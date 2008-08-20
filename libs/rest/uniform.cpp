@@ -19,6 +19,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "data/reference.hpp"
+
 #include "uniform.hpp"
 
 namespace nanogear {

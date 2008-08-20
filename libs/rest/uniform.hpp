@@ -25,6 +25,10 @@
 namespace nanogear {
 namespace rest {
 
+namespace data {
+    class response;
+}
+
 /**
  *
  * @author Lorenzo Villani <lvillani@binaryhelix.net>

@@ -19,9 +19,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #ifndef NANOGEAR_REST_DATAMETADATA_HPP
 #define NANOGEAR_REST_DATAMETADATA_HPP
+
+#include <string>
 
 namespace nanogear {
 namespace rest {
@@ -29,6 +30,7 @@ namespace data {
 
 /**
  *
+ * @author Lorenzo Villani <lvillani@binaryhelix.net>
  */
 class metadata {
 public:
@@ -37,8 +39,8 @@ public:
     virtual ~metadata() {};
 
 private:
-    std::string& m_name;
-    std::string& m_description;
+    std::string m_name;
+    std::string m_description;
 };
 
 }

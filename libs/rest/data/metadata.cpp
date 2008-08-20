@@ -19,6 +19,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <string>
 
 #include "metadata.hpp"
 
@@ -28,12 +29,12 @@ namespace data {
 
 
 metadata::metadata(const std::string& name) {
-    metadata(name, std::string::npos);
+    metadata(name, "");
 }
 
 metadata::metadata(const std::string& name, const std::string& description) {
-    m_name(name);
-    m_description(description);
+    m_name = name;
+    m_description = description;
 }
 
 
