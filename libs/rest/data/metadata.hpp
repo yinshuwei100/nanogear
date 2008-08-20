@@ -37,12 +37,11 @@ public:
     metadata(const std::string&);
     metadata(const std::string&, const std::string&);
 
-    const std::string& name();
-    const std::string& description();
-
     virtual ~metadata() {}
 
-    
+    // Getters and setters
+    const std::string& name();
+    const std::string& description();
 
 private:
     std::string m_name;
