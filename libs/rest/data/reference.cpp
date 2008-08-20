@@ -19,44 +19,24 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef NANOGEAR_RESTUNIFORM_HPP
-#define NANOGEAR_RESTUNIFORM_HPP
+#include "reference.hpp"
 
 namespace nanogear {
 namespace rest {
+namespace data {
 
-/**
- *
- * @author Lorenzo Villani <lvillani@binaryhelix.net>
- */
-class uniform {
-public:
-    uniform();
-    ~uniform();
+reference::reference(const reference& base_ref, const std::string& uri_ref) {
+    m_base_ref = base_ref;
+    m_internal_ref = uri_ref;
+}
 
-    response delete_resource(const reference&);
-    response delete_resource(const std::string&);
-
-    response get_resource(const reference&);
-    response get_resource(const std::string&);
-
-    response handle(const request&);
-    response handle(const request&, const response&);
-
-    response head(const reference&);
-    response head(const std::string&);
-
-    response options(const reference&);
-    response options(const std::string&);
-
-    response post(const reference&);
-    response post(const std::string&);
-
-    response put(const reference&);
-    response put(const std::string&);
-};
+reference::reference(const reference& base_ref, const std::string& relative_part,
+                     const std::string& query, const std::string fragment) {
+    // Create the required string and pass it to the other constructor
+    this(base_ref, std::string(relative_part).append('?').append(query)
+            .append('#').append(fragment));
+}
 
 }
 }
-
-#endif /* NANOGEAR_RESTUNIFORM_HPP */
+}

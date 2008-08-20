@@ -19,44 +19,18 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef NANOGEAR_RESTUNIFORM_HPP
-#define NANOGEAR_RESTUNIFORM_HPP
+#include "response.hpp"
 
 namespace nanogear {
 namespace rest {
 
-/**
- *
- * @author Lorenzo Villani <lvillani@binaryhelix.net>
- */
-class uniform {
-public:
-    uniform();
-    ~uniform();
+response::response() {
+}
 
-    response delete_resource(const reference&);
-    response delete_resource(const std::string&);
 
-    response get_resource(const reference&);
-    response get_resource(const std::string&);
+response::~response() {
+}
 
-    response handle(const request&);
-    response handle(const request&, const response&);
-
-    response head(const reference&);
-    response head(const std::string&);
-
-    response options(const reference&);
-    response options(const std::string&);
-
-    response post(const reference&);
-    response post(const std::string&);
-
-    response put(const reference&);
-    response put(const std::string&);
-};
 
 }
 }
-
-#endif /* NANOGEAR_RESTUNIFORM_HPP */

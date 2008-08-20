@@ -6,15 +6,15 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation;
- * version 3 of the License
+ * version 3 of the License.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public License
- * along with this library; see the file COPYING.LIB.  If not, write to
+ * You should have received a copy of the GNU General Public License
+ * along with this program; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
@@ -33,6 +33,7 @@ static void generate_cmake(const std::string& project_name) {
     std::cout << "[cmake] Creating project level CMakeLists.txt" << std::endl;
     boost::filesystem::path project_path(project_name);
 
+    // Top level CMakeLists.txt
     std::ofstream cfile((project_path / "CMakeLists.txt").string().c_str());
     cfile << "project(" << project_name << ")" << std::endl
         << "cmake_minimum_required(VERSION 2.6)" << std::endl
@@ -45,12 +46,12 @@ static void generate_cmake(const std::string& project_name) {
         << "add_subdirectory(tests)" << std::endl;
     cfile.close();
 
+    // Application cmake file
     cfile = std::ofstream((project_path / "app" / "CMakeLists.txt").string()
             .c_str());
-
     cfile << "add_subdirectory(controllers)" << std::endl
-            << "add_subdirectory(models)" << std::endl
-            << "add_subdirectory(views)" << std::endl;
+        << "add_subdirectory(models)" << std::endl
+        << "add_subdirectory(views)" << std::endl;
     cfile.close();
 }
 
