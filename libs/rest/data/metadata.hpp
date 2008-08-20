@@ -37,7 +37,12 @@ public:
     metadata(const std::string&);
     metadata(const std::string&, const std::string&);
 
+    const std::string& name();
+    const std::string& description();
+
     virtual ~metadata() {}
+
+    
 
 private:
     std::string m_name;

@@ -38,6 +38,17 @@ metadata::metadata(const std::string& name, const std::string& description)
     m_description = description;
 }
 
+const std::string& metadata::name()
+{
+    return m_name;
+}
+
+
+const std::string& metadata::description()
+{
+    return m_description;
+}
+
 
 }
 }
