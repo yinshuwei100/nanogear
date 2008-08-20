@@ -23,7 +23,7 @@
 #define NANOGEAR_RESTRESPONSE_HPP
 
 namespace std {
-    class string;
+class string;
 }
 
 namespace nanogear {
@@ -31,7 +31,7 @@ namespace rest {
 
 /**
  @author
-*/
+ */
 class response {
 public:
     response(const request&);

@@ -25,11 +25,12 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-protocol::protocol() {
+protocol::protocol()
+{
 }
 
-
-protocol::~protocol() {
+protocol::~protocol()
+{
 }
 
 

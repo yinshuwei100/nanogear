@@ -24,11 +24,12 @@
 namespace nanogear {
 namespace rest {
 
-response::response() {
+response::response()
+{
 }
 
-
-response::~response() {
+response::~response()
+{
 }
 
 

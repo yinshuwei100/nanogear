@@ -28,7 +28,7 @@ namespace data {
 
 /**
  @author
-*/
+ */
 class protocol {
 public:
     protocol();
