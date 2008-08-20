@@ -26,10 +26,12 @@
 namespace nanogear {
 namespace rest {
 
-uniform::uniform() {
+uniform::uniform()
+{
 }
 
-uniform::~uniform() {
+uniform::~uniform()
+{
 }
 
 

@@ -26,7 +26,7 @@ namespace nanogear {
 namespace rest {
 
 namespace data {
-    class response;
+class response;
 }
 
 /**
