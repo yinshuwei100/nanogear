@@ -28,14 +28,17 @@ namespace rest {
 namespace data {
 
 /**
- @author
-*/
+ *
+ */
 class metadata {
 public:
-    metadata();
+    metadata(const std::string&);
+    metadata(const std::string&, const std::string&);
+    virtual ~metadata() {};
 
-    ~metadata();
-
+private:
+    std::string& m_name;
+    std::string& m_description;
 };
 
 }
