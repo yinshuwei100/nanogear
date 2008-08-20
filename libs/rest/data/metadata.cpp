@@ -27,12 +27,13 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-
-metadata::metadata(const std::string& name) {
+metadata::metadata(const std::string& name)
+{
     metadata(name, "");
 }
 
-metadata::metadata(const std::string& name, const std::string& description) {
+metadata::metadata(const std::string& name, const std::string& description)
+{
     m_name = name;
     m_description = description;
 }

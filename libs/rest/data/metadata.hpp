@@ -36,7 +36,8 @@ class metadata {
 public:
     metadata(const std::string&);
     metadata(const std::string&, const std::string&);
-    virtual ~metadata() {};
+
+    virtual ~metadata() {}
 
 private:
     std::string m_name;
