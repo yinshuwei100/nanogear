@@ -19,29 +19,20 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "reference.hpp"
+
+#include "metadata.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-reference::reference(const reference& base_ref, const std::string& uri_ref) {
-    m_base_ref = base_ref;
-    m_internal_ref = uri_ref;
+metadata::metadata() {
 }
 
-reference::reference(const reference& base_ref, const std::string& relative_part,
-                     const std::string& query, const std::string fragment) {
-    // Create the required string and pass it to the other constructor
-    reference(base_ref, std::string(relative_part).append('?').append(query)
-            .append('#').append(fragment));
+
+metadata::~metadata() {
 }
 
-reference::reference(const std::string scheme, const std::string& host_name,
-                     int host_port, const std::string& path,
-                     const std::string& query, const std::string& fragment) {
-
-}
 
 }
 }
