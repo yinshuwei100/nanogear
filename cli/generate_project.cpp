@@ -47,8 +47,7 @@ static void generate_cmake(const std::string& project_name) {
     cfile.close();
 
     // Application cmake file
-    cfile = std::ofstream((project_path / "app" / "CMakeLists.txt").string()
-            .c_str());
+    cfile.open((project_path / "CMakeLists.txt").string().c_str());
     cfile << "add_subdirectory(controllers)" << std::endl
         << "add_subdirectory(models)" << std::endl
         << "add_subdirectory(views)" << std::endl;
