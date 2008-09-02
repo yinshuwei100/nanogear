@@ -28,6 +28,10 @@ application::application()
 {
 }
 
+application::application(context c)
+{
+}
+
 
 application::~application()
 {

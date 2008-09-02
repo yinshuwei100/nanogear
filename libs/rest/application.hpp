@@ -38,15 +38,8 @@ public:
     virtual restlet create_root();
     restlet root();
     
-    service::connector& connector();
-    service::converter& converter();
-    service::decoder& decoder();
-    service::status& status();
-    service::tunnel& tunnel();
-    
     void handle(data::request&, data::response&);
 
-    
     // Getters and setters
     void set_description(const std::string& value);
     std::string description() const;
