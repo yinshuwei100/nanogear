@@ -29,7 +29,7 @@ namespace std {
 namespace nanogear {
 namespace rest {
 
-class application {
+class application : public restlet {
 public:
     application();
     application(context);
