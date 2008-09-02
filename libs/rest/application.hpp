@@ -39,6 +39,9 @@ public:
     restlet root();
     
     void handle(data::request&, data::response&);
+    
+    void start();
+    void stop();
 
     // Getters and setters
     void set_description(const std::string& value);
@@ -67,6 +70,8 @@ public:
 
     void set_tunnel(const service::tunnel& value);
     service::tunnel tunnel() const;
+
+    void set_metadata(const service::metadata& value);
     
 private:
     std::string m_author;
@@ -79,6 +84,7 @@ private:
     service::decoder m_decoder;
     service::status m_status;
     service::tunnel m_tunnel;
+    service::metadata m_metadata;
 };
 
 }

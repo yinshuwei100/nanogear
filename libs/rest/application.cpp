@@ -106,6 +106,9 @@ void application::set_tunnel(const service::tunnel& value) {
     m_tunnel = value;
 }
 
+void application::set_metadata(const service::metadata& value) {
+    m_metadata = value;
+}
 
 } // end
 }
