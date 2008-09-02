@@ -1,5 +1,5 @@
 project(nanogear)
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.4)
 
 find_package(Boost 1.35 COMPONENTS
     program_options
