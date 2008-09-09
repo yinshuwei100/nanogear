@@ -22,15 +22,23 @@
 
 #ifndef NANOGEAR_RESTCONTEXT_HPP
 #define NANOGEAR_RESTCONTEXT_HPP
+#include <map>
+namespace std {
+class string;
+}
 
 namespace nanogear {
 namespace rest {
-
+class uniform;
     
-class context { // XXX: TODO
+class context {
 public:
     context();
+    std::map<std::string, std::string>& get_attributes();
+    virtual uniform* get_dispatcher();
 
+private:
+    std::map<std::string, std::string> attributes;
 };
 
 

@@ -20,12 +20,23 @@
  */
 
 #include "context.hpp"
+#include "uniform.hpp"
 
 namespace nanogear {
 namespace rest {
 
 context::context()
 {
+}
+
+std::map<std::string, std::string>& context::get_attributes()
+{
+    return attributes;
+}
+
+uniform* context::get_dispatcher()
+{
+    return 0;
 }
 
 }
