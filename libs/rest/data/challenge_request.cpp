@@ -63,7 +63,7 @@ void challenge_request::set_parameters(const std::list<parameter>& parameters)
     m_parameters = parameters;
 }
 
-std::string& challenge_request::realm()
+const std::string& challenge_request::realm()
 {
     return m_realm;
 }
@@ -72,7 +72,7 @@ void challenge_request::set_realm(const std::string& realm)
     m_realm = realm;
 }
 
-challenge_scheme& challenge_request::scheme()
+const challenge_scheme& challenge_request::scheme()
 {
     return m_scheme;
 }
