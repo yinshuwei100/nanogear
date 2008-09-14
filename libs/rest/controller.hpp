@@ -22,56 +22,46 @@
  */
 
 
-#include "restlet.hpp"
-#include <stdexcept>
+
+
+#ifndef NANOGEAR_REST_CONTROLLER_HPP
+#define NANOGEAR_REST_CONTROLLER_HPP
+
+
+#include "uniform.hpp"
+#include "context.hpp"
+#include "data/response.hpp"
 
 namespace nanogear {
 namespace rest {
 
-restlet::restlet(context c) : m_context(c), m_started(false)
-{
-}
+/**
+ *
+ * @author Michael Howell <mhowell123@gmail.com>
+ */
+class controller : public uniform {
+public:
+    restlet(context);
 
-bool restlet::started()
-{
-    return m_started;
-}
+    // TODO: get_logger().
+    void handle(data::request, data::response);
+    bool started();
+    bool stopped();
+    void set_context(context c);
+    context get_context();
+    void start();
+    void stop();
 
-bool restlet::stopped()
-{
-    return !started();
-}
+protected:
+    void init(data::request, data::response);
 
-void restlet::set_context(context c)
-{
-    m_context = c;
-}
+private:
+    context m_context;
+    bool m_started;
 
-context restlet::get_context()
-{
-    return m_context;
-}
-
-void restlet::start()
-{
-    m_started = true;
-}
-
-void restlet::stop()
-{
-    m_started = false;
-}
-
-void restlet::handle(data::request req, data::response res)
-{
-    init(req, res);
-}
-
-void restlet::init(data::request req, data::response res)
-{
-    if (stopped()) start()
-    if (stopped() or (!started())) throw std::logic_error("Failed to start() service.");
-}
+};
 
 }
 }
+
+#endif /* NANOGEAR_REST_CONTROLLER_HPP */
