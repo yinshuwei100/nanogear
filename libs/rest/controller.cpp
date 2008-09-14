@@ -47,7 +47,7 @@ void controller::set_context(context c)
     m_context = c;
 }
 
-context controller::get_context()
+context controller::context()
 {
     return m_context;
 }

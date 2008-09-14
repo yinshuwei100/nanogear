@@ -48,7 +48,7 @@ public:
     bool started();
     bool stopped();
     void set_context(context c);
-    context get_context();
+    context context();
     void start();
     void stop();
 
