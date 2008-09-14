@@ -23,8 +23,8 @@
 
 
 
-#ifndef NANOGEAR_RESTUNIFORM_HPP
-#define NANOGEAR_RESTUNIFORM_HPP
+#ifndef NANOGEAR_REST_UNIFORM_HPP
+#define NANOGEAR_REST_UNIFORM_HPP
 
 namespace nanogear {
 namespace rest {
@@ -67,4 +67,4 @@ public:
 }
 }
 
-#endif /* NANOGEAR_RESTUNIFORM_HPP */
+#endif /* NANOGEAR_REST_UNIFORM_HPP */

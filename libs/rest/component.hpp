@@ -24,8 +24,8 @@
 
 
 
-#ifndef NANOGEAR_RESTCOMPONENT_HPP
-#define NANOGEAR_RESTCOMPONENT_HPP
+#ifndef NANOGEAR_REST_COMPONENT_HPP
+#define NANOGEAR_REST_COMPONENT_HPP
 
 namespace std {
     template <class T> class vector<T>;
@@ -67,4 +67,4 @@ private:
 }
 }
 
-#endif
+#endif /* NANOGEAR_REST_COMPONENT_HPP */

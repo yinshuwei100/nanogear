@@ -21,7 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+#ifndef NANOGEAR_REST_DATA_HPP
+#define NANOGEAR_REST_DATA_HPP
 
 namespace std {
     template <class T> class list<T>;
@@ -46,3 +47,5 @@ public:
 
 }
 }
+
+#endif /* NANOGEAR_REST_DATA_HPP */

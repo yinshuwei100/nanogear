@@ -23,8 +23,8 @@
 
 
 
-#ifndef NANOGEAR_REST_DATAREFERENCE_HPP
-#define NANOGEAR_REST_DATAREFERENCE_HPP
+#ifndef NANOGEAR_REST_DATA_REFERENCE_HPP
+#define NANOGEAR_REST_DATA_REFERENCE_HPP
 
 namespace nanogear {
 namespace rest {
@@ -86,4 +86,4 @@ private:
 }
 }
 
-#endif /* NANOGEAR_REST_DATAREFERENCE_HPP */
+#endif /* NANOGEAR_REST_DATA_REFERENCE_HPP */

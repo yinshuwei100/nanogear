@@ -24,8 +24,9 @@
 
 
 
-#ifndef NANOGEAR_RESTCONTEXT_HPP
-#define NANOGEAR_RESTCONTEXT_HPP
+#ifndef NANOGEAR_REST_CONTEXT_HPP
+#define NANOGEAR_REST_CONTEXT_HPP
+
 #include <map>
 namespace std {
 class string;
@@ -49,4 +50,4 @@ private:
 }
 }
 
-#endif
+#endif /* NANOGEAR_REST_CONTEXT_HPP */

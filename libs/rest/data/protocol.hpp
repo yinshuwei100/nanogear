@@ -23,8 +23,8 @@
 
 
 
-#ifndef NANOGEAR_REST_DATAPROTOCOL_HPP
-#define NANOGEAR_REST_DATAPROTOCOL_HPP
+#ifndef NANOGEAR_REST_DATA_PROTOCOL_HPP
+#define NANOGEAR_REST_DATA_PROTOCOL_HPP
 
 namespace nanogear {
 namespace rest {
@@ -44,4 +44,4 @@ public:
 }
 }
 
-#endif /* NANOGEAR_REST_DATAPROTOCOL_HPP */
+#endif /* NANOGEAR_REST_DATA_PROTOCOL_HPP */

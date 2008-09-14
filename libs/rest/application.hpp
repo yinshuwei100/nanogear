@@ -23,8 +23,8 @@
 
 
 
-#ifndef NANOGEAR_RESTAPPLICATION_HPP
-#define NANOGEAR_RESTAPPLICATION_HPP
+#ifndef NANOGEAR_REST_APPLICATION_HPP
+#define NANOGEAR_REST_APPLICATION_HPP
 
 namespace std {
     class string;
@@ -94,4 +94,4 @@ private:
 }
 }
 
-#endif
+#endif /* NANOGEAR_REST_APPLICATION_HPP */

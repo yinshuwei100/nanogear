@@ -24,8 +24,10 @@
 
 
 
-#ifndef NANOGEAR_RESTRESTLET_HPP
-#define NANOGEAR_RESTRESTLET_HPP
+#ifndef NANOGEAR_REST_RESTLET_HPP
+#define NANOGEAR_REST_RESTLET_HPP
+
+
 #include "uniform.hpp"
 #include "context.hpp"
 #include <data/response.hpp>
@@ -62,4 +64,4 @@ private:
 }
 }
 
-#endif /* NANOGEAR_RESTUNIFORM_HPP */
+#endif /* NANOGEAR_REST_RESTLET_HPP */

@@ -23,8 +23,8 @@
 
 
 
-#ifndef NANOGEAR_RESTRESPONSE_HPP
-#define NANOGEAR_RESTRESPONSE_HPP
+#ifndef NANOGEAR_REST_RESPONSE_HPP
+#define NANOGEAR_REST_RESPONSE_HPP
 
 namespace std {
 class string;
@@ -73,4 +73,4 @@ public:
 }
 }
 
-#endif /* NANOGEAR_RESTRESPONSE_HPP */
+#endif /* NANOGEAR_REST_RESPONSE_HPP */
