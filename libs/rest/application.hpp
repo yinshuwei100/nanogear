@@ -33,14 +33,14 @@ namespace std {
 namespace nanogear {
 namespace rest {
 
-class application : public restlet {
+class application : public controller {
 public:
     application();
     application(context);
     ~application();
 
-    virtual restlet create_root();
-    restlet root();
+    virtual controller create_root();
+    controller root();
     
     void handle(data::request&, data::response&);
     

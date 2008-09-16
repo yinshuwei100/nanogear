@@ -41,7 +41,7 @@ namespace rest {
  */
 class controller : public uniform {
 public:
-    restlet(context);
+    controller(context);
 
     // TODO: get_logger().
     void handle(data::request, data::response);

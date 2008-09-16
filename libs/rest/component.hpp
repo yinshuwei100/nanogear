@@ -35,7 +35,7 @@ namespace nanogear {
 namespace rest {
 
     
-class component : public restlet {
+class component : public controller {
 public:
     component();
     ~component();

@@ -22,7 +22,7 @@
  */
 
 
-#include "restlet.hpp"
+#include "controller.hpp"
 #include <stdexcept>
 
 namespace nanogear {
