@@ -40,14 +40,17 @@ component::~component()
 service::log component::log() const {
     return m_log;
 }
-void component::set_log(const service::log& value) {
+void component::set_log(const service::log& value)
+{
     m_log = value;
 }
 
-service::status component::status() const {
+service::status component::status() const
+{
     return m_status;
 }
-void component::set_status(const service::status& value) {
+void component::set_status(const service::status& value)
+{
     m_status = value;
 }
 
