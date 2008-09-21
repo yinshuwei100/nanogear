@@ -38,8 +38,7 @@ challenge_response::challenge_response(const challenge_scheme& scheme,
                                        const std::string& identifier,
                                        const std::string& secret)
 {
-    m_scheme = scheme;
-    m_identifier = identifier;
+    challenge_response(scheme, identifier);
     m_secret = secret;
 }
 
