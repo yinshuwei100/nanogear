@@ -24,6 +24,10 @@
 #ifndef NANOGEAR_REST_DATA_CHALLENGE_RESPONSE_HPP
 #define NANOGEAR_REST_DATA_CHALLENGE_RESPONSE_HPP
 
+namespace std {
+class string;
+}
+
 namespace nanogear {
 namespace rest {
 namespace data {
