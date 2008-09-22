@@ -40,8 +40,8 @@ public:
     challenge_scheme(const std::string&, const std::string&, const std::string&);
     virtual ~challenge_scheme();
 
-    bool operator==(const challenge_scheme&);
-    bool operator!=(const challenge_scheme&);
+    bool operator==(const challenge_scheme&) const;
+    bool operator!=(const challenge_scheme&) const;
 
     const std::string& name() const;
     void set_name(const std::string&);
