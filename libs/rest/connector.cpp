@@ -23,7 +23,6 @@
 
 
 #include "connector.hpp"
-#include <stdexcept>
 
 namespace nanogear {
 namespace rest {
