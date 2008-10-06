@@ -28,9 +28,7 @@
 #define NANOGEAR_REST_CONTEXT_HPP
 
 #include <map>
-namespace std {
-class string;
-}
+#include <string>
 
 namespace nanogear {
 namespace rest {

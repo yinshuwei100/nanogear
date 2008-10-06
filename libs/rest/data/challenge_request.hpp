@@ -24,10 +24,10 @@
 #ifndef NANOGEAR_REST_DATA_CHALLENGE_REQUEST_HPP
 #define NANOGEAR_REST_DATA_CHALLENGE_REQUEST_HPP
 
-namespace std {
-class string;
-template <class T> class list;
-}
+#include "challenge_scheme.hpp"
+
+#include <string>
+#include <list>
 
 namespace nanogear {
 namespace rest {
@@ -44,8 +44,8 @@ public:
     bool operator==(const challenge_request&) const;
     bool operator!=(const challenge_request&) const;
                         
-    std::list<parameter>& parameters() const;
-    void set_parameters(const std::list<parameter>&);
+//    std::list<parameter>& parameters() const; // TODO
+//    void set_parameters(const std::list<parameter>&);
     
     const std::string& realm() const;
     void set_realm(const std::string&);
@@ -57,7 +57,7 @@ protected:
 private:
     challenge_scheme m_scheme;
     std::string m_realm;
-    std::list<parameter> m_parameters;
+//    std::list<parameter> m_parameters;
 };
 
 

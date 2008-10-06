@@ -23,21 +23,41 @@
 
 
 
-#include "response.hpp"
+#ifndef NANOGEAR_REST_DATA_METHOD_HPP
+#define NANOGEAR_REST_DATA_METHOD_HPP
+
+#include "metadata.hpp"
+
+#include <string>
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-response::response(const request&)
-{
+class method : public metadata {
+public:
+    method(std::string, std::string, std::string);
+
+private:
+    static method CONNECT;
+    static method COPY;
+    static method DELETE;
+    static method GET;
+    static method HEAD;
+    static method LOCK;
+    static method MKCOL;
+    static method MOVE;
+    static method OPTIONS;
+    static method POST;
+    static method PROPFIND;
+    static method PROPPATCH;
+    static method PUT;
+    static method TRACE;
+    static method UNLOCK;
+};
+
+}
+}
 }
 
-response::~response()
-{
-}
-
-
-}
-}
-}
+#endif /* NANOGEAR_REST_DATA_METADATA_HPP */

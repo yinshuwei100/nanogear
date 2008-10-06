@@ -26,9 +26,10 @@
 #ifndef NANOGEAR_REST_APPLICATION_HPP
 #define NANOGEAR_REST_APPLICATION_HPP
 
-namespace std {
-    class string;
-}
+#include "controller.hpp"
+#include "data/response.hpp"
+
+#include <string>
 
 namespace nanogear {
 namespace rest {
@@ -60,22 +61,22 @@ public:
     void set_owner(const std::string& value);
     std::string owner() const;
 
-    void set_connector(const service::connector& value);
-    service::connector connector() const;
+//    void set_connector(const service::connector& value);
+//    service::connector connector() const;
 
-    void set_converter(const service::converter& value);
-    service::converter converter() const;
+//    void set_converter(const service::converter& value);
+//    service::converter converter() const;
 
-    void set_decoder(const service::decoder& value);
-    service::decoder decoder() const;
+//    void set_decoder(const service::decoder& value);
+//    service::decoder decoder() const;
 
-    void set_status(const service::status& value);
-    service::status status() const;
+//    void set_status(const service::status& value);
+//    service::status status() const;
 
-    void set_tunnel(const service::tunnel& value);
-    service::tunnel tunnel() const;
+//    void set_tunnel(const service::tunnel& value);
+//    service::tunnel tunnel() const;
 
-    void set_metadata(const service::metadata& value);
+//    void set_metadata(const service::metadata& value);
     
 private:
     std::string m_author;
@@ -83,12 +84,12 @@ private:
     std::string m_name;
     std::string m_owner;
     
-    service::connector m_connector;
-    service::converter m_converter;
-    service::decoder m_decoder;
-    service::status m_status;
-    service::tunnel m_tunnel;
-    service::metadata m_metadata;
+//    service::connector m_connector;
+//    service::converter m_converter;
+//    service::decoder m_decoder;
+//    service::status m_status;
+//    service::tunnel m_tunnel;
+//    service::metadata m_metadata;
 };
 
 }

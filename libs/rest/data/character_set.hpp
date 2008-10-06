@@ -24,9 +24,7 @@
 #ifndef NANOGEAR_REST_DATA_CHARACTER_SET_HPP
 #define NANOGEAR_REST_DATA_CHARACTER_SET_HPP
 
-namespace std {
-class string;
-}
+#include <string>
 
 namespace nanogear {
 namespace rest {

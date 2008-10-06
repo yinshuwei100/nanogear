@@ -31,6 +31,7 @@
 #include "uniform.hpp"
 #include "context.hpp"
 #include "data/response.hpp"
+#include "data/request.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -41,14 +42,14 @@ namespace rest {
  */
 class controller : public uniform {
 public:
-    controller(context);
+    controller(context c = context());
 
     // TODO: get_logger().
     void handle(data::request, data::response);
     bool started();
     bool stopped();
     void set_context(context c);
-    context context();
+    context get_context();
     void start();
     void stop();
 

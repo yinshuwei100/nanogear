@@ -23,21 +23,26 @@
 
 
 
-#include "response.hpp"
+#ifndef NANOGEAR_REST_REQUEST_HPP
+#define NANOGEAR_REST_REQUEST_HPP
+
+#include <string>
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-response::response(const request&)
-{
+/**
+ @author
+ */
+class request { // TODO
+public:
+    request();
+    ~request();
+};
+
+}
+}
 }
 
-response::~response()
-{
-}
-
-
-}
-}
-}
+#endif /* NANOGEAR_REST_RESPONSE_HPP */

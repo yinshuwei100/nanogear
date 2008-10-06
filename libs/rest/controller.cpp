@@ -47,7 +47,7 @@ void controller::set_context(context c)
     m_context = c;
 }
 
-context controller::context()
+context controller::get_context()
 {
     return m_context;
 }
@@ -69,7 +69,7 @@ void controller::handle(data::request req, data::response res)
 
 void controller::init(data::request req, data::response res)
 {
-    if (stopped()) start()
+    if (stopped()) start();
     if (stopped() or (!started())) throw std::logic_error("Failed to start() service.");
 }
 

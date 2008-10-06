@@ -23,17 +23,17 @@
 
 
 
-#include "response.hpp"
+#include "request.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-response::response(const request&)
+request::request()
 {
 }
 
-response::~response()
+request::~request()
 {
 }
 

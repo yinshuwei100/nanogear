@@ -26,12 +26,17 @@
 #ifndef NANOGEAR_REST_RESPONSE_HPP
 #define NANOGEAR_REST_RESPONSE_HPP
 
-namespace std {
-class string;
-}
+#include "request.hpp"
+#include "method.hpp"
+#include "challenge_request.hpp"
+#include "reference.hpp"
+
+#include <string>
+#include <list>
 
 namespace nanogear {
 namespace rest {
+namespace data {
 
 /**
  @author
@@ -42,13 +47,13 @@ public:
     ~response();
 
     std::list<method> allowed_methods();
-    challenge_request challenge_request();
-    std::list<cookie_settings> cookie_settings();
-    std::list<dimension> dimensions();
+    challenge_request get_challenge_request();
+//    std::list<cookie_settings> cookie_settings(); // TODO
+//    std::list<dimension> dimensions();
     reference redirect_ref();
-    request request();
-    server_info server_info();
-    status status();
+    request get_request();
+//    server_info get_server_info();
+//    status get_status();
 
     void redirect_permanent(const reference&);
     void redirect_permanent(const std::string&);
@@ -64,12 +69,13 @@ public:
     void set_redirect_ref(const reference&);
     void set_redirect_ref(const std::string&);
 
-    void set_request(const request&);
+//    void set_request(const request&);
 
-    void set_status(const status&);
-    void set_status(const status&, const std::string&);
+//    void set_status(const status&);
+//    void set_status(const status&, const std::string&);
 };
 
+}
 }
 }
 

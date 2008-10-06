@@ -26,6 +26,9 @@
 #ifndef NANOGEAR_REST_DATA_REFERENCE_HPP
 #define NANOGEAR_REST_DATA_REFERENCE_HPP
 
+#include "character_set.hpp"
+#include "protocol.hpp"
+
 namespace nanogear {
 namespace rest {
 namespace data {
@@ -59,8 +62,8 @@ public:
     std::string path();
     std::string query();
 
-    data::form query_as_form();
-    data::form query_as_form(const data::character_set&);
+    //data::form query_as_form();
+    //data::form query_as_form(const data::character_set&);
 
     std::string relative_part();
 
@@ -75,7 +78,7 @@ public:
     std::list<std::string> segments();
 
 private:
-    reference m_base_ref;
+    reference* m_base_ref;
     std::string m_internal_ref;
     int m_fragment_index;
     int m_query_index;

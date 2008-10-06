@@ -81,6 +81,7 @@ void application::set_owner(const std::string& value)
     m_owner = value;
 }
 
+#if 0
 service::connector application::connector() const
 {
     return m_connector;
@@ -134,6 +135,7 @@ void application::set_metadata(const service::metadata& value)
 {
     m_metadata = value;
 }
+#endif
 
 } // end
 }

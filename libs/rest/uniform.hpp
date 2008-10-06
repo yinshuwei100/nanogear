@@ -26,12 +26,11 @@
 #ifndef NANOGEAR_REST_UNIFORM_HPP
 #define NANOGEAR_REST_UNIFORM_HPP
 
+#include "data/response.hpp"
+#include "data/reference.hpp"
+
 namespace nanogear {
 namespace rest {
-
-namespace data {
-class response;
-}
 
 /**
  *
@@ -42,26 +41,26 @@ public:
     uniform();
     ~uniform();
 
-    response delete_resource(const reference&);
-    response delete_resource(const std::string&);
+    data::response delete_resource(const data::reference&);
+    data::response delete_resource(const std::string&);
 
-    response get_resource(const reference&);
-    response get_resource(const std::string&);
+    data::response get_resource(const data::reference&);
+    data::response get_resource(const std::string&);
 
-    response handle(const request&);
-    response handle(const request&, const response&);
+    data::response handle(const data::request&);
+    data::response handle(const data::request&, const data::response&);
 
-    response head(const reference&);
-    response head(const std::string&);
+    data::response head(const data::reference&);
+    data::response head(const std::string&);
 
-    response options(const reference&);
-    response options(const std::string&);
+    data::response options(const data::reference&);
+    data::response options(const std::string&);
 
-    response post(const reference&);
-    response post(const std::string&);
+    data::response post(const data::reference&);
+    data::response post(const std::string&);
 
-    response put(const reference&);
-    response put(const std::string&);
+    data::response put(const data::reference&);
+    data::response put(const std::string&);
 };
 
 }
