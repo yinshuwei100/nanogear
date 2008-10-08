@@ -30,6 +30,7 @@
 #include "method.hpp"
 #include "challenge_request.hpp"
 #include "reference.hpp"
+#include "cookie_setting.hpp"
 
 #include <string>
 #include <list>
@@ -48,8 +49,8 @@ public:
 
     std::list<method> allowed_methods();
     challenge_request get_challenge_request();
-//    std::list<cookie_settings> cookie_settings(); // TODO
-//    std::list<dimension> dimensions();
+    std::list<cookie_setting> cookie_settings();
+//    std::list<dimension> dimensions(); // TODO
     reference redirect_ref();
     request get_request();
 //    server_info get_server_info();
