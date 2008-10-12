@@ -24,6 +24,10 @@
 #ifndef NANOGEAR_REST_DATA_DIMENSION_HPP
 #define NANOGEAR_REST_DATA_DIMENSION_HPP
 
+namespace nanogear {
+namespace rest {
+namespace data {
+
 enum dimension {
     CHARACTER_SET,
     CLIENT_ADDRESS,
@@ -34,5 +38,9 @@ enum dimension {
     MEDIA_TYPE,
     TIME
 };
+
+}
+}
+}
 
 #endif /* NANOGEAR_REST_DATA_DIMENSION_HPP */
