@@ -17,7 +17,9 @@ add_library(nanogear_rest SHARED
   data/protocol.cpp
   data/reference.cpp
   data/request.cpp
-  data/response.cpp
+#  data/response.cpp
+#    Depends on cookie_settings which depends on cookie which
+#    depends on the missing class: parameter
 
   
   application.cpp

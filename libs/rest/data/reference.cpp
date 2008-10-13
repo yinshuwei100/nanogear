@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+#include <list>
 
 #include "reference.hpp"
 
@@ -31,19 +31,19 @@ namespace data {
 
 reference::reference(const reference& base_ref, const std::string& uri_ref)
 {
-    m_base_ref = base_ref;
+    *m_base_ref = base_ref;
     m_internal_ref = uri_ref;
 }
 
-reference::reference(const reference& base_ref, const std::string& relative_part,
-        const std::string& query, const std::string fragment)
+/*reference::reference(const reference& base_ref, const std::string& relative_part,
+        const std::string& query, const std::string& fragment)
 {
     // Create the required string and pass it to the other constructor
     reference(base_ref, std::string(relative_part).append('?').append(query)
             .append('#').append(fragment));
-}
+            } */
 
-reference::reference(const std::string scheme, const std::string& host_name,
+reference::reference(const std::string& scheme, const std::string& host_name,
         int host_port, const std::string& path,
         const std::string& query, const std::string& fragment)
 {
