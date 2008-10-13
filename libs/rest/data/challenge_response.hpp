@@ -24,16 +24,14 @@
 #ifndef NANOGEAR_REST_DATA_CHALLENGE_RESPONSE_HPP
 #define NANOGEAR_REST_DATA_CHALLENGE_RESPONSE_HPP
 
-namespace std {
-class string;
-}
+#include <string>
+#include "challenge_scheme.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-class challenge_response
-{
+class challenge_response {
 public:
     challenge_response(const challenge_scheme&, const std::string&);
     challenge_response(const challenge_scheme&, const std::string&,

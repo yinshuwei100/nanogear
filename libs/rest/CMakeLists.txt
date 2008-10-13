@@ -1,13 +1,13 @@
 add_library(nanogear_rest SHARED
-  data/challenge_request.cpp
+#  data/challenge_request.cpp
+#    Missing class: parameter
   data/challenge_response.cpp
   data/challenge_scheme.cpp
   data/character_set.cpp
   data/client_info.cpp
   data/conditions.cpp
   data/cookie.cpp
-  data/cookie_settig.cpp
-  data/encoding.cpp
+  data/cookie_setting.cpp
   data/metadata.cpp
   data/method.cpp
   data/protocol.cpp

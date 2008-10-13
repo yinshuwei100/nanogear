@@ -23,6 +23,7 @@
 
 #include <string>
 
+#include "challenge_scheme.hpp"
 #include "challenge_response.hpp"
 
 namespace nanogear {
@@ -44,7 +45,7 @@ challenge_response::challenge_response(const challenge_scheme& scheme,
     m_secret = secret;
 }
 
-bool operator==(const challenge_response& other)
+bool challenge_response::operator==(const challenge_response& other) const
 {
     bool result = false;
     result = (scheme() == other.scheme());
@@ -53,7 +54,7 @@ bool operator==(const challenge_response& other)
     result = (credentials() == other.credentials());
 }
 
-bool operator!=(const challenge_response& other)
+bool challenge_response::operator!=(const challenge_response& other) const
 {
     return !(*this == other);
 }
@@ -61,16 +62,16 @@ bool operator!=(const challenge_response& other)
 
 
 
-const challenge_scheme& challenge_response::scheme()
+const challenge_scheme& challenge_response::scheme() const
 {
     return m_scheme;
 }
-void challenge_response::set_scheme(const const challenge_scheme& scheme)
+void challenge_response::set_scheme(const challenge_scheme& scheme)
 {
     m_scheme = scheme;
 }
 
-const std::string& challenge_response::identifier()
+const std::string& challenge_response::identifier() const
 {
     return m_identifier;
 }
@@ -79,7 +80,7 @@ void challenge_response::set_identifier(const std::string& identifier)
     m_identifier = identifier;
 }
 
-const std::string& challenge_response::secret()
+const std::string& challenge_response::secret() const
 {
     return m_secret;
 }
@@ -88,7 +89,7 @@ void challenge_response::set_secret(const std::string& secret)
     m_secret = secret;
 }
 
-const std::string& challenge_response::credentials()
+const std::string& challenge_response::credentials() const
 {
     return m_credentials;
 }
