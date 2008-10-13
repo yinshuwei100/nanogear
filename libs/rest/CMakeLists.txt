@@ -3,8 +3,9 @@ add_library(nanogear_rest SHARED
 #    Missing class: parameter
   data/challenge_response.cpp
   data/challenge_scheme.cpp
-  data/character_set.cpp
-  data/client_info.cpp
+#  data/client_info.cpp
+#    Missing class: preference
+#    Function declarations needs to be fixed
   data/conditions.cpp
   data/cookie.cpp
   data/cookie_setting.cpp
