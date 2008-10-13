@@ -49,12 +49,14 @@ encoding encoding::identify("identify",
 
 
 encoding& encoding::value_of(const std::string& name) {
-    if (name == all.name()) return all;
-    if (name == gzip.name()) return gzip;
-    if (name == zip.name()) return zip;
-    if (name == compress.name()) return compress;
-    if (name == deflate.name()) return deflate;
-    if (name == identify.name()) return identify;
+    #define encoding_case(x) if (name == x.name()) return x
+    encoding_case(all);
+    encoding_case(gzip);
+    encoding_case(zip);
+    encoding_case(compress);
+    encoding_case(deflate);
+    encoding_case(identify);
+    #undef encoding_case
     return all;
 }
 

@@ -45,11 +45,13 @@ character_set character_set::utf_16("UTF-16",
                                     "UTF 16 character set");
 
 character_set& character_set::value_of(const std::string& name) {
-    if (name == all.name()) return all;
-    if (name == iso_8859_1.name()) return iso_8859_1;
-    if (name == us_ascii.name()) return us_ascii;
-    if (name == utf_8.name()) return utf_8;
-    if (name == utf_16.name()) return utf_16;
+    #define character_case(x) if (name == x.name()) return x
+    character_case(all);
+    character_case(iso_8859_1);
+    character_case(us_ascii);
+    character_case(utf_8);
+    character_case(utf_16);
+    #undef character_case
     return all;
 }
 
