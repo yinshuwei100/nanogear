@@ -33,7 +33,7 @@ namespace data {
 challenge_response::challenge_response(const challenge_scheme& scheme,
                                        const std::string& credentials)
 {
-    m_scheme = scheme;
+    m_scheme = new challenge_scheme(scheme);
     m_credentials = credentials;
 }
 
@@ -43,6 +43,12 @@ challenge_response::challenge_response(const challenge_scheme& scheme,
 {
     challenge_response(scheme, identifier);
     m_secret = secret;
+}
+
+challenge_response::~challenge_response()
+{
+    if (m_scheme)
+        delete m_scheme;
 }
 
 bool challenge_response::operator==(const challenge_response& other) const
@@ -64,11 +70,11 @@ bool challenge_response::operator!=(const challenge_response& other) const
 
 const challenge_scheme& challenge_response::scheme() const
 {
-    return m_scheme;
+    return *m_scheme;
 }
 void challenge_response::set_scheme(const challenge_scheme& scheme)
 {
-    m_scheme = scheme;
+    *m_scheme = scheme;
 }
 
 const std::string& challenge_response::identifier() const
