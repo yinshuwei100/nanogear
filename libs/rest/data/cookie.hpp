@@ -45,6 +45,9 @@ public:
     bool operator==(const cookie&) const;
     bool operator!=(const cookie&) const;
 
+    int version() const;
+    void set_version(int);
+
     const std::string& name() const;
     void set_name(const std::string&);
 

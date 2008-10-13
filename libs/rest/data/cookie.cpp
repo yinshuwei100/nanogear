@@ -36,7 +36,7 @@ cookie::cookie(const std::string& name, const std::string& value)
 
 cookie::cookie(int version, const std::string& name, const std::string& value)
 {
-    cookie(version, name, value, "", "");
+    cookie(version, name, value, std::string(""), std::string(""));
 }
 
 cookie::cookie(int version, const std::string& name, const std::string& value,
@@ -49,7 +49,7 @@ cookie::cookie(int version, const std::string& name, const std::string& value,
     m_domain = domain;
 }
 
-bool cookie::operator==(const cookie& other)
+bool cookie::operator==(const cookie& other) const
 {
     bool ret = false;
     ret = (version() == other.version());
@@ -60,12 +60,12 @@ bool cookie::operator==(const cookie& other)
     return ret;
 }
 
-bool cookie::operator!=(const cookie& other)
+bool cookie::operator!=(const cookie& other) const 
 {
     return !(*this == other);
 }
 
-int cookie::version()
+int cookie::version() const
 {
     return m_version;
 }
@@ -75,7 +75,7 @@ void cookie::set_version(int version)
 }
 
 
-const std::string& cookie::name()
+const std::string& cookie::name() const
 {
     return m_name;
 }
@@ -84,7 +84,7 @@ void cookie::set_name(const std::string& name)
     m_name = name;
 }
 
-const std::string& cookie::value()
+const std::string& cookie::value() const
 {
     return m_value;
 }
@@ -93,7 +93,7 @@ void cookie::set_value(const std::string& value)
     m_value = value;
 }
 
-const std::string& cookie::path()
+const std::string& cookie::path() const
 {
     return m_path;
 }
@@ -102,7 +102,7 @@ void cookie::set_path(const std::string& path)
     m_path = path;
 }
 
-const std::string& cookie::domain()
+const std::string& cookie::domain() const
 {
     return m_domain;
 }
@@ -112,5 +112,6 @@ void cookie::set_domain(const std::string& domain)
 }
 
 
+}
 }
 }
