@@ -58,7 +58,7 @@ public:
     const std::string& name();
     const std::string& description();
 
-private:
+protected:
     std::string m_name;
     std::string m_description;
 };
