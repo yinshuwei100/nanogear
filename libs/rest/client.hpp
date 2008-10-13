@@ -24,22 +24,21 @@
 #ifndef NANOGEAR_REST_DATA_HPP
 #define NANOGEAR_REST_DATA_HPP
 
-namespace std {
-    template <class T> class list<T>;
-}
+#include <list>
+#include "data/protocol.hpp"
 
 namespace nanogear {
 namespace rest {
  
 class client : public connector {
 public:
-    client(context, std::list<data::protocol>);
+    client(context, std::list<nanogear::data::protocol>);
     client(context, data::protocol);
-    client(std::list<data::protocol>);
-    client(data::protocol);
+    client(std::list<nanogear::data::protocol>);
+    client(nanogear::data::protocol);
     ~client();
     
-    void handle(data::request, data::response);
+    void handle(nanogear::data::request, nanogear::data::response);
     
     void start();
     void stop();
