@@ -21,6 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <list>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
 #include "conditions.hpp"
@@ -29,7 +30,7 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-const boost::gregorian::date& conditions::modified_since()
+const boost::gregorian::date& conditions::modified_since() const
 {
     return m_modified_since;
 }
@@ -38,7 +39,7 @@ void conditions::set_modified_since(const boost::gregorian::date& modified_since
     m_modified_since = modified_since;
 }
 
-const boost::gregorian::date& conditions::unmodified_since()
+const boost::gregorian::date& conditions::unmodified_since() const
 {
     return m_unmodified_since;
 }
@@ -47,7 +48,7 @@ void conditions::set_unmodified_since(const boost::gregorian::date& unmodified_s
     m_unmodified_since = unmodified_since;
 }
 
-const std::list<tag>& conditions::match()
+const std::list<tag>& conditions::match() const
 {
     return m_match;
 }
@@ -56,7 +57,7 @@ void conditions::set_match(const std::list<tag>& match)
     m_match = match;
 }
 
-const std::list<tag>& conditions::none_match()
+const std::list<tag>& conditions::none_match() const
 {
     return m_none_match;
 }

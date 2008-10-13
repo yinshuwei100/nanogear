@@ -37,8 +37,8 @@ public:
     conditions() {};
     virtual ~conditions() {};
 
-    const boost::gregorian_date& modified_since() const;
-    void set_modified_since(const boost::gregorian_date&);
+    const boost::gregorian::date& modified_since() const;
+    void set_modified_since(const boost::gregorian::date&);
 
     const boost::gregorian::date& unmodified_since() const;
     void set_unmodified_since(const boost::gregorian::date&);

@@ -6,7 +6,8 @@ add_library(nanogear_rest SHARED
 #  data/client_info.cpp
 #    Missing class: preference
 #    Function declarations needs to be fixed
-  data/conditions.cpp
+#  data/conditions.cpp
+#    Missing class: tag
   data/cookie.cpp
   data/cookie_setting.cpp
   data/metadata.cpp
