@@ -24,6 +24,8 @@
 #ifndef NANOGEAR_REST_DATA_ENCODING_HPP
 #define NANOGEAR_REST_DATA_ENCODING_HPP
 
+#include "metadata.hpp"
+
 namespace std {
 class string;
 }
