@@ -20,6 +20,7 @@ add_library(nanogear_rest SHARED
 #  data/response.cpp
 #    Depends on cookie_settings which depends on cookie which
 #    depends on the missing class: parameter
+  data/character_set.cpp
 
   
 #  application.cpp

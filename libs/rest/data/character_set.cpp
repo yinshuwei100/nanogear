@@ -21,33 +21,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_DATA_CHARACTER_SET_HPP
-#define NANOGEAR_REST_DATA_CHARACTER_SET_HPP
+
 
 #include <string>
-#include "metadata.hpp"
+
+#include "character_set.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-class character_set : public metadata {
-public:
-    character_set(const std::string& name) : metadata(name) {};
-    character_set(const std::string& name, const std::string& description) :
-        metadata(name, description) {};
-    virtual ~character_set() {};
+character_set character_set::all("*", "All character sets");
 
-    static character_set all;
-    static character_set iso_8859_1;
-    static character_set us_ascii;
-    static character_set utf_8;
-    static character_set utf_16;
-    static character_set& value_of(const std::string& name);
-};
+character_set character_set::iso_8859_1("ISO-8859-1",
+                                        "ISO/IEC 8859-1 or Latin 1 character set");
+character_set character_set::us_ascii("US-ASCII",
+                                      "US ASCII character set");
+
+character_set character_set::utf_8("UTF-8",
+                                   "UTF 8 character set");
+
+character_set character_set::utf_16("UTF-16",
+                                    "UTF 16 character set");
+
+character_set& character_set::value_of(const std::string& name) {
+    if (name == all.name()) return all;
+    if (name == iso_8859_1.name()) return iso_8859_1;
+    if (name == us_ascii.name()) return us_ascii;
+    if (name == utf_8.name()) return utf_8;
+    if (name == utf_16.name()) return utf_16;
+    return all;
+}
 
 }
 }
 }
-
-#endif /* NANOGEAR_REST_DATA_CHARACTER_SET_HPP */
