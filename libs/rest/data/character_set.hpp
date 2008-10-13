@@ -25,30 +25,19 @@
 #define NANOGEAR_REST_DATA_CHARACTER_SET_HPP
 
 #include <string>
+#include "metadata.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
 // TODO: Add default character sets
-class character_set
-{
+class character_set : public metadata {
 public:
-    character_set(const std::string&);
-    character_set(const std::string&, const std::string&);
+    character_set(const std::string& name) : metadata(name) {};
+    character_set(const std::string& name, const std::string& description) :
+        metadata(name, description) {};
     virtual ~character_set() {};
-
-    bool operator==(const character_set&) const;
-    bool operator!=(const character_set&) const;
-
-    const std::string& name() const;
-    void set_name(const std::string&);
-
-    const std::string& description() const;
-    void set_description(const std::string&);
-private:
-    std::string& m_name;
-    std::string& m_description;
 };
 
 }
