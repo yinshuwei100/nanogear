@@ -33,20 +33,13 @@ namespace data {
 
 encoding encoding::all("*", "All encodings");
 
-encoding encoding::gzip("gzip",
-                        "GZip compression");
-encoding encoding::zip("zip",
-                       "Zip encoding");
-
-encoding encoding::compress("compress",
-                            "Common Unix compression");
-
-encoding encoding::deflate("deflate",
-                           "Deflate compression using the zlib format");
-
-encoding encoding::identify("identify",
-                            "The default encoding without any transformation");
-
+#define add_encoding(x, y) encoding encoding::x("##x##", y)
+add_encoding(gzip, "GZip compression");
+add_encoding(zip, "Zip compression");
+add_encoding(compress, "Common Unix compression");
+add_encoding(deflate, "Deflate compression using the zlib format");
+add_encoding(identify, "The default encoding without any transformation");
+#undef add_encoding
 
 encoding& encoding::value_of(const std::string& name) {
     #define encoding_case(x) if (name == x.name()) return x

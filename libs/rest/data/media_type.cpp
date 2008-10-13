@@ -31,175 +31,67 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-media_type media_type::all("*/*", "All media");
-
-media_type media_type::application_all("application/*",
-                                       "All application documents");
-
-media_type media_type::atom("application/atom+xml",
-                            "Atom syndication documents");
-
-media_type media_type::cab("application/vnd.ms-cab-compressed",
-                           "Microsoft Cabinet archive");
-
-media_type media_type::excel("application/vnd.ms-excel",
-                             "Microsoft Excel document");
-
-media_type media_type::flash("application/x-shockwave-flash",
-                             "Shockwave Flash object");
-
-media_type media_type::gnu_tar("application/x-gtar",
-                               "GNU Tar archive");
-
-media_type media_type::gnu_zip("application/x-gzip",
-                               "GNU Zip archive");
-
-media_type media_type::http_cookies("application/x-http-cookies",
-                                    "HTTP cookies");
-
-media_type media_type::java_archive("application/x-java-archive",
-                                    "Java Archive");
-
-media_type media_type::java_object("application/x-java-object",
-                                   "Java Object");
-
-media_type media_type::javascript("application/x-javascript",
-                                   "Javascript document");
-
-media_type media_type::json("application/json",
-                            "JavaScript Object Notation document");
-
-media_type media_type::octet_stream("application/octet-stream",
-                                    "Raw octet stream");
-
-media_type media_type::pdf("application/pdf",
-                           "Adobe PDF document");
-
-media_type media_type::postscript("application/postscript",
-                                  "Postscript document");
-
-media_type media_type::powerpoint("application/vnd.ms-powerpoint",
-                                  "Microsoft Powerpoint document");
-
-media_type media_type::project("application/vnd.ms-project",
-                               "Microsoft Project document");
-
-media_type media_type::rdf_xml("application/rdf+xml",
-                            "XML serialized Resource Description Framework document");
-
-media_type media_type::rtf("application/rtf",
-                           "Rich Text Format document");
-
-media_type media_type::stuffit("application/x-stuffit",
-                               "Stuffit archive");
-
-media_type media_type::tar("application/x-tar",
-                           "Tape ARchive");
-
-media_type media_type::word("application/msword",
-                            "Microsoft Word Document");
-
-media_type media_type::www_form("application/x-www-form-urlencoded",
-                                "Web form (URL encoded)");
-
-media_type media_type::www_form("application/x-www-form-urlencoded",
-                                "Web form (URL encoded)");
-
-media_type media_type::xhtml("application/xhtml+xml",
-                             "XHTML document");
-
-media_type media_type::xml("application/xml",
-                           "XML document");
-
-media_type media_type::zip("application/zip",
-                           "Zip document");
-
-media_type media_type::audio_all("audio/*",
-                                 "All audios");
-
-media_type media_type::mp3("application/mpeg",
-                           "MPEG Audio (MP3)");
-
-media_type media_type::real_audio("application/x-pn-realaudio",
-                                  "Real audio");
-
-media_type media_type::wav("application/x-wav",
-                           "Waveform audio");
-
-media_type media_type::image_all("image/*",
-                                 "All images");
-
-media_type media_type::bmp("application/bmp",
-                           "Windows Bitmap");
-
-media_type media_type::gif("application/gif",
-                           "GIF Image");
-
-media_type media_type::icon("application/x-icon",
-                            "Windows Icon (Favicon)");
-
-media_type media_type::jpeg("application/jpeg",
-                            "JPEG Image");
-
-media_type media_type::png("application/png",
-                           "Portable Network Graphics");
-
-media_type media_type::svg("application/svg+xml",
-                           "Scalable Vector Graphics");
-
-media_type media_type::message_all("message/*",
-                                   "All messages");
-
-media_type media_type::model_all("model/*",
-                                 "All models");
-
-media_type media_type::multipart_all("multipart/*",
-                                     "All multipart data");
-
-media_type media_type::forum_data("multipart/form-data",
-                                  "Multipart form data");
-
-media_type media_type::text_all("text/*",
-                                "All texts");
-
-media_type media_type::icalendar("text/calendar",
-                                 "iCalendar event");
-
-media_type media_type::css("text/css",
-                           "Cascading Style Sheet");
-
-media_type media_type::html("text/html",
-                            "HyperText Markup Language document");
-
-media_type media_type::plain("text/plain",
-                             "Plain text document");
-
-media_type media_type::rdf_n3("text/rdf+n3",
-                              "N3 serialized Resource Description Framework document");
-
-media_type media_type::uri_list("text/uri-list",
-                                "List of URIs");
-
-media_type media_type::vcard("text/x-vcard",
-                             "vCard");
-
-media_type media_type::xml_text("text/xml",
-                                "XML text document");
-
-media_type media_type::video_all("video/*",
-                                "All videos");
-
-media_type media_type::avi("video/x-msvideo",
-                           "AVI video");
-
-media_type media_type::mpeg("video/mpeg",
-                           "MPEG video");
-
-media_type media_type::quicktime("video/quicktime",
-                                 "Quicktime video");
-
-media_type media_type::wmv("video/x-ms-wmv",
-                           "Windows Media video");
+#define add_media_type(x, y, z) encoding encoding::x(y, z)
+add_media_type(all, "*/*", "All media");
+add_media_type(application_all, "application/*", "All application documents");
+add_media_type(atom, "application/atom+xml", "Atom syndication documents");
+add_media_type(cab, "application/vnd.ms-cab-compressed", "Microsoft Cabinet archive");
+add_media_type(excel, "application/vnd.ms-excel", "Microsoft Excel document");
+add_media_type(flash, "application/x-shockwave-flash", "Shockwave Flash object");
+add_media_type(gnu_tar, "application/x-gtar", "GNU Tar archive");
+add_media_type(gnu_zip, "application/x-gzip", "GNU Zip archive");
+add_media_type(http_cookies, "application/x-http-cookies", "HTTP cookies");
+add_media_type(java_archive, "application/x-java-archive", "Java Archive");
+add_media_type(java_object, "application/x-java-object", "Java Object");
+add_media_type(javascript, "application/x-javascript", "Javascript document");
+add_media_type(json, "application/json", "JavaScript Object Notation document");
+add_media_type(octet_stream, "application/octet-stream", "Raw octet stream");
+add_media_type(pdf, "application/pdf", "Adobe PDF document");
+add_media_type(postscript, "application/postscript", "Postscript document");
+add_media_type(powerpoint, "application/vnd.ms-powerpoint", "Microsoft Powerpoint document");
+add_media_type(project, "application/vnd.ms-project", "Microsoft Project document");
+add_media_type(rdf_xml, "application/rdf+xml",
+               "XML serialized Resource Description Framework document");
+add_media_type(rtf, "application/rtf", "Rich Text Format document");
+add_media_type(stuffit, "application/x-stuffit", "Stuffit archive");
+add_media_type(tar, "application/x-tar", "Tape ARchive");
+add_media_type(word, "application/msword", "Microsoft Word Document");
+add_media_type(www_form, "application/x-www-form-urlencoded",
+               "Web form (URL encoded)");
+add_media_type(xhtml, "application/xhtml+xml", "XHTML document");
+add_media_type(xml, "application/xml", "XML document");
+add_media_type(zip, "application/zip", "Zip document");
+add_media_type(audio_all, "audio/*", "All audios");
+add_media_type(mp3, "audio/mpeg", "MPEG Audio (MP3)");
+add_media_type(real_audio, "application/x-pn-realaudio", "Real audio");
+add_media_type(wav, "application/x-wav", "Waveform audio");
+add_media_type(image_all, "image/*", "All images");
+add_media_type(bmp, "image/bmp", "Windows Bitmap");
+add_media_type(gif, "image/gif", "GIF Image");
+add_media_type(icon, "image/x-icon", "Windows Icon (Favicon)");
+add_media_type(jpeg, "image/jpeg", "JPEG Image");
+add_media_type(png, "image/png", "Portable Network Graphics");
+add_media_type(svg, "image/svg+xml", "Scalable Vector Graphics");
+add_media_type(message_all, "message/*", "All messages");
+add_media_type(model_all, "model/*", "All models");
+add_media_type(multipart_all, "multipart/*", "All multipart data");
+add_media_type(form_data, "multipart/form-data", "Multipart form data");
+add_media_type(text_all, "text/*", "All text");
+add_media_type(icalendar, "text/calendar", "iCalendar event");
+add_media_type(css, "text/css", "Cascading Style Sheet");
+add_media_type(html, "text/html", "HyperText Markup Language document");
+add_media_type(plain, "text/plain", "Plain text document");
+add_media_type(rdf_n3, "text/rdf+n3",
+               "N3 serialized Resource Description Framework document");
+add_media_type(uri_list, "text/uri-list", "List of URIs");
+add_media_type(vcard, "text/x-vcard", "vCard");
+add_media_type(xml_text, "text/xml", "XML text document");
+add_media_type(video_all, "video/*", "All videos");
+add_media_type(avi, "video/x-msvideo", "AVI video");
+add_media_type(mpeg, "video/mpeg", "MPEG video");
+add_media_type(quicktime, "video/quicktime", "Quicktime video");
+add_media_type(wmv, "video/x-ms-wmv", "Windows Media video");
+#undef add_media_type
 
 media_type& media_type::value_of(const std::string& name) {
     #define media_type_case(x) if (name == x.name()) return x

@@ -31,18 +31,13 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-character_set character_set::all("*", "All character sets");
-
-character_set character_set::iso_8859_1("ISO-8859-1",
-                                        "ISO/IEC 8859-1 or Latin 1 character set");
-character_set character_set::us_ascii("US-ASCII",
-                                      "US ASCII character set");
-
-character_set character_set::utf_8("UTF-8",
-                                   "UTF 8 character set");
-
-character_set character_set::utf_16("UTF-16",
-                                    "UTF 16 character set");
+#define add_character_set(x, y, z) encoding encoding::x(y, z)
+add_character_set(all, "*", "All character sets");
+add_character_set(iso_8859_1, "ISO-8859-1", "ISO/IEC 8859-1 or Latin 1 character set");
+add_character_set(us_ascii, "US-ASCII", "US ASCII character set");`
+add_character_set(utf_8, "UTF-8", "UTF 8 character set");
+add_character_set(utf_16, "UTF-16", "UTF 16 character set");
+#undef add_character_set
 
 character_set& character_set::value_of(const std::string& name) {
     #define character_case(x) if (name == x.name()) return x
