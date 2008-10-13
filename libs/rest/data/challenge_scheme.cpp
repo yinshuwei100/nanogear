@@ -44,16 +44,16 @@ challenge_scheme::challenge_scheme(const std::string& name,
     m_description = description;
 }
 
-bool challenge_scheme::operator==(const challenge_scheme& other) {
+bool challenge_scheme::operator==(const challenge_scheme& other) const {
     return (other.name() == name());
 }
 
-bool challenge_scheme::operator!=(const challenge_scheme& other) {
+bool challenge_scheme::operator!=(const challenge_scheme& other) const {
     return !(*this == other);
 }
 
 
-const std::string& challenge_scheme::name()
+const std::string& challenge_scheme::name() const
 {
     return m_name;
 }
@@ -62,7 +62,7 @@ void challenge_scheme::set_name(const std::string& name)
     m_name = name;
 }
 
-const std::string& challenge_scheme::technical_name()
+const std::string& challenge_scheme::technical_name() const
 {
     return m_technical_name;
 }
@@ -71,7 +71,7 @@ void challenge_scheme::set_technical_name(const std::string& technical_name)
     m_technical_name = technical_name;
 }
 
-const std::string& challenge_scheme::description()
+const std::string& challenge_scheme::description() const
 {
     return m_description;
 }
