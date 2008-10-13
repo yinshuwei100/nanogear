@@ -21,38 +21,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_DATA_ENCODING_HPP
-#define NANOGEAR_REST_DATA_ENCODING_HPP
 
-#include "metadata.hpp"
 
-namespace std {
-class string;
-}
+#include <string>
+
+#include "encoding.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-class encoding : public metadata
-{
-public:
-    encoding(const std::string& name) : metadata(name);
-    encoding(const std::string& name, const std::string& description) :
-        metadata(name, description);
-    virtual ~encoding() {};
+encoding encoding::all("*", "All encodings");
 
-    static encoding all;
-    static encoding gzip;
-    static encoding zip;
-    static encoding compress;
-    static encoding deflate;
-    static encoding identify;
-    static encoding& value_of(const std::string& name);
-};
+encoding encoding::gzip("gzip",
+                        "GZip compression");
+encoding encoding::zip("zip",
+                       "Zip encoding");
+
+encoding encoding::compress("compress",
+                            "Common Unix compression");
+
+encoding encoding::deflate("deflate",
+                           "Deflate compression using the zlib format");
+
+encoding encoding::identify("identify",
+                            "The default encoding without any transformation");
+
+
+encoding& encoding::value_of(const std::string& name) {
+    if (name == all.name()) return all;
+    if (name == gzip.name()) return gzip;
+    if (name == zip.name()) return zip;
+    if (name == compress.name()) return compress;
+    if (name == deflate.name()) return deflate;
+    if (name == identify.name()) return identify;
+    return all;
+}
 
 }
 }
 }
-
-#endif /* NANOGEAR_REST_DATA_ENCODING_HPP */
