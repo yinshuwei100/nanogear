@@ -31,10 +31,10 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-#define add_character_set(x, y, z) encoding encoding::x(y, z)
+#define add_character_set(x, y, z) character_set character_set::x(y, z)
 add_character_set(all, "*", "All character sets");
 add_character_set(iso_8859_1, "ISO-8859-1", "ISO/IEC 8859-1 or Latin 1 character set");
-add_character_set(us_ascii, "US-ASCII", "US ASCII character set");`
+add_character_set(us_ascii, "US-ASCII", "US ASCII character set");
 add_character_set(utf_8, "UTF-8", "UTF 8 character set");
 add_character_set(utf_16, "UTF-16", "UTF 16 character set");
 #undef add_character_set
