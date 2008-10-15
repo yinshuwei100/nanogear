@@ -27,9 +27,8 @@
 #ifndef NANOGEAR_REST_COMPONENT_HPP
 #define NANOGEAR_REST_COMPONENT_HPP
 
-namespace std {
-    template <class T> class vector<T>;
-}
+#include <vector>
+#include "controller.hpp"
 
 namespace nanogear {
 namespace rest {

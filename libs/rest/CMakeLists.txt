@@ -27,11 +27,11 @@ add_library(nanogear_rest SHARED
 #    Depends on missing class parameter
 #  client.cpp
 #    Depends on response which depends on parameter (missing)
-  component.cpp
-  connector.cpp
-  context.cpp
-  filter.cpp
-  controller.cpp
-  uniform.cpp
+#  component.cpp
+#  connector.cpp
+#  context.cpp
+#  filter.cpp
+#  controller.cpp
+#  uniform.cpp
 )
 
