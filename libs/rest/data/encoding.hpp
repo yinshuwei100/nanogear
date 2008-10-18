@@ -42,13 +42,14 @@ public:
         metadata(name, description);
     virtual ~encoding() {};
 
-    static encoding all;
-    static encoding gzip;
-    static encoding zip;
-    static encoding compress;
-    static encoding deflate;
-    static encoding identify;
     static encoding& value_of(const std::string& name);
+
+    static encoding ALL;
+    static encoding GZIP;
+    static encoding ZIP;
+    static encoding COMPRESS;
+    static encoding DEFLATE;
+    static encoding IDENTIFY;
 };
 
 }

@@ -31,27 +31,29 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-encoding encoding::all("*", "All encodings");
-
-#define add_encoding(x, y) encoding encoding::x("##x##", y)
-add_encoding(gzip, "GZip compression");
-add_encoding(zip, "Zip compression");
-add_encoding(compress, "Common Unix compression");
-add_encoding(deflate, "Deflate compression using the zlib format");
-add_encoding(identify, "The default encoding without any transformation");
-#undef add_encoding
-
 encoding& encoding::value_of(const std::string& name) {
-    #define encoding_case(x) if (name == x.name()) return x
-    encoding_case(all);
-    encoding_case(gzip);
-    encoding_case(zip);
-    encoding_case(compress);
-    encoding_case(deflate);
-    encoding_case(identify);
-    #undef encoding_case
-    return all;
+    if (name == GZIP.name()) {
+        return GZIP;
+    } else if (name == ZIP.name()) {
+        return ZIP;
+    } else if (name == COMPRESS.name()) {
+        return COMPRESS;
+    } else if (name == DEFLATE.name()) {
+        return DEFLATE;
+    } else if (name == IDENTIFY.name()) {
+        return IDENTIFY;
+    } else {
+        return encoding(name);
+    }
 }
+
+// default encodings
+encoding encoding::ALL("*", "All encodings");
+encoding encoding::GZIP("GZip compression");
+encoding encoding::ZIP("Zip compression");
+encoding encoding::COMPRESS("Common Unix compression");
+encoding encoding::DEFLATE("Deflate compression using the zlib format");
+encoding encoding::IDENTIFY("The default encoding without any transformation");
 
 }
 }
