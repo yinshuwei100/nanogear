@@ -30,10 +30,9 @@ namespace rest {
 namespace data {
 
 protocol::protocol(const std::string& scheme_name) :
-    metadata(scheme_name, scheme_name + " Protocol")
+    metadata(scheme_name)
 {
-    m_scheme_name = scheme_name;
-    m_default_port = UNKNOWN_PORT;
+    protocol(scheme_name, scheme_name, scheme_name + " Protocol", UNKNOWN_PORT);
 }
 
 protocol::protocol(const std::string& scheme_name, const std::string& name,
@@ -74,9 +73,8 @@ protocol protocol::SMTP("smtp", "SMTP", "Simple Mail Transfer Protocol", 25);
 protocol protocol::SMTP_STARTTLS("smtp", "SMTP_STARTTLS",
                                  "Simple Mail Transfer Protocol"
                                  "(starting a TLS encryption)", 25);
-protocol protocol::SMTPS = new Protocol("smtps", "SMTPS",
-                                        "Simple Mail Transfer Protocol"
-                                        "(Secure)", 465);
+protocol protocol::SMTPS("smtps", "SMTPS", "Simple Mail Transfer Protocol"
+                         "(Secure)", 465);
 
 }
 }
