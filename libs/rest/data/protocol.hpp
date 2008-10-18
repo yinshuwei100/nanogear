@@ -26,18 +26,33 @@
 #ifndef NANOGEAR_REST_DATA_PROTOCOL_HPP
 #define NANOGEAR_REST_DATA_PROTOCOL_HPP
 
+#include <string>
+
+#include "metadata.hpp"
+
 namespace nanogear {
 namespace rest {
 namespace data {
 
-/**
- @author
- */
-class protocol {
+// TODO: Add default protocols
+class protocol : public metadata {
 public:
-    protocol();
-    ~protocol();
+    protocol(const std::string&);
+    protocol(const std::string&, const std::string&, const std::string&, int);
+    virtual ~protocol() {};
 
+    int default_port() const;
+    void set_default_port(int);
+
+    const std::string& scheme_name() const;
+    void set_scheme_name(const std::string&);
+
+    static const int UNKNOWN_PORT = -1;
+
+    
+private:
+    std::string m_scheme_name;
+    int m_default_port;
 };
 
 }

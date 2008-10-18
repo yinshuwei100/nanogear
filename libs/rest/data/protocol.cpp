@@ -29,12 +29,38 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-protocol::protocol()
+protocol::protocol(const std::string& scheme_name) :
+    metadata(scheme_name, scheme_name + " Protocol")
 {
+    m_scheme_name = scheme_name;
+    m_default_port = UNKNOWN_PORT;
 }
 
-protocol::~protocol()
+protocol::protocol(const std::string& scheme_name, const std::string& name,
+                   const std::string& description, int default_port) : metadata(name, description)
 {
+    m_scheme_name = scheme_name;
+    m_default_port = default_port;
+}
+
+int protocol::default_port() const
+{
+    return m_default_port;
+}
+
+void protocol::set_default_port(int default_port)
+{
+    m_default_port = default_port;
+}
+
+const std::string& protocol::scheme_name() const
+{
+    return m_scheme_name;
+}
+
+void protocol::set_scheme_name(const std::string& scheme_name)
+{
+    m_scheme_name = scheme_name;
 }
 
 
