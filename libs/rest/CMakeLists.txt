@@ -14,6 +14,7 @@ add_library(nanogear_rest SHARED
 #    Depends on cookie which depends on missing class: parameter
   data/metadata.cpp
   data/method.cpp
+  data/parameter.cpp
   data/protocol.cpp
   data/reference.cpp
   data/request.cpp

@@ -26,6 +26,8 @@
 
 #include <string>
 
+#include "character_set.hpp"
+
 namespace nanogear {
 namespace rest {
 namespace data {
