@@ -31,12 +31,59 @@ namespace data {
 
 cookie_setting::cookie_setting()
 {
+    cookie_setting(0, "", "", "", "");
 }
 
-cookie_setting::~cookie_setting()
+cookie_setting::cookie_setting(const std::string& name, const std::string& value)
 {
+    cookie_setting(0, name, value);
 }
 
+cookie_setting::cookie_setting(int version, const std::string& name,
+                               const std::string& value)
+{
+    cookie_setting(version, name, value, "", "");
+}
 
+cookie_setting::cookie_setting(int version, const std::string& name,
+                       const std::string& value, const std::string& path,
+                       const std::string& domain) : cookie(version, name, value,
+                                                           path, domain)
+{
+    m_max_age = -1;
+    m_secure = false;
+}
+
+const std::string& cookie_setting::comment() const
+{
+    return m_comment;
+}
+
+void cookie_setting::set_comment(const std::string& comment)
+{
+    m_comment = comment;
+}
+
+int cookie_setting::max_age() const
+{
+    return m_max_age;
+}
+
+void cookie_setting::set_max_age(int max_age)
+{
+    m_max_age = max_age;
+}
+
+bool cookie_setting::secure() const
+{
+    return m_secure;
+}
+
+void cookie_setting::set_secure(bool secure)
+{
+    m_secure = secure;
+}
+
+}
 }
 }

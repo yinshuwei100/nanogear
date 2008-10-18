@@ -35,22 +35,27 @@ namespace data {
 class cookie_setting : public cookie
 {
 public:
-    cookie_setting(int version = 0, std::string name = std::string(), std::string value = std::string(), std::string path = std::string(), std::string domain = std::string());
-    cookie_setting(std::string& name, std::string& value);
-    bool equals(void*); // ... or should I use something else?
-    std::string get_comment();
-    std::string get_description();
-    int get_max_age();
-    int hash_code();
-    bool is_secure();
-    void set_comment(std::string&);
-    void set_max_age(int);
-    void set_secure(bool);
+    cookie_setting();
+    cookie_setting(const std::string&, const std::string&);
+    cookie_setting(int, const std::string&, const std::string&);
+    cookie_setting(int, const std::string&, const std::string&,
+                   const std::string&, const std::string&);
 
+    bool operator==(const cookie_setting&) const;
+    bool operator!=(const cookie_setting&) const;
+
+    const std::string& comment() const;
+    void set_comment(const std::string&);
+
+    int max_age() const;
+    void set_max_age(int);
+
+    bool secure() const;
+    void set_secure(bool);
 private:
-    std::string comment;
-    int max_age;
-    bool secure;
+    std::string m_comment;
+    int m_max_age;
+    bool m_secure;
 };
 
 }

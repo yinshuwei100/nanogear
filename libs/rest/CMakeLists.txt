@@ -9,8 +9,7 @@ add_library(nanogear_rest SHARED
 #  data/conditions.cpp
 #    Missing class: tag
   data/cookie.cpp
-#  data/cookie_setting.cpp
-#    Depends on cookie which depends on missing class: parameter
+  data/cookie_setting.cpp
   data/metadata.cpp
   data/method.cpp
   data/parameter.cpp
