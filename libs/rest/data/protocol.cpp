@@ -63,6 +63,20 @@ void protocol::set_scheme_name(const std::string& scheme_name)
     m_scheme_name = scheme_name;
 }
 
+// default protocols
+protocol protocol::ALL("all", "ALL", "Wildcard for all protocols", UNKNOWN_PORT);
+protocol protocol::AJP("ajp", "AJP", "Apache Jakarta Protocol", 8009);
+protocol protocol::FTP("ftp", "FTP", "File Transfer Protocol", 21);
+protocol protocol::HTTP("http", "HTTP", "HyperText Transport Protocol", 80);
+protocol protocol::HTTPS("https", "HTTPS",
+                         "HyperText Transport Protocol (Secure)", 443);
+protocol protocol::SMTP("smtp", "SMTP", "Simple Mail Transfer Protocol", 25);
+protocol protocol::SMTP_STARTTLS("smtp", "SMTP_STARTTLS",
+                                 "Simple Mail Transfer Protocol"
+                                 "(starting a TLS encryption)", 25);
+protocol protocol::SMTPS = new Protocol("smtps", "SMTPS",
+                                        "Simple Mail Transfer Protocol"
+                                        "(Secure)", 465);
 
 }
 }

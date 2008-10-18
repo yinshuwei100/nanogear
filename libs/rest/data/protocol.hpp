@@ -49,7 +49,14 @@ public:
 
     static const int UNKNOWN_PORT = -1;
 
-    
+    static protocol ALL;
+    static protocol AJP;
+    static protocol FTP;
+    static protocol HTTP;
+    static protocol HTTPS;
+    static protocol SMTP;
+    static protocol SMTP_STARTTLS;
+    static protocol SMTPS;
 private:
     std::string m_scheme_name;
     int m_default_port;
