@@ -32,13 +32,12 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-class cookie
-{
+class cookie {
 public:
     cookie();
     cookie(const std::string&, const std::string&);
     cookie(int, const std::string&, const std::string&);
-    cookie(int, const std::string&, const std::string&, const std::string&
+    cookie(int, const std::string&, const std::string&, const std::string&,
            const std::string&);
     virtual ~cookie() {}
     
