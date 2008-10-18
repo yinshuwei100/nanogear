@@ -54,6 +54,19 @@ cookie_setting::cookie_setting(int version, const std::string& name,
     m_secure = false;
 }
 
+bool cookie_setting::operator==(const cookie_setting& other) const
+{
+    bool res = (other.comment() == comment());
+    res = (other.secure() == secure());
+    res = (other.max_age() == max_age());
+    return res;
+}
+
+bool cookie_setting::operator!=(const cookie_setting& other) const
+{
+    return !(*this == other);
+}
+
 const std::string& cookie_setting::comment() const
 {
     return m_comment;
