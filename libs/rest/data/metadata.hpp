@@ -49,8 +49,7 @@ namespace data {
  */
 class metadata {
 public:
-    metadata(const std::string&);
-    metadata(const std::string&, const std::string&);
+    metadata(const std::string& = std::string(), const std::string& = std::string());
 
     virtual ~metadata() {}
 

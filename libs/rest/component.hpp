@@ -29,6 +29,7 @@
 
 #include <vector>
 #include "controller.hpp"
+#include "client.hpp"
 
 namespace nanogear {
 namespace rest {

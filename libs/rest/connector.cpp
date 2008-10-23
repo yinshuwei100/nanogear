@@ -31,12 +31,12 @@ connector::connector(context c) : controller(c)
 {
 }
 
-connector::connector(context c, std::list<protocol> p) : controller(c)
+connector::connector(context c, std::list<data::protocol> p) : controller(c)
 {
     protocols = p;
 }
 
-std::list<protocol>& connector::get_protocols()
+std::list<data::protocol>& connector::get_protocols()
 {
     return protocols;
 }

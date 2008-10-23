@@ -11,7 +11,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, version 3 of the License.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,58 +21,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <string>
+#ifndef NANOGEAR_REST_DATA_PREFERENCE_HPP
+#define NANOGEAR_REST_DATA_PREFERENCE_HPP
 
-#include "challenge_scheme.hpp"
+#include <string>
+#include <list>
+
+#include "metadata.hpp"
+#include "parameter.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-challenge_scheme::challenge_scheme(const std::string& name,
-                                   const std::string& technical_name,
-                                   const std::string& description)
-: m_name(name), m_technical_name(technical_name), m_description(description)
-{
-}
+class preference {
+public:
+    preference(const metadata& m = metadata(), const float q = 1,
+               const std::list<parameter>& p = std::list<parameter>());
+    const metadata& get_metadata();
+    const std::list<parameter>& get_parameters();
+    const float get_quality();
 
-bool challenge_scheme::operator==(const challenge_scheme& other) const {
-    return (other.name() == name());
-}
-
-bool challenge_scheme::operator!=(const challenge_scheme& other) const {
-    return !(*this == other);
-}
-
-
-const std::string& challenge_scheme::name() const
-{
-    return m_name;
-}
-void challenge_scheme::set_name(const std::string& name)
-{
-    m_name = name;
-}
-
-const std::string& challenge_scheme::technical_name() const
-{
-    return m_technical_name;
-}
-void challenge_scheme::set_technical_name(const std::string& technical_name)
-{
-    m_technical_name = technical_name;
-}
-
-const std::string& challenge_scheme::description() const
-{
-    return m_description;
-}
-void challenge_scheme::set_description(const std::string& description)
-{
-    m_description = description;
-}
+private:
+    metadata m_metadata;
+    std::list<parameter> m_parameters;
+    float m_quality;
+};
 
 
 }
 }
 }
+
+#endif /* NANOGEAR_REST_DATA_PARAMETER_HPP */
+

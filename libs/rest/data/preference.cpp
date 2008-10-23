@@ -11,7 +11,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, version 3 of the License.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,58 +21,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <string>
-
-#include "challenge_scheme.hpp"
+#include "preference.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-challenge_scheme::challenge_scheme(const std::string& name,
-                                   const std::string& technical_name,
-                                   const std::string& description)
-: m_name(name), m_technical_name(technical_name), m_description(description)
+preference::preference(const metadata& m, const float q, const std::list<parameter>& p) : m_metadata(m), m_quality(q), m_parameters(p)
 {
 }
 
-bool challenge_scheme::operator==(const challenge_scheme& other) const {
-    return (other.name() == name());
-}
-
-bool challenge_scheme::operator!=(const challenge_scheme& other) const {
-    return !(*this == other);
-}
-
-
-const std::string& challenge_scheme::name() const
+const metadata& preference::get_metadata()
 {
-    return m_name;
-}
-void challenge_scheme::set_name(const std::string& name)
-{
-    m_name = name;
+    return m_metadata;
 }
 
-const std::string& challenge_scheme::technical_name() const
+const std::list<parameter>& preference::get_parameters()
 {
-    return m_technical_name;
-}
-void challenge_scheme::set_technical_name(const std::string& technical_name)
-{
-    m_technical_name = technical_name;
+    return m_parameters;
 }
 
-const std::string& challenge_scheme::description() const
+const float preference::get_quality()
 {
-    return m_description;
+    return m_quality;
 }
-void challenge_scheme::set_description(const std::string& description)
-{
-    m_description = description;
-}
-
 
 }
 }
 }
+

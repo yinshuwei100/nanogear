@@ -34,13 +34,13 @@ namespace rest {
 namespace data {
 
 challenge_request::challenge_request(const challenge_scheme& scheme,
-                                     std::string& realm)
+                                     const std::string& realm)
 {
     m_scheme = scheme;
     m_realm = realm;
 }
 
-bool challenge_request::operator==(const challenge_request& other)
+bool challenge_request::operator==(const challenge_request& other) const
 {
     bool ret = false;
     ret = (parameters() == other.parameters());
@@ -49,12 +49,12 @@ bool challenge_request::operator==(const challenge_request& other)
     return ret;
 }
 
-bool challenge_request::operator!=(const challenge_request& other)
+bool challenge_request::operator!=(const challenge_request& other) const
 {
-    return !(*this == other)
+    return !(*this == other);
 }
 
-std::list<parameter>& challenge_request::parameters()
+const std::list<parameter>& challenge_request::parameters() const
 {
     return m_parameters;
 }
@@ -63,7 +63,7 @@ void challenge_request::set_parameters(const std::list<parameter>& parameters)
     m_parameters = parameters;
 }
 
-const std::string& challenge_request::realm()
+const std::string& challenge_request::realm() const
 {
     return m_realm;
 }
@@ -72,7 +72,7 @@ void challenge_request::set_realm(const std::string& realm)
     m_realm = realm;
 }
 
-const challenge_scheme& challenge_request::scheme()
+const challenge_scheme& challenge_request::scheme() const
 {
     return m_scheme;
 }

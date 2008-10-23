@@ -29,22 +29,11 @@
 namespace nanogear {
 namespace rest {
 
-filter::filter()
+filter::filter(const context& c, controller* n) : next(n)
 {
-    this(context(), 0);
 }
 
-filter::filter(context& c)
-{
-    this(c, 0);
-}
-
-filter::filter(context& c, controller* n)
-{
-    next = n;
-}
-
-void filter::do_handle(request& req, response& res)
+void filter::do_handle(data::request& req, data::response& res)
 {
     if (has_next()) {
         get_next()->handle(req, res);
@@ -68,7 +57,7 @@ void filter::set_next(controller* c)
     next = c;
 }
 
-void filter::handle(request& req, response& res)
+void filter::handle(data::request& req, data::response& res)
 {
     init(req, res);
     before_handle(req, res);

@@ -34,8 +34,7 @@ namespace data {
 class challenge_scheme
 {
 public:
-    challenge_scheme(const std::string&, const std::string&);
-    challenge_scheme(const std::string&, const std::string&, const std::string&);
+    challenge_scheme(const std::string& name = std::string(), const std::string& technical_name = std::string(), const std::string& description = std::string());
     virtual ~challenge_scheme() {};
 
     bool operator==(const challenge_scheme&) const;

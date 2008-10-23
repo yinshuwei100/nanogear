@@ -1,11 +1,8 @@
 add_library(nanogear_rest SHARED
-#  data/challenge_request.cpp
-#    Missing class: parameter
+  data/challenge_request.cpp
   data/challenge_response.cpp
   data/challenge_scheme.cpp
-#  data/client_info.cpp
-#    Missing class: preference
-#    Function declarations needs to be fixed
+  data/client_info.cpp
 #  data/conditions.cpp
 #    Missing class: tag
   data/cookie.cpp
@@ -18,17 +15,16 @@ add_library(nanogear_rest SHARED
   data/request.cpp
   data/response.cpp
   data/character_set.cpp
+  data/preference.cpp
 
   
-#  application.cpp
-#    Depends on missing class parameter
-#  client.cpp
-#    Depends on response which depends on parameter (missing)
+  application.cpp
+  client.cpp
 #  component.cpp
-#  connector.cpp
-#  context.cpp
-#  filter.cpp
-#  controller.cpp
-#  uniform.cpp
+  connector.cpp
+  context.cpp
+  filter.cpp
+  controller.cpp
+  uniform.cpp
 )
 

@@ -27,24 +27,27 @@
 #ifndef NANOGEAR_REST_FILTER_HPP
 #define NANOGEAR_REST_FILTER_HPP
 
+#include "controller.hpp"
+#include "data/request.hpp"
+#include "data/response.hpp"
+#include "context.hpp"
+
 namespace nanogear {
 namespace rest {
 
     
 class filter : public controller {
 public:
-    filter();
-    filter(context&);
-    filter(context&, controller*);
+    filter(const context& c = context(), controller* n = 0);
     controller* get_next();
     bool has_next();
-    void set_next();
-    void handle(request&, response&);
+    void set_next(controller*);
+    void handle(data::request&, data::response&);
 
 protected:
-    virtual void after_handle(request&, response&) = 0;
-    virtual void before_handle(request&, response&) = 0;
-    virtual void do_handle(request&, response&);
+    virtual void after_handle(data::request&, data::response&) = 0;
+    virtual void before_handle(data::request&, data::response&) = 0;
+    virtual void do_handle(data::request&, data::response&);
 
 private:
     controller* next;

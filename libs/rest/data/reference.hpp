@@ -26,6 +26,8 @@
 #ifndef NANOGEAR_REST_DATA_REFERENCE_HPP
 #define NANOGEAR_REST_DATA_REFERENCE_HPP
 
+#include <list>
+
 #include "character_set.hpp"
 #include "protocol.hpp"
 

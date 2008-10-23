@@ -25,6 +25,7 @@
 #define NANOGEAR_REST_DATA_CHALLENGE_REQUEST_HPP
 
 #include "challenge_scheme.hpp"
+#include "parameter.hpp"
 
 #include <string>
 #include <list>
@@ -44,20 +45,20 @@ public:
     bool operator==(const challenge_request&) const;
     bool operator!=(const challenge_request&) const;
                         
-//    std::list<parameter>& parameters() const; // TODO
-//    void set_parameters(const std::list<parameter>&);
+    const std::list<parameter>& parameters() const; // TODO
+    void set_parameters(const std::list<parameter>&);
     
     const std::string& realm() const;
     void set_realm(const std::string&);
     
-    const challenge_scheme scheme() const;
+    const challenge_scheme& scheme() const;
     void set_scheme(const challenge_scheme&);
     
 protected:
 private:
     challenge_scheme m_scheme;
     std::string m_realm;
-//    std::list<parameter> m_parameters;
+    std::list<parameter> m_parameters;
 };
 
 

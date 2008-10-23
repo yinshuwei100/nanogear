@@ -26,19 +26,20 @@
 
 #include <list>
 #include "data/protocol.hpp"
+#include "connector.hpp"
 
 namespace nanogear {
 namespace rest {
  
 class client : public connector {
 public:
-    client(context, std::list<nanogear::data::protocol>);
+    client(context, std::list<data::protocol>);
     client(context, data::protocol);
-    client(std::list<nanogear::data::protocol>);
-    client(nanogear::data::protocol);
+    client(std::list<data::protocol>);
+    client(data::protocol);
     ~client();
     
-    void handle(nanogear::data::request, nanogear::data::response);
+    void handle(data::request, data::response);
     
     void start();
     void stop();

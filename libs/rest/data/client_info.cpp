@@ -33,45 +33,47 @@ client_info::client_info()
 }
 
 
-std::list< preference<character_set> > client_info::accepted_character_sets()
+const std::list<preference>& client_info::accepted_character_sets() const
 {
     // TODO
 }
 
-std::list< preference<encoding> > client_info::accepted_encodings()
-{
-    // TODO
-}
-
-
-std::list< preference<language> > client_info::accepted_languages()
+const std::list<preference>& client_info::accepted_encodings() const
 {
     // TODO
 }
 
 
-std::list< preference<media_type> > client_info::accepted_media_types()
+const std::list<preference>& client_info::accepted_languages() const
 {
     // TODO
 }
 
+
+const std::list<preference>& client_info::accepted_media_types() const
+{
+    // TODO
+}
+
+#if 0
 const variant& client_info::preferred_variant(const std::list<variant>&,
                                               const language&)
 {
     // TODO
 }
+#endif
 
 
-const std::string& client_info::address()
+const std::string& client_info::address() const
 {
-    return m_address;
+    return m_addresses.front();
 }
 void client_info::set_address(const std::string& address)
 {
-    m_address = address;
+    m_addresses.insert(m_addresses.begin(), address);
 }
 
-const std::string& client_info::agent()
+const std::string& client_info::agent() const
 {
     return m_agent;
 }
@@ -80,11 +82,11 @@ void client_info::set_agent(const std::string& agent)
     m_agent = agent;
 }
 
-int client_info::port()
+const int client_info::port() const
 {
     return m_port;
 }
-void client_info::set_port(int port)
+void client_info::set_port(const int port)
 {
     m_port = port;
 }
