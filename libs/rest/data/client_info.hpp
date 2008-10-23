@@ -28,6 +28,9 @@
 #include <string>
 
 #include "preference.hpp"
+#include "encoding.hpp"
+#include "language.hpp"
+#include "media_type.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -39,10 +42,10 @@ public:
     client_info();
     virtual ~client_info() {};
 
-    const std::list<preference>& accepted_character_sets() const;
-    const std::list<preference>& accepted_encodings() const;
-    const std::list<preference>& accepted_languages() const;
-    const std::list<preference>& accepted_media_types() const;
+    const std::list< preference<character_set> >& accepted_character_sets() const;
+    const std::list< preference<encoding> >& accepted_encodings() const;
+    const std::list< preference<language> >& accepted_languages() const;
+    const std::list< preference<media_type> >& accepted_media_types() const;
 //    const variant& preferred_variant(const std::list<variant>&, const language) const;
 
     const std::string& address() const;
@@ -58,9 +61,9 @@ private:
     std::list<std::string> m_addresses;
     std::string m_agent;
     int m_port;
-    std::list<preference> m_encoding_prefs;
-    std::list<preference> m_language_prefs;
-    std::list<preference> m_mediatype_prefs;
+    std::list< preference<encoding> > m_encoding_prefs;
+    std::list< preference<language> > m_language_prefs;
+    std::list< preference<media_type> > m_mediatype_prefs;
 };
 
 }

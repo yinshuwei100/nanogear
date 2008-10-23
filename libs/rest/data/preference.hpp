@@ -34,16 +34,18 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
+template <typename T>
 class preference {
 public:
-    preference(const metadata& m = metadata(), const float q = 1,
-               const std::list<parameter>& p = std::list<parameter>());
-    const metadata& get_metadata();
-    const std::list<parameter>& get_parameters();
-    const float get_quality();
+    inline preference(const T& m = T(), const float q = 1,
+               const std::list<parameter>& p = std::list<parameter>())
+               : m_metadata(m), m_quality(q), m_parameters(p) {}
+    inline const T& get_metadata() { return m_metadata; }
+    inline const std::list<parameter>& get_parameters() { return m_parameters; }
+    inline const float get_quality() { return m_quality; }
 
 private:
-    metadata m_metadata;
+    T m_metadata;
     std::list<parameter> m_parameters;
     float m_quality;
 };

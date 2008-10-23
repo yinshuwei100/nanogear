@@ -33,24 +33,24 @@ client_info::client_info()
 }
 
 
-const std::list<preference>& client_info::accepted_character_sets() const
+const std::list< preference<character_set> >& client_info::accepted_character_sets() const
 {
     // TODO
 }
 
-const std::list<preference>& client_info::accepted_encodings() const
-{
-    // TODO
-}
-
-
-const std::list<preference>& client_info::accepted_languages() const
+const std::list< preference<encoding> >& client_info::accepted_encodings() const
 {
     // TODO
 }
 
 
-const std::list<preference>& client_info::accepted_media_types() const
+const std::list< preference<language> >& client_info::accepted_languages() const
+{
+    // TODO
+}
+
+
+const std::list< preference<media_type> >& client_info::accepted_media_types() const
 {
     // TODO
 }

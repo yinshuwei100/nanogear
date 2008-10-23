@@ -35,9 +35,9 @@ class language : public metadata
 {
 public:
     // TODO: provide a default set of language items
-    language(const std::string& name) : metadata(name);
+    language(const std::string& name) : metadata(name) {}
     language(const std::string& name, const std::string& description) :
-        metadata(name, description);
+        metadata(name, description) {}
     virtual ~language() {};
 };
 
