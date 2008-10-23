@@ -31,7 +31,7 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-#define add_media_type(x, y, z) encoding encoding::x(y, z)
+#define add_media_type(x, y, z) media_type media_type::x(y, z)
 add_media_type(all, "*/*", "All media");
 add_media_type(application_all, "application/*", "All application documents");
 add_media_type(atom, "application/atom+xml", "Atom syndication documents");

@@ -26,9 +26,7 @@
 
 #include "metadata.hpp"
 
-namespace std {
-class string;
-}
+#include <string>
 
 namespace nanogear {
 namespace rest {
@@ -36,9 +34,9 @@ namespace data {
 
 class media_type : public metadata {
 public:
-    media_type(const std::string& name) : metadata(name);
+    media_type(const std::string& name) : metadata(name) {}
     media_type(const std::string& name, const std::string& description) :
-        metadata(name, description);
+        metadata(name, description) {}
     virtual ~media_type() {};
 
     static media_type all;
@@ -87,6 +85,7 @@ public:
     static media_type icalendar;
     static media_type css;
     static media_type html;
+    static media_type plain;
     static media_type rdf_n3;
     static media_type uri_list;
     static media_type vcard;

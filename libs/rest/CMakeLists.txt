@@ -16,6 +16,8 @@ add_library(nanogear_rest SHARED
   data/response.cpp
   data/character_set.cpp
   data/preference.cpp
+  data/encoding.cpp
+  data/media_type.cpp
 
   
   application.cpp

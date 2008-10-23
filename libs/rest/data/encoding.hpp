@@ -26,9 +26,7 @@
 
 #include "metadata.hpp"
 
-namespace std {
-class string;
-}
+#include <string>
 
 namespace nanogear {
 namespace rest {
@@ -37,12 +35,12 @@ namespace data {
 class encoding : public metadata
 {
 public:
-    encoding(const std::string& name) : metadata(name);
+    encoding(const std::string& name) : metadata(name) {};
     encoding(const std::string& name, const std::string& description) :
-        metadata(name, description);
+        metadata(name, description) {};
     virtual ~encoding() {};
 
-    static encoding& value_of(const std::string& name);
+    static encoding value_of(const std::string& name);
 
     static encoding ALL;
     static encoding GZIP;

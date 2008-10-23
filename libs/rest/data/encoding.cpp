@@ -31,7 +31,7 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-encoding& encoding::value_of(const std::string& name) {
+encoding encoding::value_of(const std::string& name) {
     if (name == GZIP.name()) {
         return GZIP;
     } else if (name == ZIP.name()) {
