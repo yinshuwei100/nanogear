@@ -54,8 +54,8 @@ public:
     virtual ~metadata() {}
 
     // Getters and setters
-    const std::string& name();
-    const std::string& description();
+    const std::string& name() const;
+    const std::string& description() const;
 
 protected:
     std::string m_name;

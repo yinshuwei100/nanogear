@@ -39,13 +39,13 @@ metadata::metadata(const std::string& name, const std::string& description)
 
 
 // Getters and setters
-const std::string& metadata::name()
+const std::string& metadata::name() const
 {
     return m_name;
 }
 
 
-const std::string& metadata::description()
+const std::string& metadata::description() const
 {
     return m_description;
 }

@@ -21,43 +21,52 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_DATA_CONDITIONS_HPP
-#define NANOGEAR_REST_DATA_CONDITIONS_HPP
 
-#include <list>
-#include <boost/date_time/gregorian/gregorian.hpp>
+
+#include <string>
+
 #include "tag.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-class conditions
+tag::tag(const std::string& t, bool w) :
+   metadata(t, "Validation tag equivalent to an HTTP entity tag"), m_weak(w)
 {
-public:
-    conditions() {};
-    virtual ~conditions() {};
+}
 
-    const boost::gregorian::date& modified_since() const;
-    void set_modified_since(const boost::gregorian::date&);
+const std::string tag::format() const
+{
+    if (name() == "*") {
+        return "*";
+    } else {
+        std::string sb;
+        if (is_weak()) sb += "W/";
+        return sb + "\"" + name() + "\"";
+    }
+}
 
-    const boost::gregorian::date& unmodified_since() const;
-    void set_unmodified_since(const boost::gregorian::date&);
+const bool tag::is_weak() const
+{
+    return m_weak;
+}
 
-    const std::list<tag>& match() const;
-    void set_match(const std::list<tag>&);
+tag tag::ALL = tag::parse("*");
 
-    const std::list<tag>& none_match() const;
-    void set_none_match(const std::list<tag>&);
-    
-private:
-    boost::gregorian::date m_modified_since;
-    boost::gregorian::date m_unmodified_since;
-    std::list<tag> m_match;
-    std::list<tag> m_none_match;
+tag tag::parse(const std::string& t)
+{
+    bool weak = false;
+    std::string tag_copy = t;
 
-    // TODO: find alternative to the variant type
-    status status(method&, variant&) {};
-};
+    if (tag_copy.at(0) == 'W' and tag_copy.at(1) == '/')
+        tag_copy.erase(0, 1);
+    else if (tag_copy == "*")
+        return tag("*", weak);
+    else
+        throw "Invalid tag format detected.";
+}
 
-#endif /* NANOGEAR_REST_DATA_CONDITIONS_HPP */
+}
+}
+}

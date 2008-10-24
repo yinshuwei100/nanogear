@@ -21,43 +21,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_DATA_CONDITIONS_HPP
-#define NANOGEAR_REST_DATA_CONDITIONS_HPP
+#ifndef NANOGEAR_REST_DATA_TAG_HPP
+#define NANOGEAR_REST_DATA_TAG_HPP
 
-#include <list>
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include "tag.hpp"
+#include "metadata.hpp"
+
+#include <string>
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-class conditions
+class tag : public metadata
 {
 public:
-    conditions() {};
-    virtual ~conditions() {};
+    tag(const std::string& t = std::string(), bool w = false);
+    const std::string format() const;
+    const bool is_weak() const;
+    static tag ALL;
+    static tag parse(const std::string&);
 
-    const boost::gregorian::date& modified_since() const;
-    void set_modified_since(const boost::gregorian::date&);
-
-    const boost::gregorian::date& unmodified_since() const;
-    void set_unmodified_since(const boost::gregorian::date&);
-
-    const std::list<tag>& match() const;
-    void set_match(const std::list<tag>&);
-
-    const std::list<tag>& none_match() const;
-    void set_none_match(const std::list<tag>&);
-    
 private:
-    boost::gregorian::date m_modified_since;
-    boost::gregorian::date m_unmodified_since;
-    std::list<tag> m_match;
-    std::list<tag> m_none_match;
-
-    // TODO: find alternative to the variant type
-    status status(method&, variant&) {};
+    bool m_weak;
 };
 
-#endif /* NANOGEAR_REST_DATA_CONDITIONS_HPP */
+}
+}
+}
+
+#endif /* NANOGEAR_REST_DATA_ENCODING_HPP */

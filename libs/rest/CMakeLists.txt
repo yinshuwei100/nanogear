@@ -4,7 +4,7 @@ add_library(nanogear_rest SHARED
   data/challenge_scheme.cpp
   data/client_info.cpp
 #  data/conditions.cpp
-#    Missing class: tag
+#    Missing class: status
   data/cookie.cpp
   data/cookie_setting.cpp
   data/metadata.cpp
@@ -17,6 +17,7 @@ add_library(nanogear_rest SHARED
   data/character_set.cpp
   data/encoding.cpp
   data/media_type.cpp
+  data/tag.cpp
 
   
   application.cpp
