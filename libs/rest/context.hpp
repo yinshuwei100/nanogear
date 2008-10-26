@@ -28,7 +28,10 @@
 #define NANOGEAR_REST_CONTEXT_HPP
 
 #include <map>
+#include <list>
 #include <string>
+
+#include "data/parameter.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -38,10 +41,12 @@ class context {
 public:
     context();
     std::map<std::string, std::string>& get_attributes();
+    std::list<data::parameter>& get_parameters();
     virtual uniform* get_dispatcher();
 
 private:
     std::map<std::string, std::string> attributes;
+    std::list<data::parameter> parameters;
 };
 
 
