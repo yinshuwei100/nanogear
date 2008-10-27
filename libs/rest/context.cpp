@@ -37,7 +37,7 @@ std::map<std::string, std::string>& context::get_attributes()
     return attributes;
 }
 
-std::list<data::parameters>& context::get_parameters()
+std::list<data::parameter>& context::get_parameters()
 {
     return parameters;
 }
