@@ -27,6 +27,8 @@
 #ifndef NANOGEAR_REST_FILTER_HPP
 #define NANOGEAR_REST_FILTER_HPP
 
+#include <boost/shared_ptr.hpp>
+
 #include "controller.hpp"
 #include "data/request.hpp"
 #include "data/response.hpp"
@@ -38,10 +40,10 @@ namespace rest {
     
 class filter : public controller {
 public:
-    filter(const context& c = context(), controller* n = 0);
-    controller* get_next();
+    filter(const context& c = context(), boost::shared_ptr<controller> n = boost::shared_ptr<controller>());
+    boost::shared_ptr<controller>& get_next();
     bool has_next();
-    void set_next(controller*);
+    void set_next(boost::shared_ptr<controller>&);
     void handle(data::request&, data::response&);
 
 protected:
@@ -50,7 +52,7 @@ protected:
     virtual void do_handle(data::request&, data::response&);
 
 private:
-    controller* next;
+    boost::shared_ptr<controller> next;
 };
 
 

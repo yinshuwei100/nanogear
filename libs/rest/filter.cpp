@@ -29,7 +29,7 @@
 namespace nanogear {
 namespace rest {
 
-filter::filter(const context& c, controller* n) : next(n)
+filter::filter(const context& c, boost::shared_ptr<controller> n) : next(n)
 {
 }
 
@@ -42,7 +42,7 @@ void filter::do_handle(data::request& req, data::response& res)
     }
 }
 
-controller* filter::get_next()
+boost::shared_ptr<controller>& filter::get_next()
 {
     return next;
 }
@@ -52,7 +52,7 @@ bool filter::has_next()
     return next != 0;
 }
 
-void filter::set_next(controller* c)
+void filter::set_next(boost::shared_ptr<controller>& c)
 {
     next = c;
 }

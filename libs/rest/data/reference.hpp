@@ -27,6 +27,7 @@
 #define NANOGEAR_REST_DATA_REFERENCE_HPP
 
 #include <list>
+#include <boost/shared_ptr.hpp>
 
 #include "character_set.hpp"
 #include "protocol.hpp"
@@ -80,7 +81,7 @@ public:
     std::list<std::string> segments();
 
 private:
-    reference* m_base_ref;
+    boost::shared_ptr<reference> m_base_ref;
     std::string m_internal_ref;
     int m_fragment_index;
     int m_query_index;

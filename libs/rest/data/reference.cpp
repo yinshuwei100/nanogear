@@ -31,7 +31,7 @@ namespace data {
 
 reference::reference(const reference& base_ref, const std::string& uri_ref)
 {
-    *m_base_ref = base_ref;
+    m_base_ref.reset(new reference(base_ref));
     m_internal_ref = uri_ref;
 }
 

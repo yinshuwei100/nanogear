@@ -53,7 +53,7 @@ public:
     const std::string& credentials() const;
     void set_credentials(const std::string&);
 private:
-    challenge_scheme* m_scheme;
+    challenge_scheme m_scheme;
     std::string m_credentials;
     std::string m_identifier;
     std::string m_secret;

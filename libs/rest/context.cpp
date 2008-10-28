@@ -42,9 +42,9 @@ std::list<data::parameter>& context::get_parameters()
     return parameters;
 }
 
-uniform* context::get_dispatcher()
+boost::shared_ptr<uniform> context::get_dispatcher()
 {
-    return 0;
+    return boost::shared_ptr<uniform>();
 }
 
 }

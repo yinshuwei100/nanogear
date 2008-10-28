@@ -30,6 +30,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include <boost/shared_ptr.hpp>
 
 #include "data/parameter.hpp"
 
@@ -42,7 +43,7 @@ public:
     context();
     std::map<std::string, std::string>& get_attributes();
     std::list<data::parameter>& get_parameters();
-    virtual uniform* get_dispatcher();
+    virtual boost::shared_ptr<uniform> get_dispatcher();
 
 private:
     std::map<std::string, std::string> attributes;

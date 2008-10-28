@@ -28,6 +28,7 @@
 #define NANOGEAR_REST_COMPONENT_HPP
 
 #include <vector>
+#include <boost/shared_ptr.hpp>
 #include "controller.hpp"
 #include "client.hpp"
 
@@ -40,9 +41,9 @@ public:
     component();
     ~component();
     
-    std::vector<client> clients();
-    std::vector<server> servers();
-    std::vector<host> hosts();
+    std::vector< boost::shared_ptr<client> > clients();
+    std::vector< boost::shared_ptr<server> > servers();
+    std::vector< boost::shared_ptr<host> > hosts();
     virtual_host default_host() const;
     
     void start();
@@ -56,10 +57,10 @@ public:
 	
     
 private:
-    std::vector<server> m_servers;
-    std::vector<client> m_clients;
-    std::vector<virtual_host> m_virtual_hosts;
     service::log m_log;
+    std::vector< boost::shared_ptr<server> > m_servers;
+    std::vector< boost::shared_ptr<client> > m_clients;
+    std::vector< boost::shared_ptr<virtual_host> > m_virtual_hosts;
     service::status m_status;
 };
 
