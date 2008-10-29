@@ -8,5 +8,5 @@ find_package(Boost 1.34 COMPONENTS
 
 include_directories(${Boost_INCLUDE_DIR})
 
-add_subdirectory(cli)
+# add_subdirectory(cli)
 add_subdirectory(libs)
