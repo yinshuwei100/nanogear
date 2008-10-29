@@ -18,6 +18,7 @@ add_library(nanogear_rest SHARED
   data/encoding.cpp
   data/media_type.cpp
   data/tag.cpp
+  data/server_info.cpp
   data/status.cpp
 
   
