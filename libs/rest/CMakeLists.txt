@@ -7,7 +7,6 @@ add_library(nanogear_rest SHARED
 #  data/conditions.cpp # TODO: Fix compile errors
   data/cookie.cpp
   data/cookie_setting.cpp
-# data/dimension.cpp # MISSING
   data/encoding.cpp
 # data/form.cpp # MISSING
 # data/local_reference.cpp # MISSING
