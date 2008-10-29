@@ -26,7 +26,9 @@
 
 #include <list>
 #include <boost/date_time/gregorian/gregorian.hpp>
+
 #include "tag.hpp"
+//#include "status.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -57,7 +59,7 @@ private:
     std::list<tag> m_none_match;
 
     // TODO: find alternative to the variant type
-    status status(method&, variant&) {};
+    // status status(method&, variant&) {};
 };
 
 #endif /* NANOGEAR_REST_DATA_CONDITIONS_HPP */
