@@ -24,14 +24,21 @@
 #ifndef NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP
 #define NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP
 
+namespace nanogear {
+namespace rest {
+namespace resource {
+
+// TODO: Complete implmenetation
 class representation {
 public:
     representation();
-    virtual ~representation() {};
-private:
-
-
+    virtual ~representation() { };
 };
+
+
+}
+}
+}
 
 
 #endif /* NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP */

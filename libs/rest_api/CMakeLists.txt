@@ -12,7 +12,7 @@ add_library(nanogear_rest SHARED
 # nanogear/rest/data/local_reference.cpp # MISSING
   nanogear/rest/data/metadata.cpp
   nanogear/rest/data/method.cpp
-# nanogear/rest/data/message.cpp # MISSING
+  nanogear/rest/data/message.cpp
   nanogear/rest/data/parameter.cpp
   nanogear/rest/data/protocol.cpp
   nanogear/rest/data/reference.cpp

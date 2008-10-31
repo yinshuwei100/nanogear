@@ -27,6 +27,7 @@
 #include <map>
 #include <string>
 #include "../resource/representation.hpp"
+#include "media_type.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -37,11 +38,16 @@ public:
     message() { };
     virtual ~message() { };
 
+    /**
+     * return a modifiable list
+     */
     std::map<std::string, std::string>& attributes();
-    void set_attributes(const std::map<std::string, std::string>&);
+
+    void set_entity(const nanogear::rest::resource::representation&);
+    void set_entity(const std::string&, const nanogear::rest::data::media_type&);
 private:
     std::map<std::string, std::string> m_attributes;
-    representation m_entity;
+    nanogear::rest::resource::representation m_entity;
 };
 
 }

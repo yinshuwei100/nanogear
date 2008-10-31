@@ -34,9 +34,15 @@ std::map<std::string, std::string>& message::attributes()
     return m_attributes;
 }
 
-void message::set_attributes(const std::map<std::string, std::string>& attributes)
+void message::set_entity(const nanogear::rest::resource::representation& representation)
 {
-    m_attributes = attributes;
+    m_entity = representation;
+}
+
+void message::set_entity(const std::string& value,
+                         const nanogear::rest::data::media_type& media_type)
+{
+    // TODO: build a string representation from value and media_type
 }
 
 }
