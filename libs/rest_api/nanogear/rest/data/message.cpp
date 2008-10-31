@@ -21,32 +21,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_DATA_MESSAGE_HPP
-#define NANOGEAR_REST_DATA_MESSAGE_HPP
-
 #include <map>
 #include <string>
-#include "../resource/representation.hpp"
+#include "message.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
+    
+std::map<std::string, std::string>& message::attributes()
+{
+    return m_attributes;
+}
 
-class message {
-public:
-    message() { };
-    virtual ~message() { };
-
-    std::map<std::string, std::string>& attributes();
-    void set_attributes(const std::map<std::string, std::string>&);
-private:
-    std::map<std::string, std::string> m_attributes;
-    representation m_entity;
-};
+void message::set_attributes(const std::map<std::string, std::string>& attributes)
+{
+    m_attributes = attributes;
+}
 
 }
 }
 }
-
-
-#endif /* NANOGEAR_REST_DATA_MESSAGE_HPP */
