@@ -1,1 +1,1 @@
-add_subdirectory(rest)
+add_subdirectory(rest_api)
