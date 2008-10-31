@@ -4,7 +4,7 @@
  * to complete our API implementation.
  */
 
-// do not include stuff, for now, just present something like 'pseudo-code'
+#include <nanogear/rest/controller.hpp>
 
 class my_controller : public nanogear::rest::controller {
 public:
