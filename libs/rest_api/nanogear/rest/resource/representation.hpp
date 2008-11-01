@@ -39,8 +39,8 @@ public:
     virtual ~representation() { };
 
     const std::string text() const;
-    const bool is_available() const;
-    const bool is_transient() const;
+    bool is_available() const;
+    bool is_transient() const;
     void set_available(bool);
     void set_transient(bool);
 private:
