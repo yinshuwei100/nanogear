@@ -11,7 +11,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, version 3 of the License.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,39 +21,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP
-#define NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP
 
-#include <iostream>
 
-#include "variant.hpp"
+#include "representation.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace resource {
 
-// TODO: Complete implmenetation
-class representation : public variant, public std::iostream {
-public:
-    representation(const data::media_type& t = data::media_type());
-    virtual ~representation() { };
-    const std::string get_text() const;
-    const bool is_available() const;
-    const bool is_transient() const;
-    void set_available(const bool);
-    void set_transient(const bool);
+representation::representation(const data::media_type& t) : variant(t)
+{
+    m_content_available = true;
+    m_content_transient = false;
+}
 
-private:
-    bool m_content_available;
-    bool m_content_transient;
+//TODO: get_text
 
-};
+const bool representation::is_available() const
+{
+    return m_content_available;
+}
 
+const bool representation::is_transient() const
+{
+    return m_content_transient;
+}
+
+void representation::set_available(const bool a)
+{
+    m_content_available = a;
+}
+
+void representation::set_transient(const bool t)
+{
+    m_content_transient = t;
+}
 
 }
 }
 }
-
-
-#endif /* NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP */
-
