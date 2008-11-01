@@ -22,21 +22,75 @@
  */
 
 
-
 #include "response.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-response::response(const request&)
+const std::set<data::method>& response::allowed_methods() const
 {
+    return m_allowed_methods;
 }
 
-response::~response()
+void response::set_allowed_methods(const std::set<data::method>& allowed_methods)
 {
+    m_allowed_methods = allowed_methods;
 }
 
+const std::set<data::dimension>& response::dimension() const
+{
+    return m_dimensions;
+}
+
+void response::set_dimension(const std::set<data::dimension>& dimensions)
+{
+    m_dimensions = dimensions;
+}
+
+const std::list<data::cookie_setting>& response::cookie_settings() const
+{
+    return m_cookie_settings;
+}
+
+void response::set_cookie_settings(const std::list<data::cookie_setting>& cookie_settings)
+{
+    m_cookie_settings = cookie_settings;
+}
+
+const data::reference& response::redirect_ref() const
+{
+    return m_redirect_ref;
+}
+
+void response::set_redirect_ref(const data::reference& redirect_ref)
+{
+    m_redirect_ref = redirect_ref;
+}
+void response::set_redirect_ref(const std::string& redirect_uri)
+{
+    // TODO: complete implementation
+}
+
+const data::server_info& response::server_info() const
+{
+    return m_server_info;
+}
+
+void response::set_server_info(const data::server_info& server_info)
+{
+    m_server_info = server_info;
+}
+
+const data::status& response::status() const
+{
+    return m_status;
+}
+
+void response::set_status(const data::status& status)
+{
+    m_status = status;
+}
 
 }
 }

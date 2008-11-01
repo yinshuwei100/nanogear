@@ -26,15 +26,19 @@
 #ifndef NANOGEAR_REST_RESPONSE_HPP
 #define NANOGEAR_REST_RESPONSE_HPP
 
+#include <set>
 #include <list>
 #include <string>
 
+#include "method.hpp"
+#include "status.hpp"
 #include "message.hpp"
 #include "request.hpp"
-#include "method.hpp"
-#include "challenge_request.hpp"
+#include "dimension.hpp"
 #include "reference.hpp"
+#include "server_info.hpp"
 #include "cookie_setting.hpp"
+#include "challenge_request.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -45,36 +49,42 @@ namespace data {
  */
 class response : public message {
 public:
-    response(const request&);
-    ~response();
+    //response() {};
+    //response(const request& request) : m_request(request) {};
+    virtual ~response() {};
 
-    std::list<method> allowed_methods();
-    challenge_request get_challenge_request();
-    std::list<cookie_setting> cookie_settings();
-//    std::list<dimension> dimensions(); // TODO
-    reference redirect_ref();
-    request get_request();
-//    server_info get_server_info();
-//    status get_status();
-
-    void redirect_permanent(const reference&);
-    void redirect_permanent(const std::string&);
-
-    void redirect_see_other(const reference&);
-    void redirect_see_other(const std::string&);
-
-    void redirect_temporary(const reference&);
-    void redirect_temporary(const std::string&);
-
-    void set_challenge_request(const challenge_request&);
-
-    void set_redirect_ref(const reference&);
+    const std::set<data::method>& allowed_methods() const;
+    void set_allowed_methods(const std::set<data::method>&);
+    
+    const std::set<data::dimension>& dimension() const;
+    void set_dimension(const std::set<data::dimension>&);
+    
+    const std::list<data::cookie_setting>& cookie_settings() const;
+    void set_cookie_settings(const std::list<data::cookie_setting>&);
+    
+    const data::reference& redirect_ref() const;
+    void set_redirect_ref(const data::reference&);
     void set_redirect_ref(const std::string&);
 
-//    void set_request(const request&);
+    const data::request& request() const;
+    void set_request(const data::request&);
+    void set_request(const std::string&);
 
-//    void set_status(const status&);
-//    void set_status(const status&, const std::string&);
+    const data::server_info& server_info() const;
+    void set_server_info(const data::server_info&);
+
+    const data::status& status() const;
+    void set_status(const data::status&);
+
+private:
+    std::set<data::method> m_allowed_methods;
+    std::set<data::dimension> m_dimensions;
+    std::list<data::cookie_setting> m_cookie_settings;
+    data::reference m_redirect_ref;
+    data::challenge_request m_challenge_request;
+    data::request m_request;
+    data::server_info m_server_info;
+    data::status m_status;
 };
 
 }
