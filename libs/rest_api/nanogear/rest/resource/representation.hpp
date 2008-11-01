@@ -33,7 +33,7 @@ namespace rest {
 namespace resource {
 
 // TODO: Complete implmenetation
-class representation : public variant, public std::iostream {
+class representation : public variant/*, public std::iostream*/ {
 public:
     representation(const data::media_type& t = data::media_type());
     virtual ~representation() { };
