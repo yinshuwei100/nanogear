@@ -44,7 +44,7 @@ class controller : public uniform {
 public:
     controller(context c = context());
 
-    // TODO: get_logger().
+    // TODO: logger().
     void handle(data::request, data::response);
     bool started();
     bool stopped();

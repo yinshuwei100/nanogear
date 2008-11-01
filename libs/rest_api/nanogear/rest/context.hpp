@@ -41,13 +41,13 @@ class uniform;
 class context {
 public:
     context();
-    std::map<std::string, std::string>& get_attributes();
-    std::list<data::parameter>& get_parameters();
-    virtual boost::shared_ptr<uniform> get_dispatcher();
+    std::map<std::string, std::string>& attributes();
+    std::list<data::parameter>& parameters();
+    virtual boost::shared_ptr<uniform> dispatcher();
 
 private:
-    std::map<std::string, std::string> attributes;
-    std::list<data::parameter> parameters;
+    std::map<std::string, std::string> m_attributes;
+    std::list<data::parameter> m_parameters;
 };
 
 

@@ -33,12 +33,12 @@ connector::connector(context c) : controller(c)
 
 connector::connector(context c, std::list<data::protocol> p) : controller(c)
 {
-    protocols = p;
+    m_protocols = p;
 }
 
-std::list<data::protocol>& connector::get_protocols()
+std::list<data::protocol>& connector::protocols()
 {
-    return protocols;
+    return m_protocols;
 }
 
 }

@@ -35,7 +35,7 @@ representation::representation(const data::media_type& t) : variant(t)
     m_content_transient = false;
 }
 
-//TODO: get_text
+//TODO: text
 
 const bool representation::is_available() const
 {

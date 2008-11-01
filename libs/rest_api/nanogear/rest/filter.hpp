@@ -41,7 +41,7 @@ namespace rest {
 class filter : public controller {
 public:
     filter(const context& c = context(), boost::shared_ptr<controller> n = boost::shared_ptr<controller>());
-    boost::shared_ptr<controller>& get_next();
+    boost::shared_ptr<controller>& next();
     bool has_next();
     void set_next(boost::shared_ptr<controller>&);
     void handle(data::request&, data::response&);
@@ -52,7 +52,7 @@ protected:
     virtual void do_handle(data::request&, data::response&);
 
 private:
-    boost::shared_ptr<controller> next;
+    boost::shared_ptr<controller> m_next;
 };
 
 

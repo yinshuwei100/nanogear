@@ -29,32 +29,32 @@
 namespace nanogear {
 namespace rest {
 
-filter::filter(const context& c, boost::shared_ptr<controller> n) : next(n)
+filter::filter(const context& c, boost::shared_ptr<controller> n) : m_next(n)
 {
 }
 
 void filter::do_handle(data::request& req, data::response& res)
 {
     if (has_next()) {
-        get_next()->handle(req, res);
+        next()->handle(req, res);
     } else {
         throw std::runtime_error("do_handle() without a next controller.");
     }
 }
 
-boost::shared_ptr<controller>& filter::get_next()
+boost::shared_ptr<controller>& filter::next()
 {
-    return next;
+    return m_next;
 }
 
 bool filter::has_next()
 {
-    return next != 0;
+    return m_next != 0;
 }
 
 void filter::set_next(boost::shared_ptr<controller>& c)
 {
-    next = c;
+    m_next = c;
 }
 
 void filter::handle(data::request& req, data::response& res)

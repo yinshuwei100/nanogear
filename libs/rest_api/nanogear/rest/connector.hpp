@@ -44,10 +44,10 @@ class connector : public controller {
 public:
     connector(context);
     connector(context, std::list<data::protocol>);
-    std::list<data::protocol>& get_protocols();
+    std::list<data::protocol>& protocols();
 
 private:
-    std::list<data::protocol> protocols;
+    std::list<data::protocol> m_protocols;
 
 };
 

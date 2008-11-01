@@ -54,7 +54,7 @@ public:
 
     std::string authorithy();
     reference base_ref();
-    std::string get_fragment();
+    std::string fragment();
     std::string hierarchical_part();
     std::string host_domain();
     std::string host_identifier();

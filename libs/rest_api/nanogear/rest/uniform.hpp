@@ -44,8 +44,7 @@ public:
     data::response delete_resource(const data::reference&);
     data::response delete_resource(const std::string&);
 
-    data::response get_resource(const data::reference&);
-    data::response get_resource(const std::string&);
+    data::response resource(const data::reference&);
 
     data::response handle(const data::request&);
     data::response handle(const data::request&, const data::response&);

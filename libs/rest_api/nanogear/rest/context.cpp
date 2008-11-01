@@ -32,17 +32,17 @@ context::context()
 {
 }
 
-std::map<std::string, std::string>& context::get_attributes()
+std::map<std::string, std::string>& context::attributes()
 {
-    return attributes;
+    return m_attributes;
 }
 
-std::list<data::parameter>& context::get_parameters()
+std::list<data::parameter>& context::parameters()
 {
-    return parameters;
+    return m_parameters;
 }
 
-boost::shared_ptr<uniform> context::get_dispatcher()
+boost::shared_ptr<uniform> context::dispatcher()
 {
     return boost::shared_ptr<uniform>();
 }

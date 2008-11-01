@@ -41,8 +41,8 @@ public:
                const std::list<parameter>& p = std::list<parameter>())
                : m_metadata(m), m_quality(q), m_parameters(p) {}
     inline const T& get_metadata() { return m_metadata; }
-    inline const std::list<parameter>& get_parameters() { return m_parameters; }
-    inline const float get_quality() { return m_quality; }
+    inline const std::list<parameter>& parameters() { return m_parameters; }
+    inline const float quality() { return m_quality; }
 
 private:
     T m_metadata;
