@@ -37,16 +37,15 @@ class representation : public variant, public std::iostream {
 public:
     representation(const data::media_type& t = data::media_type());
     virtual ~representation() { };
-    const std::string get_text() const;
+
+    const std::string text() const;
     const bool is_available() const;
     const bool is_transient() const;
     void set_available(const bool);
     void set_transient(const bool);
-
 private:
     bool m_content_available;
     bool m_content_transient;
-
 };
 
 
