@@ -41,8 +41,8 @@ public:
     const std::string text() const;
     const bool is_available() const;
     const bool is_transient() const;
-    void set_available(const bool);
-    void set_transient(const bool);
+    void set_available(bool);
+    void set_transient(bool);
 private:
     bool m_content_available;
     bool m_content_transient;
