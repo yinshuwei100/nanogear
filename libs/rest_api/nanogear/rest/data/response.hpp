@@ -26,15 +26,15 @@
 #ifndef NANOGEAR_REST_RESPONSE_HPP
 #define NANOGEAR_REST_RESPONSE_HPP
 
+#include <list>
+#include <string>
+
 #include "message.hpp"
 #include "request.hpp"
 #include "method.hpp"
 #include "challenge_request.hpp"
 #include "reference.hpp"
 #include "cookie_setting.hpp"
-
-#include <string>
-#include <list>
 
 namespace nanogear {
 namespace rest {
