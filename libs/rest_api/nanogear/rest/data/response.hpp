@@ -26,6 +26,7 @@
 #ifndef NANOGEAR_REST_RESPONSE_HPP
 #define NANOGEAR_REST_RESPONSE_HPP
 
+#include "message.hpp"
 #include "request.hpp"
 #include "method.hpp"
 #include "challenge_request.hpp"
@@ -42,7 +43,7 @@ namespace data {
 /**
  @author
  */
-class response {
+class response : public message {
 public:
     response(const request&);
     ~response();
