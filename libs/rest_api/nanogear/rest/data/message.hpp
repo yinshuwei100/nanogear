@@ -36,15 +36,19 @@ namespace data {
 class message {
 public:
     message() { };
+    message(const nanogear::rest::resource::representation& entity) :
+        m_entity(entity) {};
     virtual ~message() { };
 
     /**
-     * return a modifiable list
+     * return a modifiable list reference
      */
     std::map<std::string, std::string>& attributes();
 
+    const nanogear::rest::resource::representation& entity() const;
     void set_entity(const nanogear::rest::resource::representation&);
     void set_entity(const std::string&, const nanogear::rest::data::media_type&);
+    bool is_entity_available() const;
 private:
     std::map<std::string, std::string> m_attributes;
     nanogear::rest::resource::representation m_entity;
