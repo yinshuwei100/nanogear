@@ -34,7 +34,7 @@ namespace data {
 
 class media_type : public metadata {
 public:
-    media_type(const std::string& name) : metadata(name) {}
+    media_type(const std::string& name = std::string()) : metadata(name) {}
     media_type(const std::string& name, const std::string& description) :
         metadata(name, description) {}
     virtual ~media_type() {};

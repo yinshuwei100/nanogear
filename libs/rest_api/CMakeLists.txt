@@ -34,5 +34,6 @@ add_library(nanogear_rest SHARED
   nanogear/rest/filter.cpp
   nanogear/rest/controller.cpp
   nanogear/rest/uniform.cpp
+  nanogear/rest/resource/variant.cpp
 )
 
