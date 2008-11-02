@@ -64,7 +64,6 @@ public:
     
     const data::reference& redirect_ref() const;
     void set_redirect_ref(const data::reference&);
-    void set_redirect_ref(const std::string&);
 
     const data::request& request() const;
     void set_request(const data::request&);

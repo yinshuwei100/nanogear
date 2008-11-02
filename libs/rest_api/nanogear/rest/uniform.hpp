@@ -42,7 +42,6 @@ public:
     ~uniform() {};
 
     data::response delete_resource(const data::reference&);
-    data::response delete_resource(const std::string&);
 
     data::response resource(const data::reference&);
 
@@ -50,16 +49,12 @@ public:
     data::response handle(const data::request&, const data::response&);
 
     data::response head(const data::reference&);
-    data::response head(const std::string&);
 
     data::response options(const data::reference&);
-    data::response options(const std::string&);
 
     data::response post(const data::reference&);
-    data::response post(const std::string&);
 
     data::response put(const data::reference&);
-    data::response put(const std::string&);
 };
 
 }
