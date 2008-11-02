@@ -30,10 +30,6 @@
 namespace nanogear {
 namespace rest {
 
-data::response uniform::delete_resource(const std::string& resource_ref)
-{
-    //return handle(data::request(data::method::DELETE, resource_ref));
-}
 
 
 }

@@ -67,10 +67,6 @@ void response::set_redirect_ref(const data::reference& redirect_ref)
 {
     m_redirect_ref = redirect_ref;
 }
-void response::set_redirect_ref(const std::string& redirect_uri)
-{
-    // TODO: complete implementation
-}
 
 const data::server_info& response::server_info() const
 {
