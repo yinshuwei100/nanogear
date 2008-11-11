@@ -29,7 +29,7 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-request::request()
+request::request(const method&, const reference&)
 {
 }
 

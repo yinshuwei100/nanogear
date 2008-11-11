@@ -34,12 +34,9 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-// forward-declare challenge_scheme
-class challenge_scheme;
-
 class challenge_request {
 public:
-    challenge_request(const challenge_scheme&, const std::string&);
+    challenge_request(const challenge_scheme& = challenge_scheme(), const std::string& = std::string());
     virtual ~challenge_request() {};
 
     bool operator==(const challenge_request&) const;

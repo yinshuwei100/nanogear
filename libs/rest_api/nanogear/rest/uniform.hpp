@@ -41,9 +41,9 @@ public:
     uniform() {};
     ~uniform() {};
 
-    data::response delete_resource(const data::reference&);
+    data::response remove(const data::reference&);
 
-    data::response resource(const data::reference&);
+    data::response get(const data::reference&);
 
     data::response operator()(const data::request&);
     void operator()(const data::request&, const data::response&);

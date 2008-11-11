@@ -30,7 +30,23 @@
 namespace nanogear {
 namespace rest {
 
+data::response uniform::operator()(const data::request& req)
+{
+    data::response res;
+    (*this)(req, res);
+    return res;
+}
 
+#define IMPLEMENT_METHOD(x, y) data::response uniform::x(const data::reference& ref) \
+{ \
+    return (*this)(data::request(data::method::y, ref)); \
+}
+IMPLEMENT_METHOD(remove, DELETE)
+IMPLEMENT_METHOD(get, GET)
+IMPLEMENT_METHOD(head, HEAD)
+IMPLEMENT_METHOD(options, OPTIONS)
+IMPLEMENT_METHOD(post, POST)
+IMPLEMENT_METHOD(put, PUT)
 
 }
 }

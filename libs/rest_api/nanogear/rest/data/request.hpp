@@ -27,6 +27,8 @@
 #define NANOGEAR_REST_REQUEST_HPP
 
 #include <string>
+#include "method.hpp"
+#include "reference.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -37,7 +39,7 @@ namespace data {
  */
 class request /*: public message*/ { // TODO
 public:
-    request();
+    request(const method& = method(), const reference& = reference());
     ~request();
 };
 

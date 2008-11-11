@@ -36,7 +36,7 @@ namespace data {
 
 class method : public metadata {
 public:
-    method(std::string, std::string, std::string);
+    method(const std::string& = std::string(), const std::string& = std::string(), const std::string& = std::string());
 
     static method CONNECT;
     static method COPY;

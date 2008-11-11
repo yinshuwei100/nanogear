@@ -42,7 +42,7 @@ public:
     static bool server_error(int);
     static bool success(int);
 
-    status(int);
+    status(int = SUCCESS_OK);
     status(int, const std::string&, const std::string&, const std::string& uri = std::string());
     const int code() const;
     const std::string& uri() const;
