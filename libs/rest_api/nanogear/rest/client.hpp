@@ -39,7 +39,7 @@ public:
     client(data::protocol);
     ~client();
     
-    void handle(data::request, data::response);
+    void operator()(const data::request&, const data::response&);
     
     void start();
     void stop();

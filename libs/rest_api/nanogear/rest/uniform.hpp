@@ -45,8 +45,8 @@ public:
 
     data::response resource(const data::reference&);
 
-    data::response handle(const data::request&);
-    data::response handle(const data::request&, const data::response&);
+    data::response operator()(const data::request&);
+    void operator()(const data::request&, const data::response&);
 
     data::response head(const data::reference&);
 

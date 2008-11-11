@@ -43,7 +43,7 @@ public:
     virtual controller create_root();
     controller root();
     
-    void handle(data::request&, data::response&);
+    void operator()(const data::request&, const data::response&);
     
     void start();
     void stop();

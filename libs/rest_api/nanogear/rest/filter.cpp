@@ -33,10 +33,10 @@ filter::filter(const context& c, boost::shared_ptr<controller> n) : m_next(n)
 {
 }
 
-void filter::do_handle(data::request& req, data::response& res)
+void filter::do_handle(const data::request& req, const data::response& res)
 {
     if (has_next()) {
-        next()->handle(req, res);
+        (*next())(req, res);
     } else {
         throw std::runtime_error("do_handle() without a next controller.");
     }
@@ -57,7 +57,7 @@ void filter::set_next(boost::shared_ptr<controller>& c)
     m_next = c;
 }
 
-void filter::handle(data::request& req, data::response& res)
+void filter::operator()(const data::request& req, const data::response& res)
 {
     init(req, res);
     before_handle(req, res);

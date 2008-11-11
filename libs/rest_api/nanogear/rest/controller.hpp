@@ -45,7 +45,7 @@ public:
     controller(context c = context());
 
     // TODO: logger().
-    void handle(data::request, data::response);
+    void operator()(const data::request&, const data::response&);
     bool started();
     bool stopped();
     void set_context(context c);
@@ -54,7 +54,7 @@ public:
     void stop();
 
 protected:
-    void init(data::request, data::response);
+    void init(const data::request&, const data::response&);
 
 private:
     context m_context;

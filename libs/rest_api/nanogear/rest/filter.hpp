@@ -44,12 +44,12 @@ public:
     boost::shared_ptr<controller>& next();
     bool has_next();
     void set_next(boost::shared_ptr<controller>&);
-    void handle(data::request&, data::response&);
+    void operator()(const data::request&, const data::response&);
 
 protected:
-    virtual void after_handle(data::request&, data::response&) = 0;
-    virtual void before_handle(data::request&, data::response&) = 0;
-    virtual void do_handle(data::request&, data::response&);
+    virtual void after_handle(const data::request&, const data::response&) = 0;
+    virtual void before_handle(const data::request&, const data::response&) = 0;
+    virtual void do_handle(const data::request&, const data::response&);
 
 private:
     boost::shared_ptr<controller> m_next;

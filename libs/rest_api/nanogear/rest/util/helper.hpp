@@ -26,8 +26,8 @@
 
 class helper {
 public:
-    virtual void handle(nanogear::rest::data::request&,
-                        nanogear::rest::data::response&) = 0;
+    virtual void operator()(const nanogear::rest::data::request&,
+                            const nanogear::rest::data::response&) = 0;
     virtual void start() = 0;
     virtual void stop() = 0;
 };

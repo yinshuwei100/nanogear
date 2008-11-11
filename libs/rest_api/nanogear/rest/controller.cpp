@@ -62,12 +62,12 @@ void controller::stop()
     m_started = false;
 }
 
-void controller::handle(data::request req, data::response res)
+void controller::operator()(const data::request& req, const data::response& res)
 {
     init(req, res);
 }
 
-void controller::init(data::request req, data::response res)
+void controller::init(const data::request& req, const data::response& res)
 {
     if (stopped()) start();
     if (stopped() or (!started())) throw std::logic_error("Failed to start() service.");
