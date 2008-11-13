@@ -25,21 +25,27 @@
 #define NANOGEAR_REST_SERVER_HPP
 
 #include <string>
+#include <list>
+#include <boost/shared_ptr.hpp>
 
 #include "connector.hpp"
 #include "controller.hpp"
+#include "context.hpp"
+#include "util/helper.hpp"
+#include "data/protocol.hpp"
 
 namespace nanogear {
 namespace rest {
 
 class server : public connector { // TODO: complete implementation
 public:
-    server();
+    server(const context&, const std::list<data::protocol>&, const int, const std::string&, const boost::shared_ptr<controller>&);
     virtual ~server();
 private:
     std::string m_address;
     int m_port;
-    controller m_target;
+    boost::shared_ptr<controller> m_target;
+    boost::shared_ptr<helper> helper;
 };
 
 }

@@ -26,6 +26,14 @@
 namespace nanogear {
 namespace rest {
 
+server::server(const context& cont, const std::list<data::protocol>& protos,
+               const int port, const std::string& address,
+               const boost::shared_ptr<controller>& control)
+               : connector(cont, protos), m_address(address), m_port(port),
+                 m_target(control)
+{
+}
+
 
 }
 }
