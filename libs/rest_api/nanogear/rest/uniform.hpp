@@ -38,15 +38,15 @@ namespace rest {
  */
 class uniform {
 public:
-    uniform() {};
-    ~uniform() {};
+    inline uniform() {};
+    virtual ~uniform() {};
 
     data::response remove(const data::reference&);
 
     data::response get(const data::reference&);
 
     data::response operator()(const data::request&);
-    void operator()(const data::request&, const data::response&);
+    virtual void operator()(const data::request&, const data::response&) = 0;
 
     data::response head(const data::reference&);
 
