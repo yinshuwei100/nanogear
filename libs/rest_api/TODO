@@ -2,5 +2,6 @@ REST API TODO:
 (File is still incomplete)
 
 - nanogear::rest::data
-  - challenge_request: 
+  o challenge_request:
+    = const std::list<parameter>& parameters() const; // IMPLEMENT METHOD
 

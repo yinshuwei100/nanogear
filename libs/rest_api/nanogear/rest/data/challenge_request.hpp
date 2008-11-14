@@ -41,8 +41,9 @@ public:
 
     bool operator==(const challenge_request&) const;
     bool operator!=(const challenge_request&) const;
-                        
-    const std::list<parameter>& parameters() const; // TODO
+
+    /* TODO: return the list of parameters */
+    const std::list<parameter>& parameters() const;
     void set_parameters(const std::list<parameter>&);
     
     const std::string& realm() const;
@@ -51,7 +52,6 @@ public:
     const challenge_scheme& scheme() const;
     void set_scheme(const challenge_scheme&);
     
-protected:
 private:
     challenge_scheme m_scheme;
     std::string m_realm;
