@@ -24,7 +24,9 @@
 #ifndef NANOGEAR_REST_DATA_CHALLENGE_RESPONSE_HPP
 #define NANOGEAR_REST_DATA_CHALLENGE_RESPONSE_HPP
 
+#include <list>
 #include <string>
+#include "parameter.hpp"
 #include "challenge_scheme.hpp"
 
 namespace nanogear {
@@ -33,10 +35,21 @@ namespace data {
 
 class challenge_response {
 public:
-    challenge_response(const challenge_scheme&, const std::string&);
-    challenge_response(const challenge_scheme&, const std::string&,
-                       const std::string&);
-    virtual ~challenge_response();
+    challenge_response(const challenge_scheme& scheme,
+                       const std::string& credentials) : m_scheme(scheme),
+                       m_credentials(credentials) {}
+                       
+    challenge_response(const challenge_scheme& scheme,
+                       const std::string& identifier,
+                       const std::string& secret) : m_scheme(scheme),
+                       m_identifier(identifier), m_secret(secret) {}
+
+    challenge_response(const challenge_scheme& scheme,
+                       const std::string& identifier,
+                       const std::list<parameter> parameters) : m_scheme(scheme),
+                       m_identifier(identifier), m_parameters(parameters) {}
+
+    virtual ~challenge_response() {};
 
     bool operator==(const challenge_response&) const;
     bool operator!=(const challenge_response&) const;
@@ -52,7 +65,15 @@ public:
 
     const std::string& credentials() const;
     void set_credentials(const std::string&);
+
+    std::list<parameter>& parameters();
+    void set_credential_components(const std::list<parameter>&);
+
+    bool authenticated();
+    void set_authenticated(bool);
 private:
+    bool m_authenticated;
+    std::list<parameter> m_parameters;
     challenge_scheme m_scheme;
     std::string m_credentials;
     std::string m_identifier;

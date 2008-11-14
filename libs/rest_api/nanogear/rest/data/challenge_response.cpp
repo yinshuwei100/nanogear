@@ -30,25 +30,6 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-challenge_response::challenge_response(const challenge_scheme& scheme,
-                                       const std::string& credentials)
-{
-    m_scheme = scheme;
-    m_credentials = credentials;
-}
-
-challenge_response::challenge_response(const challenge_scheme& scheme,
-                                       const std::string& identifier,
-                                       const std::string& secret)
-{
-    challenge_response(scheme, identifier);
-    m_secret = secret;
-}
-
-challenge_response::~challenge_response()
-{
-}
-
 bool challenge_response::operator==(const challenge_response& other) const
 {
     bool result = false;
@@ -100,6 +81,24 @@ const std::string& challenge_response::credentials() const
 void challenge_response::set_credentials(const std::string& credentials)
 {
     m_credentials = credentials;
+}
+
+std::list<parameter>& challenge_response::parameters()
+{
+    return m_parameters;
+}
+void challenge_response::set_credential_components(const std::list<parameter>& credential_components)
+{
+    m_parameters = credential_components;
+}
+
+bool challenge_response::authenticated()
+{
+    return m_authenticated;
+}
+void challenge_response::set_authenticated(bool authenticated)
+{
+    m_authenticated = authenticated;
 }
 
 }
