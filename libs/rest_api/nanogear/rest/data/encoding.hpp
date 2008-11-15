@@ -32,8 +32,7 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-class encoding : public metadata
-{
+class encoding : public metadata {
 public:
     encoding(const std::string& name) : metadata(name) {};
     encoding(const std::string& name, const std::string& description) :

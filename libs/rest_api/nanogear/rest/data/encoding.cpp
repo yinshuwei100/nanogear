@@ -31,7 +31,8 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-encoding encoding::value_of(const std::string& name) {
+encoding encoding::value_of(const std::string& name)
+{
     if (name == GZIP.name()) {
         return GZIP;
     } else if (name == ZIP.name()) {
@@ -48,6 +49,7 @@ encoding encoding::value_of(const std::string& name) {
 }
 
 // default encodings
+// FIXME: these are not immutable objects
 encoding encoding::ALL("*", "All encodings");
 encoding encoding::GZIP("GZip compression");
 encoding encoding::ZIP("Zip compression");

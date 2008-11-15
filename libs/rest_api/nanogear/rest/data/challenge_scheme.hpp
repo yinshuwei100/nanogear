@@ -25,16 +25,19 @@
 #define NANOGEAR_REST_DATA_CHALLENGE_SCHEME_HPP
 
 #include <string>
+#include "metadata.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-// TODO: Add default schemes
-class challenge_scheme
-{
+class challenge_scheme : public metadata {
 public:
-    challenge_scheme(const std::string& name = std::string(), const std::string& technical_name = std::string(), const std::string& description = std::string());
+    challenge_scheme(const std::string& name = std::string(),
+                     const std::string& technical_name = std::string(),
+                     const std::string& description = std::string()) : 
+                     m_technical_name(technical_name), metadata(name, description) {}
+                     
     virtual ~challenge_scheme() {};
 
     bool operator==(const challenge_scheme&) const;
@@ -49,6 +52,17 @@ public:
     const std::string& description() const;
     void set_description(const std::string&);
 
+    static challenge_scheme value_of(const std::string& name);
+
+    static challenge_scheme CUSTOM;
+    static challenge_scheme HTTP_AWS_S3;
+    static challenge_scheme HTTP_BASIC;
+    static challenge_scheme HTTP_DIGEST;
+    static challenge_scheme HTTP_NTLM;
+    static challenge_scheme HTTP_OAUTH;
+    static challenge_scheme POP_BASIC;
+    static challenge_scheme POP_DIGEST;
+    static challenge_scheme SMTP_PLAIN;
 private:
     std::string m_name;
     std::string m_technical_name;
