@@ -25,24 +25,26 @@
 #define NANOGEAR_REST_DATA_HPP
 
 #include <list>
+#include <boost/shared_ptr.hpp>
 #include "data/protocol.hpp"
 #include "connector.hpp"
+#include "util/helper.hpp"
 
 namespace nanogear {
 namespace rest {
  
 class client : public connector {
 public:
-    client(context, std::list<data::protocol>);
-    client(context, data::protocol);
-    client(std::list<data::protocol>);
-    client(data::protocol);
+    client(const context& = context(), const std::list<data::protocol>& = std::list<data::protocol>());
     ~client();
-    
+    boost::shared_ptr<helper>& get_helper();
+
     void operator()(const data::request&, const data::response&);
-    
+
     void start();
     void stop();
+private:
+    boost::shared_ptr<helper> m_helper;
 };
 
 }

@@ -42,7 +42,7 @@ namespace rest {
  */
 class controller : public uniform {
 public:
-    controller(context c = context());
+    controller(const context& c = context());
 
     // TODO: logger().
     void operator()(const data::request&, const data::response&);

@@ -27,18 +27,16 @@
 namespace nanogear {
 namespace rest {
 
-connector::connector(context c) : controller(c)
-{
-}
-
-connector::connector(context c, std::list<data::protocol> p) : controller(c)
-{
-    m_protocols = p;
-}
+connector::connector(const context& c, const std::list<data::protocol>& p) : controller(c), m_protocols(p) {}
 
 std::list<data::protocol>& connector::protocols()
 {
     return m_protocols;
+}
+
+void connector::set_protocols(const std::list<data::protocol>& p)
+{
+    m_protocols = p;
 }
 
 }

@@ -42,9 +42,9 @@ namespace rest {
  */
 class connector : public controller {
 public:
-    connector(context);
-    connector(context, std::list<data::protocol>);
+    connector(const context& = context(), const std::list<data::protocol>& = std::list<data::protocol>());
     std::list<data::protocol>& protocols();
+    void set_protocols(const std::list<data::protocol>&);
 
 private:
     std::list<data::protocol> m_protocols;

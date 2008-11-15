@@ -28,7 +28,7 @@
 namespace nanogear {
 namespace rest {
 
-controller::controller(context c) : m_context(c), m_started(false)
+controller::controller(const context& c) : m_context(c), m_started(false)
 {
 }
 

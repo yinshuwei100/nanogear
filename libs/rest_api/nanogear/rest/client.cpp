@@ -26,7 +26,37 @@
 namespace nanogear {
 namespace rest {
 
-// TODO: add ctors
+client::client(const context& c, const std::list<data::protocol>& p) : connector(c, p)
+{
+    // TODO: needs engine
+}
+
+boost::shared_ptr<helper>& client::get_helper()
+{
+    return m_helper;
+}
+
+void client::operator()(const data::request& req, const data::response& res)
+{
+    init(req, res);
+    if (get_helper()) (*get_helper())(req, res);
+}
+
+void client::start()
+{
+    if (stopped()) {
+        connector::start();
+        if (get_helper()) get_helper()->start();
+    }
+}
+
+void client::stop()
+{
+    if (started()) {
+        if (get_helper()) get_helper()->stop();
+        connector::stop();
+    }
+}
 
 }
 }
