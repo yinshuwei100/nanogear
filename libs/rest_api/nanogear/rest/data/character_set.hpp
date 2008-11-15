@@ -33,7 +33,7 @@ namespace data {
 
 class character_set : public metadata {
 public:
-    character_set(const std::string& name) : metadata(name) {};
+    character_set(const std::string& name = std::string()) : metadata(name) {};
     character_set(const std::string& name, const std::string& description) :
         metadata(name, description) {};
     virtual ~character_set() {};
