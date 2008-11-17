@@ -27,9 +27,10 @@
 #include <list>
 #include <string>
 
-#include "preference.hpp"
+#include "product.hpp"
 #include "encoding.hpp"
 #include "language.hpp"
+#include "preference.hpp"
 #include "media_type.hpp"
 
 namespace nanogear {
@@ -54,13 +55,14 @@ public:
     const std::string& agent() const;
     void set_agent(const std::string&);
 
-    const int port() const;
+    int port() const;
     void set_port(int);
     
 private:
-    std::list<std::string> m_addresses;
-    std::string m_agent;
     int m_port;
+    std::string m_agent;
+    std::list<std::string> m_addresses;
+    std::list< product > m_agent_products;
     std::list< preference<encoding> > m_encoding_prefs;
     std::list< preference<language> > m_language_prefs;
     std::list< preference<media_type> > m_mediatype_prefs;
