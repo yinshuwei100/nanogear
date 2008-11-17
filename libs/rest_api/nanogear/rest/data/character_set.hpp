@@ -38,12 +38,16 @@ public:
         metadata(name, description) {};
     virtual ~character_set() {};
 
-    static character_set ALL;
-    static character_set ISO_8859_1;
-    static character_set US_ASCII;
-    static character_set UTF_8;
-    static character_set UTF_16;
-    static character_set& value_of(const std::string& name);
+    bool operator==(const character_set&) const;
+    bool operator!=(const character_set&) const;
+
+    static character_set value_of(const std::string& name);
+
+    static const character_set ALL;
+    static const character_set ISO_8859_1;
+    static const character_set US_ASCII;
+    static const character_set UTF_8;
+    static const character_set UTF_16;
 };
 
 }

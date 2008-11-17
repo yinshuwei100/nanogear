@@ -21,8 +21,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
 #include <string>
 
 #include "character_set.hpp"
@@ -31,24 +29,39 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-#define add_character_set(x, y, z) character_set character_set::x(y, z)
-add_character_set(ALL, "*", "All character sets");
-add_character_set(ISO_8859_1, "ISO-8859-1", "ISO/IEC 8859-1 or Latin 1 character set");
-add_character_set(US_ASCII, "US-ASCII", "US ASCII character set");
-add_character_set(UTF_8, "UTF-8", "UTF 8 character set");
-add_character_set(UTF_16, "UTF-16", "UTF 16 character set");
-#undef add_character_set
-
-character_set& character_set::value_of(const std::string& name) {
-    #define character_case(x) if (name == x.name()) return x
-    character_case(ALL);
-    character_case(ISO_8859_1);
-    character_case(US_ASCII);
-    character_case(UTF_8);
-    character_case(UTF_16);
-    #undef character_case
-    return ALL;
+bool character_set::operator==(const character_set& other) const
+{
+    bool result = false;
+    result = (other.name() == name());
+    return result;
 }
+
+bool character_set::operator!=(const character_set& other) const
+{
+    return !(*this == other);
+}
+
+character_set character_set::value_of(const std::string& name) {
+    if (name == ALL.name()) {
+        return ALL;
+    } else if (name == ISO_8859_1.name()) {
+        return ISO_8859_1;
+    } else if (name == US_ASCII.name()) {
+        return US_ASCII;
+    } else if (name == UTF_8.name()) {
+        return UTF_8;
+    } else if (name == UTF_16.name()) {
+        return UTF_16;
+    } else {
+        return character_set(name);
+    }
+}
+
+const character_set character_set::ALL("*", "All character sets");
+const character_set character_set::ISO_8859_1("ISO-8859-1", "ISO/IEC 8859-1 or Latin 1 character set");
+const character_set character_set::US_ASCII("US-ASCII", "US ASCII character set");
+const character_set character_set::UTF_8("UTF-8", "UTF 8 character set");
+const character_set character_set::UTF_16("UTF-16", "UTF 16 character set");
 
 }
 }
