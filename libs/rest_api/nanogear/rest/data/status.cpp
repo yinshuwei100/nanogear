@@ -35,41 +35,13 @@ namespace data {
 
 bool status::client_error(int stat)
 {
-    switch (stat) {
-    case CLIENT_ERROR_BAD_REQUEST:
-    case CLIENT_ERROR_UNAUTHORIZED:
-    case CLIENT_ERROR_PAYMENT_REQUIRED:
-    case CLIENT_ERROR_FORBIDDEN:
-    case CLIENT_ERROR_NOT_FOUND:
-    case CLIENT_ERROR_METHOD_NOT_ALLOWED:
-    case CLIENT_ERROR_NOT_ACCEPTABLE:
-    case CLIENT_ERROR_PROXY_AUTHENTIFICATION_REQUIRED:
-    case CLIENT_ERROR_REQUEST_TIMEOUT:
-    case CLIENT_ERROR_CONFLICT:
-    case CLIENT_ERROR_GONE:
-    case CLIENT_ERROR_LENGTH_REQUIRED:
-    case CLIENT_ERROR_PRECONDITION_FAILED:
-    case CLIENT_ERROR_REQUEST_ENTITY_TOO_LARGE:
-    case CLIENT_ERROR_REQUEST_URI_TOO_LONG:
-    case CLIENT_ERROR_UNSUPPORTED_MEDIA_TYPE:
-    case CLIENT_ERROR_REQUESTED_RANGE_NOT_SATISFIABLE:
-    case CLIENT_ERROR_EXPECTATION_FAILED:
-    case CLIENT_ERROR_UNPROCESSABLE_ENTITY:
-    case CLIENT_ERROR_LOCKED:
-    case CLIENT_ERROR_FAILED_DEPENDENCY:
-        return true;
-    }
+    if ((stat >= 400) && (stat < 500)) return true;
     return false;
 }
 
 bool status::connector_error(int stat)
 {
-    switch (stat) {
-    case CONNECTOR_ERROR_CONNECTION:
-    case CONNECTOR_ERROR_COMMUNICATION:
-    case CONNECTOR_ERROR_INTERNAL:
-        return true;
-    }
+    if ((stat >= 1000) && (stat < 1100)) return true;
     return false;
 }
 
@@ -80,58 +52,26 @@ bool status::error(int stat)
 
 bool status::info(int stat)
 {
-    switch (stat) {
-    case INFO_CONTINUE:
-    case INFO_SWITCHING_PROTOCOL:
-    case INFO_PROCESSING:
-        return true;
-    }
+    if ((stat >= 100) && (stat < 200)) return true;
     return false;
 }
 
 bool status::redirection(int stat)
 {
-    switch (stat) {
-    case REDIRECTION_MULTIPLE_CHOICES:
-    case REDIRECTION_PERMANENT:
-    case REDIRECTION_FOUND:
-    case REDIRECTION_SEE_OTHER:
-    case REDIRECTION_NOT_MODIFIED:
-    case REDIRECTION_USE_PROXY:
-    case REDIRECTION_TEMPORARY:
-        return true;
-    }
+    if ((stat >= 300) && (stat < 400)) return true;
     return false;
 }
 
 bool status::server_error(int stat)
 {
-    switch (stat) {
-    case SERVER_ERROR_INTERNAL:
-    case SERVER_ERROR_NOT_IMPLEMENTED:
-    case SERVER_ERROR_BAD_GATEWAY:
-    case SERVER_ERROR_SERVICE_UNAVAILABLE:
-    case SERVER_ERROR_GATEWAY_TIMEOUT:
-    case SERVER_ERROR_VERSION_NOT_SUPPORTED:
-    case SERVER_ERROR_INSUFFICIENT_STORAGE:
-        return true;
-    }
+    if ((stat >= 500) && (stat < 600)) return true;
     return false;
 }
 
 bool status::success(int stat)
 {
-    switch (stat) {
-    case SUCCESS_OK:
-    case SUCCESS_CREATED:
-    case SUCCESS_ACCEPTED:
-    case SUCCESS_NON_AUTHORITATIVE:
-    case SUCCESS_NO_CONTENT:
-    case SUCCESS_RESET_CONTENT:
-    case SUCCESS_PARTIAL_CONTENT:
-    case SUCCESS_MULTI_STATUS:
+    if ((stat >= 200) && (stat < 300))
         return true;
-    }
     return false;
 }
 
@@ -197,6 +137,10 @@ status::status(int stat)
 status::status(int c, const std::string& name, const std::string& description, const std::string& uri) : metadata(name, description), m_code(c), m_uri(uri) {}
 
 const int status::code() const
+{
+    return m_code;
+}
+status::operator const int() const
 {
     return m_code;
 }

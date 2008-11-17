@@ -36,7 +36,7 @@ namespace data {
 
 method::method(const std::string& name, const std::string& description, const std::string& uri) : metadata(name, description), m_uri(uri) {}
 
-const std::string& uri() const
+const std::string& method::uri() const
 {
     return m_uri;
 }
