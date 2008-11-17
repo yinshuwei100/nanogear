@@ -37,6 +37,7 @@ namespace data {
 class method : public metadata {
 public:
     method(const std::string& = std::string(), const std::string& = std::string(), const std::string& = std::string());
+    const std::string& uri() const;
 
     static method CONNECT;
     static method COPY;
@@ -53,6 +54,10 @@ public:
     static method PUT;
     static method TRACE;
     static method UNLOCK;
+
+    static method value_of(const std::string&);
+private:
+    std::string m_uri;
 };
 
 }

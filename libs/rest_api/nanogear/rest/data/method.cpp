@@ -34,6 +34,13 @@ namespace data {
 #define BASE_HTTP http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
 #define BASE_WEBDAV http://www.webdav.org/specs/rfc2518.html
 
+method::method(const std::string& name, const std::string& description, const std::string& uri) : metadata(name, description), m_uri(uri) {}
+
+const std::string& uri() const
+{
+    return m_uri;
+}
+
 method method::CONNECT("CONNECT",
                        "Used with a proxy that can dynamically switch to being a tunnel",
                        "##BASE_HTTP###sec9.9");
@@ -109,6 +116,28 @@ method method::UNLOCK("UNLOCK",
                       "Removes the lock identified by the lock token from the request URI,"
                       "and allother resources included in the lock",
                       "##BASE_WEBDAV###METHOD_UNLOCK");
+
+method method::value_of(const std::string& value)
+{
+    #define cas(x) if (value == x.name()) return x
+    cas(GET);
+    cas(POST);
+    cas(HEAD);
+    cas(OPTIONS);
+    cas(PUT);
+    cas(DELETE);
+    cas(CONNECT);
+    cas(COPY);
+    cas(LOCK);
+    cas(MKCOL);
+    cas(MOVE);
+    cas(PROPFIND);
+    cas(PROPPATCH);
+    cas(TRACE);
+    cas(UNLOCK);
+    return method(value);
+    #undef cas
+}
 
 }
 }
