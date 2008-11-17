@@ -69,24 +69,24 @@ void challenge_scheme::set_description(const std::string& description)
 
 challenge_scheme challenge_scheme::value_of(const std::string& name)
 {
-    if (name == custom.name()) {
-        return custom;
-    } else if (name == http::aws_s3.name()) {
-        return http::aws_s3;
-    } else if (name == http::basic.name()) {
-        return http::basic;
-    } else if (name == http::digest.name()) {
-        return http::digest;
-    } else if (name == http::ntlm.name()) {
-        return http::ntlm;
-    } else if (name == http::oauth.name()) {
-        return http::oauth;
-    } else if (name == pop::basic.name()) {
-        return pop::basic;
-    } else if (name == pop::digest.name()) {
-        return pop::digest;
-    } else if (name == smtp::plain.name()) {
-        return smtp::plain;
+    if (name == CUSTOM.name()) {
+        return CUSTOM;
+    } else if (name == HTTP::AWS_S3.name()) {
+        return HTTP::AWS_S3;
+    } else if (name == HTTP::BASIC.name()) {
+        return HTTP::BASIC;
+    } else if (name == HTTP::DIGEST.name()) {
+        return HTTP::DIGEST;
+    } else if (name == HTTP::NTLM.name()) {
+        return HTTP::NTLM;
+    } else if (name == HTTP::OAUTH.name()) {
+        return HTTP::OAUTH;
+    } else if (name == POP::BASIC.name()) {
+        return POP::BASIC;
+    } else if (name == POP::DIGEST.name()) {
+        return POP::DIGEST;
+    } else if (name == SMTP::PLAIN.name()) {
+        return SMTP::PLAIN;
     } else {
         return challenge_scheme(name);
     }
@@ -94,15 +94,15 @@ challenge_scheme challenge_scheme::value_of(const std::string& name)
 
 // default challenge_schemes
 // FIXME: these are not immutable objects
-challenge_scheme challenge_scheme::custom("CUSTOM", "Custom");
-challenge_scheme challenge_scheme::http::aws_s3("HTTP_AWS_S3", "AWS", "Amazon S3 HTTP authentication");
-challenge_scheme challenge_scheme::http::basic("HTTP_BASIC", "Basic", "Basic HTTP authentication");
-challenge_scheme challenge_scheme::http::digest("HTTP_DIGEST", "Digest", "Digest HTTP authentication");
-challenge_scheme challenge_scheme::http::ntlm("HTTP_NTLM", "NTLM", "Microsoft NTLM HTTP authentication");
-challenge_scheme challenge_scheme::http::oauth("HTTP_OAUTH", "OAuth", "Open protocol for API authentication");
-challenge_scheme challenge_scheme::pop::basic("POP_BASIC", "Basic", "Basic POP authentication (USER/PASS commands)");
-challenge_scheme challenge_scheme::pop::digest("POP_DIGEST", "Digest", "Digest POP authentication (APOP command)");
-challenge_scheme challenge_scheme::smtp::plain("SMTP_PLAIN", "PLAIN", "Plain SMTP authentication");
+const challenge_scheme challenge_scheme::CUSTOM("CUSTOM", "Custom");
+const challenge_scheme challenge_scheme::HTTP::AWS_S3("HTTP_AWS_S3", "AWS", "Amazon S3 HTTP authentication");
+const challenge_scheme challenge_scheme::HTTP::BASIC("HTTP_BASIC", "Basic", "Basic HTTP authentication");
+const challenge_scheme challenge_scheme::HTTP::DIGEST("HTTP_DIGEST", "Digest", "Digest HTTP authentication");
+const challenge_scheme challenge_scheme::HTTP::NTLM("HTTP_NTLM", "NTLM", "Microsoft NTLM HTTP authentication");
+const challenge_scheme challenge_scheme::HTTP::OAUTH("HTTP_OAUTH", "OAuth", "Open protocol for API authentication");
+const challenge_scheme challenge_scheme::POP::BASIC("POP_BASIC", "Basic", "Basic POP authentication (USER/PASS commands)");
+const challenge_scheme challenge_scheme::POP::DIGEST("POP_DIGEST", "Digest", "Digest POP authentication (APOP command)");
+const challenge_scheme challenge_scheme::SMTP::PLAIN("SMTP_PLAIN", "PLAIN", "Plain SMTP authentication");
 
 }
 }

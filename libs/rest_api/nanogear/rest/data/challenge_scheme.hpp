@@ -54,23 +54,21 @@ public:
 
     static challenge_scheme value_of(const std::string& name);
 
-    static challenge_scheme custom;
-    struct http {
-        static challenge_scheme aws_s3;
-        static challenge_scheme basic;
-        static challenge_scheme digest;
-        static challenge_scheme ntlm;
-        static challenge_scheme oauth;
+    static const challenge_scheme CUSTOM;
+    struct HTTP {
+        static const challenge_scheme AWS_S3;
+        static const challenge_scheme BASIC;
+        static const challenge_scheme DIGEST;
+        static const challenge_scheme NTLM;
+        static const challenge_scheme OAUTH;
     };
-    struct pop {
-        static challenge_scheme basic;
-        static challenge_scheme digest;
+    struct POP {
+        static const challenge_scheme BASIC;
+        static const challenge_scheme DIGEST;
     };
-    struct smtp { static challenge_scheme plain; };
+    struct SMTP { static const challenge_scheme PLAIN; };
 private:
-    std::string m_name;
     std::string m_technical_name;
-    std::string m_description;
 };
 
 }
