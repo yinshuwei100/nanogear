@@ -37,7 +37,7 @@ class tag : public metadata
 public:
     tag(const std::string& t = std::string(), bool w = false);
     const std::string format() const;
-    const bool is_weak() const;
+    bool is_weak() const;
     static tag ALL;
     static tag parse(const std::string&);
 

@@ -42,12 +42,12 @@ bool controller::stopped()
     return !started();
 }
 
-void controller::set_context(context c)
+void controller::set_context(const context& c)
 {
     m_context = c;
 }
 
-context controller::get_context()
+const context& controller::get_context() const
 {
     return m_context;
 }

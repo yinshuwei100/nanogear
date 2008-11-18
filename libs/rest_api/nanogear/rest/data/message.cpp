@@ -29,7 +29,7 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-std::map<std::string, std::string>& message::attributes()
+const std::map<std::string, std::string>& message::attributes() const
 {
     return m_attributes;
 }

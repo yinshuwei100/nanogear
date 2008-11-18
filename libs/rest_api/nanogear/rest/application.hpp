@@ -26,6 +26,8 @@
 #ifndef NANOGEAR_REST_APPLICATION_HPP
 #define NANOGEAR_REST_APPLICATION_HPP
 
+#include <boost/shared_ptr.hpp>
+
 #include "controller.hpp"
 #include "data/response.hpp"
 
@@ -37,11 +39,11 @@ namespace rest {
 class application : public controller {
 public:
     application();
-    application(context);
+    application(const context&);
     ~application();
 
-    virtual controller create_root();
-    controller root();
+    virtual boost::shared_ptr<controller>& create_root();
+    const boost::shared_ptr<controller>& root() const;
     
     void operator()(const data::request&, const data::response&);
     
@@ -50,16 +52,16 @@ public:
 
     // Getters and setters
     void set_description(const std::string& value);
-    std::string description() const;
+    const std::string& description() const;
 
     void set_author(const std::string& value);
-    std::string author() const;
+    const std::string& author() const;
 
     void set_name(const std::string& value);
-    std::string name() const;
+    const std::string& name() const;
 
     void set_owner(const std::string& value);
-    std::string owner() const;
+    const std::string& owner() const;
 
 //    void set_connector(const service::connector& value);
 //    service::connector connector() const;

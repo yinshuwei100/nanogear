@@ -29,7 +29,7 @@ namespace rest {
 
 connector::connector(const context& c, const std::list<data::protocol>& p) : controller(c), m_protocols(p) {}
 
-std::list<data::protocol>& connector::protocols()
+const std::list<data::protocol>& connector::protocols() const
 {
     return m_protocols;
 }

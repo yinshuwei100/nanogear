@@ -48,8 +48,8 @@ public:
     void operator()(const data::request&, const data::response&);
     bool started();
     bool stopped();
-    void set_context(context c);
-    context get_context();
+    void set_context(const context&);
+    const context& get_context() const;
     void start();
     void stop();
 

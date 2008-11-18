@@ -41,8 +41,8 @@ class uniform;
 class context {
 public:
     context();
-    std::map<std::string, std::string>& attributes();
-    std::list<data::parameter>& parameters();
+    const std::map<std::string, std::string>& attributes() const;
+    const std::list<data::parameter>& parameters() const;
     virtual boost::shared_ptr<uniform> dispatcher();
 
 private:

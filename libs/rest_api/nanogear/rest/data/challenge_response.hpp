@@ -46,7 +46,7 @@ public:
 
     challenge_response(const challenge_scheme& scheme,
                        const std::string& identifier,
-                       const std::list<parameter> parameters) : m_scheme(scheme),
+                       const std::list<parameter>& parameters) : m_scheme(scheme),
                        m_identifier(identifier), m_parameters(parameters) {}
 
     virtual ~challenge_response() {};

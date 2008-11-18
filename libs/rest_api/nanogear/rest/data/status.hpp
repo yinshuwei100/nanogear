@@ -44,8 +44,8 @@ public:
 
     status(int = SUCCESS_OK);
     status(int, const std::string&, const std::string&, const std::string& uri = std::string());
-    const int code() const;
-    operator const int() const;
+    int code() const;
+    operator int() const;
     const std::string& uri() const;
 
     enum codes {

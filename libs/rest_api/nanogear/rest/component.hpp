@@ -41,19 +41,19 @@ public:
     component();
     ~component();
     
-    std::vector< boost::shared_ptr<client> > clients();
-    std::vector< boost::shared_ptr<server> > servers();
-    std::vector< boost::shared_ptr<host> > hosts();
-    virtual_host default_host() const;
+    const std::vector< boost::shared_ptr<client> >& clients() const;
+    const std::vector< boost::shared_ptr<server> >& servers() const;
+    const std::vector< boost::shared_ptr<host> >& hosts() const;
+    const virtual_host& default_host() const;
     
     void start();
     void stop();
 
     void set_log(const service::log& value);
-    service::log log() const;
+    const service::log& log() const;
 
     void set_status(const service::status& value);
-    service::status status() const;
+    const service::status& status() const;
 	
     
 private:

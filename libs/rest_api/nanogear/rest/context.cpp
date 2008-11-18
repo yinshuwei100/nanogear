@@ -32,12 +32,12 @@ context::context()
 {
 }
 
-std::map<std::string, std::string>& context::attributes()
+const std::map<std::string, std::string>& context::attributes() const
 {
     return m_attributes;
 }
 
-std::list<data::parameter>& context::parameters()
+const std::list<data::parameter>& context::parameters() const
 {
     return m_parameters;
 }

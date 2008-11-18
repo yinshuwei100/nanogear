@@ -37,7 +37,7 @@ component::~component()
 }
 
 // Getters and setters
-service::log component::log() const {
+const service::log& component::log() const {
     return m_log;
 }
 void component::set_log(const service::log& value)
@@ -45,7 +45,7 @@ void component::set_log(const service::log& value)
     m_log = value;
 }
 
-service::status component::status() const
+const service::status& component::status() const
 {
     return m_status;
 }

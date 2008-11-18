@@ -43,7 +43,7 @@ namespace rest {
 class connector : public controller {
 public:
     connector(const context& = context(), const std::list<data::protocol>& = std::list<data::protocol>());
-    std::list<data::protocol>& protocols();
+    const std::list<data::protocol>& protocols() const;
     void set_protocols(const std::list<data::protocol>&);
 
 private:

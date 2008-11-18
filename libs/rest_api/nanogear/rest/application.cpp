@@ -34,7 +34,7 @@ application::application()
 {
 }
 
-application::application(context c)
+application::application(const context& c) : controller(c)
 {
 }
 
@@ -44,7 +44,7 @@ application::~application()
 }
 
 // Getters and setters follows
-std::string application::description() const
+const std::string& application::description() const
 {
     return m_description;
 }
@@ -53,7 +53,7 @@ void application::set_description(const std::string& value)
     m_description = value;
 }
 
-std::string application::author() const
+const std::string& application::author() const
 {
     return m_author;
 }
@@ -62,7 +62,7 @@ void application::set_author(const std::string& value)
     m_author = value;
 }
 
-std::string application::name() const
+const std::string& application::name() const
 {
     return m_name;
 }
@@ -72,7 +72,7 @@ void application::set_name(const std::string& value)
 }
 
 
-std::string application::owner() const
+const std::string& application::owner() const
 {
     return m_owner;
 }

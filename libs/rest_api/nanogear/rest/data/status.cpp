@@ -136,11 +136,11 @@ status::status(int stat)
 
 status::status(int c, const std::string& name, const std::string& description, const std::string& uri) : metadata(name, description), m_code(c), m_uri(uri) {}
 
-const int status::code() const
+int status::code() const
 {
     return m_code;
 }
-status::operator const int() const
+status::operator int() const
 {
     return m_code;
 }

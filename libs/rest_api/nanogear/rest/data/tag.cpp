@@ -47,7 +47,7 @@ const std::string tag::format() const
     }
 }
 
-const bool tag::is_weak() const
+bool tag::is_weak() const
 {
     return m_weak;
 }

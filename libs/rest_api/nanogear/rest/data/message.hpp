@@ -43,7 +43,7 @@ public:
     /**
      * return a modifiable list reference
      */
-    std::map<std::string, std::string>& attributes();
+    const std::map<std::string, std::string>& attributes() const;
 
     const nanogear::rest::resource::representation& entity() const;
     void set_entity(const nanogear::rest::resource::representation&);
