@@ -31,7 +31,6 @@ add_library(nanogear_rest SHARED
 #  nanogear/rest/component.cpp
   nanogear/rest/connector.cpp
   nanogear/rest/context.cpp
-  nanogear/rest/filter.cpp
   nanogear/rest/controller.cpp
   nanogear/rest/uniform.cpp
   nanogear/rest/resource/variant.cpp

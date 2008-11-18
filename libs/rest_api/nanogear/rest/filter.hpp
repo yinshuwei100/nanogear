@@ -37,24 +37,96 @@
 namespace nanogear {
 namespace rest {
 
-    
+template <class T>    
 class filter : public controller {
 public:
-    filter(const context& c = context(), boost::shared_ptr<controller> n = boost::shared_ptr<controller>());
-    boost::shared_ptr<controller>& next();
+    filter(const context& c = context(), boost::shared_ptr<T> n = boost::shared_ptr<T>());
+    inline ~filter() {};
+    boost::shared_ptr<T>& next();
     bool has_next();
-    void set_next(boost::shared_ptr<controller>&);
+    void set_next(boost::shared_ptr<T>&);
     void operator()(const data::request&, const data::response&);
 
 protected:
-    virtual void after_handle(const data::request&, const data::response&) = 0;
-    virtual void before_handle(const data::request&, const data::response&) = 0;
+    virtual void after_handle(const data::request&, const data::response&) {}
+    virtual void before_handle(const data::request&, const data::response&) {}
     virtual void do_handle(const data::request&, const data::response&);
 
 private:
-    boost::shared_ptr<controller> m_next;
+    boost::shared_ptr<T> m_next;
 };
 
+// Specialization for pointers (i.e. function pointers).
+template <typename T>
+class filter<T*> : public controller {
+public:
+    filter(const context& c = context(), T* n = 0);
+    inline ~filter() {};
+    T* next();
+    bool has_next();
+    void set_next(T*);
+    void operator()(const data::request&, const data::response&);
+
+protected:
+    virtual void after_handle(const data::request&, const data::response&) {}
+    virtual void before_handle(const data::request&, const data::response&) {}
+    virtual void do_handle(const data::request&, const data::response&);
+
+private:
+    T* m_next;
+};
+
+template <class T>
+inline filter<T>::filter(const context& c, boost::shared_ptr<T> n) : controller(c), m_next(n) {}
+
+template <typename T>
+inline filter<T*>::filter(const context& c, T* n) : controller(c), m_next(n) {}
+
+template <class T>
+inline boost::shared_ptr<T>& filter<T>::next()
+{
+    return m_next;
+}
+
+template <typename T>
+inline T* filter<T*>::next()
+{
+    return m_next;
+}
+
+template <typename T>
+inline bool filter<T>::has_next()
+{
+    return m_next != 0;
+}
+
+template <class T>
+inline void filter<T>::set_next(boost::shared_ptr<T>& next)
+{
+    m_next = next;
+}
+
+template <typename T>
+inline void filter<T*>::set_next(T* next)
+{
+    m_next = next;
+}
+
+template <typename T>
+void filter<T>::operator()(const data::request& req, const data::response& res)
+{
+    init(req, res);
+    before_handle(req, res);
+    do_handle(req, res);
+    after_handle(req, res);
+}
+
+template <typename T>
+void filter<T>::do_handle(const data::request& req, const data::response& res)
+{
+    if (has_next()) (*next())(req, res); else
+    throw std::runtime_error("do_handle() without a next controller.");
+}
 
 }
 }
