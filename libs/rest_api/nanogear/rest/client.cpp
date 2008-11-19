@@ -31,7 +31,7 @@ client::client(const context& c, const std::list<data::protocol>& p) : connector
     // TODO: needs engine
 }
 
-util::helper::ptr& client::get_helper()
+util::helper<client>::ptr& client::get_helper()
 {
     return m_helper;
 }

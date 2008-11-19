@@ -58,10 +58,10 @@ public:
     {
         return helped()->context()->parameters();
     }
-    void operator()(data::request& req, data::response& res)
+    void operator()(const data::request& req, const data::response& res)
     {
-        data::response::set_current(res);
-        context::set_current(get_context());
+        //data::response::set_current(res);
+        //context::set_current(get_context());
     }
     virtual void start() = 0;
     virtual void stop() = 0;
