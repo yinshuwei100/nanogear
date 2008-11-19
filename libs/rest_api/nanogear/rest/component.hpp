@@ -31,6 +31,7 @@
 #include <boost/shared_ptr.hpp>
 #include "controller.hpp"
 #include "client.hpp"
+#include "server.hpp"
 
 namespace nanogear {
 namespace rest {

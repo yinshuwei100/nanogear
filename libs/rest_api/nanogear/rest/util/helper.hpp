@@ -25,16 +25,57 @@
 #define NANOGEAR_REST_UTIL_HELPER_HPP
 
 #include <boost/shared_ptr.hpp>
+#include <map>
 
+#include "../context.hpp"
+#include "../data/request.hpp"
+#include "../data/response.hpp"
+
+namespace nanogear {
+namespace rest {
+namespace util {
+template <class T>
 class helper {
 public:
-    virtual void operator()(const nanogear::rest::data::request&,
-                            const nanogear::rest::data::response&) = 0;
+    helper(boost::shared_ptr<T>& helped) : m_helped(helped) {}
+    const std::map<std::string, std::string>& attributes() const
+    {
+        return m_attributes;
+    }
+    const boost::shared_ptr<T>& helped() const
+    {
+        return m_helped;
+    }
+    void set_helped(const boost::shared_ptr<T>& h)
+    {
+        m_helped = h;
+    }
+    const context& get_context() const
+    {
+        return helped()->context();
+    }
+    const std::list<data::parameter>& helped_parameters() const
+    {
+        return helped()->context()->parameters();
+    }
+    void operator()(data::request& req, data::response& res)
+    {
+        data::response::set_current(res);
+        context::set_current(get_context());
+    }
     virtual void start() = 0;
     virtual void stop() = 0;
+    virtual void update() = 0;
 
-    typedef boost::shared_ptr<helper> ptr;
+    typedef boost::shared_ptr< helper<T> > ptr;
+
+private:
+    std::map<std::string, std::string> m_attributes;
+    boost::shared_ptr<T> m_helped;
 };
+}
+}
+}
 
 
 #endif /* NANOGEAR_REST_UTIL_HELPER_HPP */

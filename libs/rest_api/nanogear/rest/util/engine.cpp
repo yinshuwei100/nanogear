@@ -21,42 +21,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "client.hpp"
+#include "engine.hpp"
 
 namespace nanogear {
 namespace rest {
-
-client::client(const context& c, const std::list<data::protocol>& p) : connector(c, p)
+namespace util {
+engine::ptr engine::instance()
 {
-    // TODO: needs engine
+    ptr pointer;
+    if (s_instance.expired()) pointer = ptr(new engine);
+    else pointer = s_instance.lock();
+    return pointer;
+}
+}
+}
 }
 
-util::helper::ptr& client::get_helper()
-{
-    return m_helper;
-}
-
-void client::operator()(const data::request& req, const data::response& res)
-{
-    init(req, res);
-    if (get_helper()) (*get_helper())(req, res);
-}
-
-void client::start()
-{
-    if (stopped()) {
-        connector::start();
-        if (get_helper()) get_helper()->start();
-    }
-}
-
-void client::stop()
-{
-    if (started()) {
-        if (get_helper()) get_helper()->stop();
-        connector::stop();
-    }
-}
-
-}
-}

@@ -11,7 +11,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, version 3 of the License.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,42 +21,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "client.hpp"
+#ifndef NANOGEAR_REST_UTIL_HELPER_FACTORY_HPP
+#define NANOGEAR_REST_UTIL_HELPER_FACTORY_HPP
+
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
+
+#include "helper.hpp"
+#include "../application.hpp"
+#include "../client.hpp"
+#include "../component.hpp"
+#include "../server.hpp"
 
 namespace nanogear {
 namespace rest {
+namespace util {
+class engine {
+public:
+    typedef boost::shared_ptr<engine> ptr;
+    static ptr instance();
+    virtual helper<application> create(const application&) = 0;
+    virtual helper<client> create(const client&) = 0;
+    virtual helper<component> create(const component&) = 0;
+    virtual helper<server> create(const server&) = 0;
 
-client::client(const context& c, const std::list<data::protocol>& p) : connector(c, p)
-{
-    // TODO: needs engine
+private:
+    static boost::weak_ptr<engine> s_instance;
+};
 }
-
-util::helper::ptr& client::get_helper()
-{
-    return m_helper;
 }
-
-void client::operator()(const data::request& req, const data::response& res)
-{
-    init(req, res);
-    if (get_helper()) (*get_helper())(req, res);
-}
-
-void client::start()
-{
-    if (stopped()) {
-        connector::start();
-        if (get_helper()) get_helper()->start();
-    }
 }
 
-void client::stop()
-{
-    if (started()) {
-        if (get_helper()) get_helper()->stop();
-        connector::stop();
-    }
-}
 
-}
-}
+#endif /* NANOGEAR_REST_UTIL_HELPER_HPP */
+
