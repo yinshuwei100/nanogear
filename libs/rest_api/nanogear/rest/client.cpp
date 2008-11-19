@@ -31,7 +31,7 @@ client::client(const context& c, const std::list<data::protocol>& p) : connector
     // TODO: needs engine
 }
 
-boost::shared_ptr<helper>& client::get_helper()
+helper::ptr& client::get_helper()
 {
     return m_helper;
 }

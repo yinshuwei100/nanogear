@@ -46,6 +46,8 @@ public:
     const std::list<data::protocol>& protocols() const;
     void set_protocols(const std::list<data::protocol>&);
 
+    typedef boost::shared_ptr<connector> ptr;
+
 private:
     std::list<data::protocol> m_protocols;
 

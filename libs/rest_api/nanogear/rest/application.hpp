@@ -42,8 +42,8 @@ public:
     application(const context&);
     ~application();
 
-    virtual boost::shared_ptr<controller>& create_root();
-    const boost::shared_ptr<controller>& root() const;
+    virtual controller::ptr& create_root();
+    const controller::ptr& root() const;
     
     void operator()(const data::request&, const data::response&);
     
@@ -79,6 +79,8 @@ public:
 //    service::tunnel tunnel() const;
 
 //    void set_metadata(const service::metadata& value);
+
+    typedef boost::shared_ptr<application> ptr;
     
 private:
     std::string m_author;

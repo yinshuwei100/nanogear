@@ -27,6 +27,7 @@
 #ifndef NANOGEAR_REST_CONTROLLER_HPP
 #define NANOGEAR_REST_CONTROLLER_HPP
 
+#include <boost/shared_ptr.hpp>
 
 #include "uniform.hpp"
 #include "context.hpp"
@@ -52,6 +53,8 @@ public:
     const context& get_context() const;
     void start();
     void stop();
+
+    typedef boost::shared_ptr<controller> ptr;
 
 protected:
     void init(const data::request&, const data::response&);

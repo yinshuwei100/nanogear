@@ -47,6 +47,8 @@ public:
     void set_next(boost::shared_ptr<T>&);
     void operator()(const data::request&, const data::response&);
 
+    typedef boost::shared_ptr< filter<T> > ptr;
+
 protected:
     virtual void after_handle(const data::request&, const data::response&) {}
     virtual void before_handle(const data::request&, const data::response&) {}

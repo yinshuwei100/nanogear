@@ -39,13 +39,15 @@ namespace rest {
 
 class server : public connector { // TODO: complete implementation
 public:
-    server(const context&, const std::list<data::protocol>&, const int, const std::string&, const boost::shared_ptr<controller>&);
+    server(const context&, const std::list<data::protocol>&, const int, const std::string&, const controller::ptr&);
     virtual ~server();
+    typedef boost::shared_ptr<server> ptr;
+
 private:
     std::string m_address;
     int m_port;
-    boost::shared_ptr<controller> m_target;
-    boost::shared_ptr<helper> helper;
+    controller::ptr m_target;
+    helper::ptr m_helper;
 };
 
 }

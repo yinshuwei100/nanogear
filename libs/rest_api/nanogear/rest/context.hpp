@@ -33,17 +33,16 @@
 #include <boost/shared_ptr.hpp>
 
 #include "data/parameter.hpp"
+#include "uniform.hpp"
 
 namespace nanogear {
 namespace rest {
-class uniform;
-    
 class context {
 public:
     context();
     const std::map<std::string, std::string>& attributes() const;
     const std::list<data::parameter>& parameters() const;
-    virtual boost::shared_ptr<uniform> dispatcher();
+    virtual uniform::ptr dispatcher();
 
 private:
     std::map<std::string, std::string> m_attributes;

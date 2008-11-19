@@ -37,14 +37,16 @@ class client : public connector {
 public:
     client(const context& = context(), const std::list<data::protocol>& = std::list<data::protocol>());
     ~client();
-    boost::shared_ptr<helper>& get_helper();
+    helper::ptr& get_helper();
 
     void operator()(const data::request&, const data::response&);
 
     void start();
     void stop();
+    typedef boost::shared_ptr<client> ptr;
+
 private:
-    boost::shared_ptr<helper> m_helper;
+    helper::ptr m_helper;
 };
 
 }

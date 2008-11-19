@@ -24,12 +24,16 @@
 #ifndef NANOGEAR_REST_UTIL_HELPER_HPP
 #define NANOGEAR_REST_UTIL_HELPER_HPP
 
+#include <boost/shared_ptr.hpp>
+
 class helper {
 public:
     virtual void operator()(const nanogear::rest::data::request&,
                             const nanogear::rest::data::response&) = 0;
     virtual void start() = 0;
     virtual void stop() = 0;
+
+    typedef boost::shared_ptr<helper> ptr;
 };
 
 

@@ -26,6 +26,8 @@
 #ifndef NANOGEAR_REST_UNIFORM_HPP
 #define NANOGEAR_REST_UNIFORM_HPP
 
+#include <boost/shared_ptr.hpp>
+
 #include "data/response.hpp"
 #include "data/reference.hpp"
 
@@ -55,6 +57,8 @@ public:
     data::response post(const data::reference&);
 
     data::response put(const data::reference&);
+
+    typedef boost::shared_ptr<uniform> ptr;
 };
 
 }
