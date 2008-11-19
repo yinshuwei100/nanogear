@@ -28,10 +28,7 @@ namespace rest {
 namespace util {
 engine::ptr engine::instance()
 {
-    ptr pointer;
-    if (s_instance.expired()) pointer = ptr(new engine);
-    else pointer = s_instance.lock();
-    return pointer;
+    return s_instance;
 }
 }
 }

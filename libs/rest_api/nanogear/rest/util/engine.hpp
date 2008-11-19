@@ -25,12 +25,11 @@
 #define NANOGEAR_REST_UTIL_HELPER_FACTORY_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
 
 #include "helper.hpp"
 #include "../application.hpp"
 #include "../client.hpp"
-#include "../component.hpp"
+//#include "../component.hpp"
 #include "../server.hpp"
 
 namespace nanogear {
@@ -40,13 +39,13 @@ class engine {
 public:
     typedef boost::shared_ptr<engine> ptr;
     static ptr instance();
-    virtual helper<application> create(const application&) = 0;
-    virtual helper<client> create(const client&) = 0;
-    virtual helper<component> create(const component&) = 0;
-    virtual helper<server> create(const server&) = 0;
+    virtual helper<application>::ptr create(const application&) = 0;
+    virtual helper<client>::ptr create(const client&) = 0;
+    //virtual helper<component>::ptr create(const component&) = 0;
+    virtual helper<server>::ptr create(const server&) = 0;
 
 private:
-    static boost::weak_ptr<engine> s_instance;
+    static boost::shared_ptr<engine> s_instance;
 };
 }
 }

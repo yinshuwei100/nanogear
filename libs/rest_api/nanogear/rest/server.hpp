@@ -47,7 +47,7 @@ private:
     std::string m_address;
     int m_port;
     controller::ptr m_target;
-    util::helper::ptr m_helper;
+    util::helper<server>::ptr m_helper;
 };
 
 }
