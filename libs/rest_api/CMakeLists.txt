@@ -1,4 +1,4 @@
-add_subdirectory(tests)
+# add_subdirectory(tests)
 
 add_library(nanogear_rest SHARED
   nanogear/rest/data/challenge_request.cpp
