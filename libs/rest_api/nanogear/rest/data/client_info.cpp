@@ -68,6 +68,10 @@ const std::string& client_info::address() const
 {
     return m_addresses.front();
 }
+const std::list<std::string>& client_info::addresses() const
+{
+    return m_addresses;
+}
 void client_info::set_address(const std::string& address)
 {
     m_addresses.insert(m_addresses.begin(), address);

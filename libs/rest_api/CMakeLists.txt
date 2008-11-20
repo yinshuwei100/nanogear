@@ -14,6 +14,7 @@ add_library(nanogear_rest SHARED
   nanogear/rest/data/method.cpp
   nanogear/rest/data/message.cpp
   nanogear/rest/data/parameter.cpp
+  nanogear/rest/data/product.cpp
   nanogear/rest/data/protocol.cpp
   nanogear/rest/data/reference.cpp
   nanogear/rest/data/request.cpp

@@ -50,9 +50,12 @@ public:
 //    const variant& preferred_variant(const std::list<variant>&, const language) const;
 
     const std::string& address() const;
+    const std::list<std::string>& addresses() const;
     void set_address(const std::string&);
 
     const std::string& agent() const;
+    const std::string& agent_name() const;
+    const std::string& agent_products() const;
     void set_agent(const std::string&);
 
     int port() const;
