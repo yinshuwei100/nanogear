@@ -1,10 +1,7 @@
 /*
  * Nanogear - C++ web development framework
- *
- * This library is based on Restlet (R) <http://www.restlet.org> by Noelios Technologies
- * Copyright (C) 2005-2008 by Noelios Technologies <http://www.noelios.com>
- * Restlet is a registered trademark of Noelios Technologies. All other marks and
- * trademarks are property of their respective owners.
+ * Class to parse URI templates as specified at
+ *   http://bitworking.org/projects/URI-Templates/
  *
  * Copyright (C) 2008 Lorenzo Villani.
  *
