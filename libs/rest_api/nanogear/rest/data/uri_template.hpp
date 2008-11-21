@@ -37,6 +37,9 @@ public:
 
     const std::string& template_string() const;
     void set_template_string(const std::string&);
+
+    void set(const std::string&, const std::string&);
+    const std::map<std::string, std::string>& vars() const;
         
     std::string expanded();
 private:

@@ -34,6 +34,16 @@ const std::string& uri_template::template_string() const
     return m_template_string;
 }
 
+void uri_template::set(const std::string& key, const std::string& value)
+{
+    m_vars.insert(std::pair<std::string, std::string>(key, value));
+}
+
+const std::map<std::string, std::string>& uri_template::vars() const
+{
+    return m_vars;
+}
+
 std::string uri_template::expanded()
 {
     
