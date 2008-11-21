@@ -1,28 +1,26 @@
 /*
- * Nanogear - C++ web development framework
- * Class to parse URI templates as specified at
- *   http://bitworking.org/projects/URI-Templates/
+ * This file is part of the nanogear project
  *
- * Copyright (C) 2008 Lorenzo Villani.
+ * (C) Copyright 2008 by Lorenzo Villani <lvillani@binaryhelix.net>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation;
+ * version 3 of the License.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Library General Public License
+ * along with this library; see the file COPYING.LIB.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
  */
 
 #ifndef NANOGEAR_REST_UTIL_URI_TEMPLATE_HPP
 #define NANOGEAR_REST_UTIL_URI_TEMPLATE_HPP
-
-#include <map>
-#include <string>
 
 namespace nanogear {
 namespace rest {
@@ -50,4 +48,5 @@ private:
 }
 }
 
-#endif
+#endif /* NANOGEAR_REST_UTIL_URI_TEMPLATE_HPP */
+
