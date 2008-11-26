@@ -39,10 +39,10 @@ class engine {
 public:
     typedef boost::shared_ptr<engine> ptr;
     static ptr instance();
-    virtual helper<application>::ptr create(const application&) = 0;
-    virtual helper<client>::ptr create(const client&) = 0;
-    //virtual helper<component>::ptr create(const component&) = 0;
-    virtual helper<server>::ptr create(const server&) = 0;
+    virtual helper<application>::ptr create(const application::ptr&) = 0;
+    virtual helper<client>::ptr create(const client::ptr&) = 0;
+    //virtual helper<component>::ptr create(const component::ptr&) = 0; // TODO
+    virtual helper<server>::ptr create(const server::ptr&) = 0;
 
 private:
     static boost::shared_ptr<engine> s_instance;

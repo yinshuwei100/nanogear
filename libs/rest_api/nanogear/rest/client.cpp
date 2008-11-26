@@ -22,13 +22,15 @@
  */
 
 #include "client.hpp"
+#include "util/engine.hpp"
 
 namespace nanogear {
 namespace rest {
 
 client::client(const context& c, const std::list<data::protocol>& p) : connector(c, p)
 {
-    // TODO: needs engine
+    if ((p.size() != 0) && util::engine::instance())
+        m_helper = util::engine::instance()->create(ptr(this));
 }
 
 util::helper<client>::ptr& client::get_helper()
