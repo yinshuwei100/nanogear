@@ -40,7 +40,20 @@ namespace rest {
 class server : public connector { // TODO: complete implementation
 public:
     server(const context&, const std::list<data::protocol>&, const int, const std::string&, const controller::ptr&);
-    virtual ~server();
+    virtual ~server() {};
+
+    const std::string& address() const;
+    const util::helper<server>::ptr& helper() const;
+    int port() const;
+    const controller::ptr& target() const;
+    void operator()(const data::request&, const data::response&);
+    bool has_target() const;
+    void set_address(const std::string&);
+    void set_port(int);
+    void set_target(const controller::ptr&);
+    void start();
+    void stop();
+
     typedef boost::shared_ptr<server> ptr;
 
 private:

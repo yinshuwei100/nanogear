@@ -43,5 +43,6 @@ add_library(nanogear_rest SHARED
   nanogear/rest/router.cpp
   nanogear/rest/uniform.cpp
   nanogear/rest/virtual_host.cpp
+  nanogear/rest/server.cpp
 )
 

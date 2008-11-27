@@ -22,6 +22,7 @@
  */
 
 #include "server.hpp"
+#include "util/engine.hpp"
 
 namespace nanogear {
 namespace rest {
@@ -32,8 +33,60 @@ server::server(const context& cont, const std::list<data::protocol>& protos,
                : connector(cont, protos), m_address(address), m_port(port),
                  m_target(control)
 {
+    if (util::engine::instance()) m_helper = util::engine::instance()->create(ptr(this));
 }
 
+const std::string& server::address() const
+{
+    return m_address;
+}
+const util::helper<server>::ptr& server::helper() const
+{
+    return m_helper;
+}
+int server::port() const
+{
+    return m_port;
+}
+const controller::ptr& server::target() const
+{
+    return m_target;
+}
+void server::operator()(const data::request& req, const data::response& res)
+{
+    connector(*this)(req, res);
+    if (has_target()) (*target())(req, res);
+}
+bool server::has_target() const
+{
+    return m_target;
+}
+void server::set_address(const std::string& a)
+{
+    m_address = a;
+}
+void server::set_port(int p)
+{
+    m_port = p;
+}
+void server::set_target(const controller::ptr& t)
+{
+    m_target = t;
+}
+void server::start()
+{
+    if (stopped()) {
+        connector::start();
+        if (helper()) helper()->start();
+    }
+}
+void server::stop()
+{
+    if (started()) {
+        if (helper()) helper()->stop();
+        connector::stop();
+    }
+}
+}
+}
 
-}
-}
