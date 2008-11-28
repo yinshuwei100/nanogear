@@ -65,5 +65,49 @@ const data::response& handler::get_response() const
 {
     return m_response;
 }
+void handler::handle_delete()
+{
+    m_response.set_status(data::status::SERVER_ERROR_INTERNAL);
+}
+void handler::handle_get()
+{
+    m_response.set_status(data::status::SERVER_ERROR_INTERNAL);
+}
+void handler::handle_head()
+{
+    handle_get();
+}
+void handler::handle_options()
+{
+    update_allowed_methods();
+    m_response.set_status(data::status::SUCCESS_OK);
+}
+void handler::handle_post()
+{
+    m_response.set_status(data::status::SERVER_ERROR_INTERNAL);
+}
+void handler::handle_put()
+{
+    m_response.set_status(data::status::SERVER_ERROR_INTERNAL);
+}
+void handler::init(const context& c, const data::request& req, const data::response& res)
+{
+    m_context = c;
+    m_request = req,
+    m_response = res;
+}
+void hander::set_context(const context& c)
+{
+    m_context = c;
+}
+void handler::set_request(const nanogear::rest::data::request& req)
+{
+    m_request = req;
+}
+void handler::set_response(const nanogear::rest::data::response& res)
+{
+    m_response = res;
+}
+
 }
 }

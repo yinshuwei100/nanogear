@@ -43,7 +43,17 @@ public:
     const context& get_context() const;
     const data::request& get_request() const;
     const data::response& get_response() const;
-    //TODO
+    void handle_delete();
+    void handle_get();
+    void handle_head();
+    void handle_options();
+    void handle_post();
+    void handle_put();
+    void init(const context&, const data::request&, const data::response&);
+    void set_context(const context&);
+    void set_request(const data::request&);
+    void set_response(const data::response&);
+    void update_allowed_methods();
 private:
     context m_context;
     data::request m_request;
