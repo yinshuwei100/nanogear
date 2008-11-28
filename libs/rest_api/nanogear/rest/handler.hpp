@@ -33,7 +33,7 @@ namespace rest {
 class handler
 {
 public:
-    handler(const context& = context(), const data::request& = data::request(), const data::response& = data:response());
+    handler(const context& = context(), const data::request& = data::request(), const data::response& = data::response());
     virtual bool allow_delete() const;
     virtual bool allow_get() const;
     virtual bool allow_head() const;

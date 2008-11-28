@@ -61,7 +61,7 @@ const data::request& handler::get_request() const
 {
     return m_request;
 }
-const data::response& hander::get_response() const
+const data::response& handler::get_response() const
 {
     return m_response;
 }
