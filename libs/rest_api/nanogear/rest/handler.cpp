@@ -96,7 +96,7 @@ void handler::init(const context& c, const data::request& req, const data::respo
     m_request = req,
     m_response = res;
 }
-void hander::set_context(const context& c)
+void handler::set_context(const context& c)
 {
     m_context = c;
 }
