@@ -24,7 +24,7 @@
 #ifndef NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP
 #define NANOGEAR_REST_RESOURCE_REPRESENTATION_HPP
 
-#include <iostream>
+#include <boost/shared_ptr.hpp>
 
 #include "variant.hpp"
 
@@ -33,7 +33,7 @@ namespace rest {
 namespace resource {
 
 // TODO: Complete implmenetation
-class representation : public variant/*, public std::iostream*/ {
+class representation : public variant {
 public:
     representation(const data::media_type& t = data::media_type());
     virtual ~representation() { };
@@ -43,6 +43,9 @@ public:
     bool is_transient() const;
     void set_available(bool);
     void set_transient(bool);
+    virtual operator std::iostream*() = 0;
+
+    typedef boost::shared_ptr<representation> ptr;
 private:
     bool m_content_available;
     bool m_content_transient;

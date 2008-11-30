@@ -29,11 +29,8 @@ namespace nanogear {
 namespace rest {
 namespace resource {
 
-representation::representation(const data::media_type& t) : variant(t)
-{
-    m_content_available = true;
-    m_content_transient = false;
-}
+representation::representation(const data::media_type& t) : variant(t), m_content_available(true),
+    m_content_transient(false) {}
 
 //TODO: text
 

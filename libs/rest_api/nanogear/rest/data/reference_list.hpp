@@ -29,26 +29,24 @@
 #include <list>
 
 #include "reference.hpp"
+#include "../resource/representation.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace data {
 
-template <typename T = reference, typename A = std::allocator<T>, typename L = std::list<T, A> >
+template <typename T = reference, typename L = std::list<T> >
 class reference_list : public L {
 public:
-    explicit reference_list(const A& allocator = A()) : L(allocator) {}
+    explicit reference_list(const L::allocator_type& allocator = L::allocator_type()) : L(allocator) {}
     explicit reference_list(size_type size, const T& value = T(),
-                  const A& allocator = A()) : L(size, value, allocator) {}
-    template <typename I> reference_list(I first, I last, const A& allocator
-                               = A()) : L(first, last, allocator) {}
-    // TODO: representation class needed
-    // NOTE: should this be explicit, or is implicit conversion desirable
-    #if 0
-    reference_list(representation uri_list)
+                  const L::allocator_type& allocator = L::allocator_type()) : L(size, value, allocator) {}
+    template <typename I> reference_list(I first, I last, const L::allocator_type()& allocator
+                               = L::allocator_type()) : L(first, last, allocator) {}
+    reference_list(resource::representation::ptr& uri_list)
     {
+        //TODO
     }
-    #endif
 
     // Thank goodness for C++ implicit conversion!
     //void push_back(const std::string& uri);
@@ -60,13 +58,9 @@ public:
     {
         m_identifier = identifier;
     }
-    // TODO: representation class needed
-    // NOTE: should we also provide an implicit conversion operator?
-    #if 0
-    const representation text_representation() const
+    const resource::representation::ptr& text_representation() const
     {
     }
-    #endif
 private:
     T m_identifier;
 

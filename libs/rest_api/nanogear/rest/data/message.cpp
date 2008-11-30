@@ -34,12 +34,12 @@ const std::map<std::string, std::string>& message::attributes() const
     return m_attributes;
 }
 
-const nanogear::rest::resource::representation& message::entity() const
+const resource::representation::ptr& message::entity() const
 {
     return m_entity;
 }
 
-void message::set_entity(const nanogear::rest::resource::representation& representation)
+void message::set_entity(const resource::representation::ptr& representation)
 {
     m_entity = representation;
 }
@@ -53,7 +53,7 @@ bool message::is_entity_available() const
 {
     // FIXME: In an ideal world we would check even if the entity has data in it
     // just return a boolean indicating if the entity is available
-    return m_entity.is_available();
+    return m_entity->is_available();
 }
 
 }
