@@ -27,6 +27,7 @@
 #define NANOGEAR_REST_UNIFORM_HPP
 
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 #include "data/response.hpp"
 #include "data/reference.hpp"
@@ -38,7 +39,7 @@ namespace rest {
  *
  * @author Lorenzo Villani <lvillani@binaryhelix.net>
  */
-class uniform {
+class uniform : public boost::noncopyable {
 public:
     inline uniform() {};
     virtual ~uniform() {};

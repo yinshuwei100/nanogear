@@ -54,7 +54,7 @@ const controller::ptr& server::target() const
 }
 void server::operator()(const data::request& req, const data::response& res)
 {
-    connector(*this)(req, res);
+    connector::operator()(req, res);
     if (has_target()) (*target())(req, res);
 }
 bool server::has_target() const
