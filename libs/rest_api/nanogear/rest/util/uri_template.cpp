@@ -50,7 +50,7 @@ std::string uri_template::expanded()
 {
     std::list<std::string> found_vars;
     std::map<std::string, std::string> found_vars_defval;
-    std::string expanded_string(m_template_string);
+    std::string pass1(m_template_string);
     
     // Define regexp
     const boost::regex command("\\{-(\\w+)|(\\w+)|(\\w+)\\}");
@@ -70,7 +70,10 @@ std::string uri_template::expanded()
     boost::match_flag_type flags = boost::match_default;
     
     while(regex_search(ib, ie, what, variable, flags)) {
-        found_vars.push_back(std::string(what[1].first, what[1].second));
+        std::string match(what[1].first, what[1].second);
+        pass1 = boost::regex_replace(m_template_string,
+            boost::regex(std::string("\\{") + match + std::string("\\}")),
+            m_vars[match], boost::match_default);
         // move next
         ib = what[0].second;
         // update flags:
@@ -79,29 +82,20 @@ std::string uri_template::expanded()
     }
     
     // Step 2-b: variables with default value
-    ib = expanded_string.begin();
-    flags = boost::match_default;
-    while(regex_search(ib, ie, what, variable_defval, flags)) {
-        found_vars_defval[std::string(what[1].first, what[1].second)] =
-            std::string(what[2].first, what[2].second);
-        // move next
-        ib = what[0].second;
-        // update flags:
-        flags |= boost::match_prev_avail;
-        flags |= boost::match_not_bob;
-    }
-
-    // Step 2-c: replace simple variables
-    std::list<std::string>::iterator it;
-    for (it = found_vars.begin(); it != found_vars.end(); ++it) {
-        boost::regex to_replace(std::string("\\{") + std::string(*it) + std::string("\\}"));
-        expanded_string = boost::regex_replace(expanded_string, to_replace, m_vars[*it], boost::match_default);
-    }
-
-    // Step 2-d: replace variables with default values
     // TODO
+//     ib = m_template_string.begin();
+//     flags = boost::match_default;
+//     while(regex_search(ib, ie, what, variable_defval, flags)) {
+//         found_vars_defval[std::string(what[1].first, what[1].second)] =
+//             std::string(what[2].first, what[2].second);
+//         // move next
+//         ib = what[0].second;
+//         // update flags:
+//         flags |= boost::match_prev_avail;
+//         flags |= boost::match_not_bob;
+//     }
 
-    return expanded_string;
+    return pass1; // FIXME: for now...
 }
 
 }
