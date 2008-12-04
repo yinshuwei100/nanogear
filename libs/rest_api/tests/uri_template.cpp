@@ -17,13 +17,20 @@ using namespace nanogear::rest::util;
 
 BOOST_AUTO_TEST_CASE(variables) {
     // result with simple assignment (no default value)
-    const std::string result1("http://example.org/?q=fred");
-    uri_template t1("http://example.org/?q={bar}");
-    t1.var()["bar"] = "fred";
-    BOOST_CHECK(t1.expanded() == result1);
+    const std::string result_simple("http://example.org/?q=fred");
+    const std::string result_undefined("/");
+    const std::string result_doubled("http://example.org/?q=fredfred");
 
-    // result with no defined variable
-    const std::string result2("/");
-    uri_template t2("/{xyxyxy}");
-    BOOST_CHECK(t2.expanded() == result2);
+    // Simple variable
+    uri_template tpl("http://example.org/?q={bar}");
+    tpl.var()["bar"] = "fred";
+    BOOST_CHECK(tpl.expanded() == result_simple);
+
+    // Undefined variable
+    tpl = uri_template("/{xyxyxy}");
+    BOOST_CHECK(tpl.expanded() == result_undefined);
+
+    // Doubled variable
+    tpl = uri_template("http://example.org/?q={bar}{bar}");
+    BOOST_CHECK(tpl.expanded() == result_doubled);
 }
