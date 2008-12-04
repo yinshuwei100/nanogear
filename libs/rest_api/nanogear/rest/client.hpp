@@ -36,7 +36,7 @@ namespace rest {
 class client : public connector {
 public:
     client(const context& = context(), const std::list<data::protocol>& = std::list<data::protocol>());
-    ~client();
+    virtual ~client() {};
     util::helper<client>::ptr& get_helper();
 
     void operator()(const data::request&, const data::response&);
