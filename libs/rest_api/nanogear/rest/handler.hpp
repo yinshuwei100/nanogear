@@ -53,7 +53,7 @@ public:
     void set_context(const context&);
     void set_request(const data::request&);
     void set_response(const data::response&);
-    void update_allowed_methods();
+    void update_allowed_methods() {}; // FIXME: implement this
 private:
     context m_context;
     data::request m_request;
