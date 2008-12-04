@@ -53,6 +53,16 @@ void parameter::set_name(const std::string& name)
     m_name = name;
 }
 
+const std::string& parameter::value() const
+{
+    return m_value;
+}
+
+void parameter::set_value(const std::string& value)
+{
+    m_value = value;
+}
+
 }
 }
 }
