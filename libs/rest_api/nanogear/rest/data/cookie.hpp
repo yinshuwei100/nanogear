@@ -34,7 +34,7 @@ namespace data {
 
 class cookie {
 public:
-    cookie();
+    cookie() {}; // FIXME
     cookie(const std::string&, const std::string&);
     cookie(int, const std::string&, const std::string&);
     cookie(int, const std::string&, const std::string&, const std::string&,
