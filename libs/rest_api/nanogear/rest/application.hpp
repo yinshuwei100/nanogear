@@ -42,10 +42,10 @@ public:
     application(const context&);
     ~application();
 
-    virtual controller::ptr& create_root();
+    virtual controller::ptr& create_root() {}; // Stub
     const controller::ptr& root() const;
     
-    void operator()(const data::request&, const data::response&);
+    void operator()(const data::request&, const data::response&) {}; // FIXME: Stub
     
     void start();
     void stop();
