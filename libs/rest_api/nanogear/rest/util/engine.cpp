@@ -21,15 +21,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/shared_ptr.hpp>
 #include "engine.hpp"
 
 namespace nanogear {
 namespace rest {
 namespace util {
+
+boost::shared_ptr<engine> engine::s_instance;
+
 engine::ptr engine::instance()
 {
     return s_instance;
 }
+
+
 }
 }
 }
