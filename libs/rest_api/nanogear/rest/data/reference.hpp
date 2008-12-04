@@ -44,7 +44,7 @@ public:
     reference(const std::string&, const std::string&);
     reference(const std::string&, const std::string&, int, const std::string&,
             const std::string&, const std::string&);
-    ~reference();
+    virtual ~reference() {};
 
     static std::string decode(const std::string&);
     static std::string decode(const std::string&, const character_set&);

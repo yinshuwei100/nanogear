@@ -39,21 +39,21 @@ public:
     method(const std::string& = std::string(), const std::string& = std::string(), const std::string& = std::string());
     const std::string& uri() const;
 
-    static method CONNECT;
-    static method COPY;
-    static method DELETE;
-    static method GET;
-    static method HEAD;
-    static method LOCK;
-    static method MKCOL;
-    static method MOVE;
-    static method OPTIONS;
-    static method POST;
-    static method PROPFIND;
-    static method PROPPATCH;
-    static method PUT;
-    static method TRACE;
-    static method UNLOCK;
+    static const method CONNECT;
+    static const method COPY;
+    static const method DELETE;
+    static const method GET;
+    static const method HEAD;
+    static const method LOCK;
+    static const method MKCOL;
+    static const method MOVE;
+    static const method OPTIONS;
+    static const method POST;
+    static const method PROPFIND;
+    static const method PROPPATCH;
+    static const method PUT;
+    static const method TRACE;
+    static const method UNLOCK;
 
     static method value_of(const std::string&);
 private:

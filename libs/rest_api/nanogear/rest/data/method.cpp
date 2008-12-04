@@ -31,9 +31,6 @@ namespace nanogear {
 namespace rest {
 namespace data {
 
-#define BASE_HTTP http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
-#define BASE_WEBDAV http://www.webdav.org/specs/rfc2518.html
-
 method::method(const std::string& name, const std::string& description, const std::string& uri) : metadata(name, description), m_uri(uri) {}
 
 const std::string& method::uri() const
@@ -41,102 +38,118 @@ const std::string& method::uri() const
     return m_uri;
 }
 
-method method::CONNECT("CONNECT",
-                       "Used with a proxy that can dynamically switch to being a tunnel",
-                       "##BASE_HTTP###sec9.9");
 
-method method::COPY("COPY",
+const method method::CONNECT("CONNECT",
+                       "Used with a proxy that can dynamically switch to being a tunnel",
+                       "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.9");
+
+const method method::COPY("COPY",
                     "Creates a duplicate of the source resource, identified by"
                     "the Request-URI, in the destination resource, identified"
                     "by the URI in the Destination header",
-                    "##BASE_WEBDAV###METHOD_COPY");
+                    "http://www.webdav.org/specs/rfc2518.html#METHOD_COPY");
 
-method method::DELETE("DELETE",
+const method method::DELETE("DELETE",
                       "Requests that the origin server deletes the resource"
                       "identified by the request URI",
-                      "##BASE_HTTP###sec9.7");
+                      "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.7");
 
-method method::GET("GET",
+const method method::GET("GET",
                    "Retrieves whatever information (in the form of an entity)"
                    "that is identified by the request URI",
-                   "##BASE_HTTP###sec9.3");
+                   "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.3");
 
-method method::HEAD("HEAD",
+const method method::HEAD("HEAD",
                     "Identical to GET except that the server must not return"
                     "a message body in the response",
-                    "##BASE_HTTP###sec9.4");
+                    "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4");
 
-method method::LOCK("LOCK",
+const method method::LOCK("LOCK",
                     "Used to take out a lock of any access type (WebDAV)",
-                    "##BASE_WEBDAV###METHOD_LOCK");
+                    "http://www.webdav.org/specs/rfc2518.html#METHOD_LOCK");
 
-method method::MKCOL("MKCOL",
+const method method::MKCOL("MKCOL",
                      "Used to create a new collection (WebDAV)",
-                     "##BASE_WEBDAV###METHOD_MKCOL");
+                     "http://www.webdav.org/specs/rfc2518.html#METHOD_MKCOL");
 
-method method::MOVE("MOVE",
+const method method::MOVE("MOVE",
                     "Logical equivalent of a copy, followed by consistency maintenance"
                     "processing, followed by a delete of the source (WebDAV)",
-                    "##BASE_WEBDAV###METHOD_MOVE");
+                    "http://www.webdav.org/specs/rfc2518.html#METHOD_MOVE");
 
 
-method OPTIONS("OPTIONS",
+const method method::OPTIONS("OPTIONS",
                "Requests for information about the communication options available"
                "on the request/response chain identified by the URI",
-               "##BASE_HTTP###sec9.2");
+               "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.2");
 
-method method::POST("POST",
+const method method::POST("POST",
                     "Requests that the origin server accepts the entity enclosed"
                     "in the request as a new subordinate of the resource identified by the request URI",
-                    "##BASE_HTTP###sec9.5");
+                    "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5");
 
 
-method method::PROPFIND("PROPFIND",
+const method method::PROPFIND("PROPFIND",
                         "Retrieves properties defined on the resource identified by the"
                         "request URI",
-                        "##BASE_WEBDAV###METHOD_PROPFIND");
+                        "http://www.webdav.org/specs/rfc2518.html#METHOD_PROPFIND");
 
-method method::PROPPATCH("PROPPATCH",
+const method method::PROPPATCH("PROPPATCH",
                          "Processes instructions specified in the request body to set"
                          "and/or remove properties defined on the resource identified"
                          "by the request URI",
-                         "##BASE_WEBDAV###METHOD_PROPPATCH");
+                         "http://www.webdav.org/specs/rfc2518.html#METHOD_PROPPATCH");
 
-method method::PUT("PUT",
+const method method::PUT("PUT",
                    "Requests that the enclosed entity be stored under the"
                    "supplied request URI",
-                   "##BASE_HTTP###sec9.6");
+                   "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.6");
 
-method method::TRACE("TRACE",
+const method method::TRACE("TRACE",
                      "Used to invoke a remote, application-layer loop-back of"
                      "the request message",
-                     "##BASE_HTTP###sec9.8");
+                     "http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.8");
 
-method method::UNLOCK("UNLOCK",
+const method method::UNLOCK("UNLOCK",
                       "Removes the lock identified by the lock token from the request URI,"
                       "and allother resources included in the lock",
-                      "##BASE_WEBDAV###METHOD_UNLOCK");
+                      "http://www.webdav.org/specs/rfc2518.html#METHOD_UNLOCK");
 
-method method::value_of(const std::string& value)
+method method::value_of(const std::string& name)
 {
-    #define cas(x) if (value == x.name()) return x
-    cas(GET);
-    cas(POST);
-    cas(HEAD);
-    cas(OPTIONS);
-    cas(PUT);
-    cas(DELETE);
-    cas(CONNECT);
-    cas(COPY);
-    cas(LOCK);
-    cas(MKCOL);
-    cas(MOVE);
-    cas(PROPFIND);
-    cas(PROPPATCH);
-    cas(TRACE);
-    cas(UNLOCK);
-    return method(value);
-    #undef cas
+    if (name == GET.name()) {
+        return GET;
+    } else if (name == POST.name()) {
+        return POST;
+    } else if (name == HEAD.name()) {
+        return HEAD;
+    } else if (name == OPTIONS.name()) {
+        return OPTIONS;
+    } else if (name == PUT.name()) {
+        return PUT;
+    } else if (name == DELETE.name()) {
+        return DELETE;
+    } else if (name == CONNECT.name()) {
+        return CONNECT;
+    } else if (name == COPY.name()) {
+        return COPY;
+    } else if (name == LOCK.name()) {
+        return LOCK;
+    } else if (name == MKCOL.name()) {
+        return MKCOL;
+    } else if (name == MOVE.name()) {
+        return MOVE;
+    } else if (name == PROPFIND.name()) {
+        return PROPFIND;
+    } else if (name == PROPPATCH.name()) {
+        return PROPPATCH;
+    } else if (name == TRACE.name()) {
+        return TRACE;
+    } else if (name == UNLOCK.name()) {
+        return UNLOCK;
+    } else {
+        return method(name);
+    }
 }
 
 }
