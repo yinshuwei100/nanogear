@@ -24,6 +24,8 @@
 #include <map>
 #include <string>
 
+#include <boost/regex.hpp>
+
 namespace nanogear {
 namespace rest {
 namespace util {
@@ -44,7 +46,7 @@ public:
 
     const std::string& template_string() const;
     void set_template_string(const std::string&);
-        
+    
     std::string expanded();
 private:
     std::string m_template_string;

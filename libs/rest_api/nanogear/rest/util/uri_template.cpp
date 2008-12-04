@@ -19,8 +19,11 @@
  */
 
 #include <map>
+#include <list>
 #include <string>
+#include <iostream>
 
+#include <boost/regex.hpp>
 
 
 #include "uri_template.hpp"
@@ -29,7 +32,7 @@ namespace nanogear {
 namespace rest {
 namespace util {
 
-std::map<std::string, std::string> uri_template::var()
+std::map<std::string, std::string>& uri_template::var()
 {
     return m_vars;
 }
@@ -45,12 +48,60 @@ const std::string& uri_template::template_string() const
 
 std::string uri_template::expanded()
 {
+    std::list<std::string> found_vars;
+    std::map<std::string, std::string> found_vars_defval;
+    std::string expanded_string(m_template_string);
+    
+    // Define regexp
+    const boost::regex command("\\{-(\\w+)|(\\w+)|(\\w+)\\}");
+    const boost::regex variable("\\{(\\w+)\\}");
+    const boost::regex variable_defval("\\{(\\w+)=(\\w+)\\}");
+    
     // Step 1: Normalization
     // TODO: Normalize the URI and %-encode all the character outside the
     //       reserved space
     // Parsing and substitutions (done via regexp parser)
     // Step 2: variable substitutions
+    // Step 2-a: simple variables
+    std::string::const_iterator ib, ie;
+    ib = m_template_string.begin(); ie = m_template_string.end();
+
+    boost::match_results<std::string::const_iterator> what;
+    boost::match_flag_type flags = boost::match_default;
     
+    while(regex_search(ib, ie, what, variable, flags)) {
+        found_vars.push_back(std::string(what[1].first, what[1].second));
+        // move next
+        ib = what[0].second;
+        // update flags:
+        flags |= boost::match_prev_avail;
+        flags |= boost::match_not_bob;
+    }
+    
+    // Step 2-b: variables with default value
+    ib = expanded_string.begin();
+    flags = boost::match_default;
+    while(regex_search(ib, ie, what, variable_defval, flags)) {
+        found_vars_defval[std::string(what[1].first, what[1].second)] =
+            std::string(what[2].first, what[2].second);
+        // move next
+        ib = what[0].second;
+        // update flags:
+        flags |= boost::match_prev_avail;
+        flags |= boost::match_not_bob;
+    }
+
+    // Step 2-c: replace simple variables
+    std::list<std::string>::iterator it;
+    for (it = found_vars.begin(); it != found_vars.end(); ++it) {
+        boost::regex to_replace(std::string("\\{") + std::string(*it) + std::string("\\}"));
+        expanded_string = boost::regex_replace(expanded_string, to_replace, m_vars[*it], boost::match_default);
+    }
+
+    // Step 2-d: replace variables with default values
+    // TODO
+
+    return expanded_string;
 }
 
 }
