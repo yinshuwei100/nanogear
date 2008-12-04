@@ -1,4 +1,4 @@
-# add_subdirectory(tests)
+add_subdirectory(tests)
 
 add_library(nanogear_rest SHARED
   nanogear/rest/data/challenge_request.cpp
@@ -28,10 +28,11 @@ add_library(nanogear_rest SHARED
   nanogear/rest/data/server_info.cpp
   nanogear/rest/data/status.cpp
 
+  nanogear/rest/resource/representation.cpp
   nanogear/rest/resource/variant.cpp
 
   nanogear/rest/util/engine.cpp
-  #nanogear/rest/util/uri_template.cpp
+  nanogear/rest/util/uri_template.cpp
 
   nanogear/rest/application.cpp
   nanogear/rest/client.cpp
@@ -46,4 +47,6 @@ add_library(nanogear_rest SHARED
   nanogear/rest/server.cpp
   nanogear/rest/handler.cpp
 )
+
+target_link_libraries(nanogear_rest)
 
