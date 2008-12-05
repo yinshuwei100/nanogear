@@ -40,7 +40,7 @@ class reference {
 public:
     //reference(const reference&); // use default copy constructor
     reference(const reference&, const std::string&);
-    reference(const std::string& = std::string());
+    reference(const std::string& = std::string()) {};
     reference(const std::string&, const std::string&);
     reference(const std::string&, const std::string&, int, const std::string&,
             const std::string&, const std::string&);
