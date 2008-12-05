@@ -80,18 +80,17 @@ std::string uri_template::expanded()
     }
     
     // Step 2-b: variables with default value
-    // TODO
-//     ib = m_template_string.begin();
-//     flags = boost::match_default;
-//     while(regex_search(ib, ie, what, variable_defval, flags)) {
-//         found_vars_defval[std::string(what[1].first, what[1].second)] =
-//             std::string(what[2].first, what[2].second);
-//         // move next
-//         ib = what[0].second;
-//         // update flags:
-//         flags |= boost::match_prev_avail;
-//         flags |= boost::match_not_bob;
-//     }
+    // reset
+    std::string pass2;
+    ib = pass1.begin(); ie = pass1.end();
+    flags = boost::match_default;
+    while (regex_search(ib, ie, what, variable_defval, flags)) {
+        // move next
+        ib = what[0].second;
+        // update flags:
+        flags |= boost::match_prev_avail;
+        flags |= boost::match_not_bob;
+    }
 
     return pass1; // FIXME: for now...
 }
