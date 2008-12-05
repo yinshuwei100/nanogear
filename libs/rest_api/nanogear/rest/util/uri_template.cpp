@@ -48,8 +48,6 @@ const std::string& uri_template::template_string() const
 
 std::string uri_template::expanded()
 {
-    std::list<std::string> found_vars;
-    std::map<std::string, std::string> found_vars_defval;
     std::string pass1(m_template_string);
     
     // Define regexp
