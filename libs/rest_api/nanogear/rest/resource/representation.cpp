@@ -34,12 +34,12 @@ representation::representation(const data::media_type& t) : variant(t), m_conten
 
 //TODO: text
 
-const bool representation::is_available() const
+bool representation::is_available() const
 {
     return m_content_available;
 }
 
-const bool representation::is_transient() const
+bool representation::is_transient() const
 {
     return m_content_transient;
 }
