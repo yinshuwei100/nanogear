@@ -34,19 +34,29 @@
 namespace nanogear {
 namespace rest {
 namespace util {
-template <class T>
-class helper {
+template <class> class helper;
+class abstract_helper {
 public:
-    helper(boost::shared_ptr<T>& helped) : m_helped(helped) {}
-    const std::map<std::string, std::string>& attributes() const
-    {
-        return m_attributes;
-    }
-    const boost::shared_ptr<T>& helped() const
+    const std::map<std::string, std::string>& attributes() const;
+    virtual void operator()(const data::request& req, const data::response& res) = 0;
+    virtual void start() = 0;
+    virtual void stop() = 0;
+    virtual void update() = 0;
+
+private:
+    std::map<std::string, std::string> m_attributes;
+    template <class> friend class helper;
+};
+
+template <class T>
+class helper : public abstract_helper {
+public:
+    helper(T* helped) : m_helped(helped) {}
+    const T* helped() const
     {
         return m_helped;
     }
-    void set_helped(const boost::shared_ptr<T>& h)
+    void set_helped(T* h)
     {
         m_helped = h;
     }
@@ -58,16 +68,11 @@ public:
     {
         return helped()->context()->parameters();
     }
-    virtual void operator()(const data::request& req, const data::response& res) = 0;
-    virtual void start() = 0;
-    virtual void stop() = 0;
-    virtual void update() = 0;
 
     typedef boost::shared_ptr< helper<T> > ptr;
 
 private:
-    std::map<std::string, std::string> m_attributes;
-    boost::shared_ptr<T> m_helped;
+    T* m_helped;
 };
 }
 }
