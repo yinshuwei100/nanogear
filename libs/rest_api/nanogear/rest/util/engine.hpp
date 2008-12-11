@@ -21,8 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_UTIL_HELPER_FACTORY_HPP
-#define NANOGEAR_REST_UTIL_HELPER_FACTORY_HPP
+#ifndef NANOGEAR_REST_UTIL_ENGINE_HPP
+#define NANOGEAR_REST_UTIL_ENGINE_HPP
 
 #include <boost/shared_ptr.hpp>
 
@@ -36,21 +36,20 @@ namespace nanogear {
 namespace rest {
 namespace util {
 class engine {
-public:
-    typedef boost::shared_ptr<engine> ptr;
-    static ptr instance();
-    virtual helper<application>::ptr create(const application::ptr&) = 0;
-    virtual helper<client>::ptr create(const client::ptr&) = 0;
-    //virtual helper<component>::ptr create(const component::ptr&) = 0; // TODO
-    virtual helper<server>::ptr create(const server::ptr&) = 0;
-
-private:
-    static boost::shared_ptr<engine> s_instance;
+// This class forms the "glue" between the protocol implementation, and the API.
+// Usage: Define a class with the following public methods, that inherits this class.
+// TODO: Provide something useful in this class ;).
+#if 0
+    static helper<application>::ptr create(application*);
+    static helper<abstrace_client>::ptr create(abstrace_client*);
+    static helper<component>::ptr create(component*);
+    static helper<abstract_server>::ptr create(abstrace_server*);
+#endif
 };
 }
 }
 }
 
 
-#endif /* NANOGEAR_REST_UTIL_HELPER_HPP */
+#endif /* NANOGEAR_REST_ENGINE_HPP */
 

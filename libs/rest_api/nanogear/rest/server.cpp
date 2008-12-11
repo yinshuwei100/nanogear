@@ -27,60 +27,57 @@
 namespace nanogear {
 namespace rest {
 
-server::server(const context& cont, const std::list<data::protocol>& protos,
+abstract_server::abstract_server(const context& cont, const std::list<data::protocol>& protos,
                const int port, const std::string& address,
                const controller::ptr& control)
                : connector(cont, protos), m_address(address), m_port(port),
-                 m_target(control)
-{
-    if (util::engine::instance()) m_helper = util::engine::instance()->create(ptr(this));
-}
+                 m_target(control) {}
 
-const std::string& server::address() const
+const std::string& abstract_server::address() const
 {
     return m_address;
 }
-const util::helper<server>::ptr& server::helper() const
+const util::helper<abstract_server>::ptr& abstract_server::helper() const
 {
     return m_helper;
 }
-int server::port() const
+int abstract_server::port() const
 {
     return m_port;
 }
-const controller::ptr& server::target() const
+const controller::ptr& abstract_server::target() const
 {
     return m_target;
 }
-void server::operator()(const data::request& req, const data::response& res)
+void abstract_server::operator()(const data::request& req, const data::response& res)
 {
     connector::operator()(req, res);
     if (has_target()) (*target())(req, res);
 }
-bool server::has_target() const
+bool abstract_server::has_target() const
 {
     return m_target;
 }
-void server::set_address(const std::string& a)
+void abstract_server::set_address(const std::string& a)
 {
     m_address = a;
 }
-void server::set_port(int p)
+void abstract_server::set_port(int p)
 {
     m_port = p;
 }
-void server::set_target(const controller::ptr& t)
+void abstract_server::set_target(const controller::ptr& t)
 {
     m_target = t;
 }
-void server::start()
+void abstract_server::start()
 {
     if (stopped()) {
         connector::start();
         if (helper()) helper()->start();
     }
 }
-void server::stop()
+void abstract_server::stop()
 {
     if (started()) {
         if (helper()) helper()->stop();

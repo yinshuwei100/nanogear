@@ -31,7 +31,6 @@ add_library(nanogear_rest SHARED
   nanogear/rest/resource/representation.cpp
   nanogear/rest/resource/variant.cpp
 
-  nanogear/rest/util/engine.cpp
   nanogear/rest/util/uri_template.cpp
 
   nanogear/rest/application.cpp

@@ -27,24 +27,20 @@
 namespace nanogear {
 namespace rest {
 
-client::client(const context& c, const std::list<data::protocol>& p) : connector(c, p)
-{
-    if ((p.size() != 0) && util::engine::instance())
-        m_helper = util::engine::instance()->create(ptr(this));
-}
+abstract_client::abstract_client(const context& c, const std::list<data::protocol>& p) : connector(c, p) {}
 
-util::helper<client>::ptr& client::get_helper()
+util::helper<abstract_client>::ptr& abstract_client::get_helper()
 {
     return m_helper;
 }
 
-void client::operator()(const data::request& req, const data::response& res)
+void abstract_client::operator()(const data::request& req, const data::response& res)
 {
     init(req, res);
     if (get_helper()) (*get_helper())(req, res);
 }
 
-void client::start()
+void abstract_client::start()
 {
     if (stopped()) {
         connector::start();
@@ -52,7 +48,7 @@ void client::start()
     }
 }
 
-void client::stop()
+void abstract_client::stop()
 {
     if (started()) {
         if (get_helper()) get_helper()->stop();

@@ -36,14 +36,15 @@
 
 namespace nanogear {
 namespace rest {
+template <class> class server;
 
-class server : public connector { // TODO: complete implementation
+class abstract_server : public connector { // TODO: complete implementation
+protected:
+    abstract_server(const context&, const std::list<data::protocol>&, const int, const std::string&, const controller::ptr&);
+    virtual ~abstract_server() {};
 public:
-    server(const context&, const std::list<data::protocol>&, const int, const std::string&, const controller::ptr&);
-    virtual ~server() {};
-
     const std::string& address() const;
-    const util::helper<server>::ptr& helper() const;
+    const util::helper<abstract_server>::ptr& helper() const;
     int port() const;
     const controller::ptr& target() const;
     void operator()(const data::request&, const data::response&);
@@ -54,15 +55,25 @@ public:
     void start();
     void stop();
 
-    typedef boost::shared_ptr<server> ptr;
-
 private:
     std::string m_address;
     int m_port;
     controller::ptr m_target;
-    util::helper<server>::ptr m_helper;
+    util::helper<abstract_server>::ptr m_helper;
+    template <class> friend class server;
 };
 
+template <class Engine>
+class server : public abstract_server {
+public:
+    server(const context& cont, const std::list<data::protocol>& protos, const int port, const std::string& address, const controller::ptr& control)
+      : abstract_server(cont, protos, port, address, control) {
+        m_helper = Engine::create(ptr(this));
+    }
+
+    typedef boost::shared_ptr<server> ptr;
+
+};
 }
 }
 

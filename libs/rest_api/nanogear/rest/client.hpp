@@ -32,21 +32,34 @@
 
 namespace nanogear {
 namespace rest {
- 
-class client : public connector {
+
+template <class> class client;
+class abstract_client : public connector {
+protected:
+    abstract_client(const context&, const std::list<data::protocol>&);
+    virtual ~abstract_client() {};
 public:
-    client(const context& = context(), const std::list<data::protocol>& = std::list<data::protocol>());
-    virtual ~client() {};
-    util::helper<client>::ptr& get_helper();
+    util::helper<abstract_client>::ptr& get_helper();
 
     void operator()(const data::request&, const data::response&);
 
     void start();
     void stop();
-    typedef boost::shared_ptr<client> ptr;
 
 private:
-    util::helper<client>::ptr m_helper;
+    util::helper<abstract_client>::ptr m_helper;
+    template<class> friend class client;
+};
+ 
+template <class Engine>
+class client : public connector {
+public:
+    client(const context& c = context(), const std::list<data::protocol>& p = std::list<data::protocol>()) :
+      abstract_client(c, p) {
+        if (p.size() != 0)
+             this->abstract_client::m_helper = Engine::create(this);
+    }
+    typedef boost::shared_ptr<client> ptr;
 };
 
 }
