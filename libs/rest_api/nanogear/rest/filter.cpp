@@ -24,42 +24,42 @@
 
 
 
-#ifndef NANOGEAR_REST_FILTER_HPP
-#define NANOGEAR_REST_FILTER_HPP
-
-#include <boost/shared_ptr.hpp>
-#include <boost/function/function2.hpp>
-
-#include "controller.hpp"
-#include "data/request.hpp"
-#include "data/response.hpp"
-#include "context.hpp"
+#include "filter.hpp"
 
 namespace nanogear {
 namespace rest {
 
-class filter : public controller {
-    typedef boost::function2<void, const data::request&, const data::response&> funct;
-public:
-    filter(const context& c = context(), funct n = funct());
-    inline ~filter() {};
-    funct& next();
-    bool has_next();
-    void set_next(funct&);
-    void operator()(const data::request&, const data::response&);
+filter::filter(const context& c, funct n) : controller(c), m_next(n) {}
 
-    typedef boost::shared_ptr<filter> ptr;
+filter::funct& filter::next()
+{
+    return m_next;
+}
 
-protected:
-    virtual void after_handle(const data::request&, const data::response&) {}
-    virtual void before_handle(const data::request&, const data::response&) {}
-    virtual void do_handle(const data::request&, const data::response&);
+bool filter::has_next()
+{
+    return m_next;
+}
 
-private:
-    funct m_next;
-};
+void filter::set_next(funct& next)
+{
+    m_next = next;
+}
+
+void filter::operator()(const data::request& req, const data::response& res)
+{
+    init(req, res);
+    before_handle(req, res);
+    do_handle(req, res);
+    after_handle(req, res);
+}
+
+void filter::do_handle(const data::request& req, const data::response& res)
+{
+    if (has_next()) next()(req, res); else
+    throw std::runtime_error("do_handle() without a next controller.");
+}
 
 }
 }
 
-#endif /* NANOGEAR_REST_FILTER_HPP */

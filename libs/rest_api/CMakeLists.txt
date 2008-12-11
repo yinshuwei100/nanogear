@@ -32,6 +32,7 @@ add_library(nanogear_rest SHARED
   nanogear/rest/resource/variant.cpp
 
   nanogear/rest/util/uri_template.cpp
+  nanogear/rest/util/helper.cpp
 
   nanogear/rest/application.cpp
   nanogear/rest/client.cpp
@@ -45,6 +46,7 @@ add_library(nanogear_rest SHARED
   nanogear/rest/virtual_host.cpp
   nanogear/rest/server.cpp
   nanogear/rest/handler.cpp
+  nanogear/rest/filter.cpp
 )
 
 target_link_libraries(nanogear_rest)
