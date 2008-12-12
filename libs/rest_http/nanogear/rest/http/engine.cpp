@@ -11,7 +11,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, version 3 of the License.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,35 +21,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_UTIL_ENGINE_HPP
-#define NANOGEAR_REST_UTIL_ENGINE_HPP
 
-#include <boost/shared_ptr.hpp>
 
-#include "helper.hpp"
-#include "../application.hpp"
-#include "../client.hpp"
-//#include "../component.hpp"
-#include "../server.hpp"
+#include "engine.hpp"
 
 namespace nanogear {
 namespace rest {
-namespace util {
-class engine {
-// This class forms the "glue" between the protocol implementation, and the API.
-// Usage: Define a class with the following public methods, that inherits this class.
-// TODO: Provide something useful in this class ;).
-#if 0
-    static helper<application>::ptr create(application*);
-    static helper<abstract_client>::ptr create(abstract_client*);
-    static helper<component>::ptr create(component*);
-    static helper<abstract_server>::ptr create(abstract_server*);
-#endif
-};
+namespace http {
+
+helper<application>::ptr create(application*) {
+    return helper<application>::ptr(); // TODO
+}
+
+helper<abstract_client>::ptr create(application*) {
+    return helper<abstract_client>::ptr(); // TODO
+}
+
+helper<component>::ptr create(application*) {
+    return helper<component>::ptr(); // TODO
+}
+
+helper<abstract_server>::ptr create(application*) {
+    return helper<abstract_server>::ptr(); // TODO
+}
+
 }
 }
 }
-
-
-#endif /* NANOGEAR_REST_ENGINE_HPP */
-

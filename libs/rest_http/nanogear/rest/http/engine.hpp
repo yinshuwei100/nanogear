@@ -21,35 +21,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_UTIL_ENGINE_HPP
-#define NANOGEAR_REST_UTIL_ENGINE_HPP
+#ifndef NANOGEAR_REST_HTTP_ENGINE_HPP
+#define NANOGEAR_REST_HTTP_ENGINE_HPP
 
-#include <boost/shared_ptr.hpp>
-
-#include "helper.hpp"
-#include "../application.hpp"
-#include "../client.hpp"
-//#include "../component.hpp"
-#include "../server.hpp"
+#include <nanogear/rest/util/engine.hpp>
 
 namespace nanogear {
 namespace rest {
-namespace util {
-class engine {
-// This class forms the "glue" between the protocol implementation, and the API.
-// Usage: Define a class with the following public methods, that inherits this class.
-// TODO: Provide something useful in this class ;).
-#if 0
+namespace http {
+class engine : public util::engine {
     static helper<application>::ptr create(application*);
     static helper<abstract_client>::ptr create(abstract_client*);
     static helper<component>::ptr create(component*);
     static helper<abstract_server>::ptr create(abstract_server*);
-#endif
 };
 }
 }
 }
 
 
-#endif /* NANOGEAR_REST_ENGINE_HPP */
+#endif /* NANOGEAR_REST_HTTP_ENGINE_HPP */
 

@@ -11,7 +11,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, version 3 of the License.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,35 +21,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REST_UTIL_ENGINE_HPP
-#define NANOGEAR_REST_UTIL_ENGINE_HPP
 
-#include <boost/shared_ptr.hpp>
 
-#include "helper.hpp"
-#include "../application.hpp"
-#include "../client.hpp"
-//#include "../component.hpp"
-#include "../server.hpp"
+#ifndef NANOGEAR_REST_HTTP_RESPONSE_HPP
+#define NANOGEAR_REST_HTTP_RESPONSE_HPP
+
+#include <nanogear/rest/data/response.hpp>
 
 namespace nanogear {
 namespace rest {
-namespace util {
-class engine {
-// This class forms the "glue" between the protocol implementation, and the API.
-// Usage: Define a class with the following public methods, that inherits this class.
-// TODO: Provide something useful in this class ;).
-#if 0
-    static helper<application>::ptr create(application*);
-    static helper<abstract_client>::ptr create(abstract_client*);
-    static helper<component>::ptr create(component*);
-    static helper<abstract_server>::ptr create(abstract_server*);
-#endif
+namespace http {
+
+/**
+ @author
+ */
+class response : public data::response { // TODO
+public:
+    response(const std::string&);
 };
+
 }
 }
 }
 
-
-#endif /* NANOGEAR_REST_ENGINE_HPP */
-
+#endif /* NANOGEAR_REST_RESPONSE_HPP */
