@@ -30,10 +30,10 @@ namespace nanogear {
 namespace rest {
 namespace http {
 class engine : public util::engine {
-    static helper<application>::ptr create(application*);
-    static helper<abstract_client>::ptr create(abstract_client*);
-    static helper<component>::ptr create(component*);
-    static helper<abstract_server>::ptr create(abstract_server*);
+    static util::helper<application>::ptr create(application*);
+    static util::helper<abstract_client>::ptr create(abstract_client*);
+    //static util::helper<component>::ptr create(component*);
+    static util::helper<abstract_server>::ptr create(abstract_server*);
 };
 }
 }

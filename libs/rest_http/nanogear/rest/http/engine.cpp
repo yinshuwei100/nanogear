@@ -29,20 +29,22 @@ namespace nanogear {
 namespace rest {
 namespace http {
 
-helper<application>::ptr create(application*) {
-    return helper<application>::ptr(); // TODO
+util::helper<application>::ptr engine::create(application*) {
+    return util::helper<application>::ptr(); // TODO
 }
 
-helper<abstract_client>::ptr create(application*) {
-    return helper<abstract_client>::ptr(); // TODO
+util::helper<abstract_client>::ptr engine::create(abstract_client*) {
+    return util::helper<abstract_client>::ptr(); // TODO
 }
 
-helper<component>::ptr create(application*) {
-    return helper<component>::ptr(); // TODO
+#if 0
+util::helper<component>::ptr engine::create(component*) {
+    return util::helper<component>::ptr(); // TODO
 }
+#endif
 
-helper<abstract_server>::ptr create(application*) {
-    return helper<abstract_server>::ptr(); // TODO
+util::helper<abstract_server>::ptr engine::create(abstract_server*) {
+    return util::helper<abstract_server>::ptr(); // TODO
 }
 
 }
