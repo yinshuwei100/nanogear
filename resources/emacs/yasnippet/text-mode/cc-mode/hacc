@@ -1,0 +1,2 @@
+const ${1:type}& ${2:name}() const;
+void set_$2(const $1&);
