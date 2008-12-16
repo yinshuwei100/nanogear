@@ -1,4 +1,5 @@
 project(nanogear)
+include(CTest)
 
 # Testing
 enable_testing()
