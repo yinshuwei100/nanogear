@@ -32,5 +32,6 @@ BOOST_AUTO_TEST_CASE(variables) {
 
     // Doubled variable
     tpl = uri_template("http://example.org/?q={bar}{bar}");
+    tpl.var()["bar"] = "fred";
     BOOST_CHECK(tpl.expanded() == result_doubled);
 }

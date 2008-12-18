@@ -21,6 +21,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include <sstream>
 #include <iostream>
 
 #include <boost/regex.hpp>
@@ -49,7 +50,6 @@ const std::string& uri_template::template_string() const
 std::string uri_template::expanded()
 {
     std::string pass1(m_template_string);
-    
     // Define regexp
     const boost::regex command("\\{-(\\w+)|(\\w+)|(\\w+)\\}");
     const boost::regex variable("\\{(\\w+)\\}");
@@ -65,31 +65,14 @@ std::string uri_template::expanded()
     ib = m_template_string.begin(); ie = m_template_string.end();
 
     boost::match_results<std::string::const_iterator> what;
-    boost::match_flag_type flags = boost::match_default;
     
-    while(regex_search(ib, ie, what, variable, flags)) {
+    // Step 1: variables
+    while(regex_search(ib, ie, what, variable, boost::match_default)) {
         std::string match(what[1].first, what[1].second);
-        pass1 = boost::regex_replace(m_template_string,
+        pass1 = boost::regex_replace(pass1,
             boost::regex(std::string("\\{") + match + std::string("\\}")),
-            m_vars[match], boost::match_default);
-        // move next
+            m_vars[match]);
         ib = what[0].second;
-        // update flags:
-        flags |= boost::match_prev_avail;
-        flags |= boost::match_not_bob;
-    }
-    
-    // Step 2-b: variables with default value
-    // reset
-    std::string pass2;
-    ib = pass1.begin(); ie = pass1.end();
-    flags = boost::match_default;
-    while (regex_search(ib, ie, what, variable_defval, flags)) {
-        // move next
-        ib = what[0].second;
-        // update flags:
-        flags |= boost::match_prev_avail;
-        flags |= boost::match_not_bob;
     }
 
     return pass1; // FIXME: for now...
