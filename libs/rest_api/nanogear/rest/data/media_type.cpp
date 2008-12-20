@@ -108,6 +108,7 @@ media_type& media_type::value_of(const std::string& name) {
     media_type_case(application::java_object);
     media_type_case(application::javascript);
     media_type_case(application::json);
+    media_type_case(application::octet_stream);
     media_type_case(application::pdf);
     media_type_case(application::postscript);
     media_type_case(application::project);
