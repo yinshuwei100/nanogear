@@ -5,6 +5,7 @@ enable_testing()
 include_directories(${CMAKE_SOURCE_DIR}/libs/rest_api)
 
 add_executable(method method.cpp)
+add_executable(uri_template uri_template.cpp)
 add_executable(media_type media_type.cpp)
 target_link_libraries(method nanogear_rest boost_regex-mt)
 target_link_libraries(media_type nanogear_rest boost_regex-mt)
