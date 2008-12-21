@@ -1,0 +1,122 @@
+#include <string>
+#include <iostream>
+
+#define BOOST_TEST_MODULE media_type_test
+#include <boost/test/included/unit_test.hpp>
+
+#include <nanogear/rest/data/media_type.hpp>
+
+using namespace nanogear::rest::data;
+
+BOOST_AUTO_TEST_CASE(presets) {
+    BOOST_CHECK(media_type::all == media_type::value_of("*/*"));
+    BOOST_CHECK(media_type::all.name() == "*/*");
+    BOOST_CHECK(media_type::application::all == media_type::value_of("application/*"));
+    BOOST_CHECK(media_type::application::all.name() == "application/*");
+    BOOST_CHECK(media_type::application::atom == media_type::value_of("application/atom+xml"));
+    BOOST_CHECK(media_type::application::atom.name() == "application/atom+xml");
+    BOOST_CHECK(media_type::application::cab == media_type::value_of("application/vnd.ms-cab-compressed"));
+    BOOST_CHECK(media_type::application::cab.name() == "application/vnd.ms-cab-compressed");
+    BOOST_CHECK(media_type::application::excel == media_type::value_of("application/vnd.ms-excel"));
+    BOOST_CHECK(media_type::application::excel.name() == "application/vnd.ms-excel");
+    BOOST_CHECK(media_type::application::flash == media_type::value_of("application/x-shockwave-flash"));
+    BOOST_CHECK(media_type::application::flash.name() == "application/x-shockwave-flash");
+    BOOST_CHECK(media_type::application::gnu_tar == media_type::value_of("application/x-gtar"));
+    BOOST_CHECK(media_type::application::gnu_tar.name() == "application/x-gtar");
+    BOOST_CHECK(media_type::application::gnu_zip == media_type::value_of("application/x-gzip"));
+    BOOST_CHECK(media_type::application::gnu_zip.name() == "application/x-gzip");
+    BOOST_CHECK(media_type::application::http_cookies == media_type::value_of("application/x-http-cookies"));
+    BOOST_CHECK(media_type::application::http_cookies.name() == "application/x-http-cookies");
+    BOOST_CHECK(media_type::application::java_archive == media_type::value_of("application/x-java-archive"));
+    BOOST_CHECK(media_type::application::java_archive.name() == "application/x-java-archive");
+    BOOST_CHECK(media_type::application::java_object == media_type::value_of("application/x-java-object"));
+    BOOST_CHECK(media_type::application::java_object.name() == "application/x-java-object");
+    BOOST_CHECK(media_type::application::javascript == media_type::value_of("application/x-javascript"));
+    BOOST_CHECK(media_type::application::javascript.name() == "application/x-javascript");
+    BOOST_CHECK(media_type::application::json == media_type::value_of("application/json"));
+    BOOST_CHECK(media_type::application::json.name() == "application/json");
+    BOOST_CHECK(media_type::application::octet_stream == media_type::value_of("application/octet-stream"));
+    BOOST_CHECK(media_type::application::octet_stream.name() == "application/octet-stream");
+    BOOST_CHECK(media_type::application::pdf == media_type::value_of("application/pdf"));
+    BOOST_CHECK(media_type::application::pdf.name() == "application/pdf");
+    BOOST_CHECK(media_type::application::postscript == media_type::value_of("application/postscript"));
+    BOOST_CHECK(media_type::application::postscript.name() == "application/postscript");
+    BOOST_CHECK(media_type::application::project == media_type::value_of("application/vnd.ms-project"));
+    BOOST_CHECK(media_type::application::project.name() == "application/vnd.ms-project");
+    BOOST_CHECK(media_type::application::rdf_xml == media_type::value_of("application/rdf+xml"));
+    BOOST_CHECK(media_type::application::rdf_xml.name() == "application/rdf+xml");
+    BOOST_CHECK(media_type::application::rtf == media_type::value_of("application/rtf"));
+    BOOST_CHECK(media_type::application::rtf.name() == "application/rtf");
+    BOOST_CHECK(media_type::application::stuffit == media_type::value_of("application/x-stuffit"));
+    BOOST_CHECK(media_type::application::stuffit.name() == "application/x-stuffit");
+    BOOST_CHECK(media_type::application::tar == media_type::value_of("application/x-tar"));
+    BOOST_CHECK(media_type::application::tar.name() == "application/x-tar");
+    BOOST_CHECK(media_type::application::word == media_type::value_of("application/msword"));
+    BOOST_CHECK(media_type::application::word.name() == "application/msword");
+    BOOST_CHECK(media_type::application::www_form == media_type::value_of("application/x-www-form-urlencoded"));
+    BOOST_CHECK(media_type::application::www_form.name() == "application/x-www-form-urlencoded");
+    BOOST_CHECK(media_type::application::xhtml == media_type::value_of("application/xhtml+xml"));
+    BOOST_CHECK(media_type::application::xhtml.name() == "application/xhtml+xml");
+    BOOST_CHECK(media_type::application::xml == media_type::value_of("application/xml"));
+    BOOST_CHECK(media_type::application::xml.name() == "application/xml");
+    BOOST_CHECK(media_type::application::zip == media_type::value_of("application/zip"));
+    BOOST_CHECK(media_type::application::zip.name() == "application/zip");
+    BOOST_CHECK(media_type::audio::all == media_type::value_of("audio/*"));
+    BOOST_CHECK(media_type::audio::all.name() == "audio/*");
+    BOOST_CHECK(media_type::audio::mp3 == media_type::value_of("audio/mpeg"));
+    BOOST_CHECK(media_type::audio::mp3.name() == "audio/mpeg");
+    BOOST_CHECK(media_type::audio::real == media_type::value_of("application/x-pn-realaudio"));
+    BOOST_CHECK(media_type::audio::real.name() == "application/x-pn-realaudio");
+    BOOST_CHECK(media_type::audio::wav == media_type::value_of("application/x-wav"));
+    BOOST_CHECK(media_type::audio::wav.name() == "application/x-wav");
+    BOOST_CHECK(media_type::image::all == media_type::value_of("image/*"));
+    BOOST_CHECK(media_type::image::all.name() == "image/*");
+    BOOST_CHECK(media_type::image::bmp == media_type::value_of("image/bmp"));
+    BOOST_CHECK(media_type::image::bmp.name() == "image/bmp");
+    BOOST_CHECK(media_type::image::gif == media_type::value_of("image/gif"));
+    BOOST_CHECK(media_type::image::gif.name() == "image/gif");
+    BOOST_CHECK(media_type::image::icon == media_type::value_of("image/x-icon"));
+    BOOST_CHECK(media_type::image::icon.name() == "image/x-icon");
+    BOOST_CHECK(media_type::image::jpeg == media_type::value_of("image/jpeg"));
+    BOOST_CHECK(media_type::image::jpeg.name() == "image/jpeg");
+    BOOST_CHECK(media_type::image::png == media_type::value_of("image/png"));
+    BOOST_CHECK(media_type::image::png.name() == "image/png");
+    BOOST_CHECK(media_type::image::svg == media_type::value_of("image/svg+xml"));
+    BOOST_CHECK(media_type::image::svg.name() == "image/svg+xml");
+    BOOST_CHECK(media_type::message::all == media_type::value_of("message/*"));
+    BOOST_CHECK(media_type::message::all.name() == "message/*");
+    BOOST_CHECK(media_type::model::all == media_type::value_of("model/*"));
+    BOOST_CHECK(media_type::model::all.name() == "model/*");
+    BOOST_CHECK(media_type::multipart::all == media_type::value_of("multipart/*"));
+    BOOST_CHECK(media_type::multipart::all.name() == "multipart/*");
+    BOOST_CHECK(media_type::multipart::form_data == media_type::value_of("multipart/form-data"));
+    BOOST_CHECK(media_type::multipart::form_data.name() == "multipart/form-data");
+    BOOST_CHECK(media_type::text::all == media_type::value_of("text/*"));
+    BOOST_CHECK(media_type::text::all.name() == "text/*");
+    BOOST_CHECK(media_type::text::icalendar == media_type::value_of("text/calendar"));
+    BOOST_CHECK(media_type::text::icalendar.name() == "text/calendar");
+    BOOST_CHECK(media_type::text::css == media_type::value_of("text/css"));
+    BOOST_CHECK(media_type::text::css.name() == "text/css");
+    BOOST_CHECK(media_type::text::html == media_type::value_of("text/html"));
+    BOOST_CHECK(media_type::text::html.name() == "text/html");
+    BOOST_CHECK(media_type::text::plain == media_type::value_of("text/plain"));
+    BOOST_CHECK(media_type::text::plain.name() == "text/plain");
+    BOOST_CHECK(media_type::text::rdf_n3 == media_type::value_of("text/rdf+n3"));
+    BOOST_CHECK(media_type::text::rdf_n3.name() == "text/rdf+n3");
+    BOOST_CHECK(media_type::text::uri_list == media_type::value_of("text/uri-list"));
+    BOOST_CHECK(media_type::text::uri_list.name() == "text/uri-list");
+    BOOST_CHECK(media_type::text::vcard == media_type::value_of("text/x-vcard"));
+    BOOST_CHECK(media_type::text::vcard.name() == "text/x-vcard");
+    BOOST_CHECK(media_type::text::xml == media_type::value_of("text/xml"));
+    BOOST_CHECK(media_type::text::xml.name() == "text/xml");
+    BOOST_CHECK(media_type::video::all == media_type::value_of("video/*"));
+    BOOST_CHECK(media_type::video::all.name() == "video/*");
+    BOOST_CHECK(media_type::video::avi == media_type::value_of("video/x-msvideo"));
+    BOOST_CHECK(media_type::video::avi.name() == "video/x-msvideo");
+    BOOST_CHECK(media_type::video::mpeg == media_type::value_of("video/mpeg"));
+    BOOST_CHECK(media_type::video::mpeg.name() == "video/mpeg");
+    BOOST_CHECK(media_type::video::quicktime == media_type::value_of("video/quicktime"));
+    BOOST_CHECK(media_type::video::quicktime.name() == "video/quicktime");
+    BOOST_CHECK(media_type::video::wmv == media_type::value_of("video/x-ms-wmv"));
+    BOOST_CHECK(media_type::video::wmv.name() == "video/x-ms-wmv");
+}

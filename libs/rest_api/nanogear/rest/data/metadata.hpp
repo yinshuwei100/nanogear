@@ -57,6 +57,8 @@ public:
     const std::string& name() const;
     const std::string& description() const;
 
+    bool operator==(const metadata&) const;
+
 protected:
     std::string m_name;
     std::string m_description;

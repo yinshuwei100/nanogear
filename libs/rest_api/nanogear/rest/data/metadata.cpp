@@ -50,6 +50,11 @@ const std::string& metadata::description() const
     return m_description;
 }
 
+bool metadata::operator==(const metadata& other) const
+{
+    return m_name == other.m_name;
+}
+
 }
 }
 }
