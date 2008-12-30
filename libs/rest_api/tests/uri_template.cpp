@@ -24,8 +24,12 @@ BOOST_AUTO_TEST_CASE(variables) {
     BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=fred");
 
     // Variable with default value
-    uri_template tpl = uri_template("http://example.org/?q={bar=fred}");
+    tpl = uri_template("http://example.org/?q={bar=fred}");
     BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=fred");
+    // This time we define a value of 'bar'
+    tpl = uri_template("http://example.org/?q={bar=fred}");
+    tpl.var()["bar"] = "foo";
+    BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=foo");
 
     // Undefined variable
     tpl = uri_template("/{xyxyxy}");

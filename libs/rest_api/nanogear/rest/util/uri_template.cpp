@@ -51,7 +51,6 @@ const std::string& uri_template::template_string() const
 
 std::string uri_template::expanded()
 {
-    std::string pass1(m_template_string);
     // Define regexp
     const boost::regex command("\\{-(\\w+)\\|(.+)\\|(.+)\\}");
     const boost::regex variable("\\{(\\w+)\\}");
@@ -63,44 +62,52 @@ std::string uri_template::expanded()
     // Parsing and substitutions (done via regexp parser)
     // Step 2: variable substitutions
     // Step 2-a: simple variables
-    std::string::const_iterator ib, ie;
-    ib = pass1.begin(); ie = pass1.end();
-
     boost::match_results<std::string::const_iterator> what;
     
     // Step 1: variables
+    std::string pass_vars(m_template_string);
+    std::string::const_iterator ib, ie;
+    ib = pass_vars.begin(); ie = pass_vars.end();
     while(regex_search(ib, ie, what, variable, boost::match_default)) {
-        std::string match(what[1].first, what[1].second);
-        boost::algorithm::replace_all(pass1, "{" + match + "}", m_vars[match]);
+        std::string var(what[1].first, what[1].second);
+        boost::algorithm::replace_all(pass_vars, "{" + var + "}", m_vars[var]);
         ib = what[0].second; // move forward
     }
 
     // Step 2: variables with default values
-    std::string pass2(pass1);
-    // TODO: implement
+    std::string pass_vars_defval(pass_vars);
+    ib = pass_vars_defval.begin(); ie = pass_vars_defval.end();
+    while(regex_search(ib, ie, what, variable_defval, boost::match_default)) {
+        std::string var(what[1].first, what[1].second);
+        std::string val(what[2].first, what[2].second);
+        if (m_vars[var] == "") {
+            boost::algorithm::replace_all(pass_vars_defval, "{" + var + "=" + val + "}", val);
+        } else {
+            boost::algorithm::replace_all(pass_vars_defval, "{" + var + "=" + val + "}", m_vars[var]);
+        }
+        ib = what[0].second; // move forward
+    }
     
     // Step 2: commands
-    std::string pass3(pass2);
-    ib = pass3.begin(); ie = pass3.end();
+    std::string pass_commands(pass_vars_defval);
+    ib = pass_commands.begin(); ie = pass_commands.end();
     while(regex_search(ib, ie, what, command, boost::match_perl)) {
         std::string command(what[1].first, what[1].second);
         std::string parameter(what[2].first, what[2].second);
         std::string varlist(what[3].first, what[3].second);
         std::string command_p("{-" + command + "|" + parameter + "|" + varlist + "}" );
         
-        std::cout << "Command: " << command << std::endl << "Parameter: " << parameter
-            << std::endl << "Varlist: " << varlist << std::endl << "Command_P: " << command_p << std::endl;
         if (command == "opt") { // only single vars
             if (m_vars[varlist] != "") {
-                boost::algorithm::replace_all(pass3, command_p, parameter);
+                boost::algorithm::replace_all(pass_commands, command_p, parameter);
             } else {
-                boost::algorithm::replace_all(pass3, command_p, "");
+                boost::algorithm::replace_all(pass_commands, command_p, "");
             }
         } else if (command == "neg") { // only single vars
             if (m_vars[varlist] == "") {
-                boost::algorithm::replace_all(pass3, command_p, parameter);
+                boost::algorithm::replace_all(pass_commands, command_p, parameter);
             } else {
-                boost::algorithm::replace_all(pass3, command_p, "");
+                boost::algorithm::replace_all(pass_commands, command_p, "");
             }
         } else if (command == "prefix") {
         } else if (command == "suffix") {
@@ -108,12 +115,12 @@ std::string uri_template::expanded()
             
         } else if (command == "list") {
         } else {
-            throw std::exception();
+            throw std::exception(); // TODO: throw appropriate exception type
         }
         ib = what[0].second; // move forward
     }
 
-    return pass3; // FIXME: for now...
+    return pass_commands; // FIXME: for now...
 }
 
 }
