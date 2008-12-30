@@ -15,10 +15,16 @@ using namespace nanogear::rest::util;
 //     BOOST_CHECK(t.expanded() ==  s);
 // }
 
+
+
 BOOST_AUTO_TEST_CASE(variables) {
     // Simple variable
     uri_template tpl("http://example.org/?q={bar}");
     tpl.var()["bar"] = "fred";
+    BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=fred");
+
+    // Variable with default value
+    uri_template tpl = uri_template("http://example.org/?q={bar=fred}");
     BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=fred");
 
     // Undefined variable
