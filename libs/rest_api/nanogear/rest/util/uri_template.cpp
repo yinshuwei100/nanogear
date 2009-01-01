@@ -35,9 +35,9 @@ namespace nanogear {
 namespace rest {
 namespace util {
 
-std::map<std::string, std::string>& uri_template::var()
+std::string& uri_template::operator[](const std::string& key)
 {
-    return m_vars;
+    return m_vars[key];
 }
 
 void uri_template::set_template_string(const std::string& template_string)

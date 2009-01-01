@@ -20,7 +20,7 @@ using namespace nanogear::rest::util;
 BOOST_AUTO_TEST_CASE(variables) {
     // Simple variable
     uri_template tpl("http://example.org/?q={bar}");
-    tpl.var()["bar"] = "fred";
+    tpl["bar"] = "fred";
     BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=fred");
 
     // Variable with default value
@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE(variables) {
     BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=fred");
     // This time we define a value of 'bar'
     tpl = uri_template("http://example.org/?q={bar=fred}");
-    tpl.var()["bar"] = "foo";
+    tpl["bar"] = "foo";
     BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=foo");
 
     // Undefined variable
@@ -37,26 +37,32 @@ BOOST_AUTO_TEST_CASE(variables) {
 
     // Doubled variable
     tpl = uri_template("http://example.org/?q={bar}{bar}");
-    tpl.var()["bar"] = "fred";
+    tpl["bar"] = "fred";
     BOOST_REQUIRE(tpl.expanded() == "http://example.org/?q=fredfred");
 }
 
 BOOST_AUTO_TEST_CASE(commands) {
     // Opt: expand if defined($var)
     uri_template tpl("{-opt|fred@example.org|foo}");
-    tpl.var()["foo"] = "fred";
+    tpl["foo"] = "fred";
     BOOST_REQUIRE(tpl.expanded() == "fred@example.org");
     tpl = uri_template("{-opt|fred@example.org|bar}");
-    tpl.var()["foo"] = "fred";
+    tpl["foo"] = "fred";
     BOOST_REQUIRE(tpl.expanded() == "");
 
     // Neg: expand if not defined($var)
     tpl = uri_template("{-neg|fred@example.org|foo}");
-    tpl.var()["foo"] = "fred";
+    tpl["foo"] = "fred";
     BOOST_REQUIRE(tpl.expanded() == "");
     tpl = uri_template("{-neg|fred@example.org|bar}");
-    tpl.var()["foo"] = "fred";
+    tpl["foo"] = "fred";
     BOOST_REQUIRE(tpl.expanded() == "fred@example.org");
+
+    // {-join|sep|var1,var2,var3}
+    // Join: join values using $varname=$varvalue separated by 'sep'
+    // Test1: simple
+    // tpl = uri_template("http://example.org/?q={-join|&|foo,bar}");
+    // tpl.var()[""]
     
 //     uri_template tpl("http://example.org/?{-join|&|foo,bar,xyzzy,baz}");
 //     tpl.var()["foo"] = "¥";
