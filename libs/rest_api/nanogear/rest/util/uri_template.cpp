@@ -27,6 +27,7 @@
 #include <boost/foreach.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/find_iterator.hpp>
 
 
 #include "uri_template.hpp"
@@ -112,7 +113,10 @@ std::string uri_template::expanded()
         } else if (command == "prefix") {
         } else if (command == "suffix") {
         } else if (command == "join") {
-            
+            // $3 MUST be a list
+            // TODO: hu-huh, need to give a look to boost::algo::split docs
+            //std::list<boost::iterator_range<std::string::iterator> > result;
+            //boost::algorithm::split(varlist, ',', result);
         } else if (command == "list") {
         } else {
             throw std::exception(); // TODO: throw appropriate exception type
@@ -120,7 +124,7 @@ std::string uri_template::expanded()
         ib = what[0].second; // move forward
     }
 
-    return pass_commands; // FIXME: for now...
+    return boost::algorithm::to_lower_copy(pass_commands); // FIXME: ...
 }
 
 }
