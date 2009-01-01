@@ -39,10 +39,7 @@ public:
         m_template_string(template_string) {};
     virtual ~uri_template() {}
 
-    /*!
-     * Returns the modifiable hash map of variables
-     */
-    std::map<std::string, std::string>& var();
+    std::string& operator[](const std::string&);
 
     const std::string& template_string() const;
     void set_template_string(const std::string&);
