@@ -8,14 +8,13 @@
 
 using namespace nanogear::rest::util;
 
-// Test for URI normalization (i.e: make it all lowercase)
-// BOOST_AUTO_TEST_CASE(normalization) {
-//     uri_template t("hTtp://wWw.EXAMPLE.com/usErs/{uSErID}");
-//     std::string s("http://www.example.com/users/{userid}");
-//     BOOST_CHECK(t.expanded() ==  s);
-// }
 
-
+BOOST_AUTO_TEST_CASE(normalization) {
+    // Simple normalization: -> all to lower case
+    uri_template tpl("hTtp://wWw.EXAMPLE.com/usErs/{uSErID}");
+    tpl["uSErID"] = "foo";
+    BOOST_REQUIRE(tpl.expanded() == "http://www.example.com/users/foo");
+}
 
 BOOST_AUTO_TEST_CASE(variables) {
     // Simple variable
