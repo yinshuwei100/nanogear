@@ -22,7 +22,7 @@
 #include <QHttpHeader>
 
 #include "qhttpserver.h"
-#include "../libs/resource.h"
+#include "../lib/resource.h"
 
 
 QHttpServer::QHttpServer(const QHostAddress& addr, int port) {
@@ -67,6 +67,7 @@ void QHttpServer::onClientReadyRead() {
         }
     }
 
+    // Automatically close the socket
     client->close();
 }
 
