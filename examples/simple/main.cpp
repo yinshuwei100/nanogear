@@ -1,5 +1,5 @@
 #include "../../httpd/qhttpserver.h"
-#include "../../libs/resource.h"
+#include "../../lib/resource.h"
 
 #include <QDebug>
 #include <QCoreApplication>
