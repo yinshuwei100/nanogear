@@ -14,5 +14,22 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "resource.h"
+#ifndef ROUTER_H
+#define ROUTER_H
 
+#include <QHash>
+
+#include "uniform.h"
+
+class QString;
+
+class Router : public Uniform {
+public:
+    void attach(const QString& uri, Uniform* resource);
+
+    const QHash<QString, Uniform*>& mappedResources() const;
+private:
+    QHash<QString, Uniform*> m_mappedResources;
+};
+
+#endif // ROUTER_H
