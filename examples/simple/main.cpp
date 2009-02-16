@@ -1,14 +1,16 @@
-#include "../../httpd/qhttpserver.h"
-#include "../../lib/resource.h"
-
 #include <QDebug>
 #include <QCoreApplication>
 #include <QHttpResponseHeader>
 #include <QHttpRequestHeader>
 #include <QTcpSocket>
 
-class RootResource : public Resource {
-    virtual void doGet(const QHttpRequestHeader& header, QTcpSocket* out) {
+#include <application.h>
+#include <server.h>
+#include <httpserver.h>
+#include <uniform.h>
+
+class RootResource : public Uniform {
+    virtual void get(const QHttpRequestHeader& header, QTcpSocket* out) {
         qDebug() << "Called RootResource";
         QHttpResponseHeader resp;
         QTextStream stream(out);
@@ -16,10 +18,21 @@ class RootResource : public Resource {
     }
 };
 
+class SimpleApplication : public Application {
+    virtual Router* createRoot() {
+        Router* r = new Router();
+        r->attach("/resource", new RootResource());
+        return r;
+    }
+};
+
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
-    QHttpServer server;
+    
+    Server* server = new HTTPServer(8080);
     RootResource rootResource;
-    server.attachResource("/", &rootResource);
+    server->attach("/simple", new SimpleApplication());
+    server->start();
+    
     return app.exec();
 }

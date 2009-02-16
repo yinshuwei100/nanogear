@@ -14,20 +14,15 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#include "router.h"
 
-class QTcpSocket;
-class QHttpRequestHeader;
+void Router::attach(const QString& uri, Uniform* resource) {
+    m_mappedResources[uri] = resource;
+}
 
-class Resource
-{
-public:
-    virtual void doGet(const QHttpRequestHeader&, QTcpSocket*) {};
-    virtual void doPost(const QHttpRequestHeader&, QTcpSocket*) {};
-    virtual void doHead(const QHttpRequestHeader&, QTcpSocket*) {};
-    virtual void doPut(const QHttpRequestHeader&, QTcpSocket*) {};
-    virtual void doDelete(const QHttpRequestHeader&, QTcpSocket*) {};
-};
 
-#endif // RESOURCE_H
+const QHash< QString, Uniform* >& Router::mappedResources() const {
+    return m_mappedResources;
+}
+
+

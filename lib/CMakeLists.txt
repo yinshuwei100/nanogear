@@ -1,6 +1,11 @@
 set(nanogear_SRCS
-#    resource.cpp
+    router.cpp
+    server.cpp
+    httpserver.cpp
 )
 
+qt4_wrap_cpp(nanogear_SRCS
+    httpserver.h
+)
 
-add_subdirectory(rest)
+add_library(nanogear SHARED ${nanogear_SRCS})

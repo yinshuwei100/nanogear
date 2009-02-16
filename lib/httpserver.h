@@ -14,28 +14,26 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef QHTTPSERVER_H
-#define QHTTPSERVER_H
+#ifndef HTTPSERVER_H
+#define HTTPSERVER_H
 
-#include <QHash>
 #include <QTcpServer>
 
-class QString;
-class QHostAddress;
-class Resource;
+#include "server.h"
 
-class QHttpServer : public QTcpServer
-{
-    Q_OBJECT
+class HTTPServer : public Server {  Q_OBJECT
 public:
-    QHttpServer(const QHostAddress& addr = QHostAddress::Any, int port = 8080);
-    virtual ~QHttpServer() {};
-    void attachResource(const QString& path, Resource*);
-private slots:
+    HTTPServer(int port = 8080);
+    virtual ~HTTPServer() {}
+    
+    virtual void start();
+    
+public slots:
     void onNewConnection();
     void onClientReadyRead();
+    
 private:
-    QHash<QString, Resource*> m_resources;
+    QTcpServer m_tcpServer;
 };
 
-#endif // QHTTPSERVER_H
+#endif // HTTPSERVER_H
