@@ -19,17 +19,28 @@
 
 #include <QHash>
 
-#include "uniform.h"
+#include "context.h"
 
 class QString;
+class Resource;
 
-class Router : public Uniform {
+class Router {
 public:
-    void attach(const QString& uri, Uniform* resource);
+    Router(const Context& context) : m_context(context) {}
+    virtual ~Router() {}
 
-    const QHash<QString, Uniform*>& mappedResources() const;
+    void attach(const QString& uri, Resource* resource);
+    
+    const QList<Resource*> attachedResources() const
+        { return m_resources; }
+
+    void setContext(const Context& context)
+        { m_context = context; }
+    const Context& context() const
+        { return m_context; }
 private:
-    QHash<QString, Uniform*> m_mappedResources;
+    Context m_context;
+    QList<Resource*> m_resources;
 };
 
 #endif // ROUTER_H

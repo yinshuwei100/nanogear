@@ -14,23 +14,5 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef UNIFORM_H
-#define UNIFORM_H
+#include "resource.h"
 
-class QHttpRequestHeader;
-class QTcpSocket;
-
-//! @note Support only GET until I come up with a better design
-//! @todo Find better names for methods
-class Uniform {
-public:
-    virtual void put() {}
-    //! @todo WRONG! Create and use abstract Request and Response objects
-    virtual void get(const QHttpRequestHeader& header, QTcpSocket* out) {}
-    virtual void post() {}
-    virtual void _delete() {}
-    virtual void head() {}
-    virtual void options() {}
-};
-
-#endif // UNIFORM_H

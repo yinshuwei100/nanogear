@@ -21,7 +21,8 @@
 
 #include "server.h"
 
-class HTTPServer : public Server {  Q_OBJECT
+class HTTPServer : public QObject, public Server {
+    Q_OBJECT
 public:
     HTTPServer(int port = 8080);
     virtual ~HTTPServer() {}
