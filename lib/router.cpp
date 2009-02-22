@@ -15,6 +15,7 @@
 */
 
 #include "router.h"
+
 #include "resource.h"
 
 void Router::attach(const QString& uri, Resource* resource) {

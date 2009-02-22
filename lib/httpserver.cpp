@@ -14,6 +14,8 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include "httpserver.h"
+
 #include <QString>
 #include <QTcpSocket>
 #include <QHostAddress>
@@ -21,7 +23,6 @@
 
 #include "router.h"
 #include "resource.h"
-#include "httpserver.h"
 #include "application.h"
 
 HTTPServer::HTTPServer(int port) : Server(port) {
