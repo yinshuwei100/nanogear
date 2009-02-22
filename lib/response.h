@@ -11,6 +11,6 @@ public:
         { return m_representation; }
 private:
     Representation m_representation;
-}
+};
 
 #endif /* NANOGEAR_RESPONSE_H */
