@@ -17,11 +17,9 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <QHash>
 #include "context.h"
 
 class QString;
-
 class Router;
 
 class Application {
