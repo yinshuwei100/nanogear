@@ -17,7 +17,7 @@
 #ifndef ROUTER_H
 #define ROUTER_H
 
-#include <QHash>
+#include <QList>
 
 #include "context.h"
 
