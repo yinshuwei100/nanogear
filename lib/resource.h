@@ -14,13 +14,36 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "router.h"
-#include "resource.h"
+#ifndef RESOURCE_H
+#define RESOURCE_H
 
-void Router::attach(const QString& uri, Resource* resource) {
-    m_resources.append(resource);
-    Context* c = new Context(context().contextPath() + uri);
-    resource->setContext(*c);
-}
+#include "context.h"
+
+class Resource {
+public:
+    virtual void handleGet()  {}
+    virtual void handlePut()  {}
+    virtual void handlePost() {}
+    virtual void handleOptions() {}
+    virtual void handleDelete()  {}
 
 
+    void setContext(const Context& context)
+        { m_context = context; }
+    const Context& context() const
+        { return m_context; }
+
+//     void setRequest(const Request& request);
+//     const Request& request() const;
+// 
+//     void setResponse(const Response& response);
+//     Response& response();
+    
+private:
+    bool m_modifiable;
+    Context m_context;
+//     Request m_request;
+//     Response m_response;
+};
+
+#endif // RESOURCE_H

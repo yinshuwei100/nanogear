@@ -19,6 +19,8 @@
 #include <QHostAddress>
 #include <QHttpRequestHeader>
 
+#include "router.h"
+#include "resource.h"
 #include "httpserver.h"
 #include "application.h"
 
@@ -27,49 +29,44 @@ HTTPServer::HTTPServer(int port) : Server(port) {
 }
 
 void HTTPServer::start() {
-    qDebug() << "HTTPServer: started on " << QHostAddress::Any << ":" << listenPort();
+    qDebug() << Q_FUNC_INFO << " started on " << QHostAddress::Any << ":" << listenPort();
     m_tcpServer.listen(QHostAddress::Any, listenPort());
 }
 
 void HTTPServer::onNewConnection() {
-    qDebug() << "HTTPServer: received new connection";
+    qDebug() << Q_FUNC_INFO << " received new connection";
     QTcpSocket* client = m_tcpServer.nextPendingConnection();
     connect(client, SIGNAL(readyRead()), this, SLOT(onClientReadyRead()));
     connect(client, SIGNAL(disconnected()), client, SLOT(deleteLater()));
 }
 
 void HTTPServer::onClientReadyRead() {
-    qDebug() << "HTTPServer: ready to read data sent by the client";
+    qDebug() << Q_FUNC_INFO << " ready to read data sent by the client";
     
     QByteArray inputBlock;
 
-    QTcpSocket* client = dynamic_cast<QTcpSocket*>(sender());
+    QTcpSocket* client = static_cast<QTcpSocket*>(sender());
     inputBlock = client->readAll();
     
     QHttpRequestHeader requestHeader(inputBlock);
     qDebug() << "HTTPServer: requested path: " << requestHeader.path();
-    foreach (const QString& appContext, attachedApps().keys()) {
-        if (requestHeader.path().startsWith(appContext)) {
-            qDebug() << "HTTPServer: found an application within context " << appContext;
-            
-            // We pass the URIs without the context
-            QString URI(requestHeader.path());
-            URI.remove(0, appContext.size());
-            qDebug() << "HTTPServer: passing " << URI;
+    foreach (Application* app, attachedApplications()) {
+        if (requestHeader.path().startsWith(app->context().contextPath())) {
+            qDebug() << Q_FUNC_INFO << " found an application within context " << app->context().contextPath();
 
-            /*! @note
-             * This is WRONG, the Uniform (or Uniform-derived) itself should be able to handle requests
-             */
             // Get context
-            Router* root = attachedApps()[appContext]->createRoot();
-            foreach (const QString& mappedURI, root->mappedResources().keys()) {
-                if (URI == mappedURI) {
+            //! @note recreate root for each new request?
+            Router* root = app->createRoot();
+            
+            foreach (Resource* resource, root->attachedResources()) {
+                qDebug() << Q_FUNC_INFO << " resource context is: " << resource->context().contextPath();
+                if (requestHeader.path() == resource->context().contextPath()) {
+                    qDebug() << Q_FUNC_INFO << " found resource attached within this context";
+                    // Set the response object
+                    
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
-                        // Ouch!
-                        // It's better to follow Restlet's design and move the
-                        // context information within a Uniform-derived class
-                        root->mappedResources()[mappedURI]->get(requestHeader, client);
+                        resource->handleGet();
                     }
                 }
             }

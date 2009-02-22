@@ -2,20 +2,12 @@
  */
 
 #include "server.h"
+#include "context.h"
+#include "application.h"
 
 void Server::attach(const QString& context, Application* app) {
-    m_attachedApps[context] = app;
-}
-
-
-int Server::listenPort() const {
-    return m_listenPort;
-}
-void Server::setListenPort(int port) {
-    m_listenPort = port;
-}
-
-const QHash< QString, Application* >& Server::attachedApps() const {
-    return m_attachedApps;
+    m_applications.append(app);
+    Context* c = new Context(context);
+    app->setContext(*c);
 }
 

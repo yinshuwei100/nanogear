@@ -18,15 +18,25 @@
 #define APPLICATION_H
 
 #include <QHash>
-
-#include "router.h"
-#include "uniform.h"
+#include "context.h"
 
 class QString;
 
-class Application : public Uniform {
+class Router;
+
+class Application {
 public:
+    Application() {}
+    Application(const Context& context) : m_context(context) {}
+    
     virtual Router* createRoot() = 0;
+
+    void setContext(const Context& context)
+        { m_context = context; }
+    const Context& context() const
+        { return m_context; }
+private:
+    Context m_context;
 };
 
 #endif // APPLICATION_H

@@ -14,30 +14,41 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <QHash>
-
 #ifndef SERVER_H
 #define SERVER_H
+
+#include <QList>
+
+#include "context.h"
 
 class QString;
 class Application;
 
-class Server : public QObject {
+class Server {
 public:
-    Server() {}
-    Server(int port) : m_listenPort(port) {}
+    Server(int port = 8080) : m_listenPort(port) {}
     virtual ~Server() {}
     
     void attach(const QString& context, Application*);
     virtual void start() = 0;
 
-    void setListenPort(int port);
-    int listenPort() const;
+    const QList<Application*>& attachedApplications() const
+        { return m_applications; }
+    
+    void setContext(const Context& context)
+        { m_context = context; }
+    const Context& context() const
+        { return m_context; }
 
-    const QHash<QString, Application*>& attachedApps() const;
+    void setListenPort(int port)
+        { m_listenPort = port; }
+    int listenPort() const
+        { return m_listenPort; }
+        
 private:
     int m_listenPort;
-    QHash<QString, Application*> m_attachedApps;
+    Context m_context;
+    QList<Application*> m_applications;
 };
 
 #endif // SERVER_H
