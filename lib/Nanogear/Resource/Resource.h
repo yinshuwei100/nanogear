@@ -21,8 +21,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Resource -*/
-
 #ifndef NANOGEAR_RESOURCE_RESOURCE_H
 #define NANOGEAR_RESOURCE_RESOURCE_H
 
