@@ -21,25 +21,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Context -*/
+#include "Router.h"
 
-#ifndef CONTEXT_H
-#define CONTEXT_H
+#include "Resource/Resource.h"
 
-#include <QString>
+namespace Nanogear {
 
-class Context {
-public:
-    Context() {}
-    Context(const QString& contextPath) : m_contextPath(contextPath) {}
-    virtual ~Context() {}
+void Router::attach(const QString& uri, Resource::Resource* resource) {
+    m_resources.append(resource);
+    Context* c = new Context(context().contextPath() + uri);
+    resource->setContext(*c);
+}
 
-    void setContextPath(const QString& contextPath)
-        { m_contextPath = contextPath; }
-    const QString& contextPath() const
-        { return m_contextPath; }
-private:
-    QString m_contextPath;
-};
+}
 
-#endif // CONTEXT_H
+

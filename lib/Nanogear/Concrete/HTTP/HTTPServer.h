@@ -21,14 +21,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "router.h"
+#ifndef NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
+#define NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
 
-#include "resource.h"
+#include <QTcpServer>
 
-void Router::attach(const QString& uri, Resource* resource) {
-    m_resources.append(resource);
-    Context* c = new Context(context().contextPath() + uri);
-    resource->setContext(*c);
+#include "../../Server.h"
+
+namespace Nanogear {
+namespace Concrete {
+namespace HTTP {
+
+class HTTPServer : public QObject, public Server {
+    Q_OBJECT
+public:
+    HTTPServer(int port = 8080);
+    virtual ~HTTPServer() {}
+    
+    virtual void start();
+    
+public slots:
+    void onNewConnection();
+    void onClientReadyRead();
+    
+private:
+    QTcpServer m_tcpServer;
+};
+
+}
+}
 }
 
-
+#endif /* NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H */

@@ -21,29 +21,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Application -*/
+#include "Server.h"
 
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#include "Context.h"
+#include "Application.h"
 
-#include "context.h"
+namespace Nanogear {
 
-class QString;
-class Router;
+void Server::attach(const QString& context, Application* app) {
+    m_applications.append(app);
+    Context* c = new Context(context);
+    app->setContext(*c);
+}
 
-class Application {
-public:
-    Application() {}
-    Application(const Context& context) : m_context(context) {}
-    
-    virtual Router* createRoot() = 0;
+}
 
-    void setContext(const Context& context)
-        { m_context = context; }
-    const Context& context() const
-        { return m_context; }
-private:
-    Context m_context;
-};
-
-#endif // APPLICATION_H

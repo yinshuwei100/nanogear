@@ -21,43 +21,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Server -*/
+/*- HEADER NAME: Router -*/
 
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef ROUTER_H
+#define ROUTER_H
 
 #include <QList>
 
-#include "context.h"
+#include "Context.h"
 
 class QString;
-class Application;
 
-class Server {
+namespace Nanogear {
+namespace Resource {
+class Resource;
+}
+
+class Router {
 public:
-    Server(int port = 8080) : m_listenPort(port) {}
-    virtual ~Server() {}
-    
-    void attach(const QString& context, Application*);
-    virtual void start() = 0;
+    Router(const Context& context) : m_context(context) {}
+    virtual ~Router() {}
 
-    const QList<Application*>& attachedApplications() const
-        { return m_applications; }
+    void attach(const QString& uri, Resource::Resource* resource);
     
+    const QList<Resource::Resource*> attachedResources() const
+        { return m_resources; }
+
     void setContext(const Context& context)
         { m_context = context; }
     const Context& context() const
         { return m_context; }
-
-    void setListenPort(int port)
-        { m_listenPort = port; }
-    int listenPort() const
-        { return m_listenPort; }
-        
 private:
-    int m_listenPort;
     Context m_context;
-    QList<Application*> m_applications;
+    QList<Resource::Resource*> m_resources;
 };
 
-#endif // SERVER_H
+}
+
+#endif // ROUTER_H

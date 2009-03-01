@@ -21,16 +21,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Representation -*/
+/*- HEADER NAME: Context -*/
 
-#ifndef NANOGEAR_REPRESENTATION_H
-#define NANOGEAR_REPRESENTATION_H
+#ifndef CONTEXT_H
+#define CONTEXT_H
 
-class QByteArray;
+#include <QString>
 
-class Representation {
+namespace Nanogear {
+
+class Context {
 public:
-    virtual QByteArray& asByteArray() = 0;
+    Context() {}
+    Context(const QString& contextPath) : m_contextPath(contextPath) {}
+    virtual ~Context() {}
+
+    void setContextPath(const QString& contextPath)
+        { m_contextPath = contextPath; }
+    const QString& contextPath() const
+        { return m_contextPath; }
+private:
+    QString m_contextPath;
 };
 
-#endif /* NANOGEAR_REPRESENTATION_H */
+}
+
+#endif // CONTEXT_H
