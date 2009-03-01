@@ -21,8 +21,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Context -*/
-
 #ifndef CONTEXT_H
 #define CONTEXT_H
 

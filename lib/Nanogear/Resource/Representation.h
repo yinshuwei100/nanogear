@@ -21,8 +21,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Representation -*/
-
 #ifndef NANOGEAR_RESOURCE_REPRESENTATION_H
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 

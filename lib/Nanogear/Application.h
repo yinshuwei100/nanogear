@@ -21,10 +21,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Application -*/
 
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef NANOGEAR_APPLICATION_H
+#define NANOGEAR_APPLICATION_H
 
 #include "Context.h"
 
@@ -51,4 +50,4 @@ private:
 
 }
 
-#endif // APPLICATION_H
+#endif /* NANOGEAR_APPLICATION_H */

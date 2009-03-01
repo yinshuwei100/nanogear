@@ -21,8 +21,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Server -*/
-
 #ifndef NANOGEAR_SERVER_H
 #define NANOGEAR_SERVER_H
 
