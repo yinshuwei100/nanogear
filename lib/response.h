@@ -1,3 +1,5 @@
+/*- HEADER NAME: Response -*/
+
 #ifndef NANOGEAR_RESPONSE_H
 #define NANOGEAR_RESPONSE_H
 

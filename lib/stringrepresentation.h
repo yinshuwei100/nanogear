@@ -21,8 +21,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_STRINGREPRESENTATION_H
-#define NANOGEAR_STRINGREPRESENTATION_H
+/*- HEADER NAME: StringRepresentation -*/
+
+#ifndef NANOGEAR_RESOURCE_STRINGREPRESENTATION_H
+#define NANOGEAR_RESOURCE_STRINGREPRESENTATION_H
 
 #include "representation.h"
 
@@ -41,4 +43,4 @@ private:
     QString m_representation;
 };
 
-#endif /* NANOGEAR_STRINGREPRESENTATION_H */
+#endif /* NANOGEAR_RESOURCE_STRINGREPRESENTATION_H */
