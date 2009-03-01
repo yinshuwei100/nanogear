@@ -9,6 +9,9 @@ class StringRepresentation : public Representation {
 public:
     StringRepresentation(const QString& repr);
 
+    QString& representation()
+        {  return m_representation; }
+
     virtual QByteArray& asByteArray()
         { return m_representation; }
 private:

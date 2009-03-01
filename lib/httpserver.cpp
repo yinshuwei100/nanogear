@@ -72,6 +72,7 @@ void HTTPServer::onClientReadyRead() {
                 }
             }
 
+				// delete the root
             delete root;
         }
     }
