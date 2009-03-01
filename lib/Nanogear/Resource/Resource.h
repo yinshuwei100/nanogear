@@ -23,10 +23,13 @@
 
 /*- HEADER NAME: Resource -*/
 
-#ifndef NANOGEAR_RESOURCE_H
-#define NANOGEAR_RESOURCE_H
+#ifndef NANOGEAR_RESOURCE_RESOURCE_H
+#define NANOGEAR_RESOURCE_RESOURCE_H
 
-#include "context.h"
+#include "../Context.h"
+
+namespace Nanogear {
+namespace Resource {
 
 class Resource {
 public:
@@ -55,4 +58,7 @@ private:
 //     Response m_response;
 };
 
-#endif // NANOGEAR_RESOURCE_H
+}
+}
+
+#endif // NANOGEAR_RESOURCE_RESOURCE_H

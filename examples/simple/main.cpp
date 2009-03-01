@@ -22,13 +22,16 @@
 #include <QHttpRequestHeader>
 #include <QTcpSocket>
 
-#include "application.h"
-#include "server.h"
-#include "httpserver.h"
-#include "resource.h"
-#include "router.h"
+#include <Nanogear/Application>
+#include <Nanogear/Router>
+#include <Nanogear/Server>
+#include <Nanogear/Resource/Resource>
+#include <Nanogear/Concrete/HTTP/HTTPServer>
 
-class RootResource : public Resource {
+using namespace Nanogear;
+using namespace Nanogear::Concrete::HTTP;
+
+class RootResource : public Resource::Resource {
     virtual void handleGet() {
         qDebug() << "Called RootResource::handleGet()";
     }

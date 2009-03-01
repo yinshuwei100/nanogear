@@ -21,35 +21,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: Router -*/
+/*- HEADER NAME: Representation -*/
 
-#ifndef ROUTER_H
-#define ROUTER_H
+#ifndef NANOGEAR_RESOURCE_REPRESENTATION_H
+#define NANOGEAR_RESOURCE_REPRESENTATION_H
 
-#include <QList>
+class QByteArray;
 
-#include "context.h"
+namespace Nanogear {
+namespace Resource {
 
-class QString;
-class Resource;
-
-class Router {
+class Representation {
 public:
-    Router(const Context& context) : m_context(context) {}
-    virtual ~Router() {}
-
-    void attach(const QString& uri, Resource* resource);
-    
-    const QList<Resource*> attachedResources() const
-        { return m_resources; }
-
-    void setContext(const Context& context)
-        { m_context = context; }
-    const Context& context() const
-        { return m_context; }
-private:
-    Context m_context;
-    QList<Resource*> m_resources;
+    virtual QByteArray& asByteArray() = 0;
 };
 
-#endif // ROUTER_H
+}
+}
+
+#endif /* NANOGEAR_RESOURCE_REPRESENTATION_H */

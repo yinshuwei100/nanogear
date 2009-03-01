@@ -21,29 +21,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*- HEADER NAME: HTTPServer -*/
+/*- HEADER NAME: Server -*/
 
-#ifndef HTTPSERVER_H
-#define HTTPSERVER_H
+#ifndef NANOGEAR_SERVER_H
+#define NANOGEAR_SERVER_H
 
-#include <QTcpServer>
+#include <QList>
 
-#include "server.h"
+#include "Context.h"
 
-class HTTPServer : public QObject, public Server {
-    Q_OBJECT
+class QString;
+
+namespace Nanogear {
+
+class Application;
+
+class Server {
 public:
-    HTTPServer(int port = 8080);
-    virtual ~HTTPServer() {}
+    Server(int port = 8080) : m_listenPort(port) {}
+    virtual ~Server() {}
     
-    virtual void start();
+    void attach(const QString& context, Application*);
+    virtual void start() = 0;
+
+    const QList<Application*>& attachedApplications() const
+        { return m_applications; }
     
-public slots:
-    void onNewConnection();
-    void onClientReadyRead();
-    
+    void setContext(const Context& context)
+        { m_context = context; }
+    const Context& context() const
+        { return m_context; }
+
+    void setListenPort(int port)
+        { m_listenPort = port; }
+    int listenPort() const
+        { return m_listenPort; }
+        
 private:
-    QTcpServer m_tcpServer;
+    int m_listenPort;
+    Context m_context;
+    QList<Application*> m_applications;
 };
 
-#endif // HTTPSERVER_H
+}
+
+#endif /* NANOGEAR_SERVER_H */

@@ -21,14 +21,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "server.h"
+/*- HEADER NAME: StringRepresentation -*/
 
-#include "context.h"
-#include "application.h"
+#ifndef NANOGEAR_RESOURCE_STRINGREPRESENTATION_H
+#define NANOGEAR_RESOURCE_STRINGREPRESENTATION_H
 
-void Server::attach(const QString& context, Application* app) {
-    m_applications.append(app);
-    Context* c = new Context(context);
-    app->setContext(*c);
+#include "Representation.h"
+
+#include <QString>
+
+namespace Nanogear {
+namespace Resource {
+
+class StringRepresentation : public Representation {
+public:
+    StringRepresentation(const QString& repr);
+
+    QString& representation()
+        {  return m_representation; }
+
+    virtual QByteArray& asByteArray()
+        { return m_representation; }
+private:
+    QString m_representation;
+};
+
+}
 }
 
+#endif /* NANOGEAR_RESOURCE_STRINGREPRESENTATION_H */

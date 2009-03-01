@@ -3,7 +3,9 @@
 #ifndef NANOGEAR_RESPONSE_H
 #define NANOGEAR_RESPONSE_H
 
-#include "representation.h"
+#include "Resource/Representation.h"
+
+namespace Nanogear {
 
 class Response {
 public:
@@ -14,5 +16,7 @@ public:
 private:
     Representation m_representation;
 };
+
+}
 
 #endif /* NANOGEAR_RESPONSE_H */

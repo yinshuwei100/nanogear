@@ -21,16 +21,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "httpserver.h"
+#include "HTTPServer.h"
 
 #include <QString>
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QHttpRequestHeader>
 
-#include "router.h"
-#include "resource.h"
-#include "application.h"
+#include "../../Router.h"
+#include "../../Application.h"
+#include "../../Resource/Resource.h"
+
+namespace Nanogear {
+namespace Concrete {
+namespace HTTP {
+
 
 HTTPServer::HTTPServer(int port) : Server(port) {
     connect(&m_tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
@@ -66,7 +71,7 @@ void HTTPServer::onClientReadyRead() {
             //! @note recreate root for each new request?
             Router* root = app->createRoot();
             
-            foreach (Resource* resource, root->attachedResources()) {
+            foreach (Resource::Resource* resource, root->attachedResources()) {
                 qDebug() << Q_FUNC_INFO << " resource context is: " << resource->context().contextPath();
                 if (requestHeader.path() == resource->context().contextPath()) {
                     qDebug() << Q_FUNC_INFO << " found resource attached within this context";
@@ -89,3 +94,6 @@ void HTTPServer::onClientReadyRead() {
 }
 
 
+}
+}
+}
