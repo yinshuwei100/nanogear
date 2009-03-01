@@ -21,6 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*- HEADER NAME: Application -*/
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
