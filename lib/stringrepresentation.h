@@ -30,6 +30,9 @@
 
 #include <QString>
 
+namespace Nanogear {
+namespace Resource {
+
 class StringRepresentation : public Representation {
 public:
     StringRepresentation(const QString& repr);
@@ -42,5 +45,8 @@ public:
 private:
     QString m_representation;
 };
+
+}
+}
 
 #endif /* NANOGEAR_RESOURCE_STRINGREPRESENTATION_H */

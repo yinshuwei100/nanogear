@@ -9,3 +9,4 @@ qt4_wrap_cpp(nanogear_SRCS
 )
 
 add_library(nanogear SHARED ${nanogear_SRCS})
+add_subdirectory(Nanogear)
