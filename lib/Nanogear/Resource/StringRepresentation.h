@@ -33,13 +33,13 @@ namespace Resource {
 
 class StringRepresentation : public Representation {
 public:
-    StringRepresentation(const QString& repr);
+    StringRepresentation(const QString& repr) : m_representation(repr) {}
 
     QString& representation()
         {  return m_representation; }
 
-    virtual QByteArray& asByteArray()
-        { return m_representation; }
+    //! @note Ouch!
+    virtual const QByteArray& asByteArray() {}
 private:
     QString m_representation;
 };

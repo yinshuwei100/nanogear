@@ -21,8 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ROUTER_H
-#define ROUTER_H
+#ifndef NANOGEAR_ROUTER_H
+#define NANOGEAR_ROUTER_H
 
 #include <QList>
 
@@ -56,4 +56,4 @@ private:
 
 }
 
-#endif // ROUTER_H
+#endif /* NANOGEAR_ROUTER_H */

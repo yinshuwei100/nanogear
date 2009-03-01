@@ -30,7 +30,9 @@
 
 #include "../../Router.h"
 #include "../../Application.h"
+#include "../../Response.h"
 #include "../../Resource/Resource.h"
+#include "../../Resource/Representation.h"
 
 namespace Nanogear {
 namespace Concrete {
@@ -70,22 +72,38 @@ void HTTPServer::onClientReadyRead() {
             // Get context
             //! @note recreate root for each new request?
             Router* root = app->createRoot();
+            Response* response = new Response();
             
             foreach (Resource::Resource* resource, root->attachedResources()) {
                 qDebug() << Q_FUNC_INFO << " resource context is: " << resource->context().contextPath();
                 if (requestHeader.path() == resource->context().contextPath()) {
                     qDebug() << Q_FUNC_INFO << " found resource attached within this context";
                     // Set the response object
+                    resource->setResponse(*response);
                     
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
                         resource->handleGet();
+                        // A GET request usually gives you the representation
+                        // of a resource
+                        response->setRepresentation(resource->represent());
                     }
+
+
+                    // Write data to the client
+                    QHttpResponseHeader responseHeader;
+                    client->write(responseHeader.toString().toAscii());
+                    //! @todo: write the response
+                    // end
+
+                    // only one resource per URI
+                    break;
                 }
             }
 
 				// delete the root
             delete root;
+            delete response;
         }
     }
 

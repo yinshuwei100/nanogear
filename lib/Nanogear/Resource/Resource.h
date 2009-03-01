@@ -25,8 +25,12 @@
 #define NANOGEAR_RESOURCE_RESOURCE_H
 
 #include "../Context.h"
+#include "../Response.h"
 
 namespace Nanogear {
+
+typedef int Request; //! @note use this fake type until it's implemented, remove ASAP!
+
 namespace Resource {
 
 class Resource {
@@ -36,6 +40,7 @@ public:
     virtual void handlePost() {}
     virtual void handleOptions() {}
     virtual void handleDelete()  {}
+    virtual const Representation& represent() {}
 
 
     void setContext(const Context& context)
@@ -43,17 +48,20 @@ public:
     const Context& context() const
         { return m_context; }
 
-//     void setRequest(const Request& request);
-//     const Request& request() const;
-// 
-//     void setResponse(const Response& response);
-//     Response& response();
-    
+    void setRequest(const Request& request)
+        { m_request = request; }
+    const Request& request() const
+        { return m_request; }
+ 
+    void setResponse(const Response& response)
+        { m_response = response; }
+    Response& response()
+        { return m_response; }
 private:
     bool m_modifiable;
     Context m_context;
-//     Request m_request;
-//     Response m_response;
+    Request m_request;
+    Response m_response;
 };
 
 }

@@ -30,12 +30,12 @@ namespace Nanogear {
 
 class Response {
 public:
-    void setRepresentation(const Representation& representation)
+    void setRepresentation(const Resource::Representation& representation)
         { m_representation = representation; }
-    const Representation& representation() const
+    const Resource::Representation& representation() const
         { return m_representation; }
 private:
-    Representation m_representation;
+    Resource::Representation m_representation;
 };
 
 }
