@@ -31,7 +31,7 @@ namespace Resource {
 
 class Representation {
 public:
-    virtual QByteArray& asByteArray() = 0;
+    virtual const QByteArray& asByteArray() {}
 };
 
 }

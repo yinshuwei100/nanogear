@@ -17,6 +17,7 @@
  */
 
 #include <QDebug>
+#include <QString>
 #include <QCoreApplication>
 #include <QHttpResponseHeader>
 #include <QHttpRequestHeader>
@@ -25,6 +26,8 @@
 #include <Nanogear/Application>
 #include <Nanogear/Router>
 #include <Nanogear/Server>
+#include <Nanogear/Resource/Representation>
+#include <Nanogear/Resource/StringRepresentation>
 #include <Nanogear/Resource/Resource>
 #include <Nanogear/Concrete/HTTP/HTTPServer>
 
@@ -32,8 +35,11 @@ using namespace Nanogear;
 using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
-    virtual void handleGet() {
+    virtual const Nanogear::Resource::Representation& represent() {
         qDebug() << "Called RootResource::handleGet()";
+        QString test("<h1>Test resource response</h1>");
+        Nanogear::Resource::StringRepresentation* srep = new Nanogear::Resource::StringRepresentation(test);
+        return *srep;
     }
 };
 
