@@ -29,7 +29,7 @@ namespace Nanogear {
 
 void Router::attach(const QString& uri, Resource::Resource* resource) {
     m_resources.append(resource);
-    Context* c = new Context(context().contextPath() + uri);
+    Context c(context().contextPath() + uri);
     resource->setContext(*c);
 }
 
