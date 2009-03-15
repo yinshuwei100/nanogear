@@ -4,6 +4,7 @@ add_subdirectory(Resource)
 set(nanogear_SRCS
     Router.cpp
     Server.cpp
+    Context.cpp
 )
 
 add_library(nanogear SHARED ${nanogear_SRCS})
