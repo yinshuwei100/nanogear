@@ -88,7 +88,7 @@ void HTTPServer::onClientReadyRead() {
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
                         resource->handleGet();
-                        responseHeader.setContentType(response.representation()->mediaType());
+                        responseHeader.setContentType(resource->response().representation()->mediaType());
                         client->write(responseHeader.toString().toUtf8());
                         client->write("\r\n"); // required by HTTP
                         client->write(resource->response().representation()->asByteArray());
