@@ -88,26 +88,22 @@ void HTTPServer::onClientReadyRead() {
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
                         resource->handleGet();
-                        client->write("\r\n");
+                        client->write("\r\n"); // required by HTTP
                         client->write(resource->response().representation()->asByteArray());
                     }
 
+                    // Close the socket
+                    client->close();
                     // only one resource per URI
                     break;
                 }
             }
-            
-            // Close connection
-            client->close();
             
             // delete the root
             delete root;
             delete response;
         }
     }
-
-    // Automatically close the socket
-    client->close();
 }
 
 
