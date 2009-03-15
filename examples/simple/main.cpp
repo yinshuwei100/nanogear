@@ -35,24 +35,24 @@ using namespace Nanogear;
 using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
-    virtual void handleGet() {
-        qDebug() << Q_FUNC_INFO << "called";
-        QString test("<h1>Test response</h1>");
-        srep = new Nanogear::Resource::StringRepresentation(test);
-        response().setRepresentation(srep);
-    }
-
+public:
+    RootResource() : srep("<h1>Test response</h1>") {}
     virtual ~RootResource() {
         delete srep;
     }
+    virtual void handleGet() {
+        qDebug() << Q_FUNC_INFO << "called";
+        response().setRepresentation(srep);
+    }
+
 private:
-    Nanogear::Resource::StringRepresentation* srep;
+    Nanogear::Resource::StringRepresentation srep;
 };
 
 class SimpleApplication : public Application {
     virtual Router* createRoot() {
-        r = new Router(context());
-        r->attach("/resource", new RootResource());
+        m_router = new Router(context());
+        m_router->attach("/resource", m_rootResource);
         return r;
     }
 
@@ -60,15 +60,17 @@ class SimpleApplication : public Application {
         delete r;
     }
 private:
-    Router* r;
+    Router* m_router;
+    RootResource m_rootResource;
 };
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
+    SimpleApplication simpleApp;
     
-    Server* server = new HTTPServer(8080);
-    server->attach("/simple", new SimpleApplication());
-    server->start();
+    HTTPServer server(8080);
+    server.attach("/simple", simpleApp);
+    server.start();
     
     return app.exec();
 }
