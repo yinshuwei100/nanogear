@@ -24,6 +24,7 @@
 #ifndef NANOGEAR_RESOURCE_REPRESENTATION_H
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 
+#include <QDebug>
 class QByteArray;
 
 namespace Nanogear {
@@ -31,7 +32,8 @@ namespace Resource {
 
 class Representation {
 public:
-    virtual const QByteArray& asByteArray() const {}
+    virtual ~Representation() {}
+    virtual QByteArray asByteArray() const = 0;
 };
 
 }
