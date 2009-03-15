@@ -33,7 +33,6 @@
 #include "../../Response.h"
 #include "../../Resource/Resource.h"
 #include "../../Resource/Representation.h"
-#include "../../Resource/StringRepresentation.h"
 
 namespace Nanogear {
 namespace Concrete {
@@ -101,7 +100,7 @@ void HTTPServer::onClientReadyRead() {
             // Close connection
             client->close();
             
-			// delete the root
+            // delete the root
             delete root;
             delete response;
         }
