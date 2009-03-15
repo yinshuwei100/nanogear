@@ -64,7 +64,7 @@ void HTTPServer::onClientReadyRead() {
     inputBlock = client->readAll();
     
     QHttpRequestHeader requestHeader(inputBlock);
-    requestHeader.setRequest(requestHeader.method(), requestHeader.path().remove(QRegExp("/$")),
+    requestHeader.setRequest(requestHeader.method(), Context::sanitize(requestHeader.path()),
         requestHeader.majorVersion(), requestHeader.minorVersion());
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
     

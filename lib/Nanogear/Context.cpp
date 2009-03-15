@@ -21,29 +21,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONTEXT_H
-#define CONTEXT_H
-
-#include <QString>
+#include "Context.h"
+#include <QRegExp>
 
 namespace Nanogear {
 
-class Context {
-public:
-    Context() {}
-    Context(const QString& contextPath) : m_contextPath(contextPath)
-        { sanitize(m_contextPath); }
-    virtual ~Context() {}
-
-    void setContextPath(const QString& contextPath)
-        { m_contextPath = contextPath; sanitize(m_contextPath); }
-    const QString& contextPath() const
-        { return m_contextPath; }
-    static QString sanitize(QString path);
-private:
-    QString m_contextPath;
-};
+QString Context::sanitize(QString path) {
+    return path.remove(QRegExp("/$"));
+}
 
 }
 
-#endif // CONTEXT_H
+
