@@ -30,8 +30,8 @@ namespace Nanogear {
 
 void Server::attach(const QString& context, Application* app) {
     m_applications.append(app);
-    Context* c = new Context(context);
-    app->setContext(*c);
+    Context c(context);
+    app->setContext(c);
 }
 
 }
