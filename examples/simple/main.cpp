@@ -35,11 +35,11 @@ using namespace Nanogear;
 using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
-    virtual const Nanogear::Resource::Representation& represent() {
+    virtual void handleGet() {
         qDebug() << "Called RootResource::handleGet()";
         QString test("<h1>Test resource response</h1>");
         Nanogear::Resource::StringRepresentation* srep = new Nanogear::Resource::StringRepresentation(test);
-        return *srep;
+        response().setRepresentation(*srep);
     }
 };
 
