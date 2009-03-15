@@ -29,8 +29,8 @@
 #include <QHttpRequestHeader>
 
 #include "../../Router.h"
-#include "../../Application.h"
 #include "../../Response.h"
+#include "../../Application.h"
 #include "../../Resource/Resource.h"
 #include "../../Resource/Representation.h"
 
@@ -65,6 +65,7 @@ void HTTPServer::onClientReadyRead() {
     
     QHttpRequestHeader requestHeader(inputBlock);
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
+    
     foreach (Application* app, attachedApplications()) {
         if (requestHeader.path().startsWith(app->context().contextPath())) {
             qDebug() << Q_FUNC_INFO << "found an application within context " << app->context().contextPath();
@@ -99,7 +100,7 @@ void HTTPServer::onClientReadyRead() {
                 }
             }
             
-            // delete the root
+            // cleanup
             delete root;
             delete response;
         }
