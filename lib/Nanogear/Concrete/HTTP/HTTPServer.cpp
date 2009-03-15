@@ -73,7 +73,7 @@ void HTTPServer::onClientReadyRead() {
             // Get context
             //! @note recreate root for each new request?
             Router* root = app->createRoot();
-            Response* response = new Response();
+            Response response;
             
             foreach (Resource::Resource* resource, root->attachedResources()) {
                 qDebug() << Q_FUNC_INFO << "resource context is: " << resource->context().contextPath();
@@ -84,7 +84,7 @@ void HTTPServer::onClientReadyRead() {
                     client->write(responseHeader.toString().toUtf8());
                     
                     // Set the response object
-                    resource->setResponse(*response);
+                    resource->setResponse(response);
                     
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
@@ -102,7 +102,6 @@ void HTTPServer::onClientReadyRead() {
             
             // cleanup
             delete root;
-            delete response;
         }
     }
 }
