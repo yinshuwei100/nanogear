@@ -78,22 +78,22 @@ void HTTPServer::onClientReadyRead() {
                 qDebug() << Q_FUNC_INFO << " resource context is: " << resource->context().contextPath();
                 if (requestHeader.path() == resource->context().contextPath()) {
                     qDebug() << Q_FUNC_INFO << " found resource attached within this context";
+                    // Begin by writing the response header
+                    QHttpResponseHeader responseHeader;
+                    client->write(responseHeader.toString().toUtf8());
+                    
                     // Set the response object
                     resource->setResponse(*response);
                     
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
                         resource->handleGet();
-                        // A GET request usually gives you the representation
-                        // of a resource
-                        response->setRepresentation(resource->represent());
+                        //! @todo: it crashes here...
+                        client->write(resource->response().representation().asByteArray());
                     }
 
 
-                    // Write data to the client
-                    QHttpResponseHeader responseHeader;
-                    client->write(responseHeader.toString().toAscii());
-                    //! @todo: write the response
+                    //! @todo: write the representation
                     // end
 
                     // only one resource per URI

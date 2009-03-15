@@ -24,6 +24,8 @@
 #ifndef NANOGEAR_RESOURCE_RESOURCE_H
 #define NANOGEAR_RESOURCE_RESOURCE_H
 
+#include <QDebug>
+
 #include "../Context.h"
 #include "../Response.h"
 
@@ -33,14 +35,15 @@ typedef int Request; //! @note use this fake type until it's implemented, remove
 
 namespace Resource {
 
+class Representation;
+
 class Resource {
 public:
-    virtual void handleGet()  {}
-    virtual void handlePut()  {}
-    virtual void handlePost() {}
-    virtual void handleOptions() {}
-    virtual void handleDelete()  {}
-    virtual const Representation& represent() {}
+    virtual void handleGet()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
+    virtual void handlePut()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
+    virtual void handlePost() { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
+    virtual void handleOptions() { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
+    virtual void handleDelete()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
 
 
     void setContext(const Context& context)
