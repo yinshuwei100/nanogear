@@ -90,7 +90,6 @@ void HTTPServer::onClientReadyRead() {
                         resource->handleGet();
                         responseHeader.setContentType(resource->response().representation()->mediaType());
                         client->write(responseHeader.toString().toUtf8());
-                        client->write("\r\n"); // required by HTTP
                         client->write(resource->response().representation()->asByteArray());
                     }
 
