@@ -51,10 +51,16 @@ private:
 
 class SimpleApplication : public Application {
     virtual Router* createRoot() {
-        Router* r = new Router(context());
+        r = new Router(context());
         r->attach("/resource", new RootResource());
         return r;
     }
+
+    virtual ~SimpleApplication() {
+        delete r;
+    }
+private:
+    Router* r;
 };
 
 int main(int argc, char** argv) {
