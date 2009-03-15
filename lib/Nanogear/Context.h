@@ -25,17 +25,20 @@
 #define CONTEXT_H
 
 #include <QString>
+#include <QRegExp>
 
 namespace Nanogear {
 
 class Context {
 public:
     Context() {}
-    Context(const QString& contextPath) : m_contextPath(contextPath) {}
+    Context(const QString& contextPath) : m_contextPath(contextPath) {
+        m_contextPath.remove(QRegExp("/$"));
+    }
     virtual ~Context() {}
 
     void setContextPath(const QString& contextPath)
-        { m_contextPath = contextPath; }
+        { m_contextPath = contextPath; m_contextPath.remove(QRegExp("([^/])/$")); }
     const QString& contextPath() const
         { return m_contextPath; }
 private:
