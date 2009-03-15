@@ -33,6 +33,7 @@
 #include "../../Response.h"
 #include "../../Resource/Resource.h"
 #include "../../Resource/Representation.h"
+#include "../../Resource/StringRepresentation.h"
 
 namespace Nanogear {
 namespace Concrete {
@@ -44,19 +45,19 @@ HTTPServer::HTTPServer(int port) : Server(port) {
 }
 
 void HTTPServer::start() {
-    qDebug() << Q_FUNC_INFO << " started on " << QHostAddress::Any << ":" << listenPort();
+    qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
     m_tcpServer.listen(QHostAddress::Any, listenPort());
 }
 
 void HTTPServer::onNewConnection() {
-    qDebug() << Q_FUNC_INFO << " received new connection";
+    qDebug() << Q_FUNC_INFO << "received new connection";
     QTcpSocket* client = m_tcpServer.nextPendingConnection();
     connect(client, SIGNAL(readyRead()), this, SLOT(onClientReadyRead()));
     connect(client, SIGNAL(disconnected()), client, SLOT(deleteLater()));
 }
 
 void HTTPServer::onClientReadyRead() {
-    qDebug() << Q_FUNC_INFO << " ready to read data sent by the client";
+    qDebug() << Q_FUNC_INFO << "ready to read data sent by the client";
     
     QByteArray inputBlock;
 
@@ -64,10 +65,10 @@ void HTTPServer::onClientReadyRead() {
     inputBlock = client->readAll();
     
     QHttpRequestHeader requestHeader(inputBlock);
-    qDebug() << "HTTPServer: requested path: " << requestHeader.path();
+    qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
     foreach (Application* app, attachedApplications()) {
         if (requestHeader.path().startsWith(app->context().contextPath())) {
-            qDebug() << Q_FUNC_INFO << " found an application within context " << app->context().contextPath();
+            qDebug() << Q_FUNC_INFO << "found an application within context " << app->context().contextPath();
 
             // Get context
             //! @note recreate root for each new request?
@@ -75,9 +76,9 @@ void HTTPServer::onClientReadyRead() {
             Response* response = new Response();
             
             foreach (Resource::Resource* resource, root->attachedResources()) {
-                qDebug() << Q_FUNC_INFO << " resource context is: " << resource->context().contextPath();
+                qDebug() << Q_FUNC_INFO << "resource context is: " << resource->context().contextPath();
                 if (requestHeader.path() == resource->context().contextPath()) {
-                    qDebug() << Q_FUNC_INFO << " found resource attached within this context";
+                    qDebug() << Q_FUNC_INFO << "found resource attached within this context";
                     // Begin by writing the response header
                     QHttpResponseHeader responseHeader;
                     client->write(responseHeader.toString().toUtf8());
@@ -88,20 +89,19 @@ void HTTPServer::onClientReadyRead() {
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
                         resource->handleGet();
-                        //! @todo: it crashes here...
-                        client->write(resource->response().representation().asByteArray());
+                        client->write("\r\n");
+                        client->write(resource->response().representation()->asByteArray());
                     }
-
-
-                    //! @todo: write the representation
-                    // end
 
                     // only one resource per URI
                     break;
                 }
             }
-
-				// delete the root
+            
+            // Close connection
+            client->close();
+            
+			// delete the root
             delete root;
             delete response;
         }

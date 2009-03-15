@@ -36,11 +36,17 @@ using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
     virtual void handleGet() {
-        qDebug() << "Called RootResource::handleGet()";
-        QString test("<h1>Test resource response</h1>");
-        Nanogear::Resource::StringRepresentation* srep = new Nanogear::Resource::StringRepresentation(test);
-        response().setRepresentation(*srep);
+        qDebug() << Q_FUNC_INFO << "called";
+        QString test("<h1>Test response</h1>");
+        srep = new Nanogear::Resource::StringRepresentation(test);
+        response().setRepresentation(srep);
     }
+
+    virtual ~RootResource() {
+        delete srep;
+    }
+private:
+    Nanogear::Resource::StringRepresentation* srep;
 };
 
 class SimpleApplication : public Application {

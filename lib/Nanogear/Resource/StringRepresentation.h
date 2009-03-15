@@ -27,19 +27,21 @@
 #include "Representation.h"
 
 #include <QString>
+#include <QDebug>
 
 namespace Nanogear {
 namespace Resource {
 
-class StringRepresentation : public Representation {
+class StringRepresentation : public virtual Representation {
 public:
     StringRepresentation(const QString& repr) : m_representation(repr) {}
+    virtual ~StringRepresentation() {}
 
     QString& representation()
         {  return m_representation; }
 
-    //! @note Ouch!
-    virtual const QByteArray& asByteArray() {}
+    virtual QByteArray asByteArray() const
+        { return m_representation.toUtf8(); }
 private:
     QString m_representation;
 };

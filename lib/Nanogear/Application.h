@@ -37,6 +37,7 @@ class Application {
 public:
     Application() {}
     Application(const Context& context) : m_context(context) {}
+    virtual ~Application() {}
     
     virtual Router* createRoot() = 0;
 

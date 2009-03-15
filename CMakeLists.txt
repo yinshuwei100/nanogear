@@ -19,6 +19,8 @@ set(QT_USE_QTNETWORK 1)
 set(QT_DONT_USE_QTGUI 1)
 include(${QT_USE_FILE})
 
+# Be strict
+add_definitions(-Wall -pedantic)
 
 add_subdirectory(lib)
 add_subdirectory(examples)

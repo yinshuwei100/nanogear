@@ -39,6 +39,8 @@ class Representation;
 
 class Resource {
 public:
+    virtual ~Resource() {}
+    
     virtual void handleGet()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
     virtual void handlePut()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
     virtual void handlePost() { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
