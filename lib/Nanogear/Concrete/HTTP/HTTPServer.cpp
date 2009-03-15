@@ -81,14 +81,15 @@ void HTTPServer::onClientReadyRead() {
                     qDebug() << Q_FUNC_INFO << "found resource attached within this context";
                     // Begin by writing the response header
                     QHttpResponseHeader responseHeader(200, "OK", requestHeader.majorVersion(), requestHeader.minorVersion());
-                    client->write(responseHeader.toString().toUtf8());
-                    
+
                     // Set the response object
                     resource->setResponse(response);
-                    
+
                     //! @note Support only GET for now until I come up with a better design
                     if (requestHeader.method() == "GET") {
                         resource->handleGet();
+                        responseHeader.setContentType(response.representation()->mediaType());
+                        client->write(responseHeader.toString().toUtf8());
                         client->write("\r\n"); // required by HTTP
                         client->write(resource->response().representation()->asByteArray());
                     }

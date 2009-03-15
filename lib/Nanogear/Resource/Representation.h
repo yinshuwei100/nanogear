@@ -26,14 +26,22 @@
 
 #include <QDebug>
 class QByteArray;
+//! @note: Use this fake type for now.
+typedef QString MediaType;
 
 namespace Nanogear {
 namespace Resource {
 
 class Representation {
 public:
+    Representation() : m_mediaType("application/octet-stream") {}
     virtual ~Representation() {}
     virtual QByteArray asByteArray() const = 0;
+    virtual MediaType mediaType() const { return m_mediaType; }
+protected:
+    void setMediaType(const MediaType& media) { m_mediaType = media; }
+private:
+    MediaType m_mediaType;
 };
 
 }
