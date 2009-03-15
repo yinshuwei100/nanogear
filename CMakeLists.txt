@@ -20,7 +20,8 @@ set(QT_DONT_USE_QTGUI 1)
 include(${QT_USE_FILE})
 
 # Be strict
-add_definitions(-Wall -pedantic)
+add_definitions(-Wall)
+#add_definitions(-pedantic) # Doesn't work on my system. Qt use long long.
 
 add_subdirectory(lib)
 add_subdirectory(examples)
