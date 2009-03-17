@@ -28,10 +28,9 @@
 
 #include "../Context.h"
 #include "../Response.h"
+#include "../Request.h"
 
 namespace Nanogear {
-
-typedef int Request; //! @note use this fake type until it's implemented, remove ASAP!
 
 namespace Resource {
 
