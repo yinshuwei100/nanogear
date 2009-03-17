@@ -26,9 +26,18 @@
 
 namespace Nanogear {
 
+//! @note: Remove ASAP.
+typedef QString Method;
+
 class Request {
 public:
     virtual ~Request() {};
+    Method method() const
+        { return m_method; }
+    void setMethod(const Method& method)
+        { m_method = method; }
+private:
+    Method m_method;
 };
 
 }
