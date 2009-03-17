@@ -41,6 +41,8 @@ public:
 
     QString& representation()
         {  return m_representation; }
+    void setRepresentation(const QString& representation)
+        { m_representation = representation; }
 
     virtual QByteArray asByteArray() const
         { return m_representation.toUtf8(); }
