@@ -43,10 +43,15 @@ private:
 
 class SimpleApplication : public Application {
 public:
-    SimpleApplication() {
+    SimpleApplication() : srep("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html") {
         attach("/resource", &m_rootResource);
     }
+    virtual Response handleGet(const Request&) {
+        qDebug() << Q_FUNC_INFO << "called";
+        return Response(200, &srep);
+    }
 private:
+    Nanogear::Resource::StringRepresentation srep;
     RootResource m_rootResource;
 };
 
