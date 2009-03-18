@@ -39,7 +39,7 @@ public:
     RootResource() : srep("<h1>Test response</h1>", "text/html") {}
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
-        return Response(&srep);
+        return Response(200, &srep);
     }
 
 private:

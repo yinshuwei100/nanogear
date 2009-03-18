@@ -27,7 +27,7 @@
 namespace Nanogear {
 
 QString Context::sanitize(QString path) {
-    return path.remove(QRegExp("/$"));
+    return path.replace("//", "/").remove(QRegExp("/$"));
 }
 
 }

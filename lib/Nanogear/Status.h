@@ -21,34 +21,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_RESPONSE_H
-#define NANOGEAR_RESPONSE_H
-
-#include "Resource/Representation.h"
-#include "Resource/StringRepresentation.h"
-#include "Status.h"
+#ifndef NANOGEAR_STATUS_H
+#define NANOGEAR_STATUS_H
 
 namespace Nanogear {
 
-class Response {
+class Status {
 public:
-    Response(const Status& s, const Resource::Representation* rep) : m_status(s), m_representation(rep) {}
-    virtual ~Response() {}
-
-    void setStatus(const Status& s)
-        { m_status = s; }
-    const Status& status()
-        { return m_status; }
-
-    void setRepresentation(const Resource::Representation* representation)
-        { m_representation = representation; }
-    const Resource::Representation* representation() const
-        { return m_representation; }
+    Status(int code) : m_code(code) {
+        switch(m_code) {
+            case 200: m_name = "OK"; break;
+            case 404: m_name = "Not Found"; break;
+        }
+    }
+    int code() const
+        { return m_code; }
+    void setCode(int stat)
+        { m_code = stat; }
+    const QString& name() const
+        { return m_name; }
+    void setName(const QString& name)
+        { m_name = name; }
 private:
-    Status m_status;
-    const Resource::Representation* m_representation;
+    int m_code;
+    QString m_name;
 };
 
 }
 
-#endif /* NANOGEAR_RESPONSE_H */
+#endif /* NANOGEAR_STATUS_H */
