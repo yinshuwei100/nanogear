@@ -67,7 +67,7 @@ void HTTPServer::onClientReadyRead() {
         requestHeader.majorVersion(), requestHeader.minorVersion());
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
 
-    foreach (Resource::Resource* resource, attachedResources()) {
+    foreach (Resource::Resource* resource, findChildren<Resource::Resource*>()) {
         if (requestHeader.path().startsWith(resource->context().contextPath())) {
             qDebug() << Q_FUNC_INFO << "found resource within context " << resource->context().contextPath();
 
