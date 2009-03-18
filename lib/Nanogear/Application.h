@@ -25,28 +25,15 @@
 #ifndef NANOGEAR_APPLICATION_H
 #define NANOGEAR_APPLICATION_H
 
-#include "Context.h"
-
-class QString;
+#include "Router.h"
 
 namespace Nanogear {
 
-class Router;
-
-class Application {
+class Application : public Router {
 public:
-    Application() {}
-    Application(const Context& context) : m_context(context) {}
+    Application() {};
+    Application(const Context& context) : Router(context) {}
     virtual ~Application() {}
-    
-    virtual Router* createRoot() = 0;
-
-    void setContext(const Context& context)
-        { m_context = context; }
-    const Context& context() const
-        { return m_context; }
-private:
-    Context m_context;
 };
 
 }

@@ -16,12 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDebug>
-#include <QString>
 #include <QCoreApplication>
-#include <QHttpResponseHeader>
-#include <QHttpRequestHeader>
-#include <QTcpSocket>
 
 #include <Nanogear/Application>
 #include <Nanogear/Router>
@@ -48,27 +43,21 @@ private:
 
 class SimpleApplication : public Application {
 public:
-    virtual Router* createRoot() {
-        m_router = new Router(context());
-        m_router->attach("/resource", &m_rootResource);
-        return m_router;
-    }
-
-    virtual ~SimpleApplication() {
-        delete m_router;
+    SimpleApplication() {
+        attach("/resource", &m_rootResource);
     }
 private:
-    Router* m_router;
     RootResource m_rootResource;
 };
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
     SimpleApplication simpleApp;
-    
+
     HTTPServer server(8080);
     server.attach("/simple", &simpleApp);
     server.start();
     
     return app.exec();
 }
+

@@ -39,15 +39,15 @@ class Representation;
 class Resource {
 public:
     Resource() : m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
-        m_notFound("<h1>Not Found</h1>") {}
+        m_notFound("<h1>Not Found</h1>", "text/html") {}
     Resource(const Context& context) : m_context(context),
         m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
-        m_notFound("<h1>Not Found</h1>") {}
+        m_notFound("<h1>Not Found</h1>", "text/html") {}
     virtual ~Resource() {}
     
-    Response handleRequest(const Request&);
+    virtual Response handleRequest(const Request&);
 
-    void setContext(const Context& context)
+    virtual void setContext(const Context& context)
         { m_context = context; }
     const Context& context() const
         { return m_context; }

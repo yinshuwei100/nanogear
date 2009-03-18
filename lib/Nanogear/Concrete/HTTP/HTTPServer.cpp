@@ -30,7 +30,6 @@
 
 #include "../../Router.h"
 #include "../../Response.h"
-#include "../../Application.h"
 #include "../../Resource/Resource.h"
 #include "../../Resource/Representation.h"
 
@@ -68,14 +67,13 @@ void HTTPServer::onClientReadyRead() {
         requestHeader.majorVersion(), requestHeader.minorVersion());
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
 
-    foreach (Application* app, attachedApplications()) {
-        if (requestHeader.path().startsWith(app->context().contextPath())) {
-            qDebug() << Q_FUNC_INFO << "found an application within context " << app->context().contextPath();
+    foreach (Resource::Resource* resource, attachedResources()) {
+        if (requestHeader.path().startsWith(resource->context().contextPath())) {
+            qDebug() << Q_FUNC_INFO << "found resource within context " << resource->context().contextPath();
 
             //! @note recreate root for each new request?
-            Router* root = app->createRoot();
             Request request(requestHeader.method(), requestHeader.path());
-            Response response = root->handleRequest(request);
+            Response response = resource->handleRequest(request);
 
             QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
                 requestHeader.majorVersion(), requestHeader.minorVersion());
@@ -83,9 +81,6 @@ void HTTPServer::onClientReadyRead() {
             client->write(responseHeader.toString().toUtf8());
             client->write(response.representation()->asByteArray());
             client->close();
-
-            // cleanup
-            delete root;
         }
     }
 }
