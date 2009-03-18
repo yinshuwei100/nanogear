@@ -80,13 +80,10 @@ void HTTPServer::onClientReadyRead() {
                 qDebug() << Q_FUNC_INFO << "resource context is: " << resource->context().contextPath();
                 if (requestHeader.path() == resource->context().contextPath()) {
                     qDebug() << Q_FUNC_INFO << "found resource attached within this context";
-                    // Begin by writing the response header
-                    QHttpResponseHeader responseHeader(200, "OK", requestHeader.majorVersion(), requestHeader.minorVersion());
-
-                    // Set the request object
                     Request request(requestHeader.method());
-
                     Response response = resource->handleRequest(request);
+
+                    QHttpResponseHeader responseHeader(response.status().code(), response.status().name(), requestHeader.majorVersion(), requestHeader.minorVersion());
                     responseHeader.setContentType(response.representation()->mediaType());
                     client->write(responseHeader.toString().toUtf8());
                     client->write(response.representation()->asByteArray());

@@ -46,7 +46,7 @@ public:
     virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
     virtual Response handleOptions(const Request& r) { return methodNotSupported(r); }
     virtual Response handleDelete(const Request& r)  { return methodNotSupported(r); }
-    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(&m_methodNotSupported); }
+    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(501, &m_methodNotSupported); }
     Response handleRequest(const Request&);
 
     void setContext(const Context& context)
