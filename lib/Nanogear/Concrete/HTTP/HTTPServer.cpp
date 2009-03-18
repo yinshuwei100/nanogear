@@ -30,6 +30,7 @@
 
 #include "../../Router.h"
 #include "../../Response.h"
+#include "../../Request.h"
 #include "../../Resource/Resource.h"
 #include "../../Resource/Representation.h"
 
@@ -73,6 +74,14 @@ void HTTPServer::onClientReadyRead() {
 
             //! @note recreate root for each new request?
             ClientInfo clientInfo(requestHeader.value("user-agent"));
+            /* Add media types */ {
+                QList< Preference<MediaType> > accept;
+                foreach (const QString& mediaType, requestHeader.value("accept").split(", ")) {
+                    QList<QString> pair = mediaType.split(';');
+                    accept.append(Preference<MediaType>(pair.at(0), pair.value(1, "1").toFloat()));
+                }
+                clientInfo.setAcceptedMediaTypes(accept);
+            }
             Request request(requestHeader.method(), requestHeader.path(), clientInfo);
             Response response = resource->handleRequest(request);
 

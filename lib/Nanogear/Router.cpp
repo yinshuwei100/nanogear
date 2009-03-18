@@ -50,11 +50,13 @@ void Router::setContext(const Context& newContext) {
 }
 
 Response Router::handleRequest(const Request& req) {
+    Response res = notFound(req);
     foreach(Resource::Resource* resource, attachedResources()) {
         if (resource->context() != req.context()) continue;
-        return resource->handleRequest(req);
+        res = resource->handleRequest(req);
+        if (req.clientInf().acceptedMediaTypes().contains(res.mediaType())) break;
     }
-    return notFound(req);
+    return res;
 }
 
 }
