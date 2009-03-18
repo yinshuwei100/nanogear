@@ -21,40 +21,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REQUEST_H
-#define NANOGEAR_REQUEST_H
+#ifndef NANOGEAR_CLIENTINFO_H
+#define NANOGEAR_CLIENTINFO_H
 
 #include <QString>
-#include "ClientInfo.h"
 
 namespace Nanogear {
 
-//! @note: Remove ASAP.
-typedef QString Method;
-
-class Request {
+class ClientInfo {
 public:
-    Request() {};
-    Request(const Method& m, const Context& c) : m_method(m), m_context(c) {}
-    virtual ~Request() {};
-    const Method& method() const
-        { return m_method; }
-    void setMethod(const Method& method)
-        { m_method = method; }
-    const Context& context() const
-        { return m_context; }
-    void setContext(const Context& context)
-        { m_context = context; }
-    void setClientInfo(const ClientInfo& clientInfo)
-        { m_clientInfo = clientInfo; }
-    const ClientInfo& clientInfo() const
-        { return m_clientInfo; }
+    void setUserAgent(const QString& a)
+        { m_userAgent = a; }
+    const QString& userAgent() const
+        { return m_userAgent; }
 private:
-    Method m_method;
-    Context m_context;
-    ClientInfo m_clientInfo;
+    QString m_userAgent;
 };
 
 }
 
-#endif /* NANOGEAR_REQUEST_H */
+#endif // NANOGEAR_CLIENTINFO_H
