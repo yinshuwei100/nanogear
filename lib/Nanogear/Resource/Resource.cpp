@@ -28,6 +28,15 @@ namespace Nanogear {
 namespace Resource {
 
 Response Resource::handleRequest(const Request& req) {
+    if (req.context() != context()) {
+        Response res = notFound(req);
+        foreach (Resource::Resource* resource, findChildren<Nanogear::Resource::Resource*>()) {
+            if (resource->context() != req.context()) continue;
+            res = resource->handleRequest(req);
+            if (req.clientInfo().acceptedMediaTypes().contains(Preference<MediaType>(res.representation()->mediaType()))) break;
+        }
+        return res;
+    }
     if (req.method() == "GET") return handleGet(req);
     if (req.method() == "PUT") return handlePut(req);
     if (req.method() == "POST") return handlePost(req);

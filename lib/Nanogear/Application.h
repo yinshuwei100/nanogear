@@ -25,14 +25,15 @@
 #ifndef NANOGEAR_APPLICATION_H
 #define NANOGEAR_APPLICATION_H
 
-#include "Router.h"
+#include "Resource/Resource.h"
 
 namespace Nanogear {
 
-class Application : public Router {
+class Application : public Resource::Resource {
+Q_OBJECT
 public:
     Application() {};
-    Application(const Context& context) : Router(context) {}
+    Application(const Context& context) : Resource(context) {}
     virtual ~Application() {}
 };
 

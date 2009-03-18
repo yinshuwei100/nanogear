@@ -19,7 +19,6 @@
 #include <QCoreApplication>
 
 #include <Nanogear/Application>
-#include <Nanogear/Router>
 #include <Nanogear/Server>
 #include <Nanogear/Resource/Representation>
 #include <Nanogear/Resource/StringRepresentation>
@@ -31,7 +30,8 @@ using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
 public:
-    RootResource() : srep("<h1>Test response</h1>", "text/html") {}
+    RootResource(const Context& c, QObject* parent)
+        : Resource(c, parent), srep("<h1>Test response</h1>", "text/html") {}
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
         return Response(200, &srep);
@@ -43,9 +43,9 @@ private:
 
 class SimpleApplication : public Application {
 public:
-    SimpleApplication() : srep("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html") {
-        attach("/resource", &m_rootResource);
-    }
+    SimpleApplication()
+        : srep("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
+          m_rootResource("/resource", this) {}
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
         return Response(200, &srep);

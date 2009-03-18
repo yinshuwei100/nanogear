@@ -25,6 +25,7 @@
 #define NANOGEAR_RESOURCE_RESOURCE_H
 
 #include <QDebug>
+#include <QObject>
 
 #include "../Context.h"
 #include "../Response.h"
@@ -36,11 +37,13 @@ namespace Resource {
 
 class Representation;
 
-class Resource {
+class Resource : public QObject {
+Q_OBJECT
 public:
     Resource() : m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
         m_notFound("<h1>Not Found</h1>", "text/html") {}
-    Resource(const Context& context) : m_context(context),
+    Resource(const Context& context, QObject* parent = 0) : QObject(parent),
+        m_context(context),
         m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
         m_notFound("<h1>Not Found</h1>", "text/html") {}
     virtual ~Resource() {}
