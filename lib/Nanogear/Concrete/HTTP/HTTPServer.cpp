@@ -28,7 +28,6 @@
 #include <QHostAddress>
 #include <QHttpRequestHeader>
 
-#include "../../Router.h"
 #include "../../Response.h"
 #include "../../Request.h"
 #include "../../Resource/Resource.h"

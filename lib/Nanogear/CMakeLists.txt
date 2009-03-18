@@ -2,10 +2,14 @@ add_subdirectory(Concrete)
 add_subdirectory(Resource)
 
 set(nanogear_SRCS
-    Router.cpp
     Server.cpp
     Context.cpp
     Resource/Resource.cpp
+)
+
+qt4_wrap_cpp(nanogear_SRCS
+    Resource/Resource.h
+    Application.h
 )
 
 add_library(nanogear SHARED ${nanogear_SRCS})
