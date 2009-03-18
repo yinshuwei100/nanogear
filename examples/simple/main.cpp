@@ -41,10 +41,10 @@ private:
     Nanogear::Resource::StringRepresentation srep;
 };
 
-class SimpleApplication : public Application {
+class Root : public Resource::Resource {
 public:
-    SimpleApplication(const Context& c, QObject* par)
-        : Application(c, par),
+    Root(const Context& c, QObject* par)
+        : Resource(c, par),
           srep("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
           m_rootResource("/resource", this) {}
     virtual Response handleGet(const Request&) {
@@ -57,11 +57,9 @@ private:
 };
 
 int main(int argc, char** argv) {
-    QCoreApplication app(argc, argv);
-    HTTPServer server(8080);
-    SimpleApplication simpleApp("/", &server);
-
-    server.start();
+    Application app(argc, argv);
+    app.setServer(new HTTPServer(8080, &app));
+    app.setRoot(new Root("/", app.server()));
 
     return app.exec();
 }

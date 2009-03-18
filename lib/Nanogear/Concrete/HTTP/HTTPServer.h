@@ -35,15 +35,14 @@ namespace HTTP {
 class HTTPServer : public Server {
     Q_OBJECT
 public:
-    HTTPServer(int port = 8080);
+    HTTPServer(int port = 8080, QObject* parent = 0);
     virtual ~HTTPServer() {}
-    
-    virtual void start();
-    
+
 public slots:
+    virtual void start();
     void onNewConnection();
     void onClientReadyRead();
-    
+
 private:
     QTcpServer m_tcpServer;
 };
