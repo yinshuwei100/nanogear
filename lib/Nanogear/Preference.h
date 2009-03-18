@@ -47,6 +47,16 @@ private:
     float m_quality;
 };
 
+template <typename T, typename U>
+bool operator==(const Preference<T>& a, const Preference<U>& b) {
+    return a.data() == b.data();
+}
+
+template <typename T, typename U>
+bool operator==(const Preference<T>& a, const U& b) {
+    return a.data() == b;
+}
+
 }
 
 #endif // NANOGEAR_PREFERENCE_H
