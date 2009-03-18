@@ -33,7 +33,7 @@ Response Resource::handleRequest(const Request& req) {
     if (req.method() == "POST") return handlePost(req);
     if (req.method() == "OPTIONS") return handleOptions(req);
     if (req.method() == "DELETE") return handleDelete(req);
-    return Response();
+    return Response(&m_methodNotSupported);
 }
 
 }
