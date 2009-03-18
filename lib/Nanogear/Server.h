@@ -32,18 +32,20 @@ class QString;
 
 namespace Nanogear {
 
-class Application;
+namespace Resource {
+class Resource;
+}
 
 class Server {
 public:
     Server(int port = 8080) : m_listenPort(port) {}
     virtual ~Server() {}
     
-    void attach(const QString& context, Application*);
+    void attach(const QString& context, Resource::Resource*);
     virtual void start() = 0;
 
-    const QList<Application*>& attachedApplications() const
-        { return m_applications; }
+    const QList<Resource::Resource*>& attachedResources() const
+        { return m_resources; }
     
     void setContext(const Context& context)
         { m_context = context; }
@@ -58,7 +60,7 @@ public:
 private:
     int m_listenPort;
     Context m_context;
-    QList<Application*> m_applications;
+    QList<Resource::Resource*> m_resources;
 };
 
 }

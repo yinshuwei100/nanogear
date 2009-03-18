@@ -25,12 +25,28 @@
 
 #include "Resource/Resource.h"
 
+#include <QRegExp>
+
 namespace Nanogear {
 
 void Router::attach(const QString& uri, Resource::Resource* resource) {
     m_resources.append(resource);
     Context c(context().contextPath() + uri);
     resource->setContext(c);
+    qDebug() << Q_FUNC_INFO << " attatched " << c.contextPath();
+}
+
+void Router::setContext(const Context& newContext) {
+    QString oldPath = context().contextPath();
+    QString newPath = newContext.contextPath();
+    qDebug() << Q_FUNC_INFO << oldPath << " -> " << newPath;
+    foreach(Resource::Resource* resource, attachedResources()) {
+        QString path = resource->context().contextPath();
+        path.replace(QRegExp("^" + oldPath), newPath);
+        qDebug() << Q_FUNC_INFO << resource->context().contextPath() << " -> " << path;
+        resource->setContext(path);
+    }
+    Resource::Resource::setContext(newContext);
 }
 
 Response Router::handleRequest(const Request& req) {

@@ -24,14 +24,14 @@
 #include "Server.h"
 
 #include "Context.h"
-#include "Application.h"
+#include "Resource/Resource.h"
 
 namespace Nanogear {
 
-void Server::attach(const QString& context, Application* app) {
-    m_applications.append(app);
+void Server::attach(const QString& context, Resource::Resource* r) {
+    m_resources.append(r);
     Context c(context);
-    app->setContext(c);
+    r->setContext(c);
 }
 
 }

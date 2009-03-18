@@ -34,12 +34,15 @@ namespace Nanogear {
 
 class Router : public Resource::Resource {
 public:
+    Router() {}
     Router(const Context& context) : Resource::Resource(context) {}
     virtual ~Router() {}
 
     void attach(const QString& uri, Resource::Resource* resource);
 
     virtual Response handleRequest(const Request&);
+
+    virtual void setContext(const Context&);
     
     const QList<Resource::Resource*> attachedResources() const
         { return m_resources; }
