@@ -62,37 +62,26 @@ void HTTPServer::onClientReadyRead() {
 
     QHttpRequestHeader requestHeader(inputBlock);
     Context requestPath = requestHeader.path();
+    ClientInfo clientInfo(requestHeader.value("user-agent"));
+    /* add media types */ {
+        QList< Preference<MediaType> > accept;
+        foreach (const QString& mediaType, requestHeader.value("accept").split(", ")) {
+            QList<QString> pair = mediaType.split(';');
+            accept.append(Preference<MediaType>(pair.at(0), pair.value(1, "1").toFloat()));
+        }
+    }
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
     qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
 
-    foreach (Resource::Resource* resource, findChildren<Resource::Resource*>()) {
-        if (requestPath.path().startsWith(resource->context().path())) {
-            qDebug() << Q_FUNC_INFO << "found resource within context " << resource->context().path();
-
-            //! @note recreate root for each new request?
-            ClientInfo clientInfo(requestHeader.value("user-agent"));
-            /* Add media types */ {
-                QList< Preference<MediaType> > accept;
-                foreach (const QString& mediaType, requestHeader.value("accept").split(", ")) {
-                    QList<QString> pair = mediaType.split(';');
-                    accept.append(Preference<MediaType>(pair.at(0), pair.value(1, "1").toFloat()));
-                }
-                clientInfo.setAcceptedMediaTypes(accept);
-            }
-            Request request(requestHeader.method(), requestPath, clientInfo);
-            Response response = resource->handleRequest(request);
-
-            if (clientInfo.acceptedMediaTypes().contains(Preference<MediaType>(response.representation()->mediaType()))) {
-                QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
-                    requestHeader.majorVersion(), requestHeader.minorVersion());
-                responseHeader.setContentType(response.representation()->mediaType());
-                client->write(responseHeader.toString().toUtf8());
-                client->write(response.representation()->asByteArray());
-                client->close();
-                break;
-            }
-        }
-    }
+    Resource::Resource* resource = findChild<Resource::Resource*>(requestPath.path());
+    Request request(requestHeader.method(), requestPath, clientInfo);
+    Response response = resource->handleRequest(request);
+    QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
+        requestHeader.majorVersion(), requestHeader.minorVersion());
+    responseHeader.setContentType(response.representation()->mediaType());
+    client->write(responseHeader.toString().toUtf8());
+    client->write(response.representation()->asByteArray());
+    client->close();
 }
 
 
