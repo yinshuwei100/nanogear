@@ -21,31 +21,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_CLIENTINFO_H
-#define NANOGEAR_CLIENTINFO_H
+#ifndef NANOGEAR_PREFERENCE_H
+#define NANOGEAR_PREFERENCE_H
 
-#include <QString>
-#include "Preference.h"
+#include <QList>
 
 namespace Nanogear {
 
-class ClientInfo {
+template <typename T>
+class Preference {
 public:
-    ClientInfo(const QString& ua = QString())
-        : m_userAgent(ua) { qDebug() << Q_FUNC_INFO << "UA:" << ua; }
-    void setUserAgent(const QString& a)
-        { m_userAgent = a; qDebug() << Q_FUNC_INFO << "UA" << a; }
-    const QString& userAgent() const
-        { return m_userAgent; }
-    void setAcceptedMediaTypes(const QList< Preference<MediaType> >& mediaTypes)
-        { m_mediaTypes = mediaTypes; }
-    const QList< Preference<MediaType> >& acceptedMediaTypes() const
-        { return m_mediaTypes; }
+    Preference(const T& data = T(), float quality = 1)
+        : m_data(data), m_quality(quality)
+        { qDebug() << Q_FUNC_INFO << data << "(" << quality << ")"; }
+    const T& data() const
+        { return m_data; }
+    void setData(const T& data)
+        { m_data = data; }
+    float quality() const
+        { return m_quality; }
+    void setQuality(float quality)
+        { m_quality = quality; }
 private:
-    QString m_userAgent;
-    QList< Preference<MediaType> > m_mediaTypes;
+    T m_data;
+    float m_quality;
 };
 
 }
 
-#endif // NANOGEAR_CLIENTINFO_H
+#endif // NANOGEAR_PREFERENCE_H
