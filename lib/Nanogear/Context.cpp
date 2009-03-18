@@ -30,6 +30,13 @@ QString Context::sanitize(QString path) {
     return path.replace("//", "/").remove(QRegExp("/$"));
 }
 
+bool operator==(const Context& a, const Context& b) {
+    return a.contextPath() == b.contextPath();
+}
+bool operator!=(const Context& a, const Context& b) {
+    return a.contextPath() != b.contextPath();
+}
+
 }
 
 

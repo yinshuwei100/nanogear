@@ -38,15 +38,13 @@ class Representation;
 
 class Resource {
 public:
-    Resource() : m_methodNotSupported("<h1>Method not supported</h1>", "text/html") {}
+    Resource() : m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
+        m_notFound("<h1>Not Found</h1>") {}
+    Resource(const Context& context) : m_context(context),
+        m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
+        m_notFound("<h1>Not Found</h1>") {}
     virtual ~Resource() {}
     
-    virtual Response handleGet(const Request& r)  { return methodNotSupported(r); }
-    virtual Response handlePut(const Request& r)  { return methodNotSupported(r); }
-    virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
-    virtual Response handleOptions(const Request& r) { return methodNotSupported(r); }
-    virtual Response handleDelete(const Request& r)  { return methodNotSupported(r); }
-    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(501, &m_methodNotSupported); }
     Response handleRequest(const Request&);
 
     void setContext(const Context& context)
@@ -54,10 +52,20 @@ public:
     const Context& context() const
         { return m_context; }
 
+protected:
+    virtual Response handleGet(const Request& r)  { return methodNotSupported(r); }
+    virtual Response handlePut(const Request& r)  { return methodNotSupported(r); }
+    virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
+    virtual Response handleOptions(const Request& r) { return methodNotSupported(r); }
+    virtual Response handleDelete(const Request& r)  { return methodNotSupported(r); }
+    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(501, &m_methodNotSupported); }
+    virtual Response notFound(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(404, &m_notFound); }
+
 private:
     bool m_modifiable;
     Context m_context;
     StringRepresentation m_methodNotSupported;
+    StringRepresentation m_notFound;
 };
 
 }

@@ -39,10 +39,14 @@ public:
         { m_contextPath = contextPath; sanitize(m_contextPath); }
     const QString& contextPath() const
         { return m_contextPath; }
+
     static QString sanitize(QString path);
 private:
     QString m_contextPath;
 };
+
+bool operator==(const Context&, const Context&);
+bool operator!=(const Context&, const Context&);
 
 }
 

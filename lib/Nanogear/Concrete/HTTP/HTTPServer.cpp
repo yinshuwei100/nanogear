@@ -57,44 +57,33 @@ void HTTPServer::onNewConnection() {
 
 void HTTPServer::onClientReadyRead() {
     qDebug() << Q_FUNC_INFO << "ready to read data sent by the client";
-    
+
     QByteArray inputBlock;
 
     QTcpSocket* client = static_cast<QTcpSocket*>(sender());
     inputBlock = client->readAll();
-    
+
     QHttpRequestHeader requestHeader(inputBlock);
     requestHeader.setRequest(requestHeader.method(), Context::sanitize(requestHeader.path()),
         requestHeader.majorVersion(), requestHeader.minorVersion());
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
-    
+
     foreach (Application* app, attachedApplications()) {
         if (requestHeader.path().startsWith(app->context().contextPath())) {
             qDebug() << Q_FUNC_INFO << "found an application within context " << app->context().contextPath();
 
-            // Get context
             //! @note recreate root for each new request?
             Router* root = app->createRoot();
+            Request request(requestHeader.method(), requestHeader.path());
+            Response response = root->handleRequest(request);
 
-            foreach (Resource::Resource* resource, root->attachedResources()) {
-                qDebug() << Q_FUNC_INFO << "resource context is: " << resource->context().contextPath();
-                if (requestHeader.path() == resource->context().contextPath()) {
-                    qDebug() << Q_FUNC_INFO << "found resource attached within this context";
-                    Request request(requestHeader.method());
-                    Response response = resource->handleRequest(request);
+            QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
+                requestHeader.majorVersion(), requestHeader.minorVersion());
+            responseHeader.setContentType(response.representation()->mediaType());
+            client->write(responseHeader.toString().toUtf8());
+            client->write(response.representation()->asByteArray());
+            client->close();
 
-                    QHttpResponseHeader responseHeader(response.status().code(), response.status().name(), requestHeader.majorVersion(), requestHeader.minorVersion());
-                    responseHeader.setContentType(response.representation()->mediaType());
-                    client->write(responseHeader.toString().toUtf8());
-                    client->write(response.representation()->asByteArray());
-
-                    // Close the socket
-                    client->close();
-                    // only one resource per URI
-                    break;
-                }
-            }
-            
             // cleanup
             delete root;
         }

@@ -26,31 +26,25 @@
 
 #include <QList>
 
-#include "Context.h"
+#include "Resource/Resource.h"
 
 class QString;
 
 namespace Nanogear {
-namespace Resource {
-class Resource;
-}
 
-class Router {
+class Router : public Resource::Resource {
 public:
-    Router(const Context& context) : m_context(context) {}
+    Router(const Context& context) : Resource::Resource(context) {}
     virtual ~Router() {}
 
     void attach(const QString& uri, Resource::Resource* resource);
+
+    virtual Response handleRequest(const Request&);
     
     const QList<Resource::Resource*> attachedResources() const
         { return m_resources; }
 
-    void setContext(const Context& context)
-        { m_context = context; }
-    const Context& context() const
-        { return m_context; }
 private:
-    Context m_context;
     QList<Resource::Resource*> m_resources;
 };
 
