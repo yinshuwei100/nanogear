@@ -30,8 +30,10 @@ namespace Nanogear {
 
 class ClientInfo {
 public:
+    ClientInfo(const QString& ua = QString())
+        : m_userAgent(ua) { qDebug() << Q_FUNC_INFO << "UA:" << ua; }
     void setUserAgent(const QString& a)
-        { m_userAgent = a; }
+        { m_userAgent = a; qDebug() << Q_FUNC_INFO << "UA" << a; }
     const QString& userAgent() const
         { return m_userAgent; }
 private:
