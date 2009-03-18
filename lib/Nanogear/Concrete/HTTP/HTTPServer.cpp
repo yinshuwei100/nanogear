@@ -82,12 +82,15 @@ void HTTPServer::onClientReadyRead() {
             Request request(requestHeader.method(), requestPath, clientInfo);
             Response response = resource->handleRequest(request);
 
-            QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
-                requestHeader.majorVersion(), requestHeader.minorVersion());
-            responseHeader.setContentType(response.representation()->mediaType());
-            client->write(responseHeader.toString().toUtf8());
-            client->write(response.representation()->asByteArray());
-            client->close();
+            if (clientInfo.acceptedMediaTypes().contains(Preference<MediaType>(response.representation()->mediaType()))) {
+                QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
+                    requestHeader.majorVersion(), requestHeader.minorVersion());
+                responseHeader.setContentType(response.representation()->mediaType());
+                client->write(responseHeader.toString().toUtf8());
+                client->write(response.representation()->asByteArray());
+                client->close();
+                break;
+            }
         }
     }
 }
