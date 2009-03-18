@@ -72,7 +72,8 @@ void HTTPServer::onClientReadyRead() {
             qDebug() << Q_FUNC_INFO << "found resource within context " << resource->context().contextPath();
 
             //! @note recreate root for each new request?
-            Request request(requestHeader.method(), requestHeader.path());
+            ClientInfo clientInfo(requestHeader.value("user-agent"));
+            Request request(requestHeader.method(), requestHeader.path(), clientInfo);
             Response response = resource->handleRequest(request);
 
             QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),

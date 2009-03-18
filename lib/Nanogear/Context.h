@@ -33,6 +33,8 @@ public:
     Context() {}
     Context(const QString& contextPath) : m_contextPath(contextPath)
         { sanitize(m_contextPath); }
+    Context(const char* charPath) : m_contextPath(charPath)
+        { sanitize(m_contextPath); }
     virtual ~Context() {}
 
     void setContextPath(const QString& contextPath)
