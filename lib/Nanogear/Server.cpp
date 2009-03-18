@@ -28,10 +28,9 @@
 
 namespace Nanogear {
 
-void Server::attach(const QString& context, Resource::Resource* r) {
+void Server::attach(const Context& context, Resource::Resource* r) {
     m_resources.append(r);
-    Context c(context);
-    r->setContext(c);
+    r->setContext(context);
 }
 
 }

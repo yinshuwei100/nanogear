@@ -28,8 +28,6 @@
 
 #include "Context.h"
 
-class QString;
-
 namespace Nanogear {
 
 namespace Resource {
@@ -41,7 +39,7 @@ public:
     Server(int port = 8080) : m_listenPort(port) {}
     virtual ~Server() {}
     
-    void attach(const QString& context, Resource::Resource*);
+    void attach(const Context& context, Resource::Resource*);
     virtual void start() = 0;
 
     const QList<Resource::Resource*>& attachedResources() const
