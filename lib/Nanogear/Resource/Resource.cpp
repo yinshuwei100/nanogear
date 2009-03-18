@@ -31,7 +31,7 @@ Response Resource::handleRequest(const Request& req) {
     if (req.context() != context()) {
         Response res = notFound(req);
         foreach (Resource::Resource* resource, findChildren<Nanogear::Resource::Resource*>()) {
-            if (!resource->context().contextPath().startsWith(req.context())) continue;
+            if (!resource->context().contextPath().startsWith(req.context().contextPath())) continue;
             res = resource->handleRequest(req);
             if (req.clientInfo().acceptedMediaTypes().contains(Preference<MediaType>(res.representation()->mediaType()))) break;
         }
