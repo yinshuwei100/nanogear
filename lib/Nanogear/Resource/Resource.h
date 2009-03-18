@@ -40,32 +40,21 @@ class Resource {
 public:
     virtual ~Resource() {}
     
-    virtual void handleGet()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
-    virtual void handlePut()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
-    virtual void handlePost() { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
-    virtual void handleOptions() { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
-    virtual void handleDelete()  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; }
-
+    virtual Response handleGet(const Request& r)  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
+    virtual Response handlePut(const Request& r)  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
+    virtual Response handlePost(const Request& r) { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
+    virtual Response handleOptions(const Request& r) { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
+    virtual Response handleDelete(const Request& r)  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
+    Response handleRequest(const Request&);
 
     void setContext(const Context& context)
         { m_context = context; }
     const Context& context() const
         { return m_context; }
 
-    void setRequest(const Request& request)
-        { m_request = request; }
-    const Request& request() const
-        { return m_request; }
- 
-    void setResponse(const Response& response)
-        { m_response = response; }
-    Response& response()
-        { return m_response; }
 private:
     bool m_modifiable;
     Context m_context;
-    Request m_request;
-    Response m_response;
 };
 
 }

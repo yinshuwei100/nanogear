@@ -21,27 +21,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REQUEST_H
-#define NANOGEAR_REQUEST_H
+#include "Resource.h"
 
 namespace Nanogear {
 
-//! @note: Remove ASAP.
-typedef QString Method;
+namespace Resource {
 
-class Request {
-public:
-    Request() {};
-    Request(const Method& m) : m_method(m) {}
-    virtual ~Request() {};
-    Method method() const
-        { return m_method; }
-    void setMethod(const Method& method)
-        { m_method = method; }
-private:
-    Method m_method;
-};
+Response Resource::handleRequest(const Request& req) {
+    if (req.method() == "GET") return handleGet(req);
+    if (req.method() == "PUT") return handlePut(req);
+    if (req.method() == "POST") return handlePost(req);
+    if (req.method() == "OPTIONS") return handleOptions(req);
+    if (req.method() == "DELETE") return handleDelete(req);
+    return Response();
+}
 
 }
 
-#endif /* NANOGEAR_REQUEST_H */
+}
+
+

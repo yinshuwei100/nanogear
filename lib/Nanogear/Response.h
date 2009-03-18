@@ -25,19 +25,23 @@
 #define NANOGEAR_RESPONSE_H
 
 #include "Resource/Representation.h"
+#include "Resource/StringRepresentation.h"
 
 namespace Nanogear {
 
 class Response {
 public:
+    Response() : m_representation(&s_error) {}
+    Response(const Resource::Representation* rep) : m_representation(rep) {}
     virtual ~Response() {}
-    
-    void setRepresentation(Resource::Representation* representation)
+
+    void setRepresentation(const Resource::Representation* representation)
         { m_representation = representation; }
     const Resource::Representation* representation() const
         { return m_representation; }
 private:
-    Resource::Representation* m_representation;
+    const Resource::Representation* m_representation;
+    static Resource::StringRepresentation s_error;
 };
 
 }

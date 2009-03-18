@@ -75,8 +75,7 @@ void HTTPServer::onClientReadyRead() {
             // Get context
             //! @note recreate root for each new request?
             Router* root = app->createRoot();
-            Response response;
-            
+
             foreach (Resource::Resource* resource, root->attachedResources()) {
                 qDebug() << Q_FUNC_INFO << "resource context is: " << resource->context().contextPath();
                 if (requestHeader.path() == resource->context().contextPath()) {
@@ -84,16 +83,13 @@ void HTTPServer::onClientReadyRead() {
                     // Begin by writing the response header
                     QHttpResponseHeader responseHeader(200, "OK", requestHeader.majorVersion(), requestHeader.minorVersion());
 
-                    // Set the response object
-                    resource->setResponse(response);
+                    // Set the request object
+                    Request request(requestHeader.method());
 
-                    //! @note Support only GET for now until I come up with a better design
-                    if (requestHeader.method() == "GET") {
-                        resource->handleGet();
-                        responseHeader.setContentType(resource->response().representation()->mediaType());
-                        client->write(responseHeader.toString().toUtf8());
-                        client->write(resource->response().representation()->asByteArray());
-                    }
+                    Response response = resource->handleRequest(request);
+                    responseHeader.setContentType(response.representation()->mediaType());
+                    client->write(responseHeader.toString().toUtf8());
+                    client->write(response.representation()->asByteArray());
 
                     // Close the socket
                     client->close();

@@ -21,27 +21,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REQUEST_H
-#define NANOGEAR_REQUEST_H
+#include "Response.h"
 
 namespace Nanogear {
 
-//! @note: Remove ASAP.
-typedef QString Method;
-
-class Request {
-public:
-    Request() {};
-    Request(const Method& m) : m_method(m) {}
-    virtual ~Request() {};
-    Method method() const
-        { return m_method; }
-    void setMethod(const Method& method)
-        { m_method = method; }
-private:
-    Method m_method;
-};
+Resource::StringRepresentation Response::s_error("<html><head><title>Internal Server Error</title></head><body><h1>Internal Server Error</h1></body></html>", "text/html");
 
 }
 
-#endif /* NANOGEAR_REQUEST_H */
+
