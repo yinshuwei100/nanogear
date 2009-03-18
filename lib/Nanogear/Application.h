@@ -25,16 +25,35 @@
 #ifndef NANOGEAR_APPLICATION_H
 #define NANOGEAR_APPLICATION_H
 
-#include "Resource/Resource.h"
+#include <QCoreApplication>
+#include "Server.h"
 
 namespace Nanogear {
 
-class Application : public Resource::Resource {
+namespace Resource {
+class Resource;
+}
+
+class Application : public QCoreApplication {
 Q_OBJECT
 public:
-    Application() {};
-    Application(const Context& context, QObject* parent) : Resource(context, parent) {}
-    virtual ~Application() {}
+    Application(int argc, char** argv) : QCoreApplication(argc, argv) {};
+    virtual ~Application() {};
+    void setServer(Server* s)
+        { m_server = s; }
+    Server* server() const
+        { return m_server; }
+    void setRoot(Resource::Resource* r)
+        { m_root = r; }
+    Resource::Resource* root() const
+        { return m_root; }
+    int exec()
+        { m_server->start(); return QCoreApplication::exec(); }
+    static Application* instance()
+        { return static_cast<Application*>(QCoreApplication::instance()); }
+private:
+    Server* m_server;
+    Resource::Resource* m_root;
 };
 
 }

@@ -38,7 +38,7 @@ namespace Concrete {
 namespace HTTP {
 
 
-HTTPServer::HTTPServer(int port) : Server(port) {
+HTTPServer::HTTPServer(int port, QObject* parent) : Server(port, parent) {
     connect(&m_tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
 }
 
