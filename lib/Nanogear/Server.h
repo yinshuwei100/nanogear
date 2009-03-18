@@ -25,6 +25,7 @@
 #define NANOGEAR_SERVER_H
 
 #include <QList>
+#include <QObject>
 
 #include "Context.h"
 
@@ -34,17 +35,14 @@ namespace Resource {
 class Resource;
 }
 
-class Server {
+class Server : public QObject {
+Q_OBJECT
 public:
     Server(int port = 8080) : m_listenPort(port) {}
     virtual ~Server() {}
     
-    void attach(const Context& context, Resource::Resource*);
     virtual void start() = 0;
 
-    const QList<Resource::Resource*>& attachedResources() const
-        { return m_resources; }
-    
     void setContext(const Context& context)
         { m_context = context; }
     const Context& context() const
@@ -58,7 +56,6 @@ public:
 private:
     int m_listenPort;
     Context m_context;
-    QList<Resource::Resource*> m_resources;
 };
 
 }

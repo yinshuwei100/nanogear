@@ -43,8 +43,9 @@ private:
 
 class SimpleApplication : public Application {
 public:
-    SimpleApplication()
-        : srep("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
+    SimpleApplication(const Context& c, QObject* par)
+        : Application(c, par),
+          srep("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
           m_rootResource("/resource", this) {}
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
@@ -57,12 +58,11 @@ private:
 
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
-    SimpleApplication simpleApp;
-
     HTTPServer server(8080);
-    server.attach("/", &simpleApp);
+    SimpleApplication simpleApp("/", &server);
+
     server.start();
-    
+
     return app.exec();
 }
 

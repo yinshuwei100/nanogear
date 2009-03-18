@@ -32,7 +32,7 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-class HTTPServer : public QObject, public Server {
+class HTTPServer : public Server {
     Q_OBJECT
 public:
     HTTPServer(int port = 8080);

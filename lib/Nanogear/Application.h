@@ -33,7 +33,7 @@ class Application : public Resource::Resource {
 Q_OBJECT
 public:
     Application() {};
-    Application(const Context& context) : Resource(context) {}
+    Application(const Context& context, QObject* parent) : Resource(context, parent) {}
     virtual ~Application() {}
 };
 
