@@ -31,20 +31,20 @@ namespace Nanogear {
 class Context {
 public:
     Context() {}
-    Context(const QString& contextPath)
-        : m_contextPath(sanitize(contextPath)) {}
+    Context(const QString& path)
+        : m_path(sanitize(path)) {}
     Context(const char* charPath)
-        : m_contextPath(sanitize(charPath)) {}
+        : m_path(sanitize(charPath)) {}
     virtual ~Context() {}
 
-    void setContextPath(const QString& contextPath)
-        { m_contextPath = sanitize(contextPath); }
-    const QString& contextPath() const
-        { return m_contextPath; }
+    void setPath(const QString& path)
+        { m_path = sanitize(path); }
+    const QString& path() const
+        { return m_path; }
 
     static QString sanitize(QString path);
 private:
-    QString m_contextPath;
+    QString m_path;
 };
 
 bool operator==(const Context&, const Context&);

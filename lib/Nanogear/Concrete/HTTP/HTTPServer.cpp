@@ -57,19 +57,17 @@ void HTTPServer::onNewConnection() {
 void HTTPServer::onClientReadyRead() {
     qDebug() << Q_FUNC_INFO << "ready to read data sent by the client";
 
-    QByteArray inputBlock;
-
     QTcpSocket* client = static_cast<QTcpSocket*>(sender());
-    inputBlock = client->readAll();
+    QByteArray inputBlock = client->readAll();
 
     QHttpRequestHeader requestHeader(inputBlock);
-    requestHeader.setRequest(requestHeader.method(), Context::sanitize(requestHeader.path()),
-        requestHeader.majorVersion(), requestHeader.minorVersion());
+    Context requestPath = requestHeader.path();
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
+    qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
 
     foreach (Resource::Resource* resource, findChildren<Resource::Resource*>()) {
-        if (requestHeader.path().startsWith(resource->context().contextPath())) {
-            qDebug() << Q_FUNC_INFO << "found resource within context " << resource->context().contextPath();
+        if (requestPath.path().startsWith(resource->context().path())) {
+            qDebug() << Q_FUNC_INFO << "found resource within context " << resource->context().path();
 
             //! @note recreate root for each new request?
             ClientInfo clientInfo(requestHeader.value("user-agent"));
@@ -81,7 +79,7 @@ void HTTPServer::onClientReadyRead() {
                 }
                 clientInfo.setAcceptedMediaTypes(accept);
             }
-            Request request(requestHeader.method(), requestHeader.path(), clientInfo);
+            Request request(requestHeader.method(), requestPath, clientInfo);
             Response response = resource->handleRequest(request);
 
             QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
