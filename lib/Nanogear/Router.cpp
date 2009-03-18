@@ -33,6 +33,14 @@ void Router::attach(const QString& uri, Resource::Resource* resource) {
     resource->setContext(c);
 }
 
+Response Router::handleRequest(const Request& req) {
+    foreach(Resource::Resource* resource, attachedResources()) {
+        if (resource->context() != req.context()) continue;
+        return resource->handleRequest(req);
+    }
+    return notFound(req);
+}
+
 }
 
 

@@ -32,14 +32,19 @@ typedef QString Method;
 class Request {
 public:
     Request() {};
-    Request(const Method& m) : m_method(m) {}
+    Request(const Method& m, const Context& c) : m_method(m), m_context(c) {}
     virtual ~Request() {};
-    Method method() const
+    const Method& method() const
         { return m_method; }
     void setMethod(const Method& method)
         { m_method = method; }
+    const Context& context() const
+        { return m_context; }
+    void setContext(const Context& context)
+        { m_context = context; }
 private:
     Method m_method;
+    Context m_context;
 };
 
 }
