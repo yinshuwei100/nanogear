@@ -37,9 +37,9 @@ using namespace Nanogear::Concrete::HTTP;
 class RootResource : public Resource::Resource {
 public:
     RootResource() : srep("<h1>Test response</h1>", "text/html") {}
-    virtual void handleGet() {
+    virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
-        response().setRepresentation(&srep);
+        return Response(&srep);
     }
 
 private:
