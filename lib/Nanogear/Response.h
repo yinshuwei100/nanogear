@@ -31,7 +31,6 @@ namespace Nanogear {
 
 class Response {
 public:
-    Response() : m_representation(&s_error) {}
     Response(const Resource::Representation* rep) : m_representation(rep) {}
     virtual ~Response() {}
 
@@ -41,7 +40,6 @@ public:
         { return m_representation; }
 private:
     const Resource::Representation* m_representation;
-    static Resource::StringRepresentation s_error;
 };
 
 }

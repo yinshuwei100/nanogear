@@ -38,13 +38,15 @@ class Representation;
 
 class Resource {
 public:
+    Resource() : m_methodNotSupported("<h1>Method not supported</h1>", "text/html") {}
     virtual ~Resource() {}
     
-    virtual Response handleGet(const Request& r)  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
-    virtual Response handlePut(const Request& r)  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
-    virtual Response handlePost(const Request& r) { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
-    virtual Response handleOptions(const Request& r) { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
-    virtual Response handleDelete(const Request& r)  { qDebug() << Q_FUNC_INFO << " is not implemented (yet)"; return Response(); }
+    virtual Response handleGet(const Request& r)  { return methodNotSupported(r); }
+    virtual Response handlePut(const Request& r)  { return methodNotSupported(r); }
+    virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
+    virtual Response handleOptions(const Request& r) { return methodNotSupported(r); }
+    virtual Response handleDelete(const Request& r)  { return methodNotSupported(r); }
+    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(&m_methodNotSupported); }
     Response handleRequest(const Request&);
 
     void setContext(const Context& context)
@@ -55,6 +57,7 @@ public:
 private:
     bool m_modifiable;
     Context m_context;
+    StringRepresentation m_methodNotSupported;
 };
 
 }

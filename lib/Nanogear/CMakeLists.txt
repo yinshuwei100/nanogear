@@ -5,7 +5,6 @@ set(nanogear_SRCS
     Router.cpp
     Server.cpp
     Context.cpp
-    Response.cpp
     Resource/Resource.cpp
 )
 
