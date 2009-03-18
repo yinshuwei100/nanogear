@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
     SimpleApplication simpleApp;
 
     HTTPServer server(8080);
-    server.attach("/simple", &simpleApp);
+    server.attach("/", &simpleApp);
     server.start();
     
     return app.exec();

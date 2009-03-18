@@ -31,14 +31,14 @@ namespace Nanogear {
 class Context {
 public:
     Context() {}
-    Context(const QString& contextPath) : m_contextPath(contextPath)
-        { sanitize(m_contextPath); }
-    Context(const char* charPath) : m_contextPath(charPath)
-        { sanitize(m_contextPath); }
+    Context(const QString& contextPath)
+        : m_contextPath(sanitize(contextPath)) {}
+    Context(const char* charPath)
+        : m_contextPath(sanitize(charPath)) {}
     virtual ~Context() {}
 
     void setContextPath(const QString& contextPath)
-        { m_contextPath = contextPath; sanitize(m_contextPath); }
+        { m_contextPath = sanitize(contextPath); }
     const QString& contextPath() const
         { return m_contextPath; }
 

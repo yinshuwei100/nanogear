@@ -50,9 +50,11 @@ void Router::setContext(const Context& newContext) {
 }
 
 Response Router::handleRequest(const Request& req) {
+    qDebug() << Q_FUNC_INFO << "called";
     if (req.context() == context()) return Resource::handleRequest(req);
     Response res = notFound(req);
     foreach(Resource::Resource* resource, attachedResources()) {
+        qDebug() << req.context().contextPath() << "->" << resource->context().contextPath();
         if (resource->context() != req.context()) continue;
         res = resource->handleRequest(req);
         if (req.clientInfo().acceptedMediaTypes().contains(Preference<MediaType>(res.representation()->mediaType()))) break;
