@@ -30,7 +30,8 @@ namespace Resource {
 Response Resource::handleRequest(const Request& req) {
     if (req.context() != context()) {
         Resource* child = findChild<Resource*>(req.context().path());
-        if (child) return child->handleRequest(req);
+        if (child)
+            return child->handleRequest(req);
         return notFound(req);
     }
 
