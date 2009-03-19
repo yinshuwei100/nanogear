@@ -69,7 +69,7 @@ void ConnectionHandlerThread::run() {
         qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
         qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
 
-        Resource::Resource* resource = findChild<Resource::Resource*>(requestPath.path());
+        Resource::Resource* resource = parent()->findChild<Resource::Resource*>(requestPath.path());
         Request request(requestHeader.method(), requestPath, clientInfo);
         Response response = resource->handleRequest(request);
 
