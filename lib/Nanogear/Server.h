@@ -36,7 +36,7 @@ class Resource;
 }
 
 class Server : public QObject {
-Q_OBJECT
+    Q_OBJECT
 public:
     Server(int port = 8080, QObject* parent = 0) : QObject(parent), m_listenPort(port) {}
     virtual ~Server() {}
@@ -50,8 +50,10 @@ public:
         { m_listenPort = port; }
     int listenPort() const
         { return m_listenPort; }
+
 public Q_SLOTS:
     virtual void start() = 0;
+
 private:
     int m_listenPort;
     Context m_context;

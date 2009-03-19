@@ -38,16 +38,18 @@ namespace Resource {
 class Representation;
 
 class Resource : public QObject {
-Q_OBJECT
+    Q_OBJECT
 public:
     Resource() : m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
         m_notFound("<h1>Not Found</h1>", "text/html") {}
+
     Resource(const Context& context, QObject* parent = 0) : QObject(parent),
         m_context(context),
         m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
         m_notFound("<h1>Not Found</h1>", "text/html") { setObjectName(context.path()); }
+
     virtual ~Resource() {}
-    
+
     virtual Response handleRequest(const Request&);
 
     virtual void setContext(const Context& context)

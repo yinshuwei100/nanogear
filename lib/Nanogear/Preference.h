@@ -24,24 +24,26 @@
 #ifndef NANOGEAR_PREFERENCE_H
 #define NANOGEAR_PREFERENCE_H
 
-#include <QList>
+#include <QtGlobal>
 
 namespace Nanogear {
 
-template <typename T>
-class Preference {
+template <typename T> class Preference {
 public:
     Preference(const T& data = T(), float quality = 1)
         : m_data(data), m_quality(quality)
         { qDebug() << Q_FUNC_INFO << data << "(" << quality << ")"; }
+
     const T& data() const
         { return m_data; }
     void setData(const T& data)
         { m_data = data; }
+
     float quality() const
         { return m_quality; }
     void setQuality(float quality)
         { m_quality = quality; }
+
 private:
     T m_data;
     float m_quality;

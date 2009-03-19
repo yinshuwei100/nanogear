@@ -33,11 +33,22 @@ Response Resource::handleRequest(const Request& req) {
         if (child) return child->handleRequest(req);
         return notFound(req);
     }
-    if (req.method() == "GET") return handleGet(req);
-    if (req.method() == "PUT") return handlePut(req);
-    if (req.method() == "POST") return handlePost(req);
-    if (req.method() == "OPTIONS") return handleOptions(req);
-    if (req.method() == "DELETE") return handleDelete(req);
+
+    if (req.method() == "GET")
+        return handleGet(req);
+
+    if (req.method() == "PUT")
+        return handlePut(req);
+
+    if (req.method() == "POST")
+        return handlePost(req);
+
+    if (req.method() == "OPTIONS")
+        return handleOptions(req);
+
+    if (req.method() == "DELETE")
+        return handleDelete(req);
+
     return methodNotSupported(req);
 }
 

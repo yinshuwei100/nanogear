@@ -35,8 +35,11 @@ namespace Resource {
 class StringRepresentation : public virtual Representation {
 public:
     StringRepresentation(const QString& repr) : m_representation(repr) {}
+
     StringRepresentation(const QString& repr, const MediaType& media)
-        : m_representation(repr) { setMediaType(media); }
+        : m_representation(repr)
+    { setMediaType(media); }
+
     virtual ~StringRepresentation() {}
 
     QString& representation()

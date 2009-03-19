@@ -21,8 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONTEXT_H
-#define CONTEXT_H
+#ifndef NANOGEAR_CONTEXT_H
+#define NANOGEAR_CONTEXT_H
 
 #include <QString>
 
@@ -52,4 +52,4 @@ bool operator!=(const Context&, const Context&);
 
 }
 
-#endif // CONTEXT_H
+#endif /* NANOGEAR_CONTEXT_H */

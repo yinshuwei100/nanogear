@@ -27,20 +27,26 @@
 #include <QString>
 #include "Preference.h"
 
+#warning This typedef must be removed ASAP
+typedef QString MediaType;
+
 namespace Nanogear {
 
 class ClientInfo {
 public:
     ClientInfo(const QString& ua = QString())
         : m_userAgent(ua) { qDebug() << Q_FUNC_INFO << "UA:" << ua; }
+
     void setUserAgent(const QString& a)
         { m_userAgent = a; qDebug() << Q_FUNC_INFO << "UA" << a; }
     const QString& userAgent() const
         { return m_userAgent; }
+
     void setAcceptedMediaTypes(const QList< Preference<MediaType> >& mediaTypes)
         { m_mediaTypes = mediaTypes; }
     const QList< Preference<MediaType> >& acceptedMediaTypes() const
         { return m_mediaTypes; }
+
 private:
     QString m_userAgent;
     QList< Preference<MediaType> > m_mediaTypes;

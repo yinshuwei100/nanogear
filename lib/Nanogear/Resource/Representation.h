@@ -26,6 +26,8 @@
 
 #include <QDebug>
 class QByteArray;
+
+#warning This typedef must be removed ASAP
 //! @note: Use this fake type for now.
 typedef QString MediaType;
 
@@ -36,10 +38,15 @@ class Representation {
 public:
     Representation() : m_mediaType("application/octet-stream") {}
     virtual ~Representation() {}
+
     virtual QByteArray asByteArray() const = 0;
-    virtual MediaType mediaType() const { return m_mediaType; }
+    virtual MediaType mediaType() const
+        { return m_mediaType; }
+
 protected:
-    void setMediaType(const MediaType& media) { m_mediaType = media; }
+    void setMediaType(const MediaType& media)
+        { m_mediaType = media; }
+
 private:
     MediaType m_mediaType;
 };

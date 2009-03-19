@@ -35,22 +35,27 @@ class Resource;
 }
 
 class Application : public QCoreApplication {
-Q_OBJECT
+    Q_OBJECT
 public:
     Application(int argc, char** argv) : QCoreApplication(argc, argv) {};
+
     virtual ~Application() {};
+
     void setServer(Server* s)
         { m_server = s; }
     Server* server() const
         { return m_server; }
+
     void setRoot(Resource::Resource* r)
         { m_root = r; }
     Resource::Resource* root() const
         { return m_root; }
+
     int exec()
         { m_server->start(); return QCoreApplication::exec(); }
     static Application* instance()
         { return static_cast<Application*>(QCoreApplication::instance()); }
+
 private:
     Server* m_server;
     Resource::Resource* m_root;
