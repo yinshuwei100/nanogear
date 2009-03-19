@@ -27,7 +27,7 @@ void ThreadedHTTPServer::incomingConnection(int socketDescriptor) {
     qDebug() << Q_FUNC_INFO << "received new connection (descriptor" << socketDescriptor << ")";
 
     ConnectionHandlerThread* handlerThread =
-        new ConnectionHandlerThread(this, socketDescriptor);
+        new ConnectionHandlerThread(parent(), socketDescriptor);
     connect(handlerThread, SIGNAL(finished()), handlerThread, SLOT(deleteLater()));
 
     qDebug() << Q_FUNC_INFO << "handling request in a new thread";

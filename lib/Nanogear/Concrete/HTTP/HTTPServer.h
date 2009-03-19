@@ -36,7 +36,7 @@ class HTTPServer : public Server {
     Q_OBJECT
 public:
     HTTPServer(int port = 8080, QObject* parent = 0)
-        : Server(port, parent), m_threadedServer(parent) {}
+        : Server(port, parent), m_threadedServer(this) {}
     virtual ~HTTPServer() {}
 
 public slots:
