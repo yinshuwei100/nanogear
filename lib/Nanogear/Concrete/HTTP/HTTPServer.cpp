@@ -63,6 +63,7 @@ void HTTPServer::onClientReadyRead() {
     QHttpRequestHeader requestHeader(inputBlock);
     Context requestPath = requestHeader.path();
     ClientInfo clientInfo(requestHeader.value("user-agent"));
+
     /* add media types */ {
         QList< Preference<MediaType> > accept;
         foreach (const QString& mediaType, requestHeader.value("accept").split(", ")) {
@@ -76,9 +77,11 @@ void HTTPServer::onClientReadyRead() {
     Resource::Resource* resource = findChild<Resource::Resource*>(requestPath.path());
     Request request(requestHeader.method(), requestPath, clientInfo);
     Response response = resource->handleRequest(request);
+
     QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
         requestHeader.majorVersion(), requestHeader.minorVersion());
     responseHeader.setContentType(response.representation()->mediaType());
+
     client->write(responseHeader.toString().toUtf8());
     client->write(response.representation()->asByteArray());
     client->close();
