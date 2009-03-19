@@ -31,28 +31,30 @@ using namespace Nanogear::Concrete::HTTP;
 class RootResource : public Resource::Resource {
 public:
     RootResource(const Context& c, QObject* parent)
-        : Resource(c, parent), srep("<h1>Test response</h1>", "text/html") {}
+        : Resource(c, parent), m_stringRepresentation("<h1>Test response</h1>", "text/html") {}
+
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
-        return Response(200, &srep);
+        return Response(200, &m_stringRepresentation);
     }
 
 private:
-    Nanogear::Resource::StringRepresentation srep;
+    Nanogear::Resource::StringRepresentation m_stringRepresentation;
 };
 
 class Root : public Resource::Resource {
 public:
     Root(const Context& c, QObject* par)
         : Resource(c, par),
-          srep("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
+          m_stringRepresentation("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
           m_rootResource("/resource", this) {}
+
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
-        return Response(200, &srep);
+        return Response(200, &m_stringRepresentation);
     }
 private:
-    Nanogear::Resource::StringRepresentation srep;
+    Nanogear::Resource::StringRepresentation m_stringRepresentation;
     RootResource m_rootResource;
 };
 

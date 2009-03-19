@@ -24,6 +24,8 @@
 #ifndef NANOGEAR_STATUS_H
 #define NANOGEAR_STATUS_H
 
+#include <QString>
+
 namespace Nanogear {
 
 class Status {
@@ -34,14 +36,17 @@ public:
             case 404: m_name = "Not Found"; break;
         }
     }
+
     int code() const
         { return m_code; }
     void setCode(int stat)
         { m_code = stat; }
+
     const QString& name() const
         { return m_name; }
     void setName(const QString& name)
         { m_name = name; }
+
 private:
     int m_code;
     QString m_name;

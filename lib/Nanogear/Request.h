@@ -25,6 +25,7 @@
 #define NANOGEAR_REQUEST_H
 
 #include <QString>
+#include "Context.h"
 #include "ClientInfo.h"
 
 namespace Nanogear {
@@ -39,18 +40,22 @@ public:
         const ClientInfo& cI = ClientInfo())
         : m_method(m), m_context(c), m_clientInfo(cI) {}
     virtual ~Request() {};
+
     const Method& method() const
         { return m_method; }
     void setMethod(const Method& method)
         { m_method = method; }
+
     const Context& context() const
         { return m_context; }
     void setContext(const Context& context)
         { m_context = context; }
+
     void setClientInfo(const ClientInfo& clientInfo)
         { m_clientInfo = clientInfo; }
     const ClientInfo& clientInfo() const
         { return m_clientInfo; }
+
 private:
     Method m_method;
     Context m_context;
