@@ -62,6 +62,7 @@ void ConnectionHandlerThread::run() {
 
         QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
+        responseHeader.setValue("server", "Nanogear");
         responseHeader.setContentType(response.representation()->mediaType());
 
         qDebug() << Q_FUNC_INFO << "sending data back to the client";
