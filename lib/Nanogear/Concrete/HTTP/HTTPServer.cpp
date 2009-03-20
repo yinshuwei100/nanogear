@@ -43,7 +43,7 @@ void HTTPServer::onClientReadyRead() {
     QTcpSocket* client = static_cast<QTcpSocket*>(sender());
 
     ConnectionHandlerThread* handlerThread =
-        new ConnectionHandlerThread(parent(), client);
+        new ConnectionHandlerThread(client, this);
     connect(handlerThread, SIGNAL(finished()), handlerThread, SLOT(deleteLater()));
 
     qDebug() << Q_FUNC_INFO << "handling request in a new thread";
