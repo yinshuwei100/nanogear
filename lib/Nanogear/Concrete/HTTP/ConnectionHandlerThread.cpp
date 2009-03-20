@@ -68,11 +68,9 @@ void ConnectionHandlerThread::run() {
         m_clientSocket->write(responseHeader.toString().toUtf8());
         m_clientSocket->write(response.representation()->asByteArray());
 
-        qDebug() << Q_FUNC_INFO << "disconnecting from host and freeing resources";
+        qDebug() << Q_FUNC_INFO << "disconnecting from host";
         m_clientSocket->disconnectFromHost();
         m_clientSocket->waitForDisconnected();
-        // deleteLater seems to be source of problems here, manually perform deletion
-        delete m_clientSocket;
     } else {
         qDebug() << Q_FUNC_INFO << "Socket error" << m_clientSocket->errorString();
     }
