@@ -58,7 +58,9 @@ void HTTPServer::onClientReadyRead() {
     qDebug() << Q_FUNC_INFO << "ready to read data sent by the client";
 
     QTcpSocket* client = static_cast<QTcpSocket*>(sender());
-    QByteArray inputBlock = client->readAll();
+    qDebug() << Q_FUNC_INFO << "request size:" << client->size();
+
+    QByteArray inputBlock(client->readAll());
 
     QHttpRequestHeader requestHeader(inputBlock);
     Context requestPath = requestHeader.path();
