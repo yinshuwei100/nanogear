@@ -25,10 +25,11 @@ namespace HTTP {
 class ThreadedHTTPServer : public QTcpServer {
     Q_OBJECT
 public:
-    ThreadedHTTPServer(QObject* parent = 0) : QTcpServer(parent) {}
+    ThreadedHTTPServer(QObject* parent = 0) : QTcpServer(parent)
+        { connect(this, SIGNAL(newConnection()), this, SLOT(onNewConnection())); }
 
-protected:
-    void incomingConnection(int);
+private slots:
+    void onNewConnection();
 };
 
 }

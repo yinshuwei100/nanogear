@@ -35,11 +35,13 @@ namespace HTTP {
 class ConnectionHandlerThread : public QThread {
     Q_OBJECT
 public:
-    ConnectionHandlerThread(QObject* parent = 0, int m_socketDescriptor = -1);
+    ConnectionHandlerThread(QObject* parent = 0, QTcpSocket* clientSocket = 0)
+        : QThread(parent), m_clientSocket(clientSocket) {}
+
     void run();
 
 private:
-    int m_socketDescriptor;
+    QTcpSocket* m_clientSocket;
 };
 
 }

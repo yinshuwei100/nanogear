@@ -23,16 +23,16 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-void ThreadedHTTPServer::incomingConnection(int socketDescriptor) {
-    qDebug() << Q_FUNC_INFO << "received new connection (descriptor" << socketDescriptor << ")";
-
+void ThreadedHTTPServer::onNewConnection() {
+    qDebug() << Q_FUNC_INFO << "received new connection";
     ConnectionHandlerThread* handlerThread =
-        new ConnectionHandlerThread(parent(), socketDescriptor);
+        new ConnectionHandlerThread(parent(), nextPendingConnection());
     connect(handlerThread, SIGNAL(finished()), handlerThread, SLOT(deleteLater()));
 
     qDebug() << Q_FUNC_INFO << "handling request in a new thread";
     handlerThread->start();
 }
+
 
 }
 }
