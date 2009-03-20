@@ -1,11 +1,10 @@
 set(nanogear_concrete_HTTP_SRCS
+    HTTPServer.cpp
     ConnectionHandlerThread.cpp
-    ThreadedHTTPServer.cpp
 )
 
 qt4_wrap_cpp(nanogear_concrete_HTTP_SRCS
     HTTPServer.h
-    ThreadedHTTPServer.h
     ConnectionHandlerThread.h
 )
 
