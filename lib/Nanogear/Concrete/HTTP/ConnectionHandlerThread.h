@@ -21,40 +21,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
-#define NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
+#ifndef NANOGEAR_CONCRETE_HTTP_CONNECTIONHANDLERTHREAD_H
+#define NANOGEAR_CONCRETE_HTTP_CONNECTIONHANDLERTHREAD_H
 
-#include <QTcpServer>
+#include <QThread>
 
-#include "../../Server.h"
+class QTcpSocket;
 
 namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-class HTTPServer : public Server {
+class ConnectionHandlerThread : public QThread {
     Q_OBJECT
 public:
-    HTTPServer(int port = 8080, QObject* parent = 0)
-        : Server(port, parent)
-        { connect(&m_tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection())); }
-    virtual ~HTTPServer() {}
+    ConnectionHandlerThread(QObject* parent = 0, QTcpSocket* clientSocket = 0)
+        : QThread(parent), m_clientSocket(clientSocket) {}
 
-public slots:
-    virtual void start() {
-        qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
-        m_tcpServer.listen(QHostAddress::Any, listenPort());
-    };
-
-    void onNewConnection();
-    void onClientReadyRead();
+    void run();
 
 private:
-    QTcpServer m_tcpServer;
+    QTcpSocket* m_clientSocket;
 };
 
 }
 }
 }
 
-#endif /* NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H */
+#endif // NANOGEAR_CONCRETE_HTTP_CONNECTIONHANDLERTHREAD_H
