@@ -39,7 +39,7 @@ namespace HTTP {
 
 void ConnectionHandlerThread::run() {
     if (m_clientSocket != 0) {
-        qDebug() << Q_FUNC_INFO << "handling request (size:" << m_clientSocket->size() << ")";
+        qDebug() << Q_FUNC_INFO << "------ handling request (size:" << m_clientSocket->size() << ")";
         QByteArray inputBlock(m_clientSocket->readAll());
 
         QHttpRequestHeader requestHeader(inputBlock);
@@ -64,15 +64,17 @@ void ConnectionHandlerThread::run() {
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setContentType(response.representation()->mediaType());
 
+        qDebug() << Q_FUNC_INFO << "sending data back to the client";
         m_clientSocket->write(responseHeader.toString().toUtf8());
         m_clientSocket->write(response.representation()->asByteArray());
 
-        qDebug() << Q_FUNC_INFO << "disconnecting from host";
+        qDebug() << Q_FUNC_INFO << "disconnecting from host and freeing resources";
         m_clientSocket->disconnectFromHost();
         m_clientSocket->waitForDisconnected();
+        // deleteLater seems to be source of problems here, manually perform deletion
+        delete m_clientSocket;
     } else {
-        qDebug() << Q_FUNC_INFO << "Socket error";
-        return;
+        qDebug() << Q_FUNC_INFO << "Socket error" << m_clientSocket->errorString();
     }
 }
 

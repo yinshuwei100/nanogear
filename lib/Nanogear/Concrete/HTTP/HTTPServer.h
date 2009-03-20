@@ -24,7 +24,7 @@
 #ifndef NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
 #define NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
 
-#include "ThreadedHTTPServer.h"
+#include <QTcpServer>
 
 #include "../../Server.h"
 
@@ -36,17 +36,21 @@ class HTTPServer : public Server {
     Q_OBJECT
 public:
     HTTPServer(int port = 8080, QObject* parent = 0)
-        : Server(port, parent), m_threadedServer(this) {}
+        : Server(port, parent)
+        { connect(&m_tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection())); }
     virtual ~HTTPServer() {}
 
 public slots:
     virtual void start() {
         qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
-        m_threadedServer.listen(QHostAddress::Any, listenPort());
+        m_tcpServer.listen(QHostAddress::Any, listenPort());
     };
 
+    void onNewConnection();
+    void onClientReadyRead();
+
 private:
-    ThreadedHTTPServer m_threadedServer;
+    QTcpServer m_tcpServer;
 };
 
 }
