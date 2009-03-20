@@ -45,6 +45,7 @@ void HTTPServer::onClientReadyRead() {
     ConnectionHandlerThread* handlerThread =
         new ConnectionHandlerThread(client, this);
     connect(handlerThread, SIGNAL(finished()), handlerThread, SLOT(deleteLater()));
+    connect(handlerThread, SIGNAL(finished()), client, SLOT(deleteLater()));
 
     qDebug() << Q_FUNC_INFO << "handling request in a new thread";
     handlerThread->start();
