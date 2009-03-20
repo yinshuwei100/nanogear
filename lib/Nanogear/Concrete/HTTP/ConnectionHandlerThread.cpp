@@ -37,23 +37,10 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-ConnectionHandlerThread::ConnectionHandlerThread(QObject* parent, int m_socketDescriptor)
-     : QThread(parent), m_socketDescriptor(m_socketDescriptor)
-{
-    //connect(m_client, SIGNAL(readyRead()), this, SLOT(onClientReadyRead()));
-    //connect(m_client, SIGNAL(disconnected()), client, SLOT(deleteLater()));
-}
-
 void ConnectionHandlerThread::run() {
-    //QTcpSocket* client = static_cast<QTcpSocket*>(sender());
-    QTcpSocket client;
-    qDebug() << Q_FUNC_INFO << "socket descriptor " << m_socketDescriptor;
-    if (!client.setSocketDescriptor(m_socketDescriptor)) {
-        qDebug() << Q_FUNC_INFO << "failed to set up socket descriptor";
-        return;
-    } else {
-        qDebug() << Q_FUNC_INFO << "handling request (size:" << client.size() << ")";
-        QByteArray inputBlock(client.readAll());
+    if (m_clientSocket != 0) {
+        qDebug() << Q_FUNC_INFO << "handling request (size:" << m_clientSocket->size() << ")";
+        QByteArray inputBlock(m_clientSocket->readAll());
 
         QHttpRequestHeader requestHeader(inputBlock);
         Context requestPath = requestHeader.path();
@@ -77,12 +64,15 @@ void ConnectionHandlerThread::run() {
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setContentType(response.representation()->mediaType());
 
-        client.write(responseHeader.toString().toUtf8());
-        client.write(response.representation()->asByteArray());
+        m_clientSocket->write(responseHeader.toString().toUtf8());
+        m_clientSocket->write(response.representation()->asByteArray());
 
         qDebug() << Q_FUNC_INFO << "disconnecting from host";
-        client.disconnectFromHost();
-        client.waitForDisconnected();
+        m_clientSocket->disconnectFromHost();
+        m_clientSocket->waitForDisconnected();
+    } else {
+        qDebug() << Q_FUNC_INFO << "Socket error";
+        return;
     }
 }
 
