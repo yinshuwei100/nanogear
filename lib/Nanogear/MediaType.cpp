@@ -26,12 +26,20 @@
 namespace Nanogear {
 
 const QString& MediaType::category() const {
-    const_cast<MediaType*>(this)->m_category = m_whole.left(m_whole.indexOf('/'));
+    if (m_category.isEmpty())
+        const_cast<MediaType*>(this)->m_category = m_whole.left(m_whole.indexOf('/'));
     return m_category;
 }
+
 const QString& MediaType::specific() const {
-    const_cast<MediaType*>(this)->m_specific = m_whole.right(m_whole.indexOf('/'));
+    if (m_category.isEmpty())
+        const_cast<MediaType*>(this)->m_specific = m_whole.right(m_whole.indexOf('/'));
     return m_specific;
+}
+
+bool MediaType::isCompatible(const MediaType& other) const{
+    return other.m_whole.contains(m_whole) ||\
+           m_whole.contains(other.m_whole);
 }
 
 }

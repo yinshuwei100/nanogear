@@ -31,16 +31,19 @@ namespace Nanogear {
 
 class MediaType {
 public:
-    MediaType(const QString& type) : m_wholeType(type) {};
-    MediaType(const char* type) : m_wholeType(type) {};
+    MediaType(const QString& type) : m_whole(type) {};
+    MediaType(const char* type) : m_whole(type) {};
     void fromString(const QString& type)
-        { m_wholeType = type; m_category = m_specific = ""; }
+        { m_whole = type; m_category = m_specific = ""; }
     const QString& toString() const
-        { return m_wholeType; }
+        { return m_whole; }
     const QString& category() const;
     const QString& specific() const;
+    bool isConcrete() const
+        { return m_whole.contains("*"); }
+    bool isCompatible(const MediaType&) const;
 private:
-    QString m_wholeType;
+    QString m_whole;
     QString m_category;
     QString m_specific;
 };
