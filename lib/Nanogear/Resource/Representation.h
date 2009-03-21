@@ -50,7 +50,9 @@ public:
         }
         qDebug() << Q_FUNC_INFO << map.size() << ": media types.";
         // Step 2: walk down until we find a usable type. QMap goes in descending order.
-        for (QMap<float, MediaType>::iterator i = map.begin(); i != map.end(); ++i) {
+        // NOTE: QMap iterates up; it starts at the lowest value. We want to try the highest first.
+        for (QMap<float, MediaType>::iterator i = map.end(); i != map.begin();) {
+            --i;
             qDebug() << Q_FUNC_INFO << ": checking if" << i->toString() << "is supported.";
             if (hasFormat(i->toString())) {
                 qDebug() << Q_FUNC_INFO << ": it is.";

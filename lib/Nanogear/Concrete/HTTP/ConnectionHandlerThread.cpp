@@ -49,7 +49,7 @@ void ConnectionHandlerThread::run() {
         /* add media types */ {
             QList< Preference<MediaType> > accept;
             foreach (const QString& mediaType, requestHeader.value("accept").split(", ")) {
-                QList<QString> pair = mediaType.split(';');
+                QList<QString> pair = mediaType.split(";q=");
                 accept.append(Preference<MediaType>(pair.at(0), pair.value(1, "1").toFloat()));
             }
             clientInfo.setAcceptedMediaTypes(accept);
