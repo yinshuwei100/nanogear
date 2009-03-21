@@ -58,7 +58,7 @@ void ConnectionHandlerThread::run() {
 
         Resource::Resource* resource = m_server->findChild<Resource::Resource*>(requestPath.path());
         Request request(requestHeader.method(), requestPath, clientInfo);
-        Response response = resource->handleRequest(request);
+        Response response = resource ? resource->handleRequest(request) : Application::instance()->notFound(request);
 
         QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
