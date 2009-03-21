@@ -54,6 +54,14 @@ void ConnectionHandlerThread::run() {
             }
             clientInfo.setAcceptedMediaTypes(accept);
         }
+        /* add locales */ {
+            QList< Preference<QLocale> > accept;
+            foreach (const QString& locale, requestHeader.value("accept-language").split(", ")) {
+                QList<QString> pair = locale.split(';');
+                accept.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
+            }
+            clientInfo.setAcceptedLocales(accept);
+        }
         qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
         qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
 

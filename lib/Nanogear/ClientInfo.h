@@ -25,6 +25,7 @@
 #define NANOGEAR_CLIENTINFO_H
 
 #include <QDebug>
+#include <QLocale>
 #include "Preference.h"
 #include "MediaType.h"
 
@@ -33,10 +34,10 @@ namespace Nanogear {
 class ClientInfo {
 public:
     ClientInfo(const QString& ua = QString())
-        : m_userAgent(ua) { qDebug() << Q_FUNC_INFO << "UA:" << ua; }
+        : m_userAgent(ua) {}
 
     void setUserAgent(const QString& a)
-        { m_userAgent = a; qDebug() << Q_FUNC_INFO << "UA" << a; }
+        { m_userAgent = a; }
     const QString& userAgent() const
         { return m_userAgent; }
 
@@ -45,9 +46,15 @@ public:
     const QList< Preference<MediaType> >& acceptedMediaTypes() const
         { return m_mediaTypes; }
 
+    void setAcceptedLocales(const QList< Preference<QLocale> >& locales)
+        { m_locales = locales; }
+    const QList< Preference<QLocale> >& acceptedLocales() const
+        { return m_locales; }
+
 private:
     QString m_userAgent;
     QList< Preference<MediaType> > m_mediaTypes;
+    QList< Preference<QLocale> > m_locales;
 };
 
 }
