@@ -25,7 +25,6 @@
 #define NANOGEAR_RESPONSE_H
 
 #include "Resource/Representation.h"
-#include "Resource/StringRepresentation.h"
 #include "Status.h"
 
 namespace Nanogear {

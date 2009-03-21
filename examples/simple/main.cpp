@@ -21,7 +21,6 @@
 #include <Nanogear/Application>
 #include <Nanogear/Server>
 #include <Nanogear/Resource/Representation>
-#include <Nanogear/Resource/StringRepresentation>
 #include <Nanogear/Resource/Resource>
 #include <Nanogear/Concrete/HTTP/HTTPServer>
 
@@ -31,30 +30,30 @@ using namespace Nanogear::Concrete::HTTP;
 class RootResource : public Resource::Resource {
 public:
     RootResource(const Context& c, QObject* parent)
-        : Resource(c, parent), m_stringRepresentation("<h1>Test response</h1>", "text/html") {}
+        : Resource(c, parent), m_representation("<h1>Test response</h1>", "text/html") {}
 
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
-        return Response(200, &m_stringRepresentation);
+        return Response(200, &m_representation);
     }
 
 private:
-    Nanogear::Resource::StringRepresentation m_stringRepresentation;
+    Nanogear::Resource::Representation m_representation;
 };
 
 class Root : public Resource::Resource {
 public:
     Root(const Context& c, QObject* par)
         : Resource(c, par),
-          m_stringRepresentation("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
+          m_representation("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
           m_rootResource("/resource", this) {}
 
     virtual Response handleGet(const Request&) {
         qDebug() << Q_FUNC_INFO << "called";
-        return Response(200, &m_stringRepresentation);
+        return Response(200, &m_representation);
     }
 private:
-    Nanogear::Resource::StringRepresentation m_stringRepresentation;
+    Nanogear::Resource::Representation m_representation;
     RootResource m_rootResource;
 };
 

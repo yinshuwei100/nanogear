@@ -52,6 +52,7 @@ void ConnectionHandlerThread::run() {
                 QList<QString> pair = mediaType.split(';');
                 accept.append(Preference<MediaType>(pair.at(0), pair.value(1, "1").toFloat()));
             }
+            clientInfo.setAcceptedMediaTypes(accept);
         }
         qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
         qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
@@ -63,11 +64,11 @@ void ConnectionHandlerThread::run() {
         QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setValue("server", "Nanogear");
-        responseHeader.setContentType(response.representation()->mediaType().toString());
+        responseHeader.setContentType(response.representation()->format(clientInfo.acceptedMediaTypes()).toString());
 
         qDebug() << Q_FUNC_INFO << "sending data back to the client";
         m_clientSocket->write(responseHeader.toString().toUtf8());
-        m_clientSocket->write(response.representation()->asByteArray());
+        m_clientSocket->write(response.representation()->data(clientInfo.acceptedMediaTypes()));
 
         qDebug() << Q_FUNC_INFO << "disconnecting from host";
         m_clientSocket->disconnectFromHost();
