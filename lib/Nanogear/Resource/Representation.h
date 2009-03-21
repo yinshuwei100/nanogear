@@ -25,6 +25,7 @@
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 
 #include <QMimeData>
+#include <QMap>
 #include <QDebug>
 #include "../MediaType.h"
 #include "../Preference.h"
@@ -35,21 +36,27 @@ namespace Resource {
 class Representation : public QMimeData {
 public:
     Representation() {}
-    Representation(const QMimeData& mimeData) : QMimeData(mimeData) {}
     template <typename Data, typename MimeType>
     Representation(const Data& data, const MimeType& mediaType = "text/plain")
         { setData(mediaType, data); }
     QByteArray data(const QList< Preference<MediaType> >& mediaTypes) const
-        { return data(format(mediaTypes)); qDebug() << Q_FUNC_INFO << "sent data"; }
+        { return data(format(mediaTypes)); }
     MediaType format(const QList< Preference<MediaType> >& mediaTypes) const {
+        // Step 1: map quality to MediaType.
+        QMap<float, MediaType> map;
         foreach (const Preference<MediaType>& mediaType, mediaTypes) {
-            #warn Need to weigh supported media types, instead of using the first available one.
-            qDebug() << Q_FUNC_INFO << "checking if" << mediaType.data().toString() << "is supported";
-            if (hasFormat(mediaType.data())) {
-                qDebug() << Q_FUNC_INFO << mediaType.data().toString() << "is supported";
-                return mediaType.data();
-            } else
-                qDebug() << Q_FUNC_INFO << mediaType.data().toString() << "is not supported";
+            map.insertMulti(mediaType.quality(), mediaType.data());
+            qDebug() << Q_FUNC_INFO << ": got media type:" << mediaType.data().toString() << mediaType.quality();
+        }
+        qDebug() << Q_FUNC_INFO << map.size() << ": media types.";
+        // Step 2: walk down until we find a usable type. QMap goes in descending order.
+        for (QMap<float, MediaType>::iterator i = map.begin(); i != map.end(); ++i) {
+            qDebug() << Q_FUNC_INFO << ": checking if" << i->toString() << "is supported.";
+            if (hasFormat(i->toString())) {
+                qDebug() << Q_FUNC_INFO << ": it is.";
+                return *i;
+            }
+            qDebug() << Q_FUNC_INFO << ": it isn't.";
         }
         return "*/*";
     }
