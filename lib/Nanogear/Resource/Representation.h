@@ -25,11 +25,8 @@
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 
 #include <QDebug>
+#include "../MediaType.h"
 class QByteArray;
-
-#warning This typedef must be removed ASAP
-//! @note: Use this fake type for now.
-typedef QString MediaType;
 
 namespace Nanogear {
 namespace Resource {
