@@ -27,6 +27,9 @@
 
 #include <QCoreApplication>
 #include "Server.h"
+#include "Resource/StringRepresentation.h"
+#include "Response.h"
+#include "Request.h"
 
 namespace Nanogear {
 
@@ -37,7 +40,9 @@ class Resource;
 class Application : public QCoreApplication {
     Q_OBJECT
 public:
-    Application(int argc, char** argv) : QCoreApplication(argc, argv) {};
+    Application(int argc, char** argv) : QCoreApplication(argc, argv),
+        m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
+        m_notFound("<h1>Not Found</h1>", "text/html") {};
 
     virtual ~Application() {};
 
@@ -56,9 +61,14 @@ public:
     static Application* instance()
         { return static_cast<Application*>(QCoreApplication::instance()); }
 
+    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(501, &m_methodNotSupported); }
+    virtual Response notFound(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(404, &m_notFound); }
+
 private:
     Server* m_server;
     Resource::Resource* m_root;
+    Resource::StringRepresentation m_methodNotSupported;
+    Resource::StringRepresentation m_notFound;
 };
 
 }

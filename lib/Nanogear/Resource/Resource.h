@@ -30,6 +30,7 @@
 #include "../Context.h"
 #include "../Response.h"
 #include "../Request.h"
+#include "../Application.h"
 
 namespace Nanogear {
 
@@ -40,13 +41,10 @@ class Representation;
 class Resource : public QObject {
     Q_OBJECT
 public:
-    Resource() : m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
-        m_notFound("<h1>Not Found</h1>", "text/html") {}
+    Resource() {}
 
     Resource(const Context& context, QObject* parent = 0) : QObject(parent),
-        m_context(context),
-        m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
-        m_notFound("<h1>Not Found</h1>", "text/html") { setObjectName(context.path()); }
+        m_context(context) { setObjectName(context.path()); }
 
     virtual ~Resource() {}
 
@@ -63,14 +61,12 @@ protected:
     virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
     virtual Response handleOptions(const Request& r) { return methodNotSupported(r); }
     virtual Response handleDelete(const Request& r)  { return methodNotSupported(r); }
-    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(501, &m_methodNotSupported); }
-    virtual Response notFound(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(404, &m_notFound); }
+    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Application::instance()->methodNotSupported(r); }
+    virtual Response notFound(const Request& r) { qDebug() << Q_FUNC_INFO; return Application::instance()->notFound(r); }
 
 private:
     bool m_modifiable;
     Context m_context;
-    StringRepresentation m_methodNotSupported;
-    StringRepresentation m_notFound;
 };
 
 }
