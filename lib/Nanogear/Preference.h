@@ -31,8 +31,7 @@ namespace Nanogear {
 template <typename T> class Preference {
 public:
     Preference(const T& data = T(), float quality = 1)
-        : m_data(data), m_quality(quality)
-        { qDebug() << Q_FUNC_INFO << data << "(" << quality << ")"; }
+        : m_data(data), m_quality(quality) {}
 
     const T& data() const
         { return m_data; }

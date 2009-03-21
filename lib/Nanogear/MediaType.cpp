@@ -21,35 +21,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_CLIENTINFO_H
-#define NANOGEAR_CLIENTINFO_H
-
-#include <QString>
-#include "Preference.h"
 #include "MediaType.h"
 
 namespace Nanogear {
 
-class ClientInfo {
-public:
-    ClientInfo(const QString& ua = QString())
-        : m_userAgent(ua) { qDebug() << Q_FUNC_INFO << "UA:" << ua; }
-
-    void setUserAgent(const QString& a)
-        { m_userAgent = a; qDebug() << Q_FUNC_INFO << "UA" << a; }
-    const QString& userAgent() const
-        { return m_userAgent; }
-
-    void setAcceptedMediaTypes(const QList< Preference<MediaType> >& mediaTypes)
-        { m_mediaTypes = mediaTypes; }
-    const QList< Preference<MediaType> >& acceptedMediaTypes() const
-        { return m_mediaTypes; }
-
-private:
-    QString m_userAgent;
-    QList< Preference<MediaType> > m_mediaTypes;
-};
+const QString& MediaType::category() const {
+    const_cast<MediaType*>(this)->m_category = m_whole.left(m_whole.indexOf('/'));
+    return m_category;
+}
+const QString& MediaType::specific() const {
+    const_cast<MediaType*>(this)->m_specific = m_whole.right(m_whole.indexOf('/'));
+    return m_specific;
+}
 
 }
 
-#endif // NANOGEAR_CLIENTINFO_H
+

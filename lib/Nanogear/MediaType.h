@@ -21,35 +21,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_CLIENTINFO_H
-#define NANOGEAR_CLIENTINFO_H
+#ifndef NANOGEAR_MEDIATYPE_H
+#define NANOGEAR_MEDIATYPE_H
 
 #include <QString>
 #include "Preference.h"
-#include "MediaType.h"
 
 namespace Nanogear {
 
-class ClientInfo {
+class MediaType {
 public:
-    ClientInfo(const QString& ua = QString())
-        : m_userAgent(ua) { qDebug() << Q_FUNC_INFO << "UA:" << ua; }
-
-    void setUserAgent(const QString& a)
-        { m_userAgent = a; qDebug() << Q_FUNC_INFO << "UA" << a; }
-    const QString& userAgent() const
-        { return m_userAgent; }
-
-    void setAcceptedMediaTypes(const QList< Preference<MediaType> >& mediaTypes)
-        { m_mediaTypes = mediaTypes; }
-    const QList< Preference<MediaType> >& acceptedMediaTypes() const
-        { return m_mediaTypes; }
-
+    MediaType(const QString& type) : m_wholeType(type) {};
+    MediaType(const char* type) : m_wholeType(type) {};
+    void fromString(const QString& type)
+        { m_wholeType = type; m_category = m_specific = ""; }
+    const QString& toString() const
+        { return m_wholeType; }
+    const QString& category() const;
+    const QString& specific() const;
 private:
-    QString m_userAgent;
-    QList< Preference<MediaType> > m_mediaTypes;
+    QString m_wholeType;
+    QString m_category;
+    QString m_specific;
 };
 
 }
 
-#endif // NANOGEAR_CLIENTINFO_H
+#endif // NANOGEAR_MEDIATYPE_H

@@ -63,7 +63,7 @@ void ConnectionHandlerThread::run() {
         QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setValue("server", "Nanogear");
-        responseHeader.setContentType(response.representation()->mediaType());
+        responseHeader.setContentType(response.representation()->mediaType().toString());
 
         qDebug() << Q_FUNC_INFO << "sending data back to the client";
         m_clientSocket->write(responseHeader.toString().toUtf8());
