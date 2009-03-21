@@ -24,7 +24,7 @@
 #ifndef NANOGEAR_PREFERENCE_H
 #define NANOGEAR_PREFERENCE_H
 
-#include <QtGlobal>
+#include <QMap>
 
 namespace Nanogear {
 
@@ -43,6 +43,21 @@ public:
     void setQuality(float quality)
         { m_quality = quality; }
 
+    static T outOf(const QList< Preference<T> > client, const QList<T>& server) {
+        // Step 1: map quality to T.
+        QMap<float, T> map;
+        foreach (const Preference<T>& type, client) {
+            map.insertMulti(type.quality(), type.data());
+        }
+        // Step 2: walk down until we find a usable type. QMap goes in descending order.
+        // NOTE: QMap starts at the lowest value. We want to try the highest first.
+        for (typename QMap<float, T>::iterator i = map.end(); i != map.begin();) {
+            --i;
+            if (server.contains(*i))
+                return *i;
+        }
+        return T();
+    }
 private:
     T m_data;
     float m_quality;
