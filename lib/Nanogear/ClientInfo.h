@@ -24,7 +24,7 @@
 #ifndef NANOGEAR_CLIENTINFO_H
 #define NANOGEAR_CLIENTINFO_H
 
-#include <QString>
+#include <QDebug>
 #include "Preference.h"
 #include "MediaType.h"
 

@@ -24,28 +24,38 @@
 #ifndef NANOGEAR_RESOURCE_REPRESENTATION_H
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 
+#include <QMimeData>
 #include <QDebug>
 #include "../MediaType.h"
-class QByteArray;
+#include "../Preference.h"
 
 namespace Nanogear {
 namespace Resource {
 
-class Representation {
+class Representation : public QMimeData {
 public:
-    Representation() : m_mediaType("application/octet-stream") {}
-    virtual ~Representation() {}
-
-    virtual QByteArray asByteArray() const = 0;
-    virtual MediaType mediaType() const
-        { return m_mediaType; }
-
-protected:
-    void setMediaType(const MediaType& media)
-        { m_mediaType = media; }
-
-private:
-    MediaType m_mediaType;
+    Representation() {}
+    template <typename Data, typename MimeType>
+    Representation(const Data& data, const MimeType& mediaType = "text/plain")
+        { setData(mediaType, data); }
+    QByteArray data(const QList< Preference<MediaType> >& mediaTypes) const
+        { return data(format(mediaTypes)); qDebug() << Q_FUNC_INFO << "sent data"; }
+    MediaType format(const QList< Preference<MediaType> >& mediaTypes) const {
+        foreach (const Preference<MediaType>& mediaType, mediaTypes) {
+            #warn Need to weigh supported media types, instead of using the first available one.
+            qDebug() << Q_FUNC_INFO << "checking if" << mediaType.data().toString() << "is supported";
+            if (hasFormat(mediaType.data())) {
+                qDebug() << Q_FUNC_INFO << mediaType.data().toString() << "is supported";
+                return mediaType.data();
+            } else
+                qDebug() << Q_FUNC_INFO << mediaType.data().toString() << "is not supported";
+        }
+        return "*/*";
+    }
+    QByteArray data(const MediaType& mediaType) const
+        { return QMimeData::data(mediaType.toString()); }
+    bool hasFormat(const MediaType& mediaType) const
+        { return QMimeData::hasFormat(mediaType.toString()); }
 };
 
 }

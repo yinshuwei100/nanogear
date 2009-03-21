@@ -27,8 +27,8 @@
 
 #include <QCoreApplication>
 #include "Server.h"
-#include "Resource/StringRepresentation.h"
 #include "Response.h"
+#include "Resource/Representation.h"
 #include "Request.h"
 
 namespace Nanogear {
@@ -67,8 +67,8 @@ public:
 private:
     Server* m_server;
     Resource::Resource* m_root;
-    Resource::StringRepresentation m_methodNotSupported;
-    Resource::StringRepresentation m_notFound;
+    Resource::Representation m_methodNotSupported;
+    Resource::Representation m_notFound;
 };
 
 }
