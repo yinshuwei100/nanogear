@@ -35,6 +35,7 @@ namespace Resource {
 class Representation : public QMimeData {
 public:
     Representation() {}
+    Representation(const QMimeData& mimeData) : QMimeData(mimeData) {}
     template <typename Data, typename MimeType>
     Representation(const Data& data, const MimeType& mediaType = "text/plain")
         { setData(mediaType, data); }
