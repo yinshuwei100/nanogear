@@ -25,8 +25,7 @@
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 
 #include <QMimeData>
-#include <QMap>
-#include <QDebug>
+#include <QStringList>
 #include "../MediaType.h"
 #include "../Preference.h"
 
@@ -41,31 +40,18 @@ public:
         { setData(mediaType, data); }
     QByteArray data(const QList< Preference<MediaType> >& mediaTypes) const
         { return data(format(mediaTypes)); }
-    MediaType format(const QList< Preference<MediaType> >& mediaTypes) const {
-        // Step 1: map quality to MediaType.
-        QMap<float, MediaType> map;
-        foreach (const Preference<MediaType>& mediaType, mediaTypes) {
-            map.insertMulti(mediaType.quality(), mediaType.data());
-            qDebug() << Q_FUNC_INFO << ": got media type:" << mediaType.data().toString() << mediaType.quality();
-        }
-        qDebug() << Q_FUNC_INFO << map.size() << ": media types.";
-        // Step 2: walk down until we find a usable type. QMap goes in descending order.
-        // NOTE: QMap iterates up; it starts at the lowest value. We want to try the highest first.
-        for (QMap<float, MediaType>::iterator i = map.end(); i != map.begin();) {
-            --i;
-            qDebug() << Q_FUNC_INFO << ": checking if" << i->toString() << "is supported.";
-            if (hasFormat(i->toString())) {
-                qDebug() << Q_FUNC_INFO << ": it is.";
-                return *i;
-            }
-            qDebug() << Q_FUNC_INFO << ": it isn't.";
-        }
-        return "*/*";
-    }
+    MediaType format(const QList< Preference<MediaType> >& mediaTypes) const
+        { return Preference<MediaType>::outOf(mediaTypes, mediaTypeFormats()); }
     QByteArray data(const MediaType& mediaType) const
         { return QMimeData::data(mediaType.toString()); }
     bool hasFormat(const MediaType& mediaType) const
         { return QMimeData::hasFormat(mediaType.toString()); }
+    QList<MediaType> mediaTypeFormats() const {
+        QList<MediaType> types;
+        foreach (const QString& type, formats())
+            types.append(type);
+        return types;
+    }
 };
 
 }
