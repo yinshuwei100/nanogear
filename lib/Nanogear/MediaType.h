@@ -25,7 +25,6 @@
 #define NANOGEAR_MEDIATYPE_H
 
 #include <QString>
-#include "Preference.h"
 
 namespace Nanogear {
 

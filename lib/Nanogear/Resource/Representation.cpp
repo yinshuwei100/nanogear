@@ -22,18 +22,21 @@
  */
 
 #include "Representation.h"
+#include <QString>
+#include <QRegExp>
+#include <QStringList>
 
 namespace Nanogear {
 
 namespace Resource {
 
 void Representation::setXhtml(const QString& xhtml) {
-    setData("application/xhtml+xml", xhtml);
+    setData("application/xhtml+xml", xhtml.toUtf8());
     QString html = xhtml;
     QRegExp fix;
     // Convert XHTML to valid HTML.
     #define ELEMENT_NONEMPTY(x) \
-    fix = "<"x" (.*)/>"; \
+    fix = QRegExp("<"x" (.*)/>"); \
     while (fix.indexIn(html) != -1)\
         html.replace(fix, "<"x" " + fix.cap(1) + "></"x">");
     ELEMENT_NONEMPTY("a");
@@ -115,7 +118,7 @@ void Representation::setXhtml(const QString& xhtml) {
     ELEMENT_NONEMPTY("var");
     #undef ELEMENT_NONEMPTY
     #define ELEMENT_EMPTY(x) \
-    fix = "<"x" (.*)/>"; \
+    fix = QRegExp("<"x" (.*)/>"); \
     while (fix.indexIn(html) != -1)\
         html.replace(fix, "<"x" " + fix.cap(1) + ">");
     ELEMENT_EMPTY("area");

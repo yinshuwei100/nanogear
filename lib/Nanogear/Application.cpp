@@ -22,10 +22,11 @@
  */
 
 #include "Application.h"
+#include "Server.h"
 
 namespace Nanogear {
 
-int Server::exec() {
+int Application::exec() {
     m_server->start();
     return QCoreApplication::exec();
 }

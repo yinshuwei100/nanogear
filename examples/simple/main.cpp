@@ -32,7 +32,7 @@ public:
     RootResource(const Context& c, QObject* parent)
         : Resource(c, parent), m_representation("<h1>Test response</h1>", "text/html") {}
 
-    virtual Response handleGet(const Request&) {
+    virtual Response handleGet(const Request&) const {
         qDebug() << Q_FUNC_INFO << "called";
         return Response(200, &m_representation);
     }
@@ -48,7 +48,7 @@ public:
           m_representation("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
           m_rootResource("/resource", this) {}
 
-    virtual Response handleGet(const Request&) {
+    virtual Response handleGet(const Request&) const {
         qDebug() << Q_FUNC_INFO << "called";
         return Response(200, &m_representation);
     }
