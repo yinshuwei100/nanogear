@@ -36,14 +36,17 @@ namespace HTTP {
 class ConnectionHandlerThread : public QThread {
     Q_OBJECT
 public:
-    ConnectionHandlerThread(QTcpSocket* clientSocket, HTTPServer* server, QObject* parent = 0)
-        : QThread(parent), m_clientSocket(clientSocket), m_server(server) {}
+    ConnectionHandlerThread(HTTPServer* server, QObject* parent = 0)
+        : QThread(parent), m_server(server) {}
 
     void run();
 
+public Q_SLOTS:
+    void onClientReadyRead();
+
 private:
-    QTcpSocket* m_clientSocket;
     HTTPServer* m_server;
+    QTcpSocket* m_clientSocket;
 };
 
 }

@@ -31,26 +31,12 @@ namespace Concrete {
 namespace HTTP {
 
 void HTTPServer::onNewConnection() {
-    qDebug() << Q_FUNC_INFO << "received new connection";
+    qDebug() << Q_FUNC_INFO << "received new connection, starting a new thread...";
 
-    QTcpSocket* client = m_tcpServer.nextPendingConnection();
-    connect(client, SIGNAL(readyRead()), this, SLOT(onClientReadyRead()));
+    (new ConnectionHandlerThread(this))->start();
+
+    qDebug() << Q_FUNC_INFO << "New thread started.";
 }
-
-void HTTPServer::onClientReadyRead() {
-    qDebug() << Q_FUNC_INFO << "the client is ready to send data, starting a new thread...";
-
-    QTcpSocket* client = static_cast<QTcpSocket*>(sender());
-
-    ConnectionHandlerThread* handlerThread =
-        new ConnectionHandlerThread(client, this);
-    connect(handlerThread, SIGNAL(finished()), handlerThread, SLOT(deleteLater()));
-    connect(handlerThread, SIGNAL(finished()), client, SLOT(deleteLater()));
-
-    qDebug() << Q_FUNC_INFO << "handling request in a new thread";
-    handlerThread->start();
-}
-
 
 }
 }
