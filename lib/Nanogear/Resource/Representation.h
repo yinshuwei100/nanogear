@@ -46,6 +46,9 @@ public:
         { return QMimeData::data(mediaType.toString()); }
     bool hasFormat(const MediaType& mediaType) const
         { return QMimeData::hasFormat(mediaType.toString()); }
+    void setXhtml(const QString& xhtml);
+    QString xhtml() const
+        { return data("application/xhtml+xml"); }
     QList<MediaType> mediaTypeFormats() const {
         QList<MediaType> types;
         foreach (const QString& type, formats())
