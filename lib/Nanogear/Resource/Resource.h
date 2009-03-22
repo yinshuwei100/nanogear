@@ -56,13 +56,13 @@ public:
         { return m_context; }
 
 protected:
-    virtual Response handleGet(const Request& r)  { return methodNotSupported(r); }
-    virtual Response handlePut(const Request& r)  { return methodNotSupported(r); }
+    virtual Response handleGet(const Request& r) const { return methodNotSupported(r); }
+    virtual Response handlePut(const Request& r) { return methodNotSupported(r); }
     virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
-    virtual Response handleOptions(const Request& r) { return methodNotSupported(r); }
-    virtual Response handleDelete(const Request& r)  { return methodNotSupported(r); }
-    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Application::instance()->methodNotSupported(r); }
-    virtual Response notFound(const Request& r) { qDebug() << Q_FUNC_INFO; return Application::instance()->notFound(r); }
+    virtual Response handleOptions(const Request& r) const { return methodNotSupported(r); }
+    virtual Response handleDelete(const Request& r) { return methodNotSupported(r); }
+    virtual Response methodNotSupported(const Request& r) const { return Application::instance()->methodNotSupported(r); }
+    virtual Response notFound(const Request& r) const { return Application::instance()->notFound(r); }
 
 private:
     bool m_modifiable;
