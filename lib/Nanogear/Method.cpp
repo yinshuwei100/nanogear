@@ -21,35 +21,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_MEDIATYPE_H
-#define NANOGEAR_MEDIATYPE_H
-
-#include <QString>
+#include "Method.h"
+#include <QMetaEnum>
 
 namespace Nanogear {
 
-class MediaType {
-public:
-    MediaType() : m_whole("*/*") {};
-    MediaType(const QString& type) : m_whole(type) {};
-    MediaType(const char* type) : m_whole(type) {};
-    void fromString(const QString& type)
-        { m_whole = type; m_category = m_specific = ""; }
-    const QString& toString() const
-        { return m_whole; }
-    bool operator==(const MediaType& type) const
-        { return m_whole == type.m_whole; }
-    bool isConcrete() const
-        { return !m_whole.contains("*"); }
-    const QString& category() const;
-    const QString& specific() const;
-    bool isCompatible(const MediaType&) const;
-private:
-    QString m_whole;
-    QString m_category;
-    QString m_specific;
-};
+int Method::toMethodType(const QString& key) {
+    const QMetaObject& metaObject = staticMetaObject;
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("MethodType"));
+    return metaEnum.keyToValue(key.toUtf8());
+}
+
+QString Method::toString(int value) {
+    const QMetaObject& metaObject = staticMetaObject;
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("MethodType"));
+    return metaEnum.valueToKey(value);
+}
 
 }
 
-#endif // NANOGEAR_MEDIATYPE_H
+

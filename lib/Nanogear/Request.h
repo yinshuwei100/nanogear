@@ -27,11 +27,9 @@
 #include <QString>
 #include "Context.h"
 #include "ClientInfo.h"
+#include "Method.h"
 
 namespace Nanogear {
-
-//! @note: Remove ASAP.
-typedef QString Method;
 
 class Request {
 public:
