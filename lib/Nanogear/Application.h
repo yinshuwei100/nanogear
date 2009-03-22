@@ -26,6 +26,7 @@
 #define NANOGEAR_APPLICATION_H
 
 #include <QCoreApplication>
+#include <QDebug>
 #include "Server.h"
 #include "Response.h"
 #include "Resource/Representation.h"
