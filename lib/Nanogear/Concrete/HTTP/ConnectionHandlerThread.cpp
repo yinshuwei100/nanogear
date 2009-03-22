@@ -38,6 +38,13 @@ namespace Concrete {
 namespace HTTP {
 
 void ConnectionHandlerThread::run() {
+    m_clientSocket = m_server->tcpServer()->nextPendingConnection();
+    connect(m_clientSocket, SIGNAL(readyRead()), SLOT(onClientReadyRead()));
+    connect(this, SIGNAL(finished()), SLOT(deleteLater()));
+    connect(this, SIGNAL(finished()), m_clientSocket, SLOT(deleteLater()));
+}
+
+void ConnectionHandlerThread::onClientReadyRead() {
     if (m_clientSocket != 0) {
         qDebug() << Q_FUNC_INFO << "------ handling request (size:" << m_clientSocket->size() << ")";
         QByteArray inputBlock(m_clientSocket->readAll());

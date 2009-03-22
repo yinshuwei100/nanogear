@@ -45,9 +45,10 @@ public slots:
         qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
         m_tcpServer.listen(QHostAddress::Any, listenPort());
     };
+    QTcpServer* tcpServer()
+        { return &m_tcpServer; }
 
     void onNewConnection();
-    void onClientReadyRead();
 
 private:
     QTcpServer m_tcpServer;
