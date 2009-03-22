@@ -31,6 +31,7 @@ void Representation::setXhtml(const QString& xhtml) {
     setData("application/xhtml+xml", xhtml);
     QString html = xhtml;
     QRegExp fix;
+    // Convert XHTML to valid HTML.
     #define ELEMENT_NONEMPTY(x) \
     fix = "<"x" (.*)/>"; \
     while (fix.indexIn(html) != -1)\
