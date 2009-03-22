@@ -22,6 +22,7 @@
  */
 
 #include "Resource.h"
+#include "../Request.h"
 
 namespace Nanogear {
 

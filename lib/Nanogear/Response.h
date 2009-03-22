@@ -24,10 +24,13 @@
 #ifndef NANOGEAR_RESPONSE_H
 #define NANOGEAR_RESPONSE_H
 
-#include "Resource/Representation.h"
 #include "Status.h"
 
 namespace Nanogear {
+
+namespace Resource {
+class Representation;
+}
 
 class Response {
 public:

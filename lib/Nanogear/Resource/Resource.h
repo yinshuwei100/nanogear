@@ -24,15 +24,15 @@
 #ifndef NANOGEAR_RESOURCE_RESOURCE_H
 #define NANOGEAR_RESOURCE_RESOURCE_H
 
-#include <QDebug>
 #include <QObject>
 
 #include "../Context.h"
 #include "../Response.h"
-#include "../Request.h"
 #include "../Application.h"
 
 namespace Nanogear {
+
+class Request;
 
 namespace Resource {
 
