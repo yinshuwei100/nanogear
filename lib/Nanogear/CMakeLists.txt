@@ -4,7 +4,9 @@ add_subdirectory(Resource)
 set(nanogear_SRCS
     Context.cpp
     Resource/Resource.cpp
+    Resource/Representation.cpp
     MediaType.cpp
+    Application.cpp
 )
 
 qt4_wrap_cpp(nanogear_SRCS

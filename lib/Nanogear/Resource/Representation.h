@@ -25,7 +25,6 @@
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 
 #include <QMimeData>
-#include <QStringList>
 #include "../MediaType.h"
 #include "../Preference.h"
 
@@ -49,12 +48,7 @@ public:
     void setXhtml(const QString& xhtml);
     QString xhtml() const
         { return data("application/xhtml+xml"); }
-    QList<MediaType> mediaTypeFormats() const {
-        QList<MediaType> types;
-        foreach (const QString& type, formats())
-            types.append(type);
-        return types;
-    }
+    QList<MediaType> mediaTypeFormats() const;
 };
 
 }

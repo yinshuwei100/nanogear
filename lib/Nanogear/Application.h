@@ -26,13 +26,13 @@
 #define NANOGEAR_APPLICATION_H
 
 #include <QCoreApplication>
-#include <QDebug>
-#include "Server.h"
 #include "Response.h"
 #include "Resource/Representation.h"
 #include "Request.h"
 
 namespace Nanogear {
+
+class Server;
 
 namespace Resource {
 class Resource;
@@ -57,13 +57,15 @@ public:
     Resource::Resource* root() const
         { return m_root; }
 
-    int exec()
-        { m_server->start(); return QCoreApplication::exec(); }
     static Application* instance()
         { return static_cast<Application*>(QCoreApplication::instance()); }
 
-    virtual Response methodNotSupported(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(501, &m_methodNotSupported); }
-    virtual Response notFound(const Request& r) { qDebug() << Q_FUNC_INFO; return Response(404, &m_notFound); }
+    virtual Response methodNotSupported(const Request& r) const
+        { return Response(501, &m_methodNotSupported); }
+    virtual Response notFound(const Request& r) const
+        { return Response(404, &m_notFound); }
+
+    int exec();
 
 private:
     Server* m_server;
