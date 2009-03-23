@@ -27,7 +27,8 @@
 #include <QLocale>
 #include "Preference.h"
 #include "MediaType.h"
-#include "CharacterSet.h"
+
+class QTextCodec;
 
 namespace Nanogear {
 
@@ -51,15 +52,15 @@ public:
     const QList< Preference<QLocale> >& acceptedLocales() const
         { return m_locales; }
 
-    void setAcceptedCharacterSets(const QList <Preference<CharacterSet> >& charsets)
-        { m_charsets = charsets; }
-    const QList <Preference<CharacterSet> >& acceptedCharacterSets() const
-        { return m_charsets; }
+    void setAcceptedTextCodecs(const QList <Preference<QTextCodec*> >& codecs)
+        { m_codecs = codecs; }
+    const QList <Preference<QTextCodec*> >& acceptedTextCodecs() const
+        { return m_codecs; }
 private:
     QString m_userAgent;
     QList< Preference<MediaType> > m_mediaTypes;
     QList< Preference<QLocale> > m_locales;
-    QList< Preference<CharacterSet> > m_charsets;
+    QList< Preference<QTextCodec*> > m_codecs;
 };
 
 }
