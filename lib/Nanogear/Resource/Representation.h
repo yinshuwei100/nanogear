@@ -46,6 +46,8 @@ public:
     bool hasFormat(const MimeType& mimeType) const
         { return QMimeData::hasFormat(mimeType.toString()); }
     void setXhtml(const QString& xhtml);
+    bool hasXhtml() const
+        { return hasFormat("application/xhtml+xml"); }
     QString xhtml() const
         { return data("application/xhtml+xml"); }
     QList<MimeType> mimeTypeFormats() const;
