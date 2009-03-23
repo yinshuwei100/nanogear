@@ -21,59 +21,49 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_METHOD_H
-#define NANOGEAR_METHOD_H
+#ifndef NANOGEAR_CHARACTERSET_H
+#define NANOGEAR_CHARACTERSET_H
 
 #include <QString>
 #include <QObject>
 
 namespace Nanogear {
 
-class Method {
+class CharacterSet {
     Q_GADGET
-    Q_ENUMS(MethodType);
+    Q_ENUMS(CharacterSetType);
 public:
-    Method() {};
-    Method(const QString& name) : m_method(toMethodType(name)) {};
-    Method(const char* name) : m_method(toMethodType(name)) {};
+    CharacterSet() {};
+    CharacterSet(const QString& name) : m_set(toCharacterSetType(name)) {};
+    CharacterSet(const char* name) : m_set(toCharacterSetType(name)) {};
     void fromString(const QString& name)
-        { m_method = toMethodType(name); }
+        { m_set = toCharacterSetType(name); }
     QString toString() const
-        { return toString(m_method); }
-    void fromMethodType(int method)
-        { m_method = method; }
-    int toMethodType() const
-        { return m_method; }
+        { return toString(m_set); }
+    void fromCharacterSetType(int set)
+        { m_set = set; }
+    int toCharacterSetType() const
+        { return m_set; }
 
-    bool operator==(const Method& type) const
-        { return m_method == type.m_method; }
+    bool operator==(const CharacterSet& set) const
+        { return m_set == set.m_set; }
     bool isValid() const
-        { return m_method != Invalid; }
+        { return m_set != Invalid; }
 
-    enum MethodType {
+    enum CharacterSetType {
         Invalid = 0,
-        CONNECT = 1,
-        COPY = 2,
-        DELETE = 3,
-        GET = 4,
-        HEAD = 5,
-        LOCK = 6,
-        MKCOL = 7,
-        MOVE = 8,
-        OPTIONS = 9,
-        POST = 10,
-        PROPFIND = 11,
-        PROPPATCH = 12,
-        PUT = 13,
-        TRACE = 14,
-        UNLOCK = 15
+        Default = 1,
+        Iso88591 = 2,
+        UsAscii = 3,
+        Utf16 = 4,
+        Utf8 = 5
     };
 private:
-    static int toMethodType(const QString&);
-    static QString toString(int method);
-    int m_method;
+    static int toCharacterSetType(const QString&);
+    static QString toString(int set);
+    int m_set;
 };
 
 }
 
-#endif // NANOGEAR_METHOD_H
+#endif // NANOGEAR_CHARACTERSET_H

@@ -55,7 +55,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
 
         /* add media types */ {
             QList< Preference<MediaType> > accept;
-            foreach (const QString& mediaType, requestHeader.value("accept").split(", ")) {
+            foreach (const QString& mediaType, requestHeader.value("accept").remove(" ").split(",")) {
                 QList<QString> pair = mediaType.split(";q=");
                 accept.append(Preference<MediaType>(pair.at(0), pair.value(1, "1").toFloat()));
             }
@@ -63,11 +63,19 @@ void ConnectionHandlerThread::onClientReadyRead() {
         }
         /* add locales */ {
             QList< Preference<QLocale> > accept;
-            foreach (const QString& locale, requestHeader.value("accept-language").split(", ")) {
-                QList<QString> pair = locale.split(';');
+            foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
+                QList<QString> pair = locale.split(";q=");
                 accept.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
             }
             clientInfo.setAcceptedLocales(accept);
+        }
+        /* add charsets */ {
+            QList< Preference<CharacterSet> > accept;
+            foreach (const QString& charset, requestHeader.value("accept-charset").remove(" ").split(",")) {
+                QList<QString> pair = charset.split(";q=");
+                accept.append(Preference<CharacterSet>(pair.at(0), pair.value(1, "1").toFloat()));
+            }
+            clientInfo.setAcceptedCharsets(accept);
         }
         qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
         qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
