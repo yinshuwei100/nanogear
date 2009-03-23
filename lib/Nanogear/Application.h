@@ -61,7 +61,7 @@ public:
         { return static_cast<Application*>(QCoreApplication::instance()); }
 
     virtual Response methodNotSupported(const Request& r) const
-        { return Response(501, &m_methodNotSupported); }
+        { return Response(Status::MethodNotAllowed, &m_methodNotSupported); }
     virtual Response notFound(const Request& r) const
         { return Response(404, &m_notFound); }
 

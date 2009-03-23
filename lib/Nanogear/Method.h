@@ -26,23 +26,25 @@
 
 #include <QString>
 #include <QObject>
+#include <QMetaType>
 
 namespace Nanogear {
 
 class Method {
     Q_GADGET
-    Q_ENUMS(MethodType);
+    Q_ENUMS(Type);
 public:
-    Method() {};
-    Method(const QString& name) : m_method(toMethodType(name)) {};
-    Method(const char* name) : m_method(toMethodType(name)) {};
+    Method() : m_method(Invalid) { qRegisterMetaType<Method>(); };
+    Method(const QString& name) : m_method(toType(name)) { qRegisterMetaType<Method>(); };
+    Method(const char* name) : m_method(toType(name)) { qRegisterMetaType<Method>(); };
+    Method(int method) : m_method(method) { qRegisterMetaType<Method>(); };
     void fromString(const QString& name)
-        { m_method = toMethodType(name); }
+        { m_method = toType(name); }
     QString toString() const
         { return toString(m_method); }
-    void fromMethodType(int method)
+    void fromType(int method)
         { m_method = method; }
-    int toMethodType() const
+    int toType() const
         { return m_method; }
 
     bool operator==(const Method& type) const
@@ -50,7 +52,7 @@ public:
     bool isValid() const
         { return m_method != Invalid; }
 
-    enum MethodType {
+    enum Type {
         Invalid = 0,
         CONNECT = 1,
         COPY = 2,
@@ -69,11 +71,13 @@ public:
         UNLOCK = 15
     };
 private:
-    static int toMethodType(const QString&);
+    static int toType(const QString&);
     static QString toString(int method);
     int m_method;
 };
 
 }
+
+Q_DECLARE_METATYPE(Nanogear::Method);
 
 #endif // NANOGEAR_METHOD_H

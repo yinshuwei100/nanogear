@@ -34,7 +34,7 @@ public:
 
     virtual Response handleGet(const Request&) const {
         qDebug() << Q_FUNC_INFO << "called";
-        return Response(200, &m_representation);
+        return Response(Status::OK, &m_representation);
     }
 
 private:
@@ -50,7 +50,7 @@ public:
 
     virtual Response handleGet(const Request&) const {
         qDebug() << Q_FUNC_INFO << "called";
-        return Response(200, &m_representation);
+        return Response(Status::OK, &m_representation);
     }
 private:
     Nanogear::Resource::Representation m_representation;
