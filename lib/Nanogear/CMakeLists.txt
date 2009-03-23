@@ -8,6 +8,7 @@ set(nanogear_SRCS
     MediaType.cpp
     Application.cpp
     Method.cpp
+    CharacterSet.cpp
 )
 
 qt4_wrap_cpp(nanogear_SRCS
@@ -15,6 +16,7 @@ qt4_wrap_cpp(nanogear_SRCS
     Application.h
     Server.h
     Method.h
+    CharacterSet.h
 )
 
 add_library(nanogear SHARED ${nanogear_SRCS})
