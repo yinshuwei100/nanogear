@@ -55,25 +55,25 @@ void ConnectionHandlerThread::onClientReadyRead() {
         ClientInfo clientInfo(requestHeader.value("user-agent"));
 
         /* add mime types */ {
-            QList< Preference<MimeType> > accept;
+            Preference<MimeType>::List accept;
             foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
-                QList<QString> pair = mimeType.split(";q=");
+                QStringList pair = mimeType.split(";q=");
                 accept.append(Preference<MimeType>(pair.at(0), pair.value(1, "1").toFloat()));
             }
             clientInfo.setAcceptedMimeTypes(accept);
         }
         /* add locales */ {
-            QList< Preference<QLocale> > accept;
+            Preference<QLocale>::List accept;
             foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
-                QList<QString> pair = locale.split(";q=");
+                QStringList pair = locale.split(";q=");
                 accept.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
             }
             clientInfo.setAcceptedLocales(accept);
         }
         /* add text codecs */ {
-            QList< Preference<QTextCodec*> > accept;
+            Preference<QTextCodec*>::List accept;
             foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
-                QList<QString> pair = codec.split(";q=");
+                QStringList pair = codec.split(";q=");
                 accept.append(Preference<QTextCodec*>(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
             }
             clientInfo.setAcceptedTextCodecs(accept);
@@ -85,7 +85,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
         Request request(requestHeader.method(), requestPath, clientInfo);
         Response response = resource ? resource->handleRequest(request) : Application::instance()->notFound(request);
         const Resource::Representation* representation = response.representation();
-        QTextCodec* codec = Preference<QTextCodec*>::top(clientInfo.acceptedTextCodecs());
+        QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
 
         QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
             requestHeader.majorVersion(), requestHeader.minorVersion());

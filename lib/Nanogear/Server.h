@@ -24,7 +24,6 @@
 #ifndef NANOGEAR_SERVER_H
 #define NANOGEAR_SERVER_H
 
-#include <QList>
 #include <QObject>
 
 #include "Context.h"
