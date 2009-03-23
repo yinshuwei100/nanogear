@@ -37,10 +37,10 @@ public:
     template <typename Data, typename Type>
     Representation(const Data& data, const Type& mimeType = "text/plain")
         { setData(mimeType, data); }
-    QByteArray data(const QList< Preference<MimeType> >& mimeTypes) const
+    QByteArray data(const Preference<MimeType>::List& mimeTypes) const
         { return data(format(mimeTypes)); }
-    MimeType format(const QList< Preference<MimeType> >& mimeTypes) const
-        { return Preference<MimeType>::outOf(mimeTypes, mimeTypeFormats()); }
+    MimeType format(const Preference<MimeType>::List& mimeTypes) const
+        { return mimeTypes.outOf(mimeTypeFormats()); }
     QByteArray data(const MimeType& mimeType) const
         { return QMimeData::data(mimeType.toString()); }
     bool hasFormat(const MimeType& mimeType) const

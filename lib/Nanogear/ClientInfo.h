@@ -43,25 +43,25 @@ public:
     const QString& userAgent() const
         { return m_userAgent; }
 
-    void setAcceptedMimeTypes(const QList< Preference<MimeType> >& mimeTypes)
+    void setAcceptedMimeTypes(const Preference<MimeType>::List& mimeTypes)
         { m_mimeTypes = mimeTypes; }
-    const QList< Preference<MimeType> >& acceptedMimeTypes() const
+    const Preference<MimeType>::List& acceptedMimeTypes() const
         { return m_mimeTypes; }
 
-    void setAcceptedLocales(const QList< Preference<QLocale> >& locales)
+    void setAcceptedLocales(const Preference<QLocale>::List& locales)
         { m_locales = locales; }
-    const QList< Preference<QLocale> >& acceptedLocales() const
+    const Preference<QLocale>::List& acceptedLocales() const
         { return m_locales; }
 
-    void setAcceptedTextCodecs(const QList <Preference<QTextCodec*> >& codecs)
+    void setAcceptedTextCodecs(const Preference<QTextCodec*>::List& codecs)
         { m_codecs = codecs; }
-    const QList <Preference<QTextCodec*> >& acceptedTextCodecs() const
+    const Preference<QTextCodec*>::List& acceptedTextCodecs() const
         { return m_codecs; }
 private:
     QString m_userAgent;
-    QList< Preference<MimeType> > m_mimeTypes;
-    QList< Preference<QLocale> > m_locales;
-    QList< Preference<QTextCodec*> > m_codecs;
+    Preference<MimeType>::List m_mimeTypes;
+    Preference<QLocale>::List m_locales;
+    Preference<QTextCodec*>::List m_codecs;
 };
 
 }

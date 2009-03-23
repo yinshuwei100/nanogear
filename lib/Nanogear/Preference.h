@@ -43,27 +43,41 @@ public:
     void setQuality(float quality)
         { m_quality = quality; }
 
-    static T top(const QList< Preference<T> >& client)
-        { return *(toMap(client).end()); }
-    static T outOf(const QList< Preference<T> >& client, const QList<T>& server) {
-        QMap<float, T> map = toMap(client);
-        for (typename QMap<float, T>::iterator i = map.end(); i != map.begin();) {
-            --i;
-            if (server.contains(*i))
-                return *i;
+    class List : public QList< Preference<T> > {
+    public:
+        List() {};
+        List(const QList< Preference<T> >& other)
+            : QList< Preference<T> >(other) {}
+        T top() const
+            { return *(toMap().end()); }
+        T outOf(const QList<T>& server) const {
+            QMap<float, T> map = toMap();
+            for (typename QMap<float, T>::iterator i = map.end(); i != map.begin();) {
+                --i;
+                if (server.contains(*i))
+                    return *i;
+            }
+            return T();
         }
-        return T();
-    }
-    static QMap<float, T> toMap(const QList< Preference<T> >& client) {
-        QMap<float, T> ret;
-        foreach (const Preference<T>& type, client) {
-            ret.insertMulti(type.quality(), type.data());
+        QMap<float, T> toMap() const {
+            QMap<float, T> ret;
+            foreach (const Preference<T>& type, *this) {
+                ret.insertMulti(type.quality(), type.data());
+            }
+            return ret;
         }
-        return ret;
-    }
+    };
 private:
     T m_data;
     float m_quality;
+};
+
+template <typename T>
+class PreferenceList : Preference<T>::List {
+public:
+    PreferenceList() {};
+    PreferenceList(const QList< Preference<T> >& list)
+        : Preference<T>::List(list) {};
 };
 
 template <typename T, typename U>
