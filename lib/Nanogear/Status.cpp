@@ -21,48 +21,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_REQUEST_H
-#define NANOGEAR_REQUEST_H
-
-#include <QString>
-#include <QMetaObject>
-#include "Context.h"
-#include "ClientInfo.h"
-#include "Method.h"
+#include "Status.h"
+#include <QMetaEnum>
 
 namespace Nanogear {
 
-class Request {
-public:
-    Request() { qRegisterMetaType<Request>(); };
-    Request(const Method& m, const Context& c,
-        const ClientInfo& cI = ClientInfo())
-        : m_method(m), m_context(c), m_clientInfo(cI) { qRegisterMetaType<Request>(); }
-    virtual ~Request() {};
+int Status::toType(const QString& key) {
+    const QMetaObject& metaObject = staticMetaObject;
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
+    return metaEnum.keyToValue(key.toUtf8());
+}
 
-    const Method& method() const
-        { return m_method; }
-    void setMethod(const Method& method)
-        { m_method = method; }
-
-    const Context& context() const
-        { return m_context; }
-    void setContext(const Context& context)
-        { m_context = context; }
-
-    void setClientInfo(const ClientInfo& clientInfo)
-        { m_clientInfo = clientInfo; }
-    const ClientInfo& clientInfo() const
-        { return m_clientInfo; }
-
-private:
-    Method m_method;
-    Context m_context;
-    ClientInfo m_clientInfo;
-};
+QString Status::toString(int value) {
+    const QMetaObject& metaObject = staticMetaObject;
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
+    return metaEnum.valueToKey(value);
+}
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::Request);
 
-#endif /* NANOGEAR_REQUEST_H */

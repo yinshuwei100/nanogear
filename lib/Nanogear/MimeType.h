@@ -25,14 +25,16 @@
 #define NANOGEAR_MIMETYPE_H
 
 #include <QString>
+#include <QMetaObject>
+#include <QMetaType>
 
 namespace Nanogear {
 
 class MimeType {
 public:
-    MimeType() : m_whole("*/*") {};
-    MimeType(const QString& type) : m_whole(type) {};
-    MimeType(const char* type) : m_whole(type) {};
+    MimeType() : m_whole("*/*") { qRegisterMetaType<MimeType>(); };
+    MimeType(const QString& type) : m_whole(type) { qRegisterMetaType<MimeType>(); };
+    MimeType(const char* type) : m_whole(type) { qRegisterMetaType<MimeType>(); };
     void fromString(const QString& type)
         { m_whole = type; m_category = m_specific = ""; }
     const QString& toString() const
@@ -51,5 +53,7 @@ private:
 };
 
 }
+
+Q_DECLARE_METATYPE(Nanogear::MimeType);
 
 #endif // NANOGEAR_MIMETYPE_H

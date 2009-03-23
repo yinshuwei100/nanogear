@@ -87,7 +87,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
         const Resource::Representation* representation = response.representation();
         QTextCodec* codec = Preference<QTextCodec*>::top(clientInfo.acceptedTextCodecs());
 
-        QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
+        QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setValue("server", "Nanogear");
         responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());

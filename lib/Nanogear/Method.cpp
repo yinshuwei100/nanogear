@@ -26,15 +26,15 @@
 
 namespace Nanogear {
 
-int Method::toMethodType(const QString& key) {
+int Method::toType(const QString& key) {
     const QMetaObject& metaObject = staticMetaObject;
-    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("MethodType"));
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
 QString Method::toString(int value) {
     const QMetaObject& metaObject = staticMetaObject;
-    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("MethodType"));
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.valueToKey(value);
 }
 

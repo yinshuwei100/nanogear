@@ -25,33 +25,98 @@
 #define NANOGEAR_STATUS_H
 
 #include <QString>
+#include <QObject>
+#include <QMetaType>
 
 namespace Nanogear {
 
 class Status {
+    Q_GADGET
+    Q_ENUMS(Type);
 public:
-    Status(int code) : m_code(code) {
-        switch(m_code) {
-            case 200: m_name = "OK"; break;
-            case 404: m_name = "Not Found"; break;
-        }
-    }
+    Status() : m_status(Invalid) { qRegisterMetaType<Status>(); };
+    Status(const QString& name) : m_status(toType(name)) { qRegisterMetaType<Status>(); };
+    Status(const char* name) : m_status(toType(name)) { qRegisterMetaType<Status>(); };
+    Status(int status) : m_status(status) { qRegisterMetaType<Status>(); };
+    void fromString(const QString& name)
+        { m_status = toType(name); }
+    QString toString() const
+        { return toString(m_status); }
+    void fromType(int status)
+        { m_status = status; }
+    int toType() const
+        { return m_status; }
 
-    int code() const
-        { return m_code; }
-    void setCode(int stat)
-        { m_code = stat; }
+    bool operator==(const Status& type) const
+        { return m_status == type.m_status; }
+    bool isValid() const
+        { return m_status != Invalid; }
 
-    const QString& name() const
-        { return m_name; }
-    void setName(const QString& name)
-        { m_name = name; }
-
+    enum Type {
+        Invalid = 0,
+        Continue = 100,
+        SwitchingProtocols = 101,
+        Processing = 102,
+        OK = 200,
+        Created = 201,
+        Accepted = 202,
+        NonAuthorativeInformation = 203,
+        NoContent = 204,
+        ResetContent = 205,
+        PartialContent = 206,
+        MultiStatus = 207,
+        MultipleChoices = 300,
+        MovedPermanently = 301,
+        Found = 302,
+        SeeOther = 303,
+        NotModified = 304,
+        UseProxy = 305,
+        SwitchProxy = 306,
+        TemporaryRedirect = 307,
+        BadRequest = 400,
+        Unauthorized = 401,
+        PaymentRequired = 402,
+        Forbidden = 403,
+        NotFound = 404,
+        MethodNotAllowed = 405,
+        NotAcceptable = 406,
+        ProxyAuthenticationRequired = 407,
+        RequestTimeout = 408,
+        Conflict = 409,
+        Gone = 410,
+        LengthRequired = 411,
+        PreconditionFailed = 412,
+        RequestEntityTooLarge = 413,
+        RequestURITooLong = 414,
+        UnsupportedMediaType = 415,
+        RequestedRangeNotSatisfiable = 416,
+        ExpectationFailed = 417,
+        ImATeapot = 418,
+        UnprocessableEntity = 422,
+        Locked = 423,
+        FailedDependency = 424,
+        UnorderedCollection = 425,
+        UpgradeRequired = 426,
+        RetryWith = 449,
+        Blocked = 450,
+        InternalServerError = 500,
+        NotImplemented = 501,
+        BadGateway = 502,
+        GatewayTimeout = 504,
+        VersionNotSupported = 505,
+        VariantAlsoNegotiates = 506,
+        InsufficientStorage = 507,
+        BandwidthLimitExceeded = 509,
+        NotExtended = 510
+    };
 private:
-    int m_code;
-    QString m_name;
+    static int toType(const QString&);
+    static QString toString(int status);
+    int m_status;
 };
 
 }
 
-#endif /* NANOGEAR_STATUS_H */
+Q_DECLARE_METATYPE(Nanogear::Status);
+
+#endif // NANOGEAR_STATUS_H

@@ -25,6 +25,7 @@
 #define NANOGEAR_CONTEXT_H
 
 #include <QString>
+#include <QMetaType>
 
 namespace Nanogear {
 
@@ -32,9 +33,11 @@ class Context {
 public:
     Context() {}
     Context(const QString& path)
-        : m_path(sanitize(path)) {}
+        : m_path(sanitize(path))
+        { qRegisterMetaType<Context>(); }
     Context(const char* charPath)
-        : m_path(sanitize(charPath)) {}
+        : m_path(sanitize(charPath))
+        { qRegisterMetaType<Context>(); }
     virtual ~Context() {}
 
     void setPath(const QString& path)
@@ -51,5 +54,7 @@ bool operator==(const Context&, const Context&);
 bool operator!=(const Context&, const Context&);
 
 }
+
+Q_DECLARE_METATYPE(Nanogear::Context);
 
 #endif /* NANOGEAR_CONTEXT_H */

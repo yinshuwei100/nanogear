@@ -25,6 +25,7 @@
 #define NANOGEAR_RESPONSE_H
 
 #include "Status.h"
+#include <QMetaObject>
 
 namespace Nanogear {
 
@@ -34,7 +35,9 @@ class Representation;
 
 class Response {
 public:
-    Response(const Status& s, const Resource::Representation* rep) : m_status(s), m_representation(rep) {}
+    Response() : m_representation(0) { qRegisterMetaType<Response>(); }
+    Response(const Status& s, const Resource::Representation* rep)
+        : m_status(s), m_representation(rep) { qRegisterMetaType<Response>(); }
     virtual ~Response() {}
 
     void setStatus(const Status& s)
@@ -52,5 +55,7 @@ private:
 };
 
 }
+
+Q_DECLARE_METATYPE(Nanogear::Response);
 
 #endif /* NANOGEAR_RESPONSE_H */

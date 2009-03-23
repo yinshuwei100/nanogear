@@ -25,6 +25,7 @@
 #define NANOGEAR_CLIENTINFO_H
 
 #include <QLocale>
+#include <QMetaType>
 #include "Preference.h"
 #include "MimeType.h"
 
@@ -35,7 +36,7 @@ namespace Nanogear {
 class ClientInfo {
 public:
     ClientInfo(const QString& ua = QString())
-        : m_userAgent(ua) {}
+        : m_userAgent(ua) { qRegisterMetaType<ClientInfo>(); }
 
     void setUserAgent(const QString& a)
         { m_userAgent = a; }
@@ -64,5 +65,7 @@ private:
 };
 
 }
+
+Q_DECLARE_METATYPE(Nanogear::ClientInfo);
 
 #endif // NANOGEAR_CLIENTINFO_H
