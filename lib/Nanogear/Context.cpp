@@ -33,6 +33,7 @@ QString Context::sanitize(QString path) {
 bool operator==(const Context& a, const Context& b) {
     return a.path() == b.path();
 }
+
 bool operator!=(const Context& a, const Context& b) {
     return a.path() != b.path();
 }

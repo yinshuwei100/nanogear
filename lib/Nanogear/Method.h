@@ -34,14 +34,20 @@ class Method {
     Q_GADGET
     Q_ENUMS(Type);
 public:
-    Method() : m_method(Invalid) { qRegisterMetaType<Method>(); };
-    Method(const QString& name) : m_method(toType(name)) { qRegisterMetaType<Method>(); };
-    Method(const char* name) : m_method(toType(name)) { qRegisterMetaType<Method>(); };
-    Method(int method) : m_method(method) { qRegisterMetaType<Method>(); };
+    Method() : m_method(Invalid)
+        { qRegisterMetaType<Method>(); }
+    Method(const QString& name) : m_method(toType(name))
+        { qRegisterMetaType<Method>(); }
+    Method(const char* name) : m_method(toType(name))
+        { qRegisterMetaType<Method>(); }
+    Method(int method) : m_method(method)
+        { qRegisterMetaType<Method>(); }
+
     void fromString(const QString& name)
         { m_method = toType(name); }
     QString toString() const
         { return toString(m_method); }
+
     void fromType(int method)
         { m_method = method; }
     int toType() const
@@ -70,6 +76,7 @@ public:
         TRACE = 14,
         UNLOCK = 15
     };
+
 private:
     static int toType(const QString&);
     static QString toString(int method);

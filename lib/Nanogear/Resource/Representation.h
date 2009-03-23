@@ -34,20 +34,27 @@ namespace Resource {
 class Representation : public QMimeData {
 public:
     Representation() {}
+
     template <typename Data, typename Type>
     Representation(const Data& data, const Type& mimeType = "text/plain")
         { setData(mimeType, data); }
+
     QByteArray data(const Preference<MimeType>::List& mimeTypes) const
         { return data(format(mimeTypes)); }
+
     MimeType format(const Preference<MimeType>::List& mimeTypes) const
         { return mimeTypes.outOf(mimeTypeFormats()); }
+
     QByteArray data(const MimeType& mimeType) const
         { return QMimeData::data(mimeType.toString()); }
+
     bool hasFormat(const MimeType& mimeType) const
         { return QMimeData::hasFormat(mimeType.toString()); }
+
     void setXhtml(const QString& xhtml);
     QString xhtml() const
         { return data("application/xhtml+xml"); }
+
     QList<MimeType> mimeTypeFormats() const;
 };
 

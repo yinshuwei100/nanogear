@@ -34,14 +34,20 @@ class Status {
     Q_GADGET
     Q_ENUMS(Type);
 public:
-    Status() : m_status(Invalid) { qRegisterMetaType<Status>(); };
-    Status(const QString& name) : m_status(toType(name)) { qRegisterMetaType<Status>(); };
-    Status(const char* name) : m_status(toType(name)) { qRegisterMetaType<Status>(); };
-    Status(int status) : m_status(status) { qRegisterMetaType<Status>(); };
+    Status() : m_status(Invalid)
+        { qRegisterMetaType<Status>(); }
+    Status(const QString& name) : m_status(toType(name))
+        { qRegisterMetaType<Status>(); }
+    Status(const char* name) : m_status(toType(name))
+        { qRegisterMetaType<Status>(); };
+    Status(int status) : m_status(status)
+        { qRegisterMetaType<Status>(); }
+
     void fromString(const QString& name)
         { m_status = toType(name); }
     QString toString() const
         { return toString(m_status); }
+
     void fromType(int status)
         { m_status = status; }
     int toType() const

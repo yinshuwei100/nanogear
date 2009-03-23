@@ -35,9 +35,9 @@ namespace Nanogear {
 class Request {
 public:
     Request() { qRegisterMetaType<Request>(); };
-    Request(const Method& m, const Context& c,
-        const ClientInfo& cI = ClientInfo())
-        : m_method(m), m_context(c), m_clientInfo(cI) { qRegisterMetaType<Request>(); }
+    Request(const Method& m, const Context& c, const ClientInfo& cI = ClientInfo())
+        : m_method(m), m_context(c), m_clientInfo(cI)
+        { qRegisterMetaType<Request>(); }
     virtual ~Request() {};
 
     const Method& method() const

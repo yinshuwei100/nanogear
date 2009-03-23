@@ -32,8 +32,10 @@ namespace Resource {
 
 void Representation::setXhtml(const QString& xhtml) {
     setData("application/xhtml+xml", xhtml.toUtf8());
+
     QString html = xhtml;
     QRegExp fix;
+
     // Convert XHTML to valid HTML.
     #define ELEMENT_NONEMPTY(x) \
     fix = QRegExp("<"x" (.*)/>"); \
@@ -117,6 +119,8 @@ void Representation::setXhtml(const QString& xhtml) {
     ELEMENT_NONEMPTY("ul");
     ELEMENT_NONEMPTY("var");
     #undef ELEMENT_NONEMPTY
+
+
     #define ELEMENT_EMPTY(x) \
     fix = QRegExp("<"x" (.*)/>"); \
     while (fix.indexIn(html) != -1)\
@@ -135,6 +139,8 @@ void Representation::setXhtml(const QString& xhtml) {
     ELEMENT_EMPTY("meta");
     ELEMENT_EMPTY("param");
     #undef ELEMENT_EMPTY
+
+
     setHtml(html);
 }
 

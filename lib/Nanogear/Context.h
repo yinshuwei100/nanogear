@@ -32,11 +32,9 @@ namespace Nanogear {
 class Context {
 public:
     Context() {}
-    Context(const QString& path)
-        : m_path(sanitize(path))
+    Context(const QString& path) : m_path(sanitize(path))
         { qRegisterMetaType<Context>(); }
-    Context(const char* charPath)
-        : m_path(sanitize(charPath))
+    Context(const char* charPath) : m_path(sanitize(charPath))
         { qRegisterMetaType<Context>(); }
     virtual ~Context() {}
 

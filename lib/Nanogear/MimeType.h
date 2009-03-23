@@ -32,19 +32,27 @@ namespace Nanogear {
 
 class MimeType {
 public:
-    MimeType() : m_whole("*/*") { qRegisterMetaType<MimeType>(); };
-    MimeType(const QString& type) : m_whole(type) { qRegisterMetaType<MimeType>(); };
-    MimeType(const char* type) : m_whole(type) { qRegisterMetaType<MimeType>(); };
+    MimeType() : m_whole("*/*")
+        { qRegisterMetaType<MimeType>(); }
+    MimeType(const QString& type) : m_whole(type)
+        { qRegisterMetaType<MimeType>(); }
+    MimeType(const char* type) : m_whole(type)
+        { qRegisterMetaType<MimeType>(); }
+
     void fromString(const QString& type)
         { m_whole = type; m_category = m_specific = ""; }
     const QString& toString() const
         { return m_whole; }
+
     bool operator==(const MimeType& type) const
         { return m_whole == type.m_whole; }
     bool isConcrete() const
         { return !m_whole.contains("*"); }
+
     const QString& category() const;
+
     const QString& specific() const;
+
     bool isCompatible(const MimeType&) const;
 private:
     QString m_whole;

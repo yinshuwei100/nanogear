@@ -35,8 +35,8 @@ namespace Nanogear {
 
 class ClientInfo {
 public:
-    ClientInfo(const QString& ua = QString())
-        : m_userAgent(ua) { qRegisterMetaType<ClientInfo>(); }
+    ClientInfo(const QString& ua = QString()) : m_userAgent(ua)
+        { qRegisterMetaType<ClientInfo>(); }
 
     void setUserAgent(const QString& a)
         { m_userAgent = a; }
