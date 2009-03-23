@@ -27,6 +27,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QHttpRequestHeader>
+#include <QTextCodec>
 
 #include "../../Response.h"
 #include "../../Request.h"
@@ -69,13 +70,13 @@ void ConnectionHandlerThread::onClientReadyRead() {
             }
             clientInfo.setAcceptedLocales(accept);
         }
-        /* add charsets */ {
-            QList< Preference<CharacterSet> > accept;
-            foreach (const QString& charset, requestHeader.value("accept-charset").remove(" ").split(",")) {
-                QList<QString> pair = charset.split(";q=");
-                accept.append(Preference<CharacterSet>(pair.at(0), pair.value(1, "1").toFloat()));
+        /* add text codecs */ {
+            QList< Preference<QTextCodec*> > accept;
+            foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
+                QList<QString> pair = codec.split(";q=");
+                accept.append(Preference<QTextCodec*>(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
             }
-            clientInfo.setAcceptedCharacterSets(accept);
+            clientInfo.setAcceptedTextCodecs(accept);
         }
         qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
         qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
@@ -84,7 +85,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
         Request request(requestHeader.method(), requestPath, clientInfo);
         Response response = resource ? resource->handleRequest(request) : Application::instance()->notFound(request);
         const Resource::Representation* representation = response.representation();
-        CharacterSet charset = Preference<CharacterSet>::top(clientInfo.acceptedCharacterSets());
+        QTextCodec* codec = Preference<QTextCodec*>::top(clientInfo.acceptedTextCodecs());
 
         QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
