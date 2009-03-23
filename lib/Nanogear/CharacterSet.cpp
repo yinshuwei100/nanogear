@@ -38,6 +38,22 @@ QString CharacterSet::toString(int value) {
     return metaEnum.valueToKey(value);
 }
 
+QByteArray CharacterSet::convert(const QString& string) const {
+    Q_ASSERT(m_set != Invalid);
+    Q_ASSERT(m_set != Utf16); // QByteArray can't hold Utf16
+    switch (m_set) {
+    case Default:
+        return string.toLocal8Bit();
+    case Iso88591:
+        return string.toLatin1();
+    case UsAscii:
+        return string.toAscii();
+    case Utf8:
+        return string.toUtf8();
+    }
+    return QByteArray();
+}
+
 }
 
 

@@ -43,20 +43,23 @@ public:
     void setQuality(float quality)
         { m_quality = quality; }
 
-    static T outOf(const QList< Preference<T> > client, const QList<T>& server) {
-        // Step 1: map quality to T.
-        QMap<float, T> map;
-        foreach (const Preference<T>& type, client) {
-            map.insertMulti(type.quality(), type.data());
-        }
-        // Step 2: walk down until we find a usable type. QMap goes in descending order.
-        // NOTE: QMap starts at the lowest value. We want to try the highest first.
+    static T top(const QList< Preference<T> >& client)
+        { return *(toMap(client).end()); }
+    static T outOf(const QList< Preference<T> >& client, const QList<T>& server) {
+        QMap<float, T> map = toMap(client);
         for (typename QMap<float, T>::iterator i = map.end(); i != map.begin();) {
             --i;
             if (server.contains(*i))
                 return *i;
         }
         return T();
+    }
+    static QMap<float, T> toMap(const QList< Preference<T> >& client) {
+        QMap<float, T> ret;
+        foreach (const Preference<T>& type, client) {
+            ret.insertMulti(type.quality(), type.data());
+        }
+        return ret;
     }
 private:
     T m_data;

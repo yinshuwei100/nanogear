@@ -51,9 +51,9 @@ public:
     const QList< Preference<QLocale> >& acceptedLocales() const
         { return m_locales; }
 
-    void setAcceptedCharsets(const QList <Preference<CharacterSet> >& charsets)
+    void setAcceptedCharacterSets(const QList <Preference<CharacterSet> >& charsets)
         { m_charsets = charsets; }
-    const QList <Preference<CharacterSet> >& acceptedCharsets() const
+    const QList <Preference<CharacterSet> >& acceptedCharacterSets() const
         { return m_charsets; }
 private:
     QString m_userAgent;
