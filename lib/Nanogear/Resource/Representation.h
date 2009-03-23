@@ -25,7 +25,7 @@
 #define NANOGEAR_RESOURCE_REPRESENTATION_H
 
 #include <QMimeData>
-#include "../MediaType.h"
+#include "../MimeType.h"
 #include "../Preference.h"
 
 namespace Nanogear {
@@ -34,21 +34,21 @@ namespace Resource {
 class Representation : public QMimeData {
 public:
     Representation() {}
-    template <typename Data, typename MimeType>
-    Representation(const Data& data, const MimeType& mediaType = "text/plain")
-        { setData(mediaType, data); }
-    QByteArray data(const QList< Preference<MediaType> >& mediaTypes) const
-        { return data(format(mediaTypes)); }
-    MediaType format(const QList< Preference<MediaType> >& mediaTypes) const
-        { return Preference<MediaType>::outOf(mediaTypes, mediaTypeFormats()); }
-    QByteArray data(const MediaType& mediaType) const
-        { return QMimeData::data(mediaType.toString()); }
-    bool hasFormat(const MediaType& mediaType) const
-        { return QMimeData::hasFormat(mediaType.toString()); }
+    template <typename Data, typename Type>
+    Representation(const Data& data, const Type& mimeType = "text/plain")
+        { setData(mimeType, data); }
+    QByteArray data(const QList< Preference<MimeType> >& mimeTypes) const
+        { return data(format(mimeTypes)); }
+    MimeType format(const QList< Preference<MimeType> >& mimeTypes) const
+        { return Preference<MimeType>::outOf(mimeTypes, mimeTypeFormats()); }
+    QByteArray data(const MimeType& mimeType) const
+        { return QMimeData::data(mimeType.toString()); }
+    bool hasFormat(const MimeType& mimeType) const
+        { return QMimeData::hasFormat(mimeType.toString()); }
     void setXhtml(const QString& xhtml);
     QString xhtml() const
         { return data("application/xhtml+xml"); }
-    QList<MediaType> mediaTypeFormats() const;
+    QList<MimeType> mimeTypeFormats() const;
 };
 
 }

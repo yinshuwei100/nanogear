@@ -138,8 +138,8 @@ void Representation::setXhtml(const QString& xhtml) {
     setHtml(html);
 }
 
-QList<MediaType> Representation::mediaTypeFormats() const {
-    QList<MediaType> types;
+QList<MimeType> Representation::mimeTypeFormats() const {
+    QList<MimeType> types;
     foreach (const QString& type, formats())
         types.append(type);
     return types;
