@@ -75,7 +75,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
                 QList<QString> pair = charset.split(";q=");
                 accept.append(Preference<CharacterSet>(pair.at(0), pair.value(1, "1").toFloat()));
             }
-            clientInfo.setAcceptedCharsets(accept);
+            clientInfo.setAcceptedCharacterSets(accept);
         }
         qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
         qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
@@ -83,15 +83,17 @@ void ConnectionHandlerThread::onClientReadyRead() {
         Resource::Resource* resource = m_server->findChild<Resource::Resource*>(requestPath.path());
         Request request(requestHeader.method(), requestPath, clientInfo);
         Response response = resource ? resource->handleRequest(request) : Application::instance()->notFound(request);
+        const Resource::Representation* representation = response.representation();
+        CharacterSet charset = Preference<CharacterSet>::top(clientInfo.acceptedCharacterSets());
 
         QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setValue("server", "Nanogear");
-        responseHeader.setContentType(response.representation()->format(clientInfo.acceptedMediaTypes()).toString());
+        responseHeader.setContentType(representation->format(clientInfo.acceptedMediaTypes()).toString());
 
         qDebug() << Q_FUNC_INFO << "sending data back to the client";
         m_clientSocket->write(responseHeader.toString().toUtf8());
-        m_clientSocket->write(response.representation()->data(clientInfo.acceptedMediaTypes()));
+        m_clientSocket->write(representation->data(clientInfo.acceptedMediaTypes()));
 
         qDebug() << Q_FUNC_INFO << "disconnecting from host";
         m_clientSocket->disconnectFromHost();

@@ -58,6 +58,7 @@ public:
         Utf16 = 4,
         Utf8 = 5
     };
+    QByteArray convert(const QString& convertFrom) const;
 private:
     static int toCharacterSetType(const QString&);
     static QString toString(int set);
