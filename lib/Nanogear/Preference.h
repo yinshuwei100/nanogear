@@ -43,11 +43,11 @@ public:
     void setQuality(float quality)
         { m_quality = quality; }
 
-    class List : public QList< Preference<T> > {
+    class List : public QList<Preference> {
     public:
         List() {};
-        List(const QList< Preference<T> >& other)
-            : QList< Preference<T> >(other) {}
+        List(const QList<Preference>& other)
+            : QList<Preference>(other) {}
         T top() const
             { return *(toMap().end()); }
         T outOf(const QList<T>& server) const {
@@ -61,7 +61,7 @@ public:
         }
         QMap<float, T> toMap() const {
             QMap<float, T> ret;
-            foreach (const Preference<T>& type, *this) {
+            foreach (const Preference& type, *this) {
                 ret.insertMulti(type.quality(), type.data());
             }
             return ret;
