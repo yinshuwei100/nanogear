@@ -21,35 +21,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_MEDIATYPE_H
-#define NANOGEAR_MEDIATYPE_H
-
-#include <QString>
+#include "MimeType.h"
 
 namespace Nanogear {
 
-class MediaType {
-public:
-    MediaType() : m_whole("*/*") {};
-    MediaType(const QString& type) : m_whole(type) {};
-    MediaType(const char* type) : m_whole(type) {};
-    void fromString(const QString& type)
-        { m_whole = type; m_category = m_specific = ""; }
-    const QString& toString() const
-        { return m_whole; }
-    bool operator==(const MediaType& type) const
-        { return m_whole == type.m_whole; }
-    bool isConcrete() const
-        { return !m_whole.contains("*"); }
-    const QString& category() const;
-    const QString& specific() const;
-    bool isCompatible(const MediaType&) const;
-private:
-    QString m_whole;
-    QString m_category;
-    QString m_specific;
-};
+const QString& MimeType::category() const {
+    if (m_category.isEmpty())
+        const_cast<MimeType*>(this)->m_category = m_whole.left(m_whole.indexOf('/'));
+    return m_category;
+}
+
+const QString& MimeType::specific() const {
+    if (m_category.isEmpty())
+        const_cast<MimeType*>(this)->m_specific = m_whole.right(m_whole.indexOf('/'));
+    return m_specific;
+}
+
+bool MimeType::isCompatible(const MimeType& other) const{
+    return other.m_whole.contains(m_whole) ||\
+           m_whole.contains(other.m_whole);
+}
 
 }
 
-#endif // NANOGEAR_MEDIATYPE_H
+

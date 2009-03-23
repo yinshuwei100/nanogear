@@ -26,7 +26,7 @@
 
 #include <QLocale>
 #include "Preference.h"
-#include "MediaType.h"
+#include "MimeType.h"
 
 class QTextCodec;
 
@@ -42,10 +42,10 @@ public:
     const QString& userAgent() const
         { return m_userAgent; }
 
-    void setAcceptedMediaTypes(const QList< Preference<MediaType> >& mediaTypes)
-        { m_mediaTypes = mediaTypes; }
-    const QList< Preference<MediaType> >& acceptedMediaTypes() const
-        { return m_mediaTypes; }
+    void setAcceptedMimeTypes(const QList< Preference<MimeType> >& mimeTypes)
+        { m_mimeTypes = mimeTypes; }
+    const QList< Preference<MimeType> >& acceptedMimeTypes() const
+        { return m_mimeTypes; }
 
     void setAcceptedLocales(const QList< Preference<QLocale> >& locales)
         { m_locales = locales; }
@@ -58,7 +58,7 @@ public:
         { return m_codecs; }
 private:
     QString m_userAgent;
-    QList< Preference<MediaType> > m_mediaTypes;
+    QList< Preference<MimeType> > m_mimeTypes;
     QList< Preference<QLocale> > m_locales;
     QList< Preference<QTextCodec*> > m_codecs;
 };

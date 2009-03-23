@@ -5,7 +5,7 @@ set(nanogear_SRCS
     Context.cpp
     Resource/Resource.cpp
     Resource/Representation.cpp
-    MediaType.cpp
+    MimeType.cpp
     Application.cpp
     Method.cpp
 )

@@ -54,13 +54,13 @@ void ConnectionHandlerThread::onClientReadyRead() {
         Context requestPath = requestHeader.path();
         ClientInfo clientInfo(requestHeader.value("user-agent"));
 
-        /* add media types */ {
-            QList< Preference<MediaType> > accept;
-            foreach (const QString& mediaType, requestHeader.value("accept").remove(" ").split(",")) {
-                QList<QString> pair = mediaType.split(";q=");
-                accept.append(Preference<MediaType>(pair.at(0), pair.value(1, "1").toFloat()));
+        /* add mime types */ {
+            QList< Preference<MimeType> > accept;
+            foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
+                QList<QString> pair = mimeType.split(";q=");
+                accept.append(Preference<MimeType>(pair.at(0), pair.value(1, "1").toFloat()));
             }
-            clientInfo.setAcceptedMediaTypes(accept);
+            clientInfo.setAcceptedMimeTypes(accept);
         }
         /* add locales */ {
             QList< Preference<QLocale> > accept;
@@ -90,11 +90,11 @@ void ConnectionHandlerThread::onClientReadyRead() {
         QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setValue("server", "Nanogear");
-        responseHeader.setContentType(representation->format(clientInfo.acceptedMediaTypes()).toString());
+        responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
 
         qDebug() << Q_FUNC_INFO << "sending data back to the client";
         m_clientSocket->write(responseHeader.toString().toUtf8());
-        m_clientSocket->write(representation->data(clientInfo.acceptedMediaTypes()));
+        m_clientSocket->write(representation->data(clientInfo.acceptedMimeTypes()));
 
         qDebug() << Q_FUNC_INFO << "disconnecting from host";
         m_clientSocket->disconnectFromHost();
