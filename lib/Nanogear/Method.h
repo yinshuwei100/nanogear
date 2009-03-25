@@ -57,6 +57,7 @@ public:
         { return m_method == type.m_method; }
     bool isValid() const
         { return m_method != Invalid; }
+    bool hasBody() const;
 
     enum Type {
         Invalid = 0,

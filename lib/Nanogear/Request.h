@@ -26,6 +26,7 @@
 
 #include <QString>
 #include <QMetaObject>
+#include <QByteArray>
 #include "Context.h"
 #include "ClientInfo.h"
 #include "Method.h"
@@ -55,10 +56,16 @@ public:
     const ClientInfo& clientInfo() const
         { return m_clientInfo; }
 
+    void setBody(const QByteArray& body)
+        { m_body = body; }
+    const QByteArray& body() const
+        { return m_body; }
+
 private:
     Method m_method;
     Context m_context;
     ClientInfo m_clientInfo;
+    QByteArray m_body;
 };
 
 }

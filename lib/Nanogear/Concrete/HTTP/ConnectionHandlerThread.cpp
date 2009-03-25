@@ -45,6 +45,11 @@ ConnectionHandlerThread::~ConnectionHandlerThread() {
 void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "New thread started";
     m_clientSocket = m_server->tcpServer()->nextPendingConnection();
+    if (!m_clientSocket) {
+        qDebug() << Q_FUNC_INFO << "Socket error" << m_clientSocket->errorString();
+        deleteLater();
+        return;
+    }
     connect(m_clientSocket, SIGNAL(readyRead()), SLOT(onClientReadyRead()));
     connect(m_clientSocket, SIGNAL(disconnected()), SLOT(quit()));
     connect(this, SIGNAL(finished()), SLOT(deleteLater()));
@@ -53,69 +58,75 @@ void ConnectionHandlerThread::run() {
 }
 
 void ConnectionHandlerThread::onClientReadyRead() {
-    if (m_clientSocket != 0) {
-        qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket->size() << ")";
-        QByteArray requestHeaderByteArray;
-        for (;;) {
-            QByteArray line = m_clientSocket->readLine();
-            if (line == "\r\n")
-                break;
-            requestHeaderByteArray += line;
+    qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket->size() << ")";
+    QByteArray requestHeaderByteArray;
+    for (;;) {
+        QByteArray line = m_clientSocket->readLine();
+        if (line == "\r\n")
+            break;
+        requestHeaderByteArray += line;
+    }
+
+    QHttpRequestHeader requestHeader(requestHeaderByteArray);
+    Context requestPath = requestHeader.path();
+    ClientInfo clientInfo(requestHeader.value("user-agent"));
+
+    /* add mime types */ {
+        Preference<MimeType>::List accept;
+        foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
+            QStringList pair = mimeType.split(";q=");
+            accept.append(Preference<MimeType>(pair.at(0), pair.value(1, "1").toFloat()));
         }
-
-        QHttpRequestHeader requestHeader(requestHeaderByteArray);
-        Context requestPath = requestHeader.path();
-        ClientInfo clientInfo(requestHeader.value("user-agent"));
-
-        /* add mime types */ {
-            Preference<MimeType>::List accept;
-            foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
-                QStringList pair = mimeType.split(";q=");
-                accept.append(Preference<MimeType>(pair.at(0), pair.value(1, "1").toFloat()));
-            }
-            clientInfo.setAcceptedMimeTypes(accept);
+        clientInfo.setAcceptedMimeTypes(accept);
+    }
+    /* add locales */ {
+        Preference<QLocale>::List accept;
+        foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
+            QStringList pair = locale.split(";q=");
+            accept.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
+         }
+         clientInfo.setAcceptedLocales(accept);
+    }
+    /* add text codecs */ {
+        Preference<QTextCodec*>::List accept;
+        foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
+            QStringList pair = codec.split(";q=");
+            accept.append(Preference<QTextCodec*>(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
         }
-        /* add locales */ {
-            Preference<QLocale>::List accept;
-            foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
-                QStringList pair = locale.split(";q=");
-                accept.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
-            }
-            clientInfo.setAcceptedLocales(accept);
-        }
-        /* add text codecs */ {
-            Preference<QTextCodec*>::List accept;
-            foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
-                QStringList pair = codec.split(";q=");
-                accept.append(Preference<QTextCodec*>(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
-            }
-            clientInfo.setAcceptedTextCodecs(accept);
-        }
-        qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
-        qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
-
-        Resource::Resource* resource = m_server->findChild<Resource::Resource*>(requestPath.path());
-        Request request(requestHeader.method(), requestPath, clientInfo);
-        Response response = resource ? resource->handleRequest(request) : Application::instance()->notFound(request);
-        const Resource::Representation* representation = response.representation();
-        QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
-
-        QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
-            requestHeader.majorVersion(), requestHeader.minorVersion());
-        responseHeader.setValue("server", "Nanogear");
-        if (response.expires().isValid())
-            responseHeader.setValue("expires", response.expires().toUTC().toString("dd MMM yyyy ss:mm:hh") + " GMT");
-        responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
-
-        qDebug() << Q_FUNC_INFO << "sending data back to the client";
-        m_clientSocket->write(responseHeader.toString().toUtf8());
-        m_clientSocket->write(representation->data(clientInfo.acceptedMimeTypes()));
-
+        clientInfo.setAcceptedTextCodecs(accept);
+    }
+    qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
+    qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
+    Resource::Resource* resource = m_server->findChild<Resource::Resource*>(requestPath.path());
+    Request request(requestHeader.method(), requestPath, clientInfo);
+    if (requestHeader.hasKey("content-length"))
+        request.setBody(m_clientSocket->read(requestHeader.value("content-length").toLongLong()));
+    else if (request.method().hasBody())
+        request.setBody(m_clientSocket->readAll());
+    Response response = resource ? resource->handleRequest(request) : Application::instance()->notFound(request);
+    const Resource::Representation* representation = response.representation();
+    QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
+    QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
+        requestHeader.majorVersion(), requestHeader.minorVersion());
+    responseHeader.setValue("connection", requestHeader.value("connection"));
+    responseHeader.setValue("server", "Nanogear");
+    if (response.expires().isValid())
+        responseHeader.setValue("expires", response.expires().toUTC().toString("dd MMM yyyy ss:mm:hh") + " GMT");
+    responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
+    QByteArray responseData = representation->data(clientInfo.acceptedMimeTypes());
+    responseHeader.setValue("content-length", QString::number(responseData.length()));
+    qDebug() << Q_FUNC_INFO << "sending data back to the client (size:" << responseHeader.value("content-length") << ")";
+    m_clientSocket->write(responseHeader.toString().toUtf8());
+    m_clientSocket->write(responseData);
+    if (responseHeader.value("connection") == "close") {
         qDebug() << Q_FUNC_INFO << "disconnecting from host";
         m_clientSocket->disconnectFromHost();
         m_clientSocket->waitForDisconnected();
     } else {
-        qDebug() << Q_FUNC_INFO << "Socket error" << m_clientSocket->errorString();
+        qDebug() << Q_FUNC_INFO << "using a persistent connection (" << responseHeader.value("connection") << ").";
+        m_clientSocket->waitForReadyRead(-1);
+        qDebug() << Q_FUNC_INFO << "Reusing existing thread";
+        onClientReadyRead();
     }
 }
 
