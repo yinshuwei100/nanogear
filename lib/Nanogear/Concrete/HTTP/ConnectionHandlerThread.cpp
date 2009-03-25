@@ -90,6 +90,8 @@ void ConnectionHandlerThread::onClientReadyRead() {
         QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
             requestHeader.majorVersion(), requestHeader.minorVersion());
         responseHeader.setValue("server", "Nanogear");
+        if (response.expires().isValid())
+            responseHeader.setValue("expires", response.expires().toUTC().toString("dd MMM yyyy ss:mm:hh") + " GMT");
         responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
 
         qDebug() << Q_FUNC_INFO << "sending data back to the client";

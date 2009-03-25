@@ -25,7 +25,8 @@
 #define NANOGEAR_RESPONSE_H
 
 #include "Status.h"
-#include <QMetaObject>
+#include <QMetaType>
+#include <QDateTime>
 
 namespace Nanogear {
 
@@ -36,8 +37,9 @@ class Representation;
 class Response {
 public:
     Response() : m_representation(0) { qRegisterMetaType<Response>(); }
-    Response(const Status& s, const Resource::Representation* rep)
-        : m_status(s), m_representation(rep) { qRegisterMetaType<Response>(); }
+    Response(const Status& s, const Resource::Representation* rep,
+      const QDateTime& expires = QDateTime::currentDateTime())
+        : m_status(s), m_representation(rep), m_expires(expires) { qRegisterMetaType<Response>(); }
     virtual ~Response() {}
 
     void setStatus(const Status& s)
@@ -49,9 +51,15 @@ public:
         { m_representation = representation; }
     const Resource::Representation* representation() const
         { return m_representation; }
+
+    void setExpires(const QDateTime& expires)
+        { m_expires = expires; }
+    const QDateTime& expires() const
+        { return m_expires; }
 private:
     Status m_status;
     const Resource::Representation* m_representation;
+    QDateTime m_expires;
 };
 
 }
