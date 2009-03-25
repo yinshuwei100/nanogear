@@ -26,6 +26,16 @@
 
 namespace Nanogear {
 
+bool Method::hasBody() const {
+    switch (m_method) {
+        // More?
+        case POST:
+        case PUT:
+            return true;
+    }
+    return false;
+}
+
 int Method::toType(const QString& key) {
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
