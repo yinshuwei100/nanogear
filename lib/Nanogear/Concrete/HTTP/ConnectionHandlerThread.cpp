@@ -38,19 +38,32 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
+ConnectionHandlerThread::~ConnectionHandlerThread() {
+    qDebug() << Q_FUNC_INFO << "Thread stopped";
+}
+
 void ConnectionHandlerThread::run() {
+    qDebug() << Q_FUNC_INFO << "New thread started";
     m_clientSocket = m_server->tcpServer()->nextPendingConnection();
     connect(m_clientSocket, SIGNAL(readyRead()), SLOT(onClientReadyRead()));
+    connect(m_clientSocket, SIGNAL(disconnected()), SLOT(quit()));
     connect(this, SIGNAL(finished()), SLOT(deleteLater()));
     connect(this, SIGNAL(finished()), m_clientSocket, SLOT(deleteLater()));
+    QThread::run();
 }
 
 void ConnectionHandlerThread::onClientReadyRead() {
     if (m_clientSocket != 0) {
-        qDebug() << Q_FUNC_INFO << "------ handling request (size:" << m_clientSocket->size() << ")";
-        QByteArray inputBlock(m_clientSocket->readAll());
+        qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket->size() << ")";
+        QByteArray requestHeaderByteArray;
+        for (;;) {
+            QByteArray line = m_clientSocket->readLine();
+            if (line == "\r\n")
+                break;
+            requestHeaderByteArray += line;
+        }
 
-        QHttpRequestHeader requestHeader(inputBlock);
+        QHttpRequestHeader requestHeader(requestHeaderByteArray);
         Context requestPath = requestHeader.path();
         ClientInfo clientInfo(requestHeader.value("user-agent"));
 

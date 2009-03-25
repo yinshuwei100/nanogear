@@ -38,6 +38,7 @@ class ConnectionHandlerThread : public QThread {
 public:
     ConnectionHandlerThread(HTTPServer* server, QObject* parent = 0)
         : QThread(parent), m_server(server) {}
+    ~ConnectionHandlerThread();
 
     void run();
 
