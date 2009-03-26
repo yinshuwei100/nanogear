@@ -60,22 +60,22 @@ public:
     bool hasBody() const;
 
     enum Type {
-        Invalid = 0,
-        CONNECT = 1,
-        COPY = 2,
-        DELETE = 3,
-        GET = 4,
-        HEAD = 5,
-        LOCK = 6,
-        MKCOL = 7,
-        MOVE = 8,
-        OPTIONS = 9,
-        POST = 10,
-        PROPFIND = 11,
-        PROPPATCH = 12,
-        PUT = 13,
-        TRACE = 14,
-        UNLOCK = 15
+        Invalid,
+        CONNECT,
+        COPY,
+        DELETE,
+        GET,
+        HEAD,
+        LOCK,
+        MKCOL,
+        MOVE,
+        OPTIONS,
+        POST,
+        PROPFIND,
+        PROPPATCH,
+        PUT,
+        TRACE,
+        UNLOCK
     };
 
 private:
