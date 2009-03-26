@@ -51,6 +51,9 @@ Response Resource::handleRequest(const Request& req) {
     if (req.method() == "DELETE")
         return handleDelete(req);
 
+    if (req.method() == "HEAD")
+        return handleHead(req);
+
     return methodNotSupported(req);
 }
 
