@@ -29,20 +29,47 @@
 
 namespace Nanogear {
 
+/*!
+ * \class Context
+ * \brief Contextual data provided to a Resource
+ *
+ * The context is the means by which a Resource may access the environment
+ * within the framework.
+ */
 class Context {
 public:
+    /*!
+     * Default constructor taking no arguments
+     */
     Context() {}
+
+    /*!
+     * A constructor used to initialize the path
+     * \param path A reference to a QString representing a path
+     */
     Context(const QString& path) : m_path(sanitize(path))
         { qRegisterMetaType<Context>(); }
-    Context(const char* charPath) : m_path(sanitize(charPath))
-        { qRegisterMetaType<Context>(); }
-    virtual ~Context() {}
 
+    /*!
+     * An overloaded constructor provided for convenience
+     * \param path A C-style string representing a path
+     */
+    Context(const char* path) : m_path(sanitize(path))
+        { qRegisterMetaType<Context>(); }
+
+    /*!
+     * Set the path assigned to this context
+     * \param path
+     */
     void setPath(const QString& path)
         { m_path = sanitize(path); }
     const QString& path() const
         { return m_path; }
 
+    /*!
+     * An utility function used to sanitize a path
+     * \param path A path
+     */
     static QString sanitize(QString path);
 private:
     QString m_path;
