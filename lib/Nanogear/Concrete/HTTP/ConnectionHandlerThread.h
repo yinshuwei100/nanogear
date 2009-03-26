@@ -42,7 +42,7 @@ public:
 
     void run();
 
-public Q_SLOTS:
+public slots:
     void onClientReadyRead();
 
 private:
