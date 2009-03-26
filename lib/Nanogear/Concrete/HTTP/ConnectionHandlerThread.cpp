@@ -31,6 +31,7 @@
 
 #include "../../Response.h"
 #include "../../Request.h"
+#include "../../Method.h"
 #include "../../Resource/Resource.h"
 #include "../../Resource/Representation.h"
 
@@ -63,19 +64,35 @@ void ConnectionHandlerThread::run() {
 void ConnectionHandlerThread::onClientReadyRead() {
     qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket->size() << ")";
 
-    QByteArray requestHeaderByteArray;
+    // Separate the HTTP headers from the request body (if any)
+    QByteArray rawRequestHeader;
     for (;;) {
         QByteArray line = m_clientSocket->readLine();
         if (line == "\r\n")
             break;
-        requestHeaderByteArray += line;
+        rawRequestHeader += line;
     }
 
-    QHttpRequestHeader requestHeader(requestHeaderByteArray);
-    Context requestPath = requestHeader.path();
-    ClientInfo clientInfo(requestHeader.value("user-agent"));
+    QHttpRequestHeader requestHeader(rawRequestHeader);
 
-    /* add mime types */ {
+    // Fill Context, ClientInfo and Method by using informations supplied by
+    // the client
+    Context requestPath(requestHeader.path());
+    ClientInfo clientInfo(requestHeader.value("user-agent"));
+    Nanogear::Method requestedMethod(requestHeader.method().toUpper());
+
+    // Fill the request body, if needed
+    QByteArray requestBody;
+    if (requestHeader.hasKey("content-length"))
+        requestBody = m_clientSocket->read(requestHeader.value("content-length").toLongLong());
+    else if (requestedMethod.hasBody())
+        requestBody = m_clientSocket->readAll();
+
+    /*
+     * Fill the ClientInfo object
+     */
+    // Add accepted MIME types
+    {
         Preference<MimeType>::List accept;
         foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
             QStringList pair = mimeType.split(";q=");
@@ -84,7 +101,8 @@ void ConnectionHandlerThread::onClientReadyRead() {
         clientInfo.setAcceptedMimeTypes(accept);
     }
 
-    /* add locales */ {
+    // Add accepted locales
+    {
         Preference<QLocale>::List accept;
         foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
             QStringList pair = locale.split(";q=");
@@ -93,7 +111,8 @@ void ConnectionHandlerThread::onClientReadyRead() {
          clientInfo.setAcceptedLocales(accept);
     }
 
-    /* add text codecs */ {
+    // Add accepted character sets
+    {
         Preference<QTextCodec*>::List accept;
         foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
             QStringList pair = codec.split(";q=");
@@ -101,18 +120,19 @@ void ConnectionHandlerThread::onClientReadyRead() {
         }
         clientInfo.setAcceptedTextCodecs(accept);
     }
+    /* End of "Fill the ClientInfo object" */
 
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
     qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
 
+    // Find a matching resource in Qt MetaObject hierarchy
     Resource::Resource* resource = m_server->findChild<Resource::Resource*>(requestPath.path());
-    Request request(requestHeader.method(), requestPath, clientInfo);
 
-    if (requestHeader.hasKey("content-length"))
-        request.setBody(m_clientSocket->read(requestHeader.value("content-length").toLongLong()));
-    else if (request.method().hasBody())
-        request.setBody(m_clientSocket->readAll());
+    // Build the request object
+    Request request(requestHeader.method(), requestPath, clientInfo, requestBody);
 
+    // And retrieve the response object (if the resource cannot be found just)
+    // return a default response object
     Response response = resource ? resource->handleRequest(request) :
         Application::instance()->notFound(request);
 
@@ -133,6 +153,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
     QByteArray responseData(representation->data(clientInfo.acceptedMimeTypes()));
     responseHeader.setValue("content-length", QString::number(responseData.length()));
 
+    // And finally send data back to the client
     qDebug() << Q_FUNC_INFO << "sending data back to the client (size:" << responseHeader.value("content-length") << ")";
     m_clientSocket->write(responseHeader.toString().toUtf8());
     m_clientSocket->write(responseData);
