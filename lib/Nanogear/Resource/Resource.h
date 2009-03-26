@@ -59,6 +59,7 @@ protected:
     virtual Response handleGet(const Request& r) const { return methodNotSupported(r); }
     virtual Response handlePut(const Request& r) { return methodNotSupported(r); }
     virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
+    virtual Response handleHead(const Request& r) { return methodNotSupported(r); }
     virtual Response handleOptions(const Request& r) const { return methodNotSupported(r); }
     virtual Response handleDelete(const Request& r) { return methodNotSupported(r); }
     virtual Response methodNotSupported(const Request& r) const { return Application::instance()->methodNotSupported(r); }
