@@ -53,6 +53,6 @@ bool operator!=(const Context&, const Context&);
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::Context);
+Q_DECLARE_METATYPE(Nanogear::Context)
 
 #endif /* NANOGEAR_CONTEXT_H */

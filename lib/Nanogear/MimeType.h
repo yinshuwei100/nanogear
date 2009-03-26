@@ -62,6 +62,6 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::MimeType);
+Q_DECLARE_METATYPE(Nanogear::MimeType)
 
 #endif // NANOGEAR_MIMETYPE_H

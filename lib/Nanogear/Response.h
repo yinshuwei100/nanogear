@@ -64,6 +64,6 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::Response);
+Q_DECLARE_METATYPE(Nanogear::Response)
 
 #endif /* NANOGEAR_RESPONSE_H */

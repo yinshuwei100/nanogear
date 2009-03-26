@@ -98,6 +98,6 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::ClientInfo);
+Q_DECLARE_METATYPE(Nanogear::ClientInfo)
 
 #endif // NANOGEAR_CLIENTINFO_H

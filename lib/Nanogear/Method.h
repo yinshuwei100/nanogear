@@ -32,7 +32,7 @@ namespace Nanogear {
 
 class Method {
     Q_GADGET
-    Q_ENUMS(Type);
+    Q_ENUMS(Type)
 public:
     Method() : m_method(Invalid)
         { qRegisterMetaType<Method>(); }
@@ -86,6 +86,6 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::Method);
+Q_DECLARE_METATYPE(Nanogear::Method)
 
 #endif // NANOGEAR_METHOD_H

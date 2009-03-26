@@ -110,6 +110,6 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::Request);
+Q_DECLARE_METATYPE(Nanogear::Request)
 
 #endif /* NANOGEAR_REQUEST_H */
