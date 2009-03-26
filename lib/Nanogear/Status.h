@@ -30,31 +30,75 @@
 
 namespace Nanogear {
 
+/*!
+ * \class Status
+ * \brief Response status code
+ *
+ * This class is used to send Response codes to the clients
+ */
 class Status {
     Q_GADGET
     Q_ENUMS(Type)
 public:
+    /*!
+     * A default constructor which sends an invalid response code by default (!)
+     */
     Status() : m_status(Invalid)
         { qRegisterMetaType<Status>(); }
+
+    /*!
+     * Construct the status from its name
+     * \param name The status name
+     */
     Status(const QString& name) : m_status(toType(name))
         { qRegisterMetaType<Status>(); }
+
+    /*!
+     * An overloaded constructor provided for convenience
+     * \param name The status name as C-style string
+     */
     Status(const char* name) : m_status(toType(name))
         { qRegisterMetaType<Status>(); };
+
+    /*!
+     * Construct this Status from its code
+     * \param status the status code
+     */
     Status(int status) : m_status(status)
         { qRegisterMetaType<Status>(); }
 
+    /*!
+     * Construct the status from its name
+     * \param name The status name
+     */
     void fromString(const QString& name)
         { m_status = toType(name); }
+
+    /*!
+     * \return The string representation of this status code
+     */
     QString toString() const
         { return toString(m_status); }
 
+    /*!
+     * Construct this Status from its code
+     * \param status the status code
+     */
     void fromType(int status)
         { m_status = status; }
+
+    /*!
+     * \return The status code
+     */
     int toType() const
         { return m_status; }
 
     bool operator==(const Status& type) const
         { return m_status == type.m_status; }
+
+    /*!
+     * \return true if this Status is valid
+     */
     bool isValid() const
         { return m_status != Invalid; }
 
