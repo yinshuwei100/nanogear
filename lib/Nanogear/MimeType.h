@@ -30,34 +30,82 @@
 
 namespace Nanogear {
 
+/*!
+ * \class MimeType
+ * \brief Encapsulates a MIME type
+ *
+ * This class represents a MIME type as described in RFC2046
+ */
 class MimeType {
 public:
+    /*!
+     * A default constructor, it will build a MimeType representing all possible
+     * type/subtype pairs.
+     */
     MimeType() : m_whole("*/*")
         { qRegisterMetaType<MimeType>(); }
+
+    /*!
+     * A constructor which builds the object from the string representation of
+     * a MIME type
+     * \param type A string representation of the MIME type
+     */
     MimeType(const QString& type) : m_whole(type)
         { qRegisterMetaType<MimeType>(); }
+
+    /*!
+     * An overloaded constructor provided for convenience
+     * \param type A C-style string representing the MIME type
+     */
     MimeType(const char* type) : m_whole(type)
         { qRegisterMetaType<MimeType>(); }
 
+    /*!
+     * Build this MimeType object from its string representation
+     * \param type A string representation of the MIME type
+     */
     void fromString(const QString& type)
-        { m_whole = type; m_category = m_specific = ""; }
+        { m_whole = type; m_type = m_subtype = ""; }
+
+    /*!
+     * \return The string representation of this MimeType object
+     */
     const QString& toString() const
         { return m_whole; }
 
     bool operator==(const MimeType& type) const
         { return m_whole == type.m_whole; }
+
+    /*!
+     * A concrete MIME type must not contain wildcards
+     * \return true if this MIME type does not contain wildcards
+     */
     bool isConcrete() const
         { return !m_whole.contains("*"); }
 
-    const QString& category() const;
+    /*!
+     * This is the part before the backslash in a string representation
+     * of a MIME type
+     * \return the MIME type
+     */
+    const QString& type() const;
 
-    const QString& specific() const;
+    /*!
+     * This is the part after the backslash in a string representation of a MIME
+     * type
+     * \return the MIME subtype
+     */
+    const QString& subtype() const;
 
+    /*!
+     * Check if two MIME types are compatible
+     * \return true if both MIME types are compatible each other
+     */
     bool isCompatible(const MimeType&) const;
 private:
     QString m_whole;
-    QString m_category;
-    QString m_specific;
+    QString m_type;
+    QString m_subtype;
 };
 
 }
