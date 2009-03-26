@@ -24,9 +24,10 @@
 #ifndef NANOGEAR_METHOD_H
 #define NANOGEAR_METHOD_H
 
-#include <QString>
 #include <QObject>
 #include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
 
@@ -41,73 +42,65 @@ class Method {
     Q_GADGET
     Q_ENUMS(Type)
 public:
+
     /*!
      * Default constructor. Builds a invalid method.
      */
-    Method() : m_method(Invalid)
-        { qRegisterMetaType<Method>(); }
+    Method();
 
     /*!
      * Build a Method object from its name
      * \param name method's name
      */
-    Method(const QString& name) : m_method(toType(name))
-        { qRegisterMetaType<Method>(); }
+    Method(const QString& name);
 
     /*!
      * This is an overloaded constructor provided for convenience
      * \param name method's name (C-style string)
      */
-    Method(const char* name) : m_method(toType(name))
-        { qRegisterMetaType<Method>(); }
+    Method(const char* name);
 
     /*!
      * This is an overloaded constructor provided for convenience
      * \param method the code representing a method
      */
-    Method(int method) : m_method(method)
-        { qRegisterMetaType<Method>(); }
+    Method(int method);
+
+    ~Method();
 
     /*!
      * Build this object from the name of the method
      * \param name Method name
      */
-    void fromString(const QString& name)
-        { m_method = toType(name); }
+    void fromString(const QString& name);
 
     /*!
      * \return Return the method name as a string
      */
-    QString toString() const
-        { return toString(m_method); }
+    QString toString() const;
 
     /*!
      * Build this method from its integer code
      * \param method
      */
-    void fromType(int method)
-        { m_method = method; }
+    void fromType(int method);
 
     /*!
      * \return the code associated with this method
      */
-    int toType() const
-        { return m_method; }
+    int toType() const;
 
-    bool operator==(const Method& type) const
-        { return m_method == type.m_method; }
+    bool operator==(const Method& type) const;
 
     /*!
      * \return If this method is valid or not
      */
-    bool isValid() const
-        { return m_method != Invalid; }
+    bool isValid() const;
 
     /*!
      * \return true if this method has a body
      */
     bool hasBody() const;
-
 
     enum Type {
         Invalid,
@@ -129,9 +122,8 @@ public:
     };
 
 private:
-    static int toType(const QString&);
-    static QString toString(int method);
-    int m_method;
+    struct Private;
+    Private* d;
 };
 
 }

@@ -79,7 +79,7 @@ private:
 };
 
 template <typename T>
-class PreferenceList : Preference<T>::List {
+class PreferenceList : public Preference<T>::List {
 public:
     PreferenceList() {};
     PreferenceList(const QList< Preference<T> >& list)

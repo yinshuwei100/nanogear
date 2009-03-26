@@ -27,12 +27,11 @@
 
 #include <QCoreApplication>
 #include "Response.h"
-#include "Resource/Representation.h"
-#include "Request.h"
 
 namespace Nanogear {
 
 class Server;
+class Request;
 
 namespace Resource {
 class Resource;
@@ -57,56 +56,49 @@ public:
      * Warning: The data pointed to by argc and argv must stay valid for the
      * entire lifetime of the QCoreApplication object.
      */
-    Application(int argc, char** argv) : QCoreApplication(argc, argv),
-        m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
-        m_notFound("<h1>Not Found</h1>", "text/html") {};
+    Application(int argc, char** argv);
+
+    virtual ~Application();
 
     /*!
      * Attach a server to this application. The server is automatically started
      * when calling exec()
      * \param server a pointer to a concrete implementation of the server class
      */
-    void setServer(Server* server)
-        { m_server = server; }
+    void setServer(Server* s);
 
     /*!
      * \return The currently attached server
      */
-    Server* server() const
-        { return m_server; }
+    Server* server() const;
 
     /*!
      * Sets the root resource. Such resource will typically respond to request
      * made on the root context ("/") relative to the application's context
      * \param resource a pointer a Nanogear::Resource::Resource
      */
-    void setRoot(Resource::Resource* resource)
-        { m_root = resource; }
+    void setRoot(Resource::Resource* r);
 
     /*!
      * \return The root resource
      */
-    Resource::Resource* root() const
-        { return m_root; }
+    Resource::Resource* root() const;
 
     /*!
      * Retrieve an instance of this Nanogear application
      * \return A pointer to the current instance
      */
-    static Application* instance()
-        { return static_cast<Application*>(QCoreApplication::instance()); }
+    static Application* instance();
 
     /*!
      * \return a default Response when a method is not supported
      */
-    virtual Response methodNotSupported(const Request& r) const
-        { return Response(Status::MethodNotAllowed, &m_methodNotSupported); }
+    virtual Response methodNotSupported(const Request& r) const;
 
     /*!
      * \return a default Response when a resource is not found
      */
-    virtual Response notFound(const Request& r) const
-        { return Response(Status::NotFound, &m_notFound); }
+    virtual Response notFound(const Request& r) const;
 
     /*!
      * Start this Nanogear application. This method will also call the
@@ -116,10 +108,8 @@ public:
     int exec();
 
 private:
-    Server* m_server;
-    Resource::Resource* m_root;
-    Resource::Representation m_methodNotSupported;
-    Resource::Representation m_notFound;
+    struct Private;
+    Private* d;
 };
 
 }

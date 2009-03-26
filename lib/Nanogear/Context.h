@@ -24,8 +24,9 @@
 #ifndef NANOGEAR_CONTEXT_H
 #define NANOGEAR_CONTEXT_H
 
-#include <QString>
 #include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
 
@@ -41,38 +42,32 @@ public:
     /*!
      * Default constructor taking no arguments
      */
-    Context() {}
+    Context();
 
     /*!
      * A constructor used to initialize the path
      * \param path A reference to a QString representing a path
      */
-    Context(const QString& path) : m_path(sanitize(path))
-        { qRegisterMetaType<Context>(); }
+    Context(const QString& path);
 
     /*!
      * An overloaded constructor provided for convenience
      * \param path A C-style string representing a path
      */
-    Context(const char* path) : m_path(sanitize(path))
-        { qRegisterMetaType<Context>(); }
+    Context(const char* charPath);
+
+    virtual ~Context();
 
     /*!
      * Set the path assigned to this context
      * \param path
      */
-    void setPath(const QString& path)
-        { m_path = sanitize(path); }
-    const QString& path() const
-        { return m_path; }
+    void setPath(const QString& path);
 
-    /*!
-     * An utility function used to sanitize a path
-     * \param path A path
-     */
-    static QString sanitize(QString path);
+    const QString& path() const;
 private:
-    QString m_path;
+    struct Private;
+    Private* d;
 };
 
 bool operator==(const Context&, const Context&);

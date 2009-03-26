@@ -24,14 +24,15 @@
 #ifndef NANOGEAR_REQUEST_H
 #define NANOGEAR_REQUEST_H
 
-#include <QString>
-#include <QMetaObject>
-#include <QByteArray>
-#include "Context.h"
-#include "ClientInfo.h"
-#include "Method.h"
+#include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
+
+class Method;
+class Context;
+class ClientInfo;
 
 /*!
  * \class Request
@@ -54,8 +55,7 @@ namespace Nanogear {
  */
 class Request {
 public:
-    Request()
-        { qRegisterMetaType<Request>(); }
+    Request();
 
     /*!
      * A constructor used to initialize values.
@@ -65,47 +65,47 @@ public:
      * \param c a const reference to a ContextObject
      * \param cI a const reference to a ClientInfo
      */
-    Request(const Method& m, const Context& c, const ClientInfo& cI = ClientInfo(), const QByteArray& body = QByteArray())
-        : m_method(m), m_context(c), m_clientInfo(cI), m_body(body)
-    { qRegisterMetaType<Request>(); }
+    Request(const Method& m, const Context& c, const ClientInfo& cI);
 
-    virtual ~Request() {}
+    virtual ~Request();
 
     /*!
      * When a client makes a request it usually specifies a method. It used to
      * determine which handler should be called on a resource.
      * \return An object encapsulating a method
      */
-    const Method& method() const
-        { return m_method; }
+    const Method& method() const;
+
+    void setMethod(const Method& method);
 
     /*!
      * A client usually makes a request at a specified URI which we call
      * 'context'
      * \return The requested context
      */
-    const Context& context() const
-        { return m_context; }
+    const Context& context() const;
+
+    void setContext(const Context& context);
 
     /*!
      * A client usually attaches additional informations to the request, this
      * method can be used to retrieve it.
      * \return An object representing additional informations supplied by the client
      */
-    const ClientInfo& clientInfo() const
-        { return m_clientInfo; }
+    const ClientInfo& clientInfo() const;
+
+    void setClientInfo(const ClientInfo& clientInfo);
 
     /*!
      * \return The request body in raw form
      */
-    const QByteArray& body() const
-        { return m_body; }
+    const QByteArray& body() const;
+
+    void setBody(const QByteArray& body);
 
 private:
-    Method m_method;
-    Context m_context;
-    ClientInfo m_clientInfo;
-    QByteArray m_body;
+    struct Private;
+    Private* d;
 };
 
 }
