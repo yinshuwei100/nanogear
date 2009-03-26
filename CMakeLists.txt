@@ -1,9 +1,10 @@
 project(nanogear)
 cmake_minimum_required(VERSION 2.6)
 include("VERSION.cmake")
-message("This is Nanogear ${NANOGEAR_MAJOR}.${NANOGEAR_MINOR}.${NANOGEAR_PATCH}")
+message(STATUS "This is Nanogear ${NANOGEAR_MAJOR}.${NANOGEAR_MINOR}.${NANOGEAR_PATCH}")
 
-# Test SUITE
+
+# Test suite
 if (${ENABLE_TESTS})
     include(CTest)
     enable_testing()
@@ -16,16 +17,39 @@ if (${ENABLE_TESTS})
 endif(${ENABLE_TESTS})
 #####
 
+
+# Documentation
+find_package(Doxygen)
+if (${DOXYGEN_FOUND})
+    message(STATUS "Building documentation")
+    add_subdirectory(docs)
+endif (${DOXYGEN_FOUND})
+
+
 find_package(Qt4 REQUIRED)
 set(QT_USE_QTNETWORK 1)
 set(QT_DONT_USE_QTGUI 1)
 include(${QT_USE_FILE})
 
-# Be strict
+
+# Be strict?
 if (${PEDANTIC})
+    message(STATUS "Pedantic mode enabled")
     add_definitions(-Wall)
     add_definitions(-pedantic)
+else (${PEDANTIC})
+    message(STATUS "Pedantic mode is NOT enabled")
+    message(STATUS "  If you are a developer you are strongly encouraged to activate")
+    message(STATUS "  the pedantic mode")
 endif (${PEDANTIC})
 
+
+# Build the examples?
+if (${BUILD_EXAMPLES})
+    message(STATUS "Will build examples")
+    add_subdirectory(examples)
+endif(${BUILD_EXAMPLES})
+
+
+# Build the library
 add_subdirectory(lib)
-add_subdirectory(examples)
