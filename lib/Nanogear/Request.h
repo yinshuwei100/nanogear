@@ -59,6 +59,8 @@ public:
 
     /*!
      * A constructor used to initialize values.
+     * This constructor is intended to be used only by 'Server' implementations
+     *
      * \param m a const reference to a Method object
      * \param c a const reference to a ContextObject
      * \param cI a const reference to a ClientInfo
