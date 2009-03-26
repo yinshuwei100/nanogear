@@ -137,8 +137,8 @@ void ConnectionHandlerThread::onClientReadyRead() {
     responseHeader.setValue("connection", requestHeader.value("connection"));
     responseHeader.setValue("server", "Nanogear");
 
-    if (response.expires().isValid())
-        responseHeader.setValue("expires", response.expires().toUTC().toString("dd MMM yyyy ss:mm:hh") + " GMT");
+    if (response.expirationDate().isValid())
+        responseHeader.setValue("expires", response.expirationDate().toUTC().toString("dd MMM yyyy ss:mm:hh") + " GMT");
 
     responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
 

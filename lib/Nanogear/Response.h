@@ -34,32 +34,75 @@ namespace Resource {
 class Representation;
 }
 
+/*!
+ * \class Response
+ * \brief Encapsulates a response to the client
+ *
+ * A Response object represents a server response. Resources usually have the
+ * task to fill a Response object which will be sent back to the client by a
+ * concrete implementation of Server
+ */
 class Response {
 public:
-    Response() : m_representation(0) { qRegisterMetaType<Response>(); }
-    Response(const Status& s, const Resource::Representation* rep,
-      const QDateTime& expires = QDateTime::currentDateTime())
-        : m_status(s), m_representation(rep), m_expires(expires) { qRegisterMetaType<Response>(); }
-    virtual ~Response() {}
+    /*!
+     * A default constructor which builds a Response with an empty
+     * representation.
+     */
+    Response() : m_representation(0)
+        { qRegisterMetaType<Response>(); }
 
-    void setStatus(const Status& s)
-        { m_status = s; }
+    /*!
+     * A constructor used to initialize several values
+     * \param status The response status code
+     * \param rep A representation attached to this Response
+     * \param expires A QDateTime representing the expiration date of this response
+     */
+    Response(const Status& status, const Resource::Representation* rep,
+        const QDateTime& expirationDate = QDateTime::currentDateTime())
+        : m_status(status), m_representation(rep), m_expirationDate(expirationDate)
+    { qRegisterMetaType<Response>(); }
+
+    /*!
+     * Set the response status code
+     * \param status The response status code
+     */
+    void setStatus(const Status& status)
+        { m_status = status; }
+    /*!
+     * \return The response' status code
+     */
     const Status& status()
         { return m_status; }
 
+    /*!
+     * Set the representation attached to this Response
+     * \param representation A pointer to a Representation object
+     */
     void setRepresentation(const Resource::Representation* representation)
         { m_representation = representation; }
+
+    /*!
+     * \return The representation attached to this Response
+     */
     const Resource::Representation* representation() const
         { return m_representation; }
 
-    void setExpires(const QDateTime& expires)
-        { m_expires = expires; }
-    const QDateTime& expires() const
-        { return m_expires; }
+    /*!
+     * Set the expiration date for this Response
+     * \param expirationDate A QDateTime representing the expiration date
+     */
+    void setExpirationDate(const QDateTime& expirationDate)
+        { m_expirationDate = expirationDate; }
+
+    /*!
+     * \return the expiration date of this Response
+     */
+    const QDateTime& expirationDate() const
+        { return m_expirationDate; }
 private:
     Status m_status;
     const Resource::Representation* m_representation;
-    QDateTime m_expires;
+    QDateTime m_expirationDate;
 };
 
 }
