@@ -49,10 +49,13 @@ namespace Nanogear {
  * encodings, etc) is encapsulated in a ClientInfo object and is read-only.
  *
  * The requested context is encapsulated by a Context object and is read-only.
+ *
+ * The request body is represented by a read-only QByteArray
  */
 class Request {
 public:
-    Request() { qRegisterMetaType<Request>(); };
+    Request()
+        { qRegisterMetaType<Request>(); }
 
     /*!
      * A constructor used to initialize values.
@@ -60,9 +63,9 @@ public:
      * \param c a const reference to a ContextObject
      * \param cI a const reference to a ClientInfo
      */
-    Request(const Method& m, const Context& c, const ClientInfo& cI = ClientInfo())
-        : m_method(m), m_context(c), m_clientInfo(cI)
-        { qRegisterMetaType<Request>(); }
+    Request(const Method& m, const Context& c, const ClientInfo& cI = ClientInfo(), const QByteArray& body = QByteArray())
+        : m_method(m), m_context(c), m_clientInfo(cI), m_body(body)
+    { qRegisterMetaType<Request>(); }
 
     virtual ~Request() {}
 
@@ -73,8 +76,6 @@ public:
      */
     const Method& method() const
         { return m_method; }
-    void setMethod(const Method& method)
-        { m_method = method; }
 
     /*!
      * A client usually makes a request at a specified URI which we call
@@ -83,11 +84,7 @@ public:
      */
     const Context& context() const
         { return m_context; }
-    void setContext(const Context& context)
-        { m_context = context; }
 
-    void setClientInfo(const ClientInfo& clientInfo)
-        { m_clientInfo = clientInfo; }
     /*!
      * A client usually attaches additional informations to the request, this
      * method can be used to retrieve it.
@@ -96,8 +93,6 @@ public:
     const ClientInfo& clientInfo() const
         { return m_clientInfo; }
 
-    void setBody(const QByteArray& body)
-        { m_body = body; }
     /*!
      * \return The request body in raw form
      */
