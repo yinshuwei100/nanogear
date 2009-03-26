@@ -24,48 +24,37 @@
 #ifndef NANOGEAR_REQUEST_H
 #define NANOGEAR_REQUEST_H
 
-#include <QString>
-#include <QMetaObject>
-#include <QByteArray>
-#include "Context.h"
-#include "ClientInfo.h"
-#include "Method.h"
+#include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
 
+class Method;
+class Context;
+class ClientInfo;
+
 class Request {
 public:
-    Request() { qRegisterMetaType<Request>(); };
-    Request(const Method& m, const Context& c, const ClientInfo& cI = ClientInfo())
-        : m_method(m), m_context(c), m_clientInfo(cI)
-        { qRegisterMetaType<Request>(); }
-    virtual ~Request() {};
+    Request();
+    Request(const Method& m, const Context& c, const ClientInfo& cI);
+    virtual ~Request();
 
-    const Method& method() const
-        { return m_method; }
-    void setMethod(const Method& method)
-        { m_method = method; }
+    const Method& method() const;
+    void setMethod(const Method& method);
 
-    const Context& context() const
-        { return m_context; }
-    void setContext(const Context& context)
-        { m_context = context; }
+    const Context& context() const;
+    void setContext(const Context& context);
 
-    void setClientInfo(const ClientInfo& clientInfo)
-        { m_clientInfo = clientInfo; }
-    const ClientInfo& clientInfo() const
-        { return m_clientInfo; }
+    void setClientInfo(const ClientInfo& clientInfo);
+    const ClientInfo& clientInfo() const;
 
-    void setBody(const QByteArray& body)
-        { m_body = body; }
-    const QByteArray& body() const
-        { return m_body; }
+    void setBody(const QByteArray& body);
+    const QByteArray& body() const;
 
 private:
-    Method m_method;
-    Context m_context;
-    ClientInfo m_clientInfo;
-    QByteArray m_body;
+    struct Private;
+    Private* d;
 };
 
 }

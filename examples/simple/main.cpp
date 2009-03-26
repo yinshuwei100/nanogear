@@ -17,12 +17,14 @@
  */
 
 #include <QCoreApplication>
+#include <QDebug>
 
 #include <Nanogear/Application>
 #include <Nanogear/Server>
 #include <Nanogear/Resource/Representation>
 #include <Nanogear/Resource/Resource>
 #include <Nanogear/Concrete/HTTP/HTTPServer>
+#include <Nanogear/Status>
 
 using namespace Nanogear;
 using namespace Nanogear::Concrete::HTTP;

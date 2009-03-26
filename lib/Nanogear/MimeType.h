@@ -24,30 +24,24 @@
 #ifndef NANOGEAR_MIMETYPE_H
 #define NANOGEAR_MIMETYPE_H
 
-#include <QString>
-#include <QMetaObject>
 #include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
 
 class MimeType {
 public:
-    MimeType() : m_whole("*/*")
-        { qRegisterMetaType<MimeType>(); }
-    MimeType(const QString& type) : m_whole(type)
-        { qRegisterMetaType<MimeType>(); }
-    MimeType(const char* type) : m_whole(type)
-        { qRegisterMetaType<MimeType>(); }
+    MimeType();
+    MimeType(const QString& type);
+    MimeType(const char* type);
+    ~MimeType();
 
-    void fromString(const QString& type)
-        { m_whole = type; m_category = m_specific = ""; }
-    const QString& toString() const
-        { return m_whole; }
+    void fromString(const QString& type);
+    const QString& toString() const;
 
-    bool operator==(const MimeType& type) const
-        { return m_whole == type.m_whole; }
-    bool isConcrete() const
-        { return !m_whole.contains("*"); }
+    bool operator==(const MimeType& type) const;
+    bool isConcrete() const;
 
     const QString& category() const;
 
@@ -55,9 +49,8 @@ public:
 
     bool isCompatible(const MimeType&) const;
 private:
-    QString m_whole;
-    QString m_category;
-    QString m_specific;
+    struct Private;
+    Private* d;
 };
 
 }

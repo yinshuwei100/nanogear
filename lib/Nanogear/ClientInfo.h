@@ -24,44 +24,36 @@
 #ifndef NANOGEAR_CLIENTINFO_H
 #define NANOGEAR_CLIENTINFO_H
 
-#include <QLocale>
 #include <QMetaType>
-#include "Preference.h"
-#include "MimeType.h"
 
 class QTextCodec;
+class QLocale;
 
 namespace Nanogear {
 
+class MimeType;
+template <typename> class Preference;
+template <typename> class PreferenceList;
+
 class ClientInfo {
 public:
-    ClientInfo(const QString& ua = QString()) : m_userAgent(ua)
-        { qRegisterMetaType<ClientInfo>(); }
+    ClientInfo(const QString& ua = QString());
+    ~ClientInfo();
 
-    void setUserAgent(const QString& a)
-        { m_userAgent = a; }
-    const QString& userAgent() const
-        { return m_userAgent; }
+    void setUserAgent(const QString& a);
+    const QString& userAgent() const;
 
-    void setAcceptedMimeTypes(const Preference<MimeType>::List& mimeTypes)
-        { m_mimeTypes = mimeTypes; }
-    const Preference<MimeType>::List& acceptedMimeTypes() const
-        { return m_mimeTypes; }
+    void setAcceptedMimeTypes(const PreferenceList<MimeType>& mimeTypes);
+    const PreferenceList<MimeType>& acceptedMimeTypes() const;
 
-    void setAcceptedLocales(const Preference<QLocale>::List& locales)
-        { m_locales = locales; }
-    const Preference<QLocale>::List& acceptedLocales() const
-        { return m_locales; }
+    void setAcceptedLocales(const PreferenceList<QLocale>& locales);
+    const PreferenceList<QLocale>& acceptedLocales() const;
 
-    void setAcceptedTextCodecs(const Preference<QTextCodec*>::List& codecs)
-        { m_codecs = codecs; }
-    const Preference<QTextCodec*>::List& acceptedTextCodecs() const
-        { return m_codecs; }
+    void setAcceptedTextCodecs(const PreferenceList<QTextCodec*>& codecs);
+    const PreferenceList<QTextCodec*>& acceptedTextCodecs() const;
 private:
-    QString m_userAgent;
-    Preference<MimeType>::List m_mimeTypes;
-    Preference<QLocale>::List m_locales;
-    Preference<QTextCodec*>::List m_codecs;
+    struct Private;
+    Private* d;
 };
 
 }

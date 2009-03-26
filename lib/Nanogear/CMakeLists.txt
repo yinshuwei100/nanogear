@@ -9,6 +9,10 @@ set(nanogear_SRCS
     Application.cpp
     Method.cpp
     Status.cpp
+    Request.cpp
+    ClientInfo.cpp
+    Response.cpp
+    Server.cpp
 )
 
 qt4_wrap_cpp(nanogear_SRCS

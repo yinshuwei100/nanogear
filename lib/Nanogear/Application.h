@@ -27,12 +27,11 @@
 
 #include <QCoreApplication>
 #include "Response.h"
-#include "Resource/Representation.h"
-#include "Request.h"
 
 namespace Nanogear {
 
 class Server;
+class Request;
 
 namespace Resource {
 class Resource;
@@ -41,37 +40,26 @@ class Resource;
 class Application : public QCoreApplication {
     Q_OBJECT
 public:
-    Application(int argc, char** argv) : QCoreApplication(argc, argv),
-        m_methodNotSupported("<h1>Method not supported</h1>", "text/html"),
-        m_notFound("<h1>Not Found</h1>", "text/html") {};
+    Application(int argc, char** argv);
 
-    virtual ~Application() {};
+    virtual ~Application();
 
-    void setServer(Server* s)
-        { m_server = s; }
-    Server* server() const
-        { return m_server; }
+    void setServer(Server* s);
+    Server* server() const;
 
-    void setRoot(Resource::Resource* r)
-        { m_root = r; }
-    Resource::Resource* root() const
-        { return m_root; }
+    void setRoot(Resource::Resource* r);
+    Resource::Resource* root() const;
 
-    static Application* instance()
-        { return static_cast<Application*>(QCoreApplication::instance()); }
+    static Application* instance();
 
-    virtual Response methodNotSupported(const Request& r) const
-        { return Response(Status::MethodNotAllowed, &m_methodNotSupported); }
-    virtual Response notFound(const Request& r) const
-        { return Response(404, &m_notFound); }
+    virtual Response methodNotSupported(const Request& r) const;
+    virtual Response notFound(const Request& r) const;
 
     int exec();
 
 private:
-    Server* m_server;
-    Resource::Resource* m_root;
-    Resource::Representation m_methodNotSupported;
-    Resource::Representation m_notFound;
+    struct Private;
+    Private* d;
 };
 
 }

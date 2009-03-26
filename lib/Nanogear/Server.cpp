@@ -21,45 +21,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Server.h"
 #include "Context.h"
-#include <QRegExp>
-#include <QString>
 
 namespace Nanogear {
 
-struct Context::Private {
-    Private() {};
-    Private(const QString& p) : path(sanitize(p)) {};
-    static QString sanitize(QString);
-    QString path;
+struct Server::Private {
+    Private(int port) : listenPort(port) {}
+    int listenPort;
+    Context context;
 };
 
-Context::Context() : d(new Private()) {}
-Context::Context(const QString& path) : d(new Private(path)) {
-    qRegisterMetaType<Context>();
-}
-Context::Context(const char* charPath) : d(new Private(charPath)) {
-    qRegisterMetaType<Context>();
-}
-Context::~Context() {
+Server::Server(int port, QObject* parent) : QObject(parent), d(new Private(port)) {}
+Server::~Server() {
     delete d;
 }
 
-void Context::setPath(const QString& path)
-    { d->path = d->sanitize(path); }
-const QString& Context::path() const
-    { return d->path; }
-
-QString Context::Private::sanitize(QString path) {
-    return path.replace("//", "/").remove(QRegExp("/$"));
+void Server::setContext(const Context& context) {
+    d->context = context;
+}
+const Context& Server::context() const {
+    return d->context;
 }
 
-bool operator==(const Context& a, const Context& b) {
-    return a.path() == b.path();
+void Server::setListenPort(int port) {
+    d->listenPort = port;
 }
-
-bool operator!=(const Context& a, const Context& b) {
-    return a.path() != b.path();
+int Server::listenPort() const {
+    return d->listenPort;
 }
 
 }

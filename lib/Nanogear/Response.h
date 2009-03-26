@@ -24,11 +24,13 @@
 #ifndef NANOGEAR_RESPONSE_H
 #define NANOGEAR_RESPONSE_H
 
-#include "Status.h"
 #include <QMetaType>
-#include <QDateTime>
+
+class QDateTime;
 
 namespace Nanogear {
+
+class Status;
 
 namespace Resource {
 class Representation;
@@ -36,30 +38,22 @@ class Representation;
 
 class Response {
 public:
-    Response() : m_representation(0) { qRegisterMetaType<Response>(); }
-    Response(const Status& s, const Resource::Representation* rep,
-      const QDateTime& expires = QDateTime::currentDateTime())
-        : m_status(s), m_representation(rep), m_expires(expires) { qRegisterMetaType<Response>(); }
-    virtual ~Response() {}
+    Response();
+    Response(const Status& s, const Resource::Representation* rep);
+    Response(const Status& s, const Resource::Representation* rep, const QDateTime& expires);
+    virtual ~Response();
 
-    void setStatus(const Status& s)
-        { m_status = s; }
-    const Status& status()
-        { return m_status; }
+    void setStatus(const Status& s);
+    const Status& status();
 
-    void setRepresentation(const Resource::Representation* representation)
-        { m_representation = representation; }
-    const Resource::Representation* representation() const
-        { return m_representation; }
+    void setRepresentation(const Resource::Representation* representation);
+    const Resource::Representation* representation() const;
 
-    void setExpires(const QDateTime& expires)
-        { m_expires = expires; }
-    const QDateTime& expires() const
-        { return m_expires; }
+    void setExpires(const QDateTime& expires);
+    const QDateTime& expires() const;
 private:
-    Status m_status;
-    const Resource::Representation* m_representation;
-    QDateTime m_expires;
+    struct Private;
+    Private* d;
 };
 
 }

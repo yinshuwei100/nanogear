@@ -26,9 +26,9 @@
 
 #include <QObject>
 
-#include "Context.h"
-
 namespace Nanogear {
+
+class Context;
 
 namespace Resource {
 class Resource;
@@ -37,25 +37,21 @@ class Resource;
 class Server : public QObject {
     Q_OBJECT
 public:
-    Server(int port = 8080, QObject* parent = 0) : QObject(parent), m_listenPort(port) {}
-    virtual ~Server() {}
+    Server(int port = 8080, QObject* parent = 0);
+    virtual ~Server();
 
-    void setContext(const Context& context)
-        { m_context = context; }
-    const Context& context() const
-        { return m_context; }
+    void setContext(const Context& context);
+    const Context& context() const;
 
-    void setListenPort(int port)
-        { m_listenPort = port; }
-    int listenPort() const
-        { return m_listenPort; }
+    void setListenPort(int port);
+    int listenPort() const;
 
 public Q_SLOTS:
     virtual void start() = 0;
 
 private:
-    int m_listenPort;
-    Context m_context;
+    struct Private;
+    Private* d;
 };
 
 }
