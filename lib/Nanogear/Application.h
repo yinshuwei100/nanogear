@@ -46,6 +46,7 @@ class Resource;
  * It is responsible for starting the event loop and the attached connector.
  */
 class Application : public QCoreApplication {
+    Q_OBJECT
 public:
     /*!
      * Initialize this Nanogear application
