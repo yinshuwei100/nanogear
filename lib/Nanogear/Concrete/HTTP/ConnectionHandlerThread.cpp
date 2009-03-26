@@ -75,10 +75,9 @@ void ConnectionHandlerThread::onClientReadyRead() {
 
     QHttpRequestHeader requestHeader(rawRequestHeader);
 
-    // Fill Context, ClientInfo and Method by using informations supplied by
+    // Fill Context and Method by using informations supplied by
     // the client
     Context requestPath(requestHeader.path());
-    ClientInfo clientInfo(requestHeader.value("user-agent"));
     Nanogear::Method requestedMethod(requestHeader.method().toUpper());
 
     // Fill the request body, if needed
@@ -92,34 +91,27 @@ void ConnectionHandlerThread::onClientReadyRead() {
      * Fill the ClientInfo object
      */
     // Add accepted MIME types
-    {
-        Preference<MimeType>::List accept;
-        foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
-            QStringList pair = mimeType.split(";q=");
-            accept.append(Preference<MimeType>(pair.at(0), pair.value(1, "1").toFloat()));
-        }
-        clientInfo.setAcceptedMimeTypes(accept);
+    Preference<MimeType>::List acceptedMimeTypes;
+    foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
+        QStringList pair = mimeType.split(";q=");
+        acceptedMimeTypes.append(Preference<MimeType>(pair.at(0), pair.value(1, "1").toFloat()));
     }
 
     // Add accepted locales
-    {
-        Preference<QLocale>::List accept;
-        foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
-            QStringList pair = locale.split(";q=");
-            accept.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
-         }
-         clientInfo.setAcceptedLocales(accept);
+    Preference<QLocale>::List acceptedLocales;
+    foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
+        QStringList pair = locale.split(";q=");
+        acceptedLocales.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
     }
 
     // Add accepted character sets
-    {
-        Preference<QTextCodec*>::List accept;
-        foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
-            QStringList pair = codec.split(";q=");
-            accept.append(Preference<QTextCodec*>(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
-        }
-        clientInfo.setAcceptedTextCodecs(accept);
+    Preference<QTextCodec*>::List acceptedCharsets;
+    foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
+        QStringList pair = codec.split(";q=");
+        acceptedCharsets.append(Preference<QTextCodec*>(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
     }
+
+    ClientInfo clientInfo(acceptedMimeTypes, acceptedLocales, acceptedCharsets, requestHeader.value("user-agent"));
     /* End of "Fill the ClientInfo object" */
 
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();

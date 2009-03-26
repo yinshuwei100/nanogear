@@ -66,17 +66,11 @@ public:
         const QString& userAgent = QString()) : m_mimeTypes(mimeTypes),
         m_locales(locales), m_codecs(codecs), m_userAgent(userAgent) {}
 
-    void setUserAgent(const QString& userAgent)
-        { m_userAgent = userAgent; }
-
     /*!
      * \return The UserAgent string (if any)
      */
     const QString& userAgent() const
         { return m_userAgent; }
-
-    void setAcceptedMimeTypes(const Preference<MimeType>::List& mimeTypes)
-        { m_mimeTypes = mimeTypes; }
 
     /*!
      * \return The list of accepted MIME types
@@ -84,18 +78,11 @@ public:
     const Preference<MimeType>::List& acceptedMimeTypes() const
         { return m_mimeTypes; }
 
-    void setAcceptedLocales(const Preference<QLocale>::List& locales)
-        { m_locales = locales; }
-
     /*!
      * \return The list of accepted languages
      */
     const Preference<QLocale>::List& acceptedLocales() const
         { return m_locales; }
-
-
-    void setAcceptedTextCodecs(const Preference<QTextCodec*>::List& codecs)
-        { m_codecs = codecs; }
 
     /*!
      * \return The list of accepted charsets
@@ -103,10 +90,10 @@ public:
     const Preference<QTextCodec*>::List& acceptedTextCodecs() const
         { return m_codecs; }
 private:
-    QString m_userAgent;
     Preference<MimeType>::List m_mimeTypes;
     Preference<QLocale>::List m_locales;
     Preference<QTextCodec*>::List m_codecs;
+    QString m_userAgent;
 };
 
 }
