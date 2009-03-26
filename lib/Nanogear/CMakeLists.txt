@@ -17,4 +17,4 @@ qt4_wrap_cpp(nanogear_SRCS
 )
 
 add_library(nanogear SHARED ${nanogear_SRCS})
-target_link_libraries(nanogear nanogear_resource nanogear_concrete_HTTP)
+target_link_libraries(nanogear nanogear_concrete_HTTP nanogear_resource)
