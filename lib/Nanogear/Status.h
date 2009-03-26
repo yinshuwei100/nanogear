@@ -24,9 +24,10 @@
 #ifndef NANOGEAR_STATUS_H
 #define NANOGEAR_STATUS_H
 
-#include <QString>
 #include <QObject>
 #include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
 
@@ -34,29 +35,20 @@ class Status {
     Q_GADGET
     Q_ENUMS(Type);
 public:
-    Status() : m_status(Invalid)
-        { qRegisterMetaType<Status>(); }
-    Status(const QString& name) : m_status(toType(name))
-        { qRegisterMetaType<Status>(); }
-    Status(const char* name) : m_status(toType(name))
-        { qRegisterMetaType<Status>(); };
-    Status(int status) : m_status(status)
-        { qRegisterMetaType<Status>(); }
+    Status();
+    Status(const QString& name);
+    Status(const char* name);
+    Status(int status);
+    ~Status();
 
-    void fromString(const QString& name)
-        { m_status = toType(name); }
-    QString toString() const
-        { return toString(m_status); }
+    void fromString(const QString& name);
+    QString toString() const;
 
-    void fromType(int status)
-        { m_status = status; }
-    int toType() const
-        { return m_status; }
+    void fromType(int status);
+    int toType() const;
 
-    bool operator==(const Status& type) const
-        { return m_status == type.m_status; }
-    bool isValid() const
-        { return m_status != Invalid; }
+    bool operator==(const Status& type) const;
+    bool isValid() const;
 
     enum Type {
         Invalid = 0,
@@ -116,9 +108,8 @@ public:
         NotExtended = 510
     };
 private:
-    static int toType(const QString&);
-    static QString toString(int status);
-    int m_status;
+    struct Private;
+    Private* d;
 };
 
 }

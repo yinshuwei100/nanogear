@@ -23,6 +23,7 @@
 
 #include "Resource.h"
 #include "../Request.h"
+#include "../Method.h"
 
 namespace Nanogear {
 

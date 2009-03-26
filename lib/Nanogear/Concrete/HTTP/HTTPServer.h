@@ -24,9 +24,9 @@
 #ifndef NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
 #define NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
 
-#include <QTcpServer>
-
 #include "../../Server.h"
+
+class QTcpServer;
 
 namespace Nanogear {
 namespace Concrete {
@@ -35,23 +35,18 @@ namespace HTTP {
 class HTTPServer : public Server {
     Q_OBJECT
 public:
-    HTTPServer(int port = 8080, QObject* parent = 0)
-        : Server(port, parent)
-        { connect(&m_tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection())); }
-    virtual ~HTTPServer() {}
+    HTTPServer(int port = 8080, QObject* parent = 0);
+    virtual ~HTTPServer();
 
 public slots:
-    virtual void start() {
-        qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
-        m_tcpServer.listen(QHostAddress::Any, listenPort());
-    };
-    QTcpServer* tcpServer()
-        { return &m_tcpServer; }
+    virtual void start();
+    QTcpServer* tcpServer();
 
     void onNewConnection();
 
 private:
-    QTcpServer m_tcpServer;
+    struct Private;
+    Private* d;
 };
 
 }

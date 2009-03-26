@@ -24,28 +24,24 @@
 #ifndef NANOGEAR_CONTEXT_H
 #define NANOGEAR_CONTEXT_H
 
-#include <QString>
 #include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
 
 class Context {
 public:
-    Context() {}
-    Context(const QString& path) : m_path(sanitize(path))
-        { qRegisterMetaType<Context>(); }
-    Context(const char* charPath) : m_path(sanitize(charPath))
-        { qRegisterMetaType<Context>(); }
-    virtual ~Context() {}
+    Context();
+    Context(const QString& path);
+    Context(const char* charPath);
+    virtual ~Context();
 
-    void setPath(const QString& path)
-        { m_path = sanitize(path); }
-    const QString& path() const
-        { return m_path; }
-
-    static QString sanitize(QString path);
+    void setPath(const QString& path);
+    const QString& path() const;
 private:
-    QString m_path;
+    struct Private;
+    Private* d;
 };
 
 bool operator==(const Context&, const Context&);
