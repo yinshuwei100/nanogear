@@ -159,6 +159,7 @@ public:
         BandwidthLimitExceeded = 509,
         NotExtended = 510
     };
+
 private:
     static int toType(const QString&);
     static QString toString(int status);
