@@ -28,11 +28,16 @@
 
 namespace Nanogear {
 
+/*!
+ * \class Preference
+ * \brief Encapsulates client preferences
+ *
+ * Encapsulates a generic preference
+ */
 template <typename T> class Preference {
 public:
     Preference(const T& data = T(), float quality = 1)
         : m_data(data), m_quality(quality) {}
-    virtual ~Preference() {}
 
     const T& data() const
         { return m_data; }
