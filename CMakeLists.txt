@@ -1,4 +1,4 @@
-project(nanogear)
+project(nanogear CXX C)
 cmake_minimum_required(VERSION 2.6)
 include("VERSION.cmake")
 message(STATUS "This is Nanogear ${NANOGEAR_MAJOR}.${NANOGEAR_MINOR}.${NANOGEAR_PATCH}")
@@ -20,10 +20,10 @@ endif(${ENABLE_TESTS})
 
 # Documentation
 find_package(Doxygen)
-if (${DOXYGEN_FOUND})
+if (DOXYGEN_FOUND)
     message(STATUS "Building documentation")
     add_subdirectory(docs)
-endif (${DOXYGEN_FOUND})
+endif (DOXYGEN_FOUND)
 
 
 find_package(Qt4 REQUIRED)
