@@ -33,28 +33,73 @@ class QTextCodec;
 
 namespace Nanogear {
 
+/*!
+ * \class ClientInfo
+ * \brief Represents additional informations supplied by the client
+ *
+ * This class represents additional informations supplied by the client
+ * such as the UserAgent, the accepted MIME types, locales and character sets.
+ *
+ * This data is used for content-negotiation. A resource is not forced to send
+ * data back to client according to the parameters provided by ClientInfo
+ * but it's highly suggested to do so.
+ *
+ * The data provided by this class is meant to be read-only.
+ */
 class ClientInfo {
 public:
     ClientInfo(const QString& ua = QString()) : m_userAgent(ua)
         { qRegisterMetaType<ClientInfo>(); }
 
-    void setUserAgent(const QString& a)
-        { m_userAgent = a; }
+    /*!
+     * A constructor used to initialize values.
+     * This constructor is intended to be used only by 'Server' implementations
+     *
+     * \param mimeTypes a list of supported MIME types
+     * \param locales a list of supported locales
+     * \param codecs a list of supported character encodings
+     * \param userAgent the UserAgent string (if any)
+     */
+    ClientInfo(const Preference<MimeType>::List& mimeTypes,
+        const Preference<QLocale>::List& locales,
+        const Preference<QTextCodec*>::List& codecs,
+        const QString& userAgent = QString()) : m_mimeTypes(mimeTypes),
+        m_locales(locales), m_codecs(codecs), m_userAgent(userAgent) {}
+
+    void setUserAgent(const QString& userAgent)
+        { m_userAgent = userAgent; }
+
+    /*!
+     * \return The UserAgent string (if any)
+     */
     const QString& userAgent() const
         { return m_userAgent; }
 
     void setAcceptedMimeTypes(const Preference<MimeType>::List& mimeTypes)
         { m_mimeTypes = mimeTypes; }
+
+    /*!
+     * \return The list of accepted MIME types
+     */
     const Preference<MimeType>::List& acceptedMimeTypes() const
         { return m_mimeTypes; }
 
     void setAcceptedLocales(const Preference<QLocale>::List& locales)
         { m_locales = locales; }
+
+    /*!
+     * \return The list of accepted languages
+     */
     const Preference<QLocale>::List& acceptedLocales() const
         { return m_locales; }
 
+
     void setAcceptedTextCodecs(const Preference<QTextCodec*>::List& codecs)
         { m_codecs = codecs; }
+
+    /*!
+     * \return The list of accepted charsets
+     */
     const Preference<QTextCodec*>::List& acceptedTextCodecs() const
         { return m_codecs; }
 private:
