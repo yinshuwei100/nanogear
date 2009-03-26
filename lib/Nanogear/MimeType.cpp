@@ -25,16 +25,16 @@
 
 namespace Nanogear {
 
-const QString& MimeType::category() const {
-    if (m_category.isEmpty())
-        const_cast<MimeType*>(this)->m_category = m_whole.left(m_whole.indexOf('/'));
-    return m_category;
+const QString& MimeType::type() const {
+    if (m_type.isEmpty())
+        const_cast<MimeType*>(this)->m_type = m_whole.left(m_whole.indexOf('/'));
+    return m_type;
 }
 
-const QString& MimeType::specific() const {
-    if (m_category.isEmpty())
-        const_cast<MimeType*>(this)->m_specific = m_whole.right(m_whole.indexOf('/'));
-    return m_specific;
+const QString& MimeType::subtype() const {
+    if (m_type.isEmpty())
+        const_cast<MimeType*>(this)->m_subtype = m_whole.right(m_whole.indexOf('/'));
+    return m_subtype;
 }
 
 bool MimeType::isCompatible(const MimeType& other) const{
