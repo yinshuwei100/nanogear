@@ -25,10 +25,32 @@
 #include "ConnectionHandlerThread.h"
 
 #include <QTcpSocket>
+#include <QTcpServer>
 
 namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
+
+struct HTTPServer::Private {
+    QTcpServer tcpServer;
+};
+
+HTTPServer::HTTPServer(int port, QObject* parent )
+    : Server(port, parent), d(new Private()) {
+    connect(&d->tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
+}
+HTTPServer::~HTTPServer() {
+    delete d;
+}
+
+void HTTPServer::start() {
+    qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
+    d->tcpServer.listen(QHostAddress::Any, listenPort());
+}
+
+QTcpServer* HTTPServer::tcpServer() {
+    return &d->tcpServer;
+}
 
 void HTTPServer::onNewConnection() {
     qDebug() << Q_FUNC_INFO << "received new connection, starting a new thread...";
@@ -41,3 +63,4 @@ void HTTPServer::onNewConnection() {
 }
 }
 }
+
