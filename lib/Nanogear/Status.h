@@ -32,7 +32,7 @@ namespace Nanogear {
 
 class Status {
     Q_GADGET
-    Q_ENUMS(Type);
+    Q_ENUMS(Type)
 public:
     Status() : m_status(Invalid)
         { qRegisterMetaType<Status>(); }
@@ -123,6 +123,6 @@ private:
 
 }
 
-Q_DECLARE_METATYPE(Nanogear::Status);
+Q_DECLARE_METATYPE(Nanogear::Status)
 
 #endif // NANOGEAR_STATUS_H
