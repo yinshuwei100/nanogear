@@ -33,19 +33,54 @@
 
 namespace Nanogear {
 
+/*!
+ * \class Request
+ * \brief This class encapsulates and abstracts a client request
+ *
+ * A Request object represents a client request. That is, every client, either
+ * a web browser or another program, will usually include supported media types,
+ * supported charset, the resource context, request method and request
+ * parameters.
+ *
+ * It is connector's (or, in general, a Server implementation) responsiblity
+ * to fill this object and pass a reference to resources methods handlers.
+ *
+ * Informations sent by the client (such as supported media types, character
+ * encodings, etc) is encapsulated in a ClientInfo object and is read-only.
+ *
+ * The requested context is encapsulated by a Context object and is read-only.
+ */
 class Request {
 public:
     Request() { qRegisterMetaType<Request>(); };
+
+    /*!
+     * A constructor used to initialize values.
+     * \param m a const reference to a Method object
+     * \param c a const reference to a ContextObject
+     * \param cI a const reference to a ClientInfo
+     */
     Request(const Method& m, const Context& c, const ClientInfo& cI = ClientInfo())
         : m_method(m), m_context(c), m_clientInfo(cI)
         { qRegisterMetaType<Request>(); }
-    virtual ~Request() {};
 
+    virtual ~Request() {}
+
+    /*!
+     * When a client makes a request it usually specifies a method. It used to
+     * determine which handler should be called on a resource.
+     * \return An object encapsulating a method
+     */
     const Method& method() const
         { return m_method; }
     void setMethod(const Method& method)
         { m_method = method; }
 
+    /*!
+     * A client usually makes a request at a specified URI which we call
+     * 'context'
+     * \return The requested context
+     */
     const Context& context() const
         { return m_context; }
     void setContext(const Context& context)
@@ -53,11 +88,19 @@ public:
 
     void setClientInfo(const ClientInfo& clientInfo)
         { m_clientInfo = clientInfo; }
+    /*!
+     * A client usually attaches additional informations to the request, this
+     * method can be used to retrieve it.
+     * \return An object representing additional informations supplied by the client
+     */
     const ClientInfo& clientInfo() const
         { return m_clientInfo; }
 
     void setBody(const QByteArray& body)
         { m_body = body; }
+    /*!
+     * \return The request body in raw form
+     */
     const QByteArray& body() const
         { return m_body; }
 
