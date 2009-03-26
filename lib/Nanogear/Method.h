@@ -30,34 +30,84 @@
 
 namespace Nanogear {
 
+/*!
+ * \class Method
+ * \brief Encapsulates the requested method
+ *
+ * Used to determine which method to execute to handle a request. It is usually
+ * filled by a concrete implementation of Server.
+ */
 class Method {
     Q_GADGET
     Q_ENUMS(Type)
 public:
+    /*!
+     * Default constructor. Builds a invalid method.
+     */
     Method() : m_method(Invalid)
         { qRegisterMetaType<Method>(); }
+
+    /*!
+     * Build a Method object from its name
+     * \param name method's name
+     */
     Method(const QString& name) : m_method(toType(name))
         { qRegisterMetaType<Method>(); }
+
+    /*!
+     * This is an overloaded constructor provided for convenience
+     * \param name method's name (C-style string)
+     */
     Method(const char* name) : m_method(toType(name))
         { qRegisterMetaType<Method>(); }
+
+    /*!
+     * This is an overloaded constructor provided for convenience
+     * \param method the code representing a method
+     */
     Method(int method) : m_method(method)
         { qRegisterMetaType<Method>(); }
 
+    /*!
+     * Build this object from the name of the method
+     * \param name Method name
+     */
     void fromString(const QString& name)
         { m_method = toType(name); }
+
+    /*!
+     * \return Return the method name as a string
+     */
     QString toString() const
         { return toString(m_method); }
 
+    /*!
+     * Build this method from its integer code
+     * \param method
+     */
     void fromType(int method)
         { m_method = method; }
+
+    /*!
+     * \return the code associated with this method
+     */
     int toType() const
         { return m_method; }
 
     bool operator==(const Method& type) const
         { return m_method == type.m_method; }
+
+    /*!
+     * \return If this method is valid or not
+     */
     bool isValid() const
         { return m_method != Invalid; }
+
+    /*!
+     * \return true if this method has a body
+     */
     bool hasBody() const;
+
 
     enum Type {
         Invalid,

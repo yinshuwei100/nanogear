@@ -32,8 +32,9 @@ bool Method::hasBody() const {
         case POST:
         case PUT:
             return true;
+        default:
+            return false;
     }
-    return false;
 }
 
 int Method::toType(const QString& key) {
