@@ -34,23 +34,58 @@ namespace Resource {
 class Resource;
 }
 
+/*!
+ * \class Server
+ * \brief Abstract class representing a generic Server
+ *
+ * This abstract class is implemented by concrete server.
+ *
+ * A Server is usually attached to an Application object.
+ *
+ * Nanogear ships with a concrete, multi-threaded HTTP server.
+ */
 class Server : public QObject {
     Q_OBJECT
 public:
+    /*!
+     * The default constructor
+     * \param port The server will listen on to this port
+     * \param parent The parent of this object
+     */
     Server(int port = 8080, QObject* parent = 0) : QObject(parent), m_listenPort(port) {}
+
     virtual ~Server() {}
 
+    /*!
+     * Set the root context of this application
+     * \param context Context
+     */
     void setContext(const Context& context)
         { m_context = context; }
+
+    /*!
+     * \return The context of this application
+     */
     const Context& context() const
         { return m_context; }
 
+    /*!
+     * Set the listen port for this server
+     * \param port Listen port
+     */
     void setListenPort(int port)
         { m_listenPort = port; }
+
+    /*!
+     * \return The listen port
+     */
     int listenPort() const
         { return m_listenPort; }
 
-public Q_SLOTS:
+public slots:
+    /*!
+     * Concrete implementation of Server must implement this function
+     */
     virtual void start() = 0;
 
 private:
