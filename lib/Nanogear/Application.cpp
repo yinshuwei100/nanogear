@@ -69,7 +69,7 @@ Response Application::methodNotSupported(const Request& r) const {
     return Response(Status::MethodNotAllowed, &d->methodNotSupported);
 }
 Response Application::notFound(const Request& r) const {
-    return Response(404, &d->notFound);
+    return Response(Status::NotFound, &d->notFound);
 }
 
 int Application::exec() {

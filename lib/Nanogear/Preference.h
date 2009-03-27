@@ -49,13 +49,17 @@ public:
     void setQuality(float quality)
         { m_quality = quality; }
 
+
     class List : public QList<Preference> {
     public:
-        List() {};
+        List() {}
+
         List(const QList<Preference>& other)
             : QList<Preference>(other) {}
+
         T top() const
             { return *(toMap().end()); }
+
         T outOf(const QList<T>& server) const {
             QMap<float, T> map = toMap();
             for (typename QMap<float, T>::iterator i = map.end(); i != map.begin();) {
@@ -65,6 +69,7 @@ public:
             }
             return T();
         }
+
         QMap<float, T> toMap() const {
             QMap<float, T> ret;
             foreach (const Preference& type, *this) {
@@ -73,6 +78,7 @@ public:
             return ret;
         }
     };
+
 private:
     T m_data;
     float m_quality;
