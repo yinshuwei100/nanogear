@@ -26,7 +26,7 @@
 
 #include <QString>
 #include <QTextCodec>
-#include "../../Preference.h"
+#include "../../PreferenceList.h"
 
 namespace Nanogear {
 namespace Concrete {
@@ -37,7 +37,7 @@ namespace HTTP {
  * \arg h The value of an HTTP header.
  */
 template <typename T>
-PreferenceList<T> getPreferenceListFromHttpHeader(const QString& h) {
+PreferenceList<T> getPreferenceListFromHeader(const QString& h) {
     PreferenceList<T> accept;
     QString header = h;
     foreach (const QString& item, header.remove(" ").split(",")) {
@@ -48,7 +48,7 @@ PreferenceList<T> getPreferenceListFromHttpHeader(const QString& h) {
 }
 
 template <>
-PreferenceList<QTextCodec*> getPreferenceListFromHttpHeader(const QString& h) {
+PreferenceList<QTextCodec*> getPreferenceListFromHeader(const QString& h) {
     PreferenceList<QTextCodec*> accept;
     QString header = h;
     foreach (const QString& item, header.remove(" ").split(",")) {

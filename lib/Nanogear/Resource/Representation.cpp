@@ -22,6 +22,9 @@
  */
 
 #include "Representation.h"
+
+#include "../PreferenceList.h"
+
 #include <QString>
 #include <QRegExp>
 #include <QStringList>
