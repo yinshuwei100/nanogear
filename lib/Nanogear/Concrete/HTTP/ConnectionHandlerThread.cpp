@@ -29,6 +29,9 @@
 #include <QHttpRequestHeader>
 #include <QTextCodec>
 
+#include "HTTPServer.h"
+#include "Utility.h"
+
 #include "../../Response.h"
 #include "../../Request.h"
 #include "../../Method.h"
@@ -87,32 +90,11 @@ void ConnectionHandlerThread::onClientReadyRead() {
     else if (requestedMethod.hasBody())
         requestBody = m_clientSocket->readAll();
 
-    /*
-     * Fill the ClientInfo object
-     */
-    // Add accepted MIME types
-    Preference<MimeType>::List acceptedMimeTypes;
-    foreach (const QString& mimeType, requestHeader.value("accept").remove(" ").split(",")) {
-        QStringList pair = mimeType.split(";q=");
-        acceptedMimeTypes.append(Preference<MimeType>(pair.at(0), pair.value(1, "1").toFloat()));
-    }
-
-    // Add accepted locales
-    Preference<QLocale>::List acceptedLocales;
-    foreach (const QString& locale, requestHeader.value("accept-language").remove(" ").split(",")) {
-        QStringList pair = locale.split(";q=");
-        acceptedLocales.append(Preference<QLocale>(pair.at(0), pair.value(1, "1").toFloat()));
-    }
-
-    // Add accepted character sets
-    Preference<QTextCodec*>::List acceptedCharsets;
-    foreach (const QString& codec, requestHeader.value("accept-charset").remove(" ").split(",")) {
-        QStringList pair = codec.split(";q=");
-        acceptedCharsets.append(Preference<QTextCodec*>(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
-    }
-
+    // Fill the ClientInfo object
+    PreferenceList<MimeType> acceptedMimeTypes = getPreferenceListFromHttpHeader<MimeType>(requestHeader.value("accept"));
+    PreferenceList<QLocale> acceptedLocales = getPreferenceListFromHttpHeader<QLocale>(requestHeader.value("accept-language"));
+    PreferenceList<QTextCodec*> acceptedCharsets = getPreferenceListFromHttpHeader<QTextCodec*>(requestHeader.value("accept-charset"));
     ClientInfo clientInfo(acceptedMimeTypes, acceptedLocales, acceptedCharsets, requestHeader.value("user-agent"));
-    /* End of "Fill the ClientInfo object" */
 
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
     qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
