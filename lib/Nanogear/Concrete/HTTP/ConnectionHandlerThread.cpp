@@ -61,6 +61,8 @@ void ConnectionHandlerThread::run() {
     connect(this, SIGNAL(finished()), m_clientSocket, SLOT(deleteLater()));
     m_clientSocket->waitForReadyRead(-1);
     onClientReadyRead();
+
+    QThread::run();
 }
 
 void ConnectionHandlerThread::onClientReadyRead() {

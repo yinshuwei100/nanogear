@@ -25,7 +25,10 @@
 #define NANOGEAR_CONCRETE_HTTP_UTILITY_H
 
 #include <QString>
+#include <QStringList>
 #include <QTextCodec>
+
+#include "../../Preference.h"
 #include "../../PreferenceList.h"
 
 namespace Nanogear {
@@ -39,10 +42,12 @@ namespace HTTP {
 template <typename T>
 PreferenceList<T> getPreferenceListFromHeader(const QString& h) {
     PreferenceList<T> accept;
+    
     QString header = h;
     foreach (const QString& item, header.remove(" ").split(",")) {
         QStringList pair = item.split(";q=");
-        accept.append(preference(pair.at(0), pair.value(1, "1").toFloat()));
+        Preference<T> preference(pair.at(0), pair.value(1, "1").toFloat());
+        accept.append(preference);
     }
     return accept;
 }
@@ -53,7 +58,8 @@ PreferenceList<QTextCodec*> getPreferenceListFromHeader(const QString& h) {
     QString header = h;
     foreach (const QString& item, header.remove(" ").split(",")) {
         QStringList pair = item.split(";q=");
-        accept.append(preference(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat()));
+        Preference<QTextCodec*> preference(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat());
+        accept.append(preference);
     }
     return accept;
 }

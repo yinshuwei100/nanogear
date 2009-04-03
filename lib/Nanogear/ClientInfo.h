@@ -26,7 +26,8 @@
 
 #include <QLocale>
 #include <QMetaType>
-#include "Preference.h"
+
+#include "PreferenceList.h"
 #include "MimeType.h"
 
 class QTextCodec;
@@ -48,8 +49,7 @@ namespace Nanogear {
  */
 class ClientInfo {
 public:
-    ClientInfo(const ClientInfo&);
-    ~ClientInfo();
+    //ClientInfo(const ClientInfo&);
 
     /*!
      * Default constructor. The resulting ClientInfo is empty.
@@ -65,9 +65,9 @@ public:
      * \param codecs a list of supported character encodings
      * \param userAgent the UserAgent string (if any)
      */
-    ClientInfo(const Preference<MimeType>::List& mimeTypes,
-        const Preference<QLocale>::List& locales,
-        const Preference<QTextCodec*>::List& codecs,
+    ClientInfo(const PreferenceList<MimeType>& mimeTypes,
+        const PreferenceList<QLocale>& locales,
+        const PreferenceList<QTextCodec*>& codecs,
         const QString& userAgent = QString()) : m_mimeTypes(mimeTypes),
         m_locales(locales), m_codecs(codecs), m_userAgent(userAgent) {}
 
@@ -80,24 +80,24 @@ public:
     /*!
      * \return The list of accepted MIME types
      */
-    const Preference<MimeType>::List& acceptedMimeTypes() const
+    const PreferenceList<MimeType>& acceptedMimeTypes() const
         { return m_mimeTypes; }
 
     /*!
      * \return The list of accepted languages
      */
-    const Preference<QLocale>::List& acceptedLocales() const
+    const PreferenceList<QLocale>& acceptedLocales() const
         { return m_locales; }
 
     /*!
      * \return The list of accepted charsets
      */
-    const Preference<QTextCodec*>::List& acceptedTextCodecs() const
+    const PreferenceList<QTextCodec*>& acceptedTextCodecs() const
         { return m_codecs; }
 private:
-    Preference<MimeType>::List m_mimeTypes;
-    Preference<QLocale>::List m_locales;
-    Preference<QTextCodec*>::List m_codecs;
+    PreferenceList<MimeType> m_mimeTypes;
+    PreferenceList<QLocale> m_locales;
+    PreferenceList<QTextCodec*> m_codecs;
     QString m_userAgent;
 };
 

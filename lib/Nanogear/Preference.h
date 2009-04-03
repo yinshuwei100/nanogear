@@ -49,41 +49,9 @@ public:
     void setQuality(float quality)
         { m_quality = quality; }
 
-    class List : public QList<Preference> {
-    public:
-        List() {};
-        List(const QList<Preference>& other)
-            : QList<Preference>(other) {}
-        T top() const
-            { return *(toMap().end()); }
-        T outOf(const QList<T>& server) const {
-            QMap<float, T> map = toMap();
-            for (typename QMap<float, T>::iterator i = map.end(); i != map.begin();) {
-                --i;
-                if (server.contains(*i))
-                    return *i;
-            }
-            return T();
-        }
-        QMap<float, T> toMap() const {
-            QMap<float, T> ret;
-            foreach (const Preference& type, *this) {
-                ret.insertMulti(type.quality(), type.data());
-            }
-            return ret;
-        }
-    };
 private:
     T m_data;
     float m_quality;
-};
-
-template <typename T>
-class PreferenceList : Preference<T>::List {
-public:
-    PreferenceList() {};
-    PreferenceList(const QList< Preference<T> >& list)
-        : Preference<T>::List(list) {};
 };
 
 template <typename T, typename U>

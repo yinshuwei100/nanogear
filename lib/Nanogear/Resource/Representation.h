@@ -26,7 +26,7 @@
 
 #include <QMimeData>
 #include "../MimeType.h"
-#include "../Preference.h"
+#include "../PreferenceList.h"
 
 namespace Nanogear {
 namespace Resource {
@@ -52,14 +52,14 @@ public:
     /*!
      * \return the data (in raw form) attached to this representation
      */
-    QByteArray data(const Preference<MimeType>::List& mimeTypes) const
+    QByteArray data(const PreferenceList<MimeType>& mimeTypes) const
         { return data(format(mimeTypes)); }
 
     /*!
      * \return the best matching MIME type out of the MIME types supported by
      *    the client
      */
-    MimeType format(const Preference<MimeType>::List& mimeTypes) const
+    MimeType format(const PreferenceList<MimeType>& mimeTypes) const
         { return mimeTypes.outOf(mimeTypeFormats()); }
 
     /*!

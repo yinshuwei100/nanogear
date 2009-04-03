@@ -57,8 +57,7 @@ namespace Nanogear {
  */
 class Request {
 public:
-    Request(const Request&);
-    virtual ~Request();
+    //Request(const Request&);
 
     /*!
      * Default constructor. Invalid method, empty context, empty clientInfo.
@@ -73,8 +72,10 @@ public:
      * \param c a const reference to a ContextObject
      * \param cI a const reference to a ClientInfo
      */
-    Request(const Method& m, const Context& c, const ClientInfo& cI, const Resource::Representation* body);
+    Request(const Method& method, const Context& context, const ClientInfo& clientInfo, Resource::Representation* body) :
+        m_method(method), m_context(context), m_clientInfo(clientInfo), m_representation(body) {}
 
+        
     /*!
      * When a client makes a request it usually specifies a method. It used to
      * determine which handler should be called on a resource.
@@ -103,7 +104,7 @@ public:
      * Set the representation attached to this Request
      * \param representation A pointer to a Representation object
      */
-    void setRepresentation(const Resource::Representation* representation)
+    void setRepresentation(Resource::Representation* representation)
         { m_representation = representation; }
 
     /*!
