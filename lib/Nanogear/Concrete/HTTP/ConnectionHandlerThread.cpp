@@ -56,10 +56,11 @@ void ConnectionHandlerThread::run() {
         return;
     }
 
-    connect(m_clientSocket, SIGNAL(readyRead()), SLOT(onClientReadyRead()));
     connect(m_clientSocket, SIGNAL(disconnected()), SLOT(quit()));
     connect(this, SIGNAL(finished()), SLOT(deleteLater()));
     connect(this, SIGNAL(finished()), m_clientSocket, SLOT(deleteLater()));
+    m_clientSocket->waitForReadyRead(-1);
+    onClientReadyRead();
 }
 
 void ConnectionHandlerThread::onClientReadyRead() {
