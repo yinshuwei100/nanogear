@@ -48,8 +48,13 @@ namespace Nanogear {
  */
 class ClientInfo {
 public:
-    ClientInfo(const QString& ua = QString()) : m_userAgent(ua)
-        { qRegisterMetaType<ClientInfo>(); }
+    ClientInfo(const ClientInfo&);
+    ~ClientInfo();
+
+    /*!
+     * Default constructor. The resulting ClientInfo is empty.
+     */
+    ClientInfo();
 
     /*!
      * A constructor used to initialize values.

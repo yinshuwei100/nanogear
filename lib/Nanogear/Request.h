@@ -54,8 +54,13 @@ namespace Nanogear {
  */
 class Request {
 public:
-    Request()
-        { qRegisterMetaType<Request>(); }
+    Request(const Request&);
+    virtual ~Request();
+
+    /*!
+     * Default constructor. Invalid method, empty context, empty clientInfo.
+     */
+    Request();
 
     /*!
      * A constructor used to initialize values.
