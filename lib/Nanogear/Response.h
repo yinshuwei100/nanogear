@@ -24,13 +24,11 @@
 #ifndef NANOGEAR_RESPONSE_H
 #define NANOGEAR_RESPONSE_H
 
-#include <QMetaType>
+#include <QDateTime>
 
-class QDateTime;
+#include "Status.h"
 
 namespace Nanogear {
-
-class Status;
 
 namespace Resource {
 class Representation;
@@ -47,60 +45,60 @@ class Representation;
 class Response {
 public:
     /*!
-     * A default constructor which builds a Response with an empty
-     * representation.
-     */
-    Response();
-
-    /*!
      * A constructor used to initialize several values
      * \param status The response status code
-     * \param rep A representation attached to this Response
+     * \param representation A representation attached to this Response
      * \param expires A QDateTime representing the expiration date of this response
      */
-    Response(const Status& s, const Resource::Representation* rep);
-    Response(const Status& s, const Resource::Representation* rep, const QDateTime& expires);
-    virtual ~Response();
+    Response(const Status& status, const Resource::Representation* representation) :
+        m_status(status), m_representation(representation) {}
+    Response(const Status& status, const Resource::Representation* representation, const QDateTime& expires) :
+        m_status(status), m_representation(representation), m_expires(expires) {}
 
     /*!
      * Set the response status code
      * \param status The response status code
      */
-    void setStatus(const Status& s);
+    void setStatus(const Status& status)
+        { m_status = status; }
 
     /*!
      * \return The response' status code
      */
-    const Status& status();
+    const Status& status()
+        { return m_status; }
 
     /*!
      * Set the representation attached to this Response
      * \param representation A pointer to a Representation object
      */
-    void setRepresentation(const Resource::Representation* representation);
+    void setRepresentation(const Resource::Representation* representation)
+        { m_representation = representation; }
 
     /*!
      * \return The representation attached to this Response
      */
-    const Resource::Representation* representation() const;
+    const Resource::Representation* representation() const
+        { return m_representation; }
 
     /*!
      * Set the expiration date for this Response
      * \param expirationDate A QDateTime representing the expiration date
      */
-    void setExpirationDate(const QDateTime& expires);
+    void setExpirationDate(const QDateTime& expires)
+        { m_expires = expires; }
 
     /*!
      * \return the expiration date of this Response
      */
-    const QDateTime& expirationDate() const;
+    const QDateTime& expirationDate() const
+        { return m_expires; }
 private:
-    struct Private;
-    Private* d;
+    Status m_status;
+    const Resource::Representation* m_representation;
+    QDateTime m_expires;
 };
 
 }
-
-Q_DECLARE_METATYPE(Nanogear::Response)
 
 #endif /* NANOGEAR_RESPONSE_H */

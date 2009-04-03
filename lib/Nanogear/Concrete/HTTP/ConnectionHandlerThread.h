@@ -46,7 +46,6 @@ class ConnectionHandlerThread : public QThread {
     Q_OBJECT
 public:
     ConnectionHandlerThread(HTTPServer* server, QObject* parent = 0);
-    ~ConnectionHandlerThread();
 
     void run();
 
@@ -54,8 +53,8 @@ public slots:
     void onClientReadyRead();
 
 private:
-    struct Private;
-    Private* d;
+    HTTPServer* m_server;
+    QTcpSocket* m_clientSocket;
 };
 
 }

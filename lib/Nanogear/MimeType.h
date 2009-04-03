@@ -38,7 +38,6 @@ namespace Nanogear {
  */
 class MimeType {
 public:
-
     /*!
      * A default constructor, it will build a MimeType representing all possible
      * type/subtype pairs.
@@ -57,7 +56,6 @@ public:
      * \param type A C-style string representing the MIME type
      */
     MimeType(const char* type);
-    ~MimeType();
 
     /*!
      * Build this MimeType object from its string representation
@@ -98,8 +96,9 @@ public:
      */
     bool isCompatible(const MimeType&) const;
 private:
-    struct Private;
-    Private* d;
+    QString m_whole;
+    QString m_type;
+    QString m_subtype;
 };
 
 }

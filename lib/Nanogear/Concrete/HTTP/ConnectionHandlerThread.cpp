@@ -27,16 +27,14 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QHttpRequestHeader>
+#include <QLocale>
 #include <QTextCodec>
 #include <QDateTime>
 #include <QTcpServer>
 
 #include "HTTPServer.h"
-<<<<<<< HEAD:lib/Nanogear/Concrete/HTTP/ConnectionHandlerThread.cpp
-=======
 #include "Utility.h"
 
->>>>>>> fix:lib/Nanogear/Concrete/HTTP/ConnectionHandlerThread.cpp
 #include "../../Response.h"
 #include "../../Request.h"
 #include "../../Method.h"
@@ -49,51 +47,35 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-struct ConnectionHandlerThread::Private {
-    Private(HTTPServer* s) : server(s) {}
-    HTTPServer* server;
-    QTcpSocket* clientSocket;
-};
 
 ConnectionHandlerThread::ConnectionHandlerThread(HTTPServer* server, QObject* parent)
-    : QThread(parent), d(new Private(server)) {}
-ConnectionHandlerThread::~ConnectionHandlerThread() {
-    qDebug() << Q_FUNC_INFO << "Thread stopped";
-    delete d;
-}
+    : QThread(parent), m_server(server) {}
 
 void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "New thread started";
-    d->clientSocket = d->server->tcpServer()->nextPendingConnection();
-    if (!d->clientSocket) {
-        qDebug() << Q_FUNC_INFO << "Socket error" << d->clientSocket->errorString();
+    m_clientSocket = m_server->tcpServer()->nextPendingConnection();
+    if (!m_clientSocket) {
+        qDebug() << Q_FUNC_INFO << "Socket error" << m_clientSocket->errorString();
         deleteLater();
         return;
     }
-<<<<<<< HEAD:lib/Nanogear/Concrete/HTTP/ConnectionHandlerThread.cpp
-    connect(d->clientSocket, SIGNAL(readyRead()), SLOT(onClientReadyRead()));
-    connect(d->clientSocket, SIGNAL(disconnected()), SLOT(quit()));
-    connect(this, SIGNAL(finished()), SLOT(deleteLater()));
-    connect(this, SIGNAL(finished()), d->clientSocket, SLOT(deleteLater()));
-=======
-
+    
     connect(m_clientSocket, SIGNAL(disconnected()), SLOT(quit()));
     connect(this, SIGNAL(finished()), SLOT(deleteLater()));
     connect(this, SIGNAL(finished()), m_clientSocket, SLOT(deleteLater()));
     m_clientSocket->waitForReadyRead(-1);
     onClientReadyRead();
 
->>>>>>> fix:lib/Nanogear/Concrete/HTTP/ConnectionHandlerThread.cpp
     QThread::run();
 }
 
 void ConnectionHandlerThread::onClientReadyRead() {
-    qDebug() << Q_FUNC_INFO << "Handling request (size:" << d->clientSocket->size() << ")";
+    qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket->size() << ")";
 
     // Separate the HTTP headers from the request body (if any)
     QByteArray rawRequestHeader;
     for (;;) {
-        QByteArray line = d->clientSocket->readLine();
+        QByteArray line = m_clientSocket->readLine();
         if (line == "\r\n")
             break;
         rawRequestHeader += line;
@@ -107,19 +89,11 @@ void ConnectionHandlerThread::onClientReadyRead() {
     Nanogear::Method requestedMethod(requestHeader.method().toUpper());
 
     // Fill the request body, if needed
-<<<<<<< HEAD:lib/Nanogear/Concrete/HTTP/ConnectionHandlerThread.cpp
-    QByteArray requestBody;
-    if (requestHeader.hasKey("content-length"))
-        requestBody = d->clientSocket->read(requestHeader.value("content-length").toLongLong());
-    else if (requestedMethod.hasBody())
-        requestBody = d->clientSocket->readAll();
-=======
     QByteArray requestBody = requestHeader.hasKey("content-length")
         ? m_clientSocket->read(requestHeader.value("content-length").toLongLong()) : "";
     if (requestedMethod.hasBody())
         requestBody = m_clientSocket->readAll();
     Resource::Representation requestRepresentation(requestBody, requestHeader.value("content-type"));
->>>>>>> fix:lib/Nanogear/Concrete/HTTP/ConnectionHandlerThread.cpp
 
     // Fill the ClientInfo object
     PreferenceList<MimeType> acceptedMimeTypes = getPreferenceListFromHeader<MimeType>(requestHeader.value("accept"));
@@ -131,7 +105,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
     qDebug() << Q_FUNC_INFO << "requested context == " << requestPath.path();
 
     // Find a matching resource in Qt MetaObject hierarchy
-    Resource::Resource* resource = d->server->findChild<Resource::Resource*>(requestPath.path());
+    Resource::Resource* resource = m_server->findChild<Resource::Resource*>(requestPath.path());
 
     // Build the request object
     Request request(requestHeader.method(), requestPath, clientInfo, &requestRepresentation);
@@ -144,6 +118,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
     const Resource::Representation* representation = response.representation();
 
     QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
+    Q_UNUSED(codec); // FIXME
 
     QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
         requestHeader.majorVersion(), requestHeader.minorVersion());
@@ -164,15 +139,15 @@ void ConnectionHandlerThread::onClientReadyRead() {
 
     // And finally send data back to the client
     qDebug() << Q_FUNC_INFO << "sending data back to the client (size:" << responseHeader.value("content-length") << ")";
-    d->clientSocket->write(responseHeader.toString().toUtf8());
-    d->clientSocket->write(responseData);
+    m_clientSocket->write(responseHeader.toString().toUtf8());
+    m_clientSocket->write(responseData);
     if (responseHeader.value("connection") == "close") {
         qDebug() << Q_FUNC_INFO << "disconnecting from host";
-        d->clientSocket->disconnectFromHost();
-        d->clientSocket->waitForDisconnected();
+        m_clientSocket->disconnectFromHost();
+        m_clientSocket->waitForDisconnected();
     } else {
         qDebug() << Q_FUNC_INFO << "using a persistent connection (" << responseHeader.value("connection") << ").";
-        d->clientSocket->waitForReadyRead(-1);
+        m_clientSocket->waitForReadyRead(-1);
         qDebug() << Q_FUNC_INFO << "Reusing existing thread";
         onClientReadyRead();
     }

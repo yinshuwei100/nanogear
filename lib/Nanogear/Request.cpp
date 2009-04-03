@@ -30,53 +30,25 @@
 
 namespace Nanogear {
 
-struct Request::Private {
-    Private() {};
-    Private(const Method& m, const Context& c, const ClientInfo& cI)
-        : method(m), context(c), clientInfo(cI) {};
-    Method method;
-    Context context;
-    ClientInfo clientInfo;
-    QByteArray body;
-};
-
-Request::Request() : d(new Private) {
-    qRegisterMetaType<Request>();
-}
-Request::Request(const Method& m, const Context& c, const ClientInfo& cI)
-    : d(new Private(m, c, cI)) {
-    qRegisterMetaType<Request>();
-}
-Request::~Request() {
-    delete d;
-}
-
 const Method& Request::method() const {
-    return d->method;
+    return m_method;
 }
 void Request::setMethod(const Method& method) {
-    d->method = method;
+    m_method = method;
 }
 
 const Context& Request::context() const {
-    return d->context;
+    return m_context;
 }
 void Request::setContext(const Context& context) {
-    d->context = context;
+    m_context = context;
 }
 
 void Request::setClientInfo(const ClientInfo& clientInfo) {
-    d->clientInfo = clientInfo;
+    m_clientInfo = clientInfo;
 }
 const ClientInfo& Request::clientInfo() const {
-    return d->clientInfo;
-}
-
-void Request::setBody(const QByteArray& body) {
-    d->body = body;
-}
-const QByteArray& Request::body() const {
-    return d->body;
+    return m_clientInfo;
 }
 
 }

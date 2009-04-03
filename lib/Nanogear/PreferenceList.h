@@ -26,6 +26,7 @@
 
 #include <QMap>
 #include <QList>
+
 #include "Preference.h"
 
 namespace Nanogear {
@@ -36,8 +37,7 @@ namespace Nanogear {
  *
  * Preference's are meant to be chosen from. PreferenceList provides convenience methods for doing just that.
  */
-template <typename T>
-class PreferenceList : public QList< Preference<T> > {
+template <typename T> class PreferenceList : public QList< Preference<T> > {
 public:
     /*!
      * Default constructor. Results in an empty list.
