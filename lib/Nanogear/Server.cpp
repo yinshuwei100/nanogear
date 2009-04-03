@@ -21,46 +21,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
-#define NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H
-
-#include "../../Server.h"
-
-class QTcpServer;
+#include "Server.h"
+#include "Context.h"
 
 namespace Nanogear {
-namespace Concrete {
-namespace HTTP {
 
-/*!
- * \class HTTPServer
- * \brief A simple HTTP 1.1 server
- * \ingroup HTTP Server
- *
- * This is a concrete Server implementation providing a very simple HTTP 1.1
- * threaded server.
- *
- * \note It is not meant to be production-ready.
- */
-class HTTPServer : public Server {
-    Q_OBJECT
-public:
-    HTTPServer(int port = 8080, QObject* parent = 0);
-    virtual ~HTTPServer();
-
-public slots:
-    virtual void start();
-    QTcpServer* tcpServer();
-
-    void onNewConnection();
-
-private:
-    struct Private;
-    Private* d;
+struct Server::Private {
+    Private(int port) : listenPort(port) {}
+    int listenPort;
+    Context context;
 };
 
-}
-}
+Server::Server(int port, QObject* parent) : QObject(parent), d(new Private(port)) {}
+Server::~Server() {
+    delete d;
 }
 
-#endif /* NANOGEAR_CONCRETE_HTTP_HTTPSERVER_H */
+void Server::setContext(const Context& context) {
+    d->context = context;
+}
+const Context& Server::context() const {
+    return d->context;
+}
+
+void Server::setListenPort(int port) {
+    d->listenPort = port;
+}
+int Server::listenPort() const {
+    return d->listenPort;
+}
+
+}
+

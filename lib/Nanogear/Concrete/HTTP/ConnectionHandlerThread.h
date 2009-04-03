@@ -25,7 +25,6 @@
 #define NANOGEAR_CONCRETE_HTTP_CONNECTIONHANDLERTHREAD_H
 
 #include <QThread>
-#include "HTTPServer.h"
 
 class QTcpSocket;
 
@@ -33,6 +32,7 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
+class HTTPServer;
 
 /*!
  * \class ConnectionHandlerThread
@@ -45,8 +45,7 @@ namespace HTTP {
 class ConnectionHandlerThread : public QThread {
     Q_OBJECT
 public:
-    ConnectionHandlerThread(HTTPServer* server, QObject* parent = 0)
-        : QThread(parent), m_server(server) {}
+    ConnectionHandlerThread(HTTPServer* server, QObject* parent = 0);
     ~ConnectionHandlerThread();
 
     void run();
@@ -55,8 +54,8 @@ public slots:
     void onClientReadyRead();
 
 private:
-    HTTPServer* m_server;
-    QTcpSocket* m_clientSocket;
+    struct Private;
+    Private* d;
 };
 
 }

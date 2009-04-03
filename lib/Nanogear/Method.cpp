@@ -23,11 +23,58 @@
 
 #include "Method.h"
 #include <QMetaEnum>
+#include <QString>
 
 namespace Nanogear {
 
+struct Method::Private {
+    Private() : method(Invalid) {};
+    Private(const QString& name) : method(toType(name)) {};
+    Private(int m) : method(m) {};
+    static int toType(const QString&);
+    static QString toString(int method);
+    int method;
+};
+
+Method::Method() : d(new Private()) {
+    qRegisterMetaType<Method>();
+}
+Method::Method(const QString& name) : d(new Private(name)) {
+    qRegisterMetaType<Method>();
+}
+Method::Method(const char* name) : d(new Private(name)) {
+    qRegisterMetaType<Method>();
+}
+Method::Method(int method) : d(new Private(method)) {
+    qRegisterMetaType<Method>();
+}
+Method::~Method() {
+    delete d;
+}
+
+void Method::fromString(const QString& name) {
+    d->method = d->toType(name);
+}
+QString Method::toString() const {
+    return d->toString(d->method);
+}
+
+void Method::fromType(int method) {
+    d->method = method;
+}
+int Method::toType() const {
+    return d->method;
+}
+
+bool Method::operator==(const Method& type) const {
+    return d->method == type.d->method;
+}
+bool Method::isValid() const {
+    return d->method != Invalid;
+}
+
 bool Method::hasBody() const {
-    switch (m_method) {
+    switch (d->method) {
         // More?
         case POST:
         case PUT:
@@ -37,18 +84,17 @@ bool Method::hasBody() const {
     }
 }
 
-int Method::toType(const QString& key) {
+int Method::Private::toType(const QString& key) {
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
-QString Method::toString(int value) {
+QString Method::Private::toString(int value) {
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.valueToKey(value);
 }
 
 }
-
 

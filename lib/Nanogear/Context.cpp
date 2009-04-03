@@ -23,10 +23,34 @@
 
 #include "Context.h"
 #include <QRegExp>
+#include <QString>
 
 namespace Nanogear {
 
-QString Context::sanitize(QString path) {
+struct Context::Private {
+    Private() {};
+    Private(const QString& p) : path(sanitize(p)) {};
+    static QString sanitize(QString);
+    QString path;
+};
+
+Context::Context() : d(new Private()) {}
+Context::Context(const QString& path) : d(new Private(path)) {
+    qRegisterMetaType<Context>();
+}
+Context::Context(const char* charPath) : d(new Private(charPath)) {
+    qRegisterMetaType<Context>();
+}
+Context::~Context() {
+    delete d;
+}
+
+void Context::setPath(const QString& path)
+    { d->path = d->sanitize(path); }
+const QString& Context::path() const
+    { return d->path; }
+
+QString Context::Private::sanitize(QString path) {
     return path.replace("//", "/").remove(QRegExp("/$"));
 }
 
@@ -39,5 +63,4 @@ bool operator!=(const Context& a, const Context& b) {
 }
 
 }
-
 

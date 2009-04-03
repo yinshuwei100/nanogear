@@ -57,8 +57,6 @@ class Representation;
 class Resource : public QObject {
     Q_OBJECT
 public:
-    Resource() {}
-
     /*!
      * A constructor taking a Context and a parent object
      * \param context this resource context
@@ -69,7 +67,7 @@ public:
 
     virtual ~Resource() {}
 
-    
+
     /*!
      * This method is used internally to dispatch the request to the
      * appropriate handler
@@ -99,7 +97,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleGet(const Request& r) const { return methodNotSupported(r); }
+    virtual Response handleGet(const Request& request) const
+        { return methodNotSupported(request); }
 
     /*!
      * Override this method in a derived class to handle a HEAD request.
@@ -110,7 +109,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handlePut(const Request& r) { return methodNotSupported(r); }
+    virtual Response handleHead(const Request& request)
+        { return methodNotSupported(request); }
 
     /*!
      * Override this method in a derived class to handle a PUT request.
@@ -119,7 +119,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handlePost(const Request& r) { return methodNotSupported(r); }
+    virtual Response handlePut(const Request& request)
+        { return methodNotSupported(request); }
 
     /*!
      * Override this method in a derived class to handle a POST request.
@@ -128,8 +129,9 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleHead(const Request& r) { return methodNotSupported(r); }
-
+    virtual Response handlePost(const Request& request)
+        { return methodNotSupported(request); }
+        
     /*!
      * Override this method in a derived class to handle a OPTIONS request.
      * By default this methods returns Status::MethodNotAllowed
@@ -137,7 +139,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleOptions(const Request& r) const { return methodNotSupported(r); }
+    virtual Response handleOptions(const Request& request) const
+        { return methodNotSupported(request); }
 
     /*!
      * Override this method in a derived class to handle a DELETE request.
@@ -146,21 +149,24 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleDelete(const Request& r) { return methodNotSupported(r); }
+    virtual Response handleDelete(const Request& request)
+        { return methodNotSupported(request); }
 
     /*!
      * Respond with Status::MethodNotAllowed
      * \param request const reference to a Request object
      * \return a default Response saying that the requested method is not allowed
      */
-    virtual Response methodNotSupported(const Request& r) const { return Application::instance()->methodNotSupported(r); }
+    virtual Response methodNotSupported(const Request& request) const
+        { return Application::instance()->methodNotSupported(request); }
 
     /*!
      * Respond with Status::MethodNotAllowed
      * \param request const reference to a Request object
      * \return a default Response saying that the requested resource was not found
      */
-    virtual Response notFound(const Request& r) const { return Application::instance()->notFound(r); }
+    virtual Response notFound(const Request& request) const
+        { return Application::instance()->notFound(request); }
 
 private:
     bool m_modifiable;

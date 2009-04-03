@@ -24,11 +24,13 @@
 #ifndef NANOGEAR_RESPONSE_H
 #define NANOGEAR_RESPONSE_H
 
-#include "Status.h"
 #include <QMetaType>
-#include <QDateTime>
+
+class QDateTime;
 
 namespace Nanogear {
+
+class Status;
 
 namespace Resource {
 class Representation;
@@ -48,8 +50,7 @@ public:
      * A default constructor which builds a Response with an empty
      * representation.
      */
-    Response() : m_representation(0)
-        { qRegisterMetaType<Response>(); }
+    Response();
 
     /*!
      * A constructor used to initialize several values
@@ -57,52 +58,45 @@ public:
      * \param rep A representation attached to this Response
      * \param expires A QDateTime representing the expiration date of this response
      */
-    Response(const Status& status, const Resource::Representation* rep,
-        const QDateTime& expirationDate = QDateTime::currentDateTime())
-        : m_status(status), m_representation(rep), m_expirationDate(expirationDate)
-    { qRegisterMetaType<Response>(); }
+    Response(const Status& s, const Resource::Representation* rep);
+    Response(const Status& s, const Resource::Representation* rep, const QDateTime& expires);
+    virtual ~Response();
 
     /*!
      * Set the response status code
      * \param status The response status code
      */
-    void setStatus(const Status& status)
-        { m_status = status; }
+    void setStatus(const Status& s);
+
     /*!
      * \return The response' status code
      */
-    const Status& status()
-        { return m_status; }
+    const Status& status();
 
     /*!
      * Set the representation attached to this Response
      * \param representation A pointer to a Representation object
      */
-    void setRepresentation(const Resource::Representation* representation)
-        { m_representation = representation; }
+    void setRepresentation(const Resource::Representation* representation);
 
     /*!
      * \return The representation attached to this Response
      */
-    const Resource::Representation* representation() const
-        { return m_representation; }
+    const Resource::Representation* representation() const;
 
     /*!
      * Set the expiration date for this Response
      * \param expirationDate A QDateTime representing the expiration date
      */
-    void setExpirationDate(const QDateTime& expirationDate)
-        { m_expirationDate = expirationDate; }
+    void setExpirationDate(const QDateTime& expires);
 
     /*!
      * \return the expiration date of this Response
      */
-    const QDateTime& expirationDate() const
-        { return m_expirationDate; }
+    const QDateTime& expirationDate() const;
 private:
-    Status m_status;
-    const Resource::Representation* m_representation;
-    QDateTime m_expirationDate;
+    struct Private;
+    Private* d;
 };
 
 }

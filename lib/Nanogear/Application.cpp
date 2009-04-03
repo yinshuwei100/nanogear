@@ -23,11 +23,57 @@
 
 #include "Application.h"
 #include "Server.h"
+#include "Response.h"
+#include "Resource/Representation.h"
+#include "Request.h"
+#include "Status.h"
 
 namespace Nanogear {
 
+struct Application::Private {
+    Private(int argc, char** argv) :
+        methodNotSupported("<h1>Method not supported</h1>", "text/html"),
+        notFound("<h1>Not Found</h1>", "text/html") {};
+    Server* server;
+    Resource::Resource* root;
+    Resource::Representation methodNotSupported;
+    Resource::Representation notFound;
+};
+
+Application::Application(int argc, char** argv)
+    : QCoreApplication(argc, argv), d(new Private(argc, argv)) {};
+
+Application::~Application() {
+    delete d;
+}
+
+void Application::setServer(Server* s) {
+    d->server = s;
+}
+Server* Application::server() const {
+    return d->server;
+}
+
+void Application::setRoot(Resource::Resource* r) {
+    d->root = r;
+}
+Resource::Resource* Application::root() const {
+    return d->root;
+}
+
+Application* Application::instance() {
+    return static_cast<Application*>(QCoreApplication::instance());
+}
+
+Response Application::methodNotSupported(const Request& r) const {
+    return Response(Status::MethodNotAllowed, &d->methodNotSupported);
+}
+Response Application::notFound(const Request& r) const {
+    return Response(Status::NotFound, &d->notFound);
+}
+
 int Application::exec() {
-    m_server->start();
+    d->server->start();
     return QCoreApplication::exec();
 }
 
