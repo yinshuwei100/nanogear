@@ -32,6 +32,16 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
+/*!
+ * \class HTTPServer
+ * \brief A simple HTTP 1.1 server
+ * \ingroup HTTP Server
+ *
+ * This is a concrete Server implementation providing a very simple HTTP 1.1
+ * threaded server.
+ *
+ * \note It is not meant to be production-ready.
+ */
 class HTTPServer : public Server {
     Q_OBJECT
 public:
