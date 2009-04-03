@@ -24,8 +24,6 @@
 #ifndef NANOGEAR_PREFERENCE_H
 #define NANOGEAR_PREFERENCE_H
 
-#include <QMap>
-
 namespace Nanogear {
 
 template <typename> class PreferenceList;

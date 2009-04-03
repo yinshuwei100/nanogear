@@ -60,8 +60,6 @@ void ConnectionHandlerThread::run() {
     connect(m_clientSocket, SIGNAL(disconnected()), SLOT(quit()));
     connect(this, SIGNAL(finished()), SLOT(deleteLater()));
     connect(this, SIGNAL(finished()), m_clientSocket, SLOT(deleteLater()));
-
-    QThread::run();
 }
 
 void ConnectionHandlerThread::onClientReadyRead() {
@@ -91,9 +89,9 @@ void ConnectionHandlerThread::onClientReadyRead() {
         requestBody = m_clientSocket->readAll();
 
     // Fill the ClientInfo object
-    PreferenceList<MimeType> acceptedMimeTypes = getPreferenceListFromHttpHeader<MimeType>(requestHeader.value("accept"));
-    PreferenceList<QLocale> acceptedLocales = getPreferenceListFromHttpHeader<QLocale>(requestHeader.value("accept-language"));
-    PreferenceList<QTextCodec*> acceptedCharsets = getPreferenceListFromHttpHeader<QTextCodec*>(requestHeader.value("accept-charset"));
+    PreferenceList<MimeType> acceptedMimeTypes = getPreferenceListFromHeader<MimeType>(requestHeader.value("accept"));
+    PreferenceList<QLocale> acceptedLocales = getPreferenceListFromHeader<QLocale>(requestHeader.value("accept-language"));
+    PreferenceList<QTextCodec*> acceptedCharsets = getPreferenceListFromHeader<QTextCodec*>(requestHeader.value("accept-charset"));
     ClientInfo clientInfo(acceptedMimeTypes, acceptedLocales, acceptedCharsets, requestHeader.value("user-agent"));
 
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
@@ -117,6 +115,10 @@ void ConnectionHandlerThread::onClientReadyRead() {
     QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
         requestHeader.majorVersion(), requestHeader.minorVersion());
     responseHeader.setValue("connection", requestHeader.value("connection"));
+    if (responseHeader.value("connection").isEmpty()) {
+        if (responseHeader.majorVersion() <= 1 && responseHeader.minorVersion() == 0)
+            responseHeader.setValue("connection", "close");
+    }
     responseHeader.setValue("server", "Nanogear");
 
     if (response.expirationDate().isValid())
