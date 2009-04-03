@@ -27,55 +27,32 @@
 
 namespace Nanogear {
 
-<<<<<<< HEAD:lib/Nanogear/MimeType.cpp
-struct MimeType::Private {
-    Private() : whole("*/*"), category("*"), specific("*") {}
-    Private(const QString& type) : whole(type), category("*"), specific("*") {}
-    QString whole;
-    QString category;
-    QString specific;
-};
-
-MimeType::MimeType() : d(new Private()) {
+MimeType::MimeType() {
     qRegisterMetaType<MimeType>();
 }
-MimeType::MimeType(const QString& type) : d(new Private(type)) {
+MimeType::MimeType(const QString& type) : m_whole(type), m_type("*"), m_subtype("*") {
     qRegisterMetaType<MimeType>();
 }
-MimeType::MimeType(const char* type) : d(new Private(type)) {
+MimeType::MimeType(const char* type) : m_whole(type), m_type("*"), m_subtype("*") {
     qRegisterMetaType<MimeType>();
-}
-MimeType::~MimeType() {
-    delete d;
 }
 
 void MimeType::fromString(const QString& type) {
-    d->whole = type;
-    d->category.clear();
-    d->specific.clear();
+    m_whole = type;
+    m_type.clear();
+    m_subtype.clear();
 }
 const QString& MimeType::toString() const {
-    return d->whole;
+    return m_whole;
 }
 
 bool MimeType::operator==(const MimeType& type) const {
-    return d->whole == type.d->whole;
+    return m_whole == type.m_whole;
 }
 bool MimeType::isConcrete() const {
-    return !d->whole.contains("*");
+    return !m_whole.contains("*");
 }
 
-const QString& MimeType::category() const {
-    if (d->category.isEmpty())
-        const_cast<MimeType*>(this)->d->category = d->whole.left(d->whole.indexOf('/'));
-    return d->category;
-}
-
-const QString& MimeType::specific() const {
-    if (d->category.isEmpty())
-        const_cast<MimeType*>(this)->d->specific = d->whole.right(d->whole.indexOf('/'));
-    return d->specific;
-=======
 const QString& MimeType::type() const {
     if (m_type.isEmpty())
         const_cast<MimeType*>(this)->m_type = m_whole.left(m_whole.indexOf('/'));
@@ -86,12 +63,11 @@ const QString& MimeType::subtype() const {
     if (m_type.isEmpty())
         const_cast<MimeType*>(this)->m_subtype = m_whole.right(m_whole.indexOf('/'));
     return m_subtype;
->>>>>>> 133163988d2ca89822cf0c0d409f49f572b79275:lib/Nanogear/MimeType.cpp
 }
 
 bool MimeType::isCompatible(const MimeType& other) const {
-    return other.d->whole.contains(d->whole) ||\
-           d->whole.contains(other.d->whole);
+    return other.m_whole.contains(m_whole) ||\
+           m_whole.contains(other.m_whole);
 }
 
 }

@@ -25,6 +25,7 @@
 #define NANOGEAR_CLIENTINFO_H
 
 #include <QMetaType>
+#include <QLocale>
 
 #include "PreferenceList.h"
 #include "MimeType.h"
@@ -53,13 +54,6 @@ template <typename> class PreferenceList;
  */
 class ClientInfo {
 public:
-    //ClientInfo(const ClientInfo&);
-
-    /*!
-     * Default constructor. The resulting ClientInfo is empty.
-     */
-    ClientInfo();
-
     /*!
      * A constructor used to initialize values.
      * This constructor is intended to be used only by 'Server' implementations
@@ -105,7 +99,5 @@ private:
 };
 
 }
-
-Q_DECLARE_METATYPE(Nanogear::ClientInfo)
 
 #endif // NANOGEAR_CLIENTINFO_H

@@ -31,25 +31,14 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-struct HTTPServer::Private {
-    QTcpServer tcpServer;
-};
-
 HTTPServer::HTTPServer(int port, QObject* parent )
-    : Server(port, parent), d(new Private()) {
-    connect(&d->tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
-}
-HTTPServer::~HTTPServer() {
-    delete d;
+    : Server(port, parent) {
+    connect(&m_tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
 }
 
 void HTTPServer::start() {
     qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
-    d->tcpServer.listen(QHostAddress::Any, listenPort());
-}
-
-QTcpServer* HTTPServer::tcpServer() {
-    return &d->tcpServer;
+    m_tcpServer.listen(QHostAddress::Any, listenPort());
 }
 
 void HTTPServer::onNewConnection() {

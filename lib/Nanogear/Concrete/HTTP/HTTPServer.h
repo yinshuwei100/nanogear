@@ -26,7 +26,7 @@
 
 #include "../../Server.h"
 
-class QTcpServer;
+#include <QTcpServer>
 
 namespace Nanogear {
 namespace Concrete {
@@ -46,17 +46,16 @@ class HTTPServer : public Server {
     Q_OBJECT
 public:
     HTTPServer(int port = 8080, QObject* parent = 0);
-    virtual ~HTTPServer();
 
 public slots:
     virtual void start();
-    QTcpServer* tcpServer();
+
+    QTcpServer* tcpServer() { return &m_tcpServer; }
 
     void onNewConnection();
 
 private:
-    struct Private;
-    Private* d;
+    QTcpServer m_tcpServer;
 };
 
 }

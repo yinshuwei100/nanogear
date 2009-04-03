@@ -8,8 +8,6 @@ set(nanogear_SRCS
     Method.cpp
     Status.cpp
     Request.cpp
-    ClientInfo.cpp
-    Response.cpp
     Server.cpp
 )
 
