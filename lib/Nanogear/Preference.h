@@ -28,6 +28,8 @@
 
 namespace Nanogear {
 
+template <typename> class PreferenceList;
+
 /*!
  * \class Preference
  * \brief Encapsulates client preferences
