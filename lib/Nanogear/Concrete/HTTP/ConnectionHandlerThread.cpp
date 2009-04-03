@@ -83,11 +83,11 @@ void ConnectionHandlerThread::onClientReadyRead() {
     Nanogear::Method requestedMethod(requestHeader.method().toUpper());
 
     // Fill the request body, if needed
-    QByteArray requestBody;
-    if (requestHeader.hasKey("content-length"))
-        requestBody = m_clientSocket->read(requestHeader.value("content-length").toLongLong());
-    else if (requestedMethod.hasBody())
+    QByteArray requestBody = requestHeader.hasKey("content-length")
+        ? m_clientSocket->read(requestHeader.value("content-length").toLongLong()) : "";
+    if (requestedMethod.hasBody())
         requestBody = m_clientSocket->readAll();
+    Resource::Representation requestRepresentation(requestBody, requestHeader.value("content-type"));
 
     // Fill the ClientInfo object
     PreferenceList<MimeType> acceptedMimeTypes = getPreferenceListFromHeader<MimeType>(requestHeader.value("accept"));
@@ -102,7 +102,7 @@ void ConnectionHandlerThread::onClientReadyRead() {
     Resource::Resource* resource = m_server->findChild<Resource::Resource*>(requestPath.path());
 
     // Build the request object
-    Request request(requestHeader.method(), requestPath, clientInfo, requestBody);
+    Request request(requestHeader.method(), requestPath, clientInfo, &requestRepresentation);
 
     // And retrieve the response object (if the resource cannot be found just)
     // return a default response object
