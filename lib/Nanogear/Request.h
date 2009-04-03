@@ -27,9 +27,12 @@
 #include <QString>
 #include <QMetaObject>
 #include <QByteArray>
+
 #include "Context.h"
 #include "ClientInfo.h"
 #include "Method.h"
+
+#include "Resource/Representation.h"
 
 namespace Nanogear {
 
@@ -70,11 +73,7 @@ public:
      * \param c a const reference to a ContextObject
      * \param cI a const reference to a ClientInfo
      */
-    Request(const Method& m, const Context& c, const ClientInfo& cI = ClientInfo(), const QByteArray& body = QByteArray())
-        : m_method(m), m_context(c), m_clientInfo(cI), m_body(body)
-    { qRegisterMetaType<Request>(); }
-
-    virtual ~Request() {}
+    Request(const Method& m, const Context& c, const ClientInfo& cI, const Resource::Representation* body);
 
     /*!
      * When a client makes a request it usually specifies a method. It used to
@@ -101,16 +100,23 @@ public:
         { return m_clientInfo; }
 
     /*!
-     * \return The request body in raw form
+     * Set the representation attached to this Request
+     * \param representation A pointer to a Representation object
      */
-    const QByteArray& body() const
-        { return m_body; }
+    void setRepresentation(const Resource::Representation* representation)
+        { m_representation = representation; }
+
+    /*!
+     * \return The representation attached to this request
+     */
+    const Resource::Representation* representation() const
+        { return m_representation; }
 
 private:
     Method m_method;
     Context m_context;
     ClientInfo m_clientInfo;
-    QByteArray m_body;
+    Resource::Representation* m_representation;
 };
 
 }
