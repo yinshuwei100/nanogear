@@ -93,6 +93,12 @@ public:
         { return data("application/xhtml+xml"); }
 
     /*!
+     * \return true if this representation is holding an XHTML document
+     */
+    bool hasXhtml() const
+        { return hasFormat("application/xhtml+xml"); }
+
+    /*!
      * \return the list of formats this representation can give back to the
      *    clients as MIME types.
      */

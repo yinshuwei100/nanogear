@@ -36,6 +36,10 @@
 
 namespace Nanogear {
 
+class Method;
+class Context;
+class ClientInfo;
+
 /*!
  * \class Request
  * \brief This class encapsulates and abstracts a client request
@@ -81,24 +85,27 @@ public:
      * determine which handler should be called on a resource.
      * \return An object encapsulating a method
      */
-    const Method& method() const
-        { return m_method; }
+    const Method& method() const;
+
+    void setMethod(const Method& method);
 
     /*!
      * A client usually makes a request at a specified URI which we call
      * 'context'
      * \return The requested context
      */
-    const Context& context() const
-        { return m_context; }
+    const Context& context() const;
+
+    void setContext(const Context& context);
 
     /*!
      * A client usually attaches additional informations to the request, this
      * method can be used to retrieve it.
      * \return An object representing additional informations supplied by the client
      */
-    const ClientInfo& clientInfo() const
-        { return m_clientInfo; }
+    const ClientInfo& clientInfo() const;
+
+    void setClientInfo(const ClientInfo& clientInfo);
 
     /*!
      * Set the representation attached to this Request

@@ -24,15 +24,19 @@
 #ifndef NANOGEAR_CLIENTINFO_H
 #define NANOGEAR_CLIENTINFO_H
 
-#include <QLocale>
 #include <QMetaType>
 
 #include "PreferenceList.h"
 #include "MimeType.h"
 
 class QTextCodec;
+class QLocale;
 
 namespace Nanogear {
+
+class MimeType;
+template <typename> class Preference;
+template <typename> class PreferenceList;
 
 /*!
  * \class ClientInfo
@@ -74,8 +78,7 @@ public:
     /*!
      * \return The UserAgent string (if any)
      */
-    const QString& userAgent() const
-        { return m_userAgent; }
+    const QString& userAgent() const;
 
     /*!
      * \return The list of accepted MIME types
@@ -84,7 +87,7 @@ public:
         { return m_mimeTypes; }
 
     /*!
-     * \return The list of accepted languages
+     * \return The list of accepted MIME types
      */
     const PreferenceList<QLocale>& acceptedLocales() const
         { return m_locales; }

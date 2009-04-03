@@ -24,9 +24,9 @@
 #ifndef NANOGEAR_MIMETYPE_H
 #define NANOGEAR_MIMETYPE_H
 
-#include <QString>
-#include <QMetaObject>
 #include <QMetaType>
+
+class QString;
 
 namespace Nanogear {
 
@@ -38,50 +38,45 @@ namespace Nanogear {
  */
 class MimeType {
 public:
+
     /*!
      * A default constructor, it will build a MimeType representing all possible
      * type/subtype pairs.
      */
-    MimeType() : m_whole("*/*")
-        { qRegisterMetaType<MimeType>(); }
+    MimeType();
 
     /*!
      * A constructor which builds the object from the string representation of
      * a MIME type
      * \param type A string representation of the MIME type
      */
-    MimeType(const QString& type) : m_whole(type)
-        { qRegisterMetaType<MimeType>(); }
+    MimeType(const QString& type);
 
     /*!
      * An overloaded constructor provided for convenience
      * \param type A C-style string representing the MIME type
      */
-    MimeType(const char* type) : m_whole(type)
-        { qRegisterMetaType<MimeType>(); }
+    MimeType(const char* type);
+    ~MimeType();
 
     /*!
      * Build this MimeType object from its string representation
      * \param type A string representation of the MIME type
      */
-    void fromString(const QString& type)
-        { m_whole = type; m_type = m_subtype = ""; }
+    void fromString(const QString& type);
 
     /*!
      * \return The string representation of this MimeType object
      */
-    const QString& toString() const
-        { return m_whole; }
+    const QString& toString() const;
 
-    bool operator==(const MimeType& type) const
-        { return m_whole == type.m_whole; }
+    bool operator==(const MimeType& type) const;
 
     /*!
      * A concrete MIME type must not contain wildcards
      * \return true if this MIME type does not contain wildcards
      */
-    bool isConcrete() const
-        { return !m_whole.contains("*"); }
+    bool isConcrete() const;
 
     /*!
      * This is the part before the backslash in a string representation
@@ -103,9 +98,8 @@ public:
      */
     bool isCompatible(const MimeType&) const;
 private:
-    QString m_whole;
-    QString m_type;
-    QString m_subtype;
+    struct Private;
+    Private* d;
 };
 
 }

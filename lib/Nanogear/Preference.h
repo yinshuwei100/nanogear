@@ -38,6 +38,7 @@ template <typename T> class Preference {
 public:
     Preference(const T& data = T(), float quality = 1)
         : m_data(data), m_quality(quality) {}
+    virtual ~Preference() {}
 
     const T& data() const
         { return m_data; }
@@ -53,6 +54,7 @@ private:
     T m_data;
     float m_quality;
 };
+
 
 template <typename T, typename U>
 bool operator==(const Preference<T>& a, const Preference<U>& b) {
