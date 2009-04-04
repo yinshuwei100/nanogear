@@ -31,22 +31,17 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-HTTPServer::HTTPServer(int port, QObject* parent )
-    : Server(port, parent) {
-    connect(&m_tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
-}
-
 void HTTPServer::start() {
-    qDebug() << Q_FUNC_INFO << "started on " << QHostAddress::Any << ":" << listenPort();
-    m_tcpServer.listen(QHostAddress::Any, listenPort());
+    qDebug() << Q_FUNC_INFO << "Starting HTTP server on " << listenAddress() << ":" << listenPort();
+    listen(listenAddress(), listenPort());
 }
 
-void HTTPServer::onNewConnection() {
-    qDebug() << Q_FUNC_INFO << "received new connection, starting a new thread...";
-
-    (new ConnectionHandlerThread(this))->start();
-
-    qDebug() << Q_FUNC_INFO << "New thread started.";
+void HTTPServer::incomingConnection(int handle) {
+    qDebug() << Q_FUNC_INFO << "Received new connection, starting a new thread...";
+    
+    ConnectionHandlerThread* handler = new ConnectionHandlerThread(handle);
+    connect(handler, SIGNAL(finished()), handler, SLOT(deleteLater()));
+    handler->start();
 }
 
 }

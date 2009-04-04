@@ -38,22 +38,15 @@ class HTTPServer;
  * \class ConnectionHandlerThread
  * \brief Handle an HTTP connection
  * \ingroup HTTP Server
- *
- * This thread handles a client connection. Keep-Alive is used whenever
- * possible
  */
 class ConnectionHandlerThread : public QThread {
-    Q_OBJECT
 public:
-    ConnectionHandlerThread(HTTPServer* server, QObject* parent = 0);
+    ConnectionHandlerThread(int handle);
 
     void run();
 
-public slots:
-    void onClientReadyRead();
-
 private:
-    HTTPServer* m_server;
+    int m_socketHandle;
     QTcpSocket* m_clientSocket;
 };
 

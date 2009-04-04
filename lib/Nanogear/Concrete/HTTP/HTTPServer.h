@@ -42,20 +42,16 @@ namespace HTTP {
  *
  * \note It is not meant to be production-ready.
  */
-class HTTPServer : public Server {
-    Q_OBJECT
+class HTTPServer : public Server, public QTcpServer {
 public:
-    HTTPServer(int port = 8080, QObject* parent = 0);
+    HTTPServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
+        Server(port, listenAddress) {};
 
-public slots:
-    virtual void start();
+public:
+    void start();
 
-    QTcpServer* tcpServer() { return &m_tcpServer; }
-
-    void onNewConnection();
-
-private:
-    QTcpServer m_tcpServer;
+protected:
+    virtual void incomingConnection(int handle);
 };
 
 }

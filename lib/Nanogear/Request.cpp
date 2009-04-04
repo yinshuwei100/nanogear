@@ -22,9 +22,10 @@
  */
 
 #include "Request.h"
+
 #include <QString>
 #include <QByteArray>
-#include "Context.h"
+
 #include "ClientInfo.h"
 #include "Method.h"
 
@@ -35,13 +36,6 @@ const Method& Request::method() const {
 }
 void Request::setMethod(const Method& method) {
     m_method = method;
-}
-
-const Context& Request::context() const {
-    return m_context;
-}
-void Request::setContext(const Context& context) {
-    m_context = context;
 }
 
 void Request::setClientInfo(const ClientInfo& clientInfo) {

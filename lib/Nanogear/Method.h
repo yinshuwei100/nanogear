@@ -42,31 +42,28 @@ class Method {
     Q_GADGET
     Q_ENUMS(Type)
 public:
-
     /*!
      * Default constructor. Builds a invalid method.
      */
-    Method();
+    Method() : m_method(Invalid) {}
 
     /*!
      * Build a Method object from its name
      * \param name method's name
      */
-    Method(const QString& name);
+    Method(const QString& name) : m_method(toType(name)) {}
 
     /*!
      * This is an overloaded constructor provided for convenience
      * \param name method's name (C-style string)
      */
-    Method(const char* name);
+    Method(const char* name) : m_method(toType(name)) {}
 
     /*!
      * This is an overloaded constructor provided for convenience
      * \param method the code representing a method
      */
     Method(int method);
-
-    ~Method();
 
     /*!
      * Build this object from the name of the method
@@ -77,7 +74,7 @@ public:
     /*!
      * \return Return the method name as a string
      */
-    QString toString() const;
+    QString toString();
 
     /*!
      * Build this method from its integer code
@@ -120,14 +117,15 @@ public:
         TRACE,
         UNLOCK
     };
-
+    
 private:
-    struct Private;
-    Private* d;
+    int toType(const QString& key);
+    QString toString(int value);
+    
+private:
+    int m_method;
 };
 
 }
-
-Q_DECLARE_METATYPE(Nanogear::Method)
 
 #endif // NANOGEAR_METHOD_H

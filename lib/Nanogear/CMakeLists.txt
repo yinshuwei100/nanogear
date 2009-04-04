@@ -2,20 +2,17 @@ add_subdirectory(Concrete)
 add_subdirectory(Resource)
 
 set(nanogear_SRCS
-    Context.cpp
     MimeType.cpp
     Application.cpp
     Method.cpp
     Status.cpp
     Request.cpp
-    Server.cpp
 )
 
 qt4_wrap_cpp(nanogear_SRCS
     Application.h
-    Server.h
-    Method.h
     Status.h
+    Method.h
 )
 
 add_library(nanogear SHARED ${nanogear_SRCS})

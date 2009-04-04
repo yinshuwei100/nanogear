@@ -26,7 +26,6 @@
 
 #include <QObject>
 
-#include "../Context.h"
 #include "../Response.h"
 #include "../Application.h"
 
@@ -59,12 +58,23 @@ class Resource : public QObject {
 public:
     /*!
      * A constructor taking a Context and a parent object
-     * \param context this resource context
+     * \param uri this resource URI
      * \param parent parent to this resource
      */
-    Resource(const Context& context, QObject* parent = 0) : QObject(parent),
-        m_context(context) { setObjectName(context.path()); }
+    Resource(const QString& uri, QObject* parent = 0) : QObject(parent), m_resourceUri(uri)
+        { setObjectName(uri); }
 
+    /*!
+     * An overloaded constructor provided for convenience
+     * \param context C-style string representing this resource' URI
+     * \param parent parent to this resource
+     */
+    Resource(const QChar uri, QObject* parent = 0) : QObject(parent), m_resourceUri(uri)
+        { setObjectName(uri); }
+
+    /*!
+     * Empty virtual destructor
+     */
     virtual ~Resource() {}
 
 
@@ -77,18 +87,19 @@ public:
     virtual Response handleRequest(const Request&);
 
     /*!
-     * Set the context associated with this resource
-     * \param context the context associated with this resource
+     * Set the URI (relative to its parent) on which this resource should
+     * answer the requests
+     * \param uri a string representing the path
      */
-    virtual void setContext(const Context& context)
-        { m_context = context; setObjectName(context.path()); }
+    void setUri(const QString& uri)
+        { m_resourceUri = uri; setObjectName(uri); }
 
     /*!
-     * \returns the context associated with this resource
+     * \return The URI this resource is attached to
      */
-    const Context& context() const
-        { return m_context; }
-
+    const QString& uri() const
+        { return m_resourceUri; }
+        
 protected:
     /*!
      * Override this method in a derived class to handle a GET request.
@@ -169,8 +180,7 @@ protected:
         { return Application::instance()->notFound(request); }
 
 private:
-    bool m_modifiable;
-    Context m_context;
+    QString m_resourceUri;
 };
 
 }
