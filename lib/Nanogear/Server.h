@@ -81,7 +81,6 @@ public:
      */
     int listenPort() const;
 
-public slots:
     /*!
      * Concrete implementation of Server must implement this function
      */
