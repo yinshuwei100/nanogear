@@ -22,34 +22,28 @@
  */
 
 #include "Server.h"
-#include "Context.h"
 
 namespace Nanogear {
 
-struct Server::Private {
-    Private(int port) : listenPort(port) {}
-    int listenPort;
-    Context context;
-};
 
-Server::Server(int port, QObject* parent) : QObject(parent), d(new Private(port)) {}
-Server::~Server() {
-    delete d;
-}
+Server::Server(int port, QObject* parent) :
+    QObject(parent), m_listenPort(port) {}
 
+    
 void Server::setContext(const Context& context) {
-    d->context = context;
+    m_context = context;
 }
 const Context& Server::context() const {
-    return d->context;
+    return m_context;
 }
+
 
 void Server::setListenPort(int port) {
-    d->listenPort = port;
+    m_listenPort = port;
 }
 int Server::listenPort() const {
-    return d->listenPort;
+    return m_listenPort;
 }
 
-}
 
+}

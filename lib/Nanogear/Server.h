@@ -26,6 +26,8 @@
 
 #include <QObject>
 
+#include "Context.h"
+
 namespace Nanogear {
 
 class Context;
@@ -86,8 +88,8 @@ public slots:
     virtual void start() = 0;
 
 private:
-    struct Private;
-    Private* d;
+    int m_listenPort;
+    Context m_context;
 };
 
 }
