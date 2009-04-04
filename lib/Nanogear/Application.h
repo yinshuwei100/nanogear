@@ -26,7 +26,10 @@
 #define NANOGEAR_APPLICATION_H
 
 #include <QCoreApplication>
+
 #include "Response.h"
+
+#include "Resource/Representation.h"
 
 namespace Nanogear {
 
@@ -57,8 +60,6 @@ public:
      * entire lifetime of the QCoreApplication object.
      */
     Application(int argc, char** argv);
-
-    virtual ~Application();
 
     /*!
      * Attach a server to this application. The server is automatically started
@@ -108,8 +109,10 @@ public:
     int exec();
 
 private:
-    struct Private;
-    Private* d;
+    Server* m_server;
+    Resource::Resource* m_root;
+    Resource::Representation m_methodNotSupported;
+    Resource::Representation m_notFound;
 };
 
 }
