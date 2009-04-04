@@ -57,7 +57,7 @@ public:
      */
     Server(int port = 8080, QObject* parent = 0);
 
-    virtual ~Server();
+    virtual ~Server() {}
 
     /*!
      * Set the root context of this application
