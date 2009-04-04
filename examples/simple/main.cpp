@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QCoreApplication>
+#include <QString>
 #include <QDebug>
 
 #include <Nanogear/Application>
@@ -31,8 +31,8 @@ using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
 public:
-    RootResource(const Context& c, QObject* parent)
-        : Resource(c, parent), m_representation("<h1>Test response</h1>", "text/html") {}
+    RootResource(const QString& uri, QObject* parent)
+        : Resource(uri, parent), m_representation("<h1>Test response</h1>", "text/html") {}
 
     virtual Response handleGet(const Request&) const {
         qDebug() << Q_FUNC_INFO << "called";
@@ -45,8 +45,8 @@ private:
 
 class Root : public Resource::Resource {
 public:
-    Root(const Context& c, QObject* par)
-        : Resource(c, par),
+    Root(const QString& uri, QObject* par)
+        : Resource(uri, par),
           m_representation("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
           m_rootResource("/resource", this) {}
 
@@ -61,8 +61,8 @@ private:
 
 int main(int argc, char** argv) {
     Application app(argc, argv);
-    app.setServer(new HTTPServer(8080, &app));
-    app.setRoot(new Root("/", app.server()));
+    app.setServer(new HTTPServer());
+    app.setRoot(new Root("/"));
 
     return app.exec();
 }

@@ -25,8 +25,7 @@
 #define NANOGEAR_SERVER_H
 
 #include <QObject>
-
-#include "Context.h"
+#include <QHostAddress>
 
 namespace Nanogear {
 
@@ -46,8 +45,7 @@ class Resource;
  *
  * Nanogear ships with a concrete, multi-threaded HTTP server.
  */
-class Server : public QObject {
-    Q_OBJECT
+class Server {
 public:
 
     /*!
@@ -55,31 +53,36 @@ public:
      * \param port The server will listen on to this port
      * \param parent The parent of this object
      */
-    Server(int port = 8080, QObject* parent = 0);
+    Server(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
+        m_listenPort(port), m_listenAddress(listenAddress) {}
 
     virtual ~Server() {}
-
-    /*!
-     * Set the root context of this application
-     * \param context Context
-     */
-    void setContext(const Context& context);
-
-    /*!
-     * \return The context of this application
-     */
-    const Context& context() const;
 
     /*!
      * Set the listen port for this server
      * \param port Listen port
      */
-    void setListenPort(int port);
+    void setListenPort(int port)
+        { m_listenPort = port; }
 
     /*!
      * \return The listen port
      */
-    int listenPort() const;
+    int listenPort() const
+        { return m_listenPort; }
+
+    /*!
+     * Set the address onto the server listens for new connections
+     * \param listenAddress An IPv4/IPv6 address encapsulated in a QHostAddress
+     */
+    void setListenAddress(const QHostAddress& listenAddress)
+        { m_listenAddress = listenAddress; }
+
+    /*!
+     * \return The current listening address
+     */
+    const QHostAddress& listenAddress() const
+        { return m_listenAddress; }
 
     /*!
      * Concrete implementation of Server must implement this function
@@ -88,7 +91,7 @@ public:
 
 private:
     int m_listenPort;
-    Context m_context;
+    QHostAddress m_listenAddress;
 };
 
 }

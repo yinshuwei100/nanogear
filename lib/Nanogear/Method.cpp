@@ -27,54 +27,29 @@
 
 namespace Nanogear {
 
-struct Method::Private {
-    Private() : method(Invalid) {};
-    Private(const QString& name) : method(toType(name)) {};
-    Private(int m) : method(m) {};
-    static int toType(const QString&);
-    static QString toString(int method);
-    int method;
-};
-
-Method::Method() : d(new Private()) {
-    qRegisterMetaType<Method>();
-}
-Method::Method(const QString& name) : d(new Private(name)) {
-    qRegisterMetaType<Method>();
-}
-Method::Method(const char* name) : d(new Private(name)) {
-    qRegisterMetaType<Method>();
-}
-Method::Method(int method) : d(new Private(method)) {
-    qRegisterMetaType<Method>();
-}
-Method::~Method() {
-    delete d;
-}
-
 void Method::fromString(const QString& name) {
-    d->method = d->toType(name);
+    m_method = toType(name);
 }
-QString Method::toString() const {
-    return d->toString(d->method);
+QString Method::toString() {
+    return toString(m_method);
 }
 
 void Method::fromType(int method) {
-    d->method = method;
+    m_method = method;
 }
 int Method::toType() const {
-    return d->method;
+    return m_method;
 }
 
 bool Method::operator==(const Method& type) const {
-    return d->method == type.d->method;
+    return m_method == type.m_method;
 }
 bool Method::isValid() const {
-    return d->method != Invalid;
+    return m_method != Invalid;
 }
 
 bool Method::hasBody() const {
-    switch (d->method) {
+    switch (m_method) {
         // More?
         case POST:
         case PUT:
@@ -84,13 +59,13 @@ bool Method::hasBody() const {
     }
 }
 
-int Method::Private::toType(const QString& key) {
+int Method::toType(const QString& key) {
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
-QString Method::Private::toString(int value) {
+QString Method::toString(int value) {
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.valueToKey(value);

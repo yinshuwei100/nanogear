@@ -5,16 +5,14 @@ message(STATUS "This is Nanogear ${NANOGEAR_MAJOR}.${NANOGEAR_MINOR}.${NANOGEAR_
 
 
 # Test suite
-if (${ENABLE_TESTS})
-    include(CTest)
-    enable_testing()
-    set(CTEST_PROJECT_NAME "Nanogear")
-    set(CTEST_NIGHTLY_START_TIME "23:00:00 GMT")
-    set(CTEST_DROP_METHOD http)
-    set(CTEST_DROP_SITE "dashboard.binaryhelix.net")
-    set(CTEST_DROP_LOCATION "/submit.php?project=Nanogear")
-    set(CTEST_DROP_SITE_CDASH TRUE)
-endif(${ENABLE_TESTS})
+include(CTest)
+enable_testing()
+set(CTEST_PROJECT_NAME "Nanogear")
+set(CTEST_NIGHTLY_START_TIME "23:00:00 GMT")
+set(CTEST_DROP_METHOD http)
+set(CTEST_DROP_SITE "dashboard.binaryhelix.net")
+set(CTEST_DROP_LOCATION "/submit.php?project=Nanogear")
+set(CTEST_DROP_SITE_CDASH TRUE)
 #####
 
 
@@ -43,13 +41,5 @@ else (${PEDANTIC})
     message(STATUS "  the pedantic mode")
 endif (${PEDANTIC})
 
-
-# Build the examples?
-if (${BUILD_EXAMPLES})
-    message(STATUS "Will build examples")
-    add_subdirectory(examples)
-endif(${BUILD_EXAMPLES})
-
-
-# Build the library
+add_subdirectory(examples)
 add_subdirectory(lib)

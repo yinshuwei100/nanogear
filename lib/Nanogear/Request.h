@@ -28,7 +28,6 @@
 #include <QMetaObject>
 #include <QByteArray>
 
-#include "Context.h"
 #include "ClientInfo.h"
 #include "Method.h"
 
@@ -76,8 +75,8 @@ public:
      * \param c a const reference to a ContextObject
      * \param cI a const reference to a ClientInfo
      */
-    Request(const Method& method, const Context& context, const ClientInfo& clientInfo, Resource::Representation* body) :
-        m_method(method), m_context(context), m_clientInfo(clientInfo), m_representation(body) {}
+    Request(const Method& method, const ClientInfo& clientInfo, Resource::Representation* body) :
+        m_method(method), m_clientInfo(clientInfo), m_representation(body) {}
 
         
     /*!
@@ -88,15 +87,6 @@ public:
     const Method& method() const;
 
     void setMethod(const Method& method);
-
-    /*!
-     * A client usually makes a request at a specified URI which we call
-     * 'context'
-     * \return The requested context
-     */
-    const Context& context() const;
-
-    void setContext(const Context& context);
 
     /*!
      * A client usually attaches additional informations to the request, this
@@ -120,10 +110,23 @@ public:
     const Resource::Representation* representation() const
         { return m_representation; }
 
+    /*!
+     * Set the path requested by the client
+     * \param path A string representing the requested path
+     */
+    void setPath(const QString& path)
+        { m_path = path; }
+
+    /*!
+     * \return The path requested by the client
+     */
+    const QString& path() const
+        { return m_path; }
+
 private:
     Method m_method;
-    Context m_context;
     ClientInfo m_clientInfo;
+    QString m_path;
     Resource::Representation* m_representation;
 };
 

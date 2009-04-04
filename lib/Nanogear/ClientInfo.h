@@ -35,10 +35,6 @@ class QLocale;
 
 namespace Nanogear {
 
-class MimeType;
-template <typename> class Preference;
-template <typename> class PreferenceList;
-
 /*!
  * \class ClientInfo
  * \brief Represents additional informations supplied by the client
