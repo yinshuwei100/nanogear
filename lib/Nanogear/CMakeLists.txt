@@ -1,11 +1,14 @@
-add_subdirectory(Concrete)
-add_subdirectory(Resource)
-
 set(nanogear_SRCS
     MimeType.cpp
     Application.cpp
     Status.cpp
     Router.cpp
+
+    Resource/Resource.cpp
+    Resource/Representation.cpp
+
+    Concrete/HTTP/HTTPServer.cpp
+    Concrete/HTTP/ConnectionHandlerThread.cpp
 )
 
 qt4_wrap_cpp(nanogear_SRCS
@@ -14,4 +17,4 @@ qt4_wrap_cpp(nanogear_SRCS
 )
 
 add_library(nanogear SHARED ${nanogear_SRCS})
-target_link_libraries(nanogear nanogear_concrete_HTTP nanogear_resource)
+target_link_libraries(nanogear ${QT_LIBRARIES})
