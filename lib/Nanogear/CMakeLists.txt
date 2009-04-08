@@ -7,6 +7,7 @@ set(nanogear_SRCS
 
     Resource/Resource.cpp
     Resource/Representation.cpp
+    Resource/Directory.cpp
 
     Concrete/HTTP/HTTPServer.cpp
     Concrete/HTTP/ConnectionHandlerThread.cpp
