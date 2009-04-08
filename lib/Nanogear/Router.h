@@ -27,6 +27,7 @@
 #include <QMap>
 
 #include "Resource/Resource.h"
+#include "Resource/Representation.h"
 
 namespace Nanogear {
 
@@ -35,6 +36,8 @@ class Response;
 
 class Router : public Resource::Resource {
 public:
+    Router() : m_notFound("<h2>404 - Not found</h2>", "text/html") {}
+
     void handleRequest(const Request&, Response&);
 
     void attach(const QString& path, Resource::Resource* resource)
@@ -44,6 +47,7 @@ public:
         { return m_routes; }
 private:
     QMap<QString, Resource*> m_routes;
+    Nanogear::Resource::Representation m_notFound;
 };
 
 }

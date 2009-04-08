@@ -23,6 +23,7 @@
 
 #include "ConnectionHandlerThread.h"
 
+#include <QPointer>
 #include <QString>
 #include <QTcpSocket>
 #include <QHostAddress>
@@ -54,61 +55,66 @@ ConnectionHandlerThread::ConnectionHandlerThread(int handle)
 void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "New thread started";
 
-    m_clientSocket = new QTcpSocket(this);
-    if (!m_clientSocket->setSocketDescriptor(m_socketHandle)) {
-        qDebug() << Q_FUNC_INFO << "Failed to set socket descriptor (" << m_socketHandle << ")";
+    qDebug() << Q_FUNC_INFO << "Socket descriptor: " << m_socketHandle;
+    if (!m_clientSocket.setSocketDescriptor(m_socketHandle)) {
+        qDebug() << Q_FUNC_INFO << "Failed to set socked descriptor";
         deleteLater();
         return;
     }
 
-    //connect(m_clientSocket, SIGNAL(disconnected()), this, SLOT(quit()));
-    //connect(this, SIGNAL(finished()), m_clientSocket, SLOT(deleteLater()));
+    connect(&m_clientSocket, SIGNAL(disconnected()), this, SLOT(quit()));
+    connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
+    connect(this, SIGNAL(finished()), &m_clientSocket, SLOT(deleteLater()));
 
-    m_clientSocket->waitForReadyRead(-1);
+    m_clientSocket.waitForReadyRead(-1);
 
     qDebug() << Q_FUNC_INFO << "Handling request (size:"
-        << m_clientSocket->size() << ")";
+        << m_clientSocket.size() << ")";
 
     // Separate the HTTP headers from the request body (if any)
     QByteArray rawRequestHeader;
     for (;;) {
-        QByteArray line = m_clientSocket->readLine();
+        QByteArray line = m_clientSocket.readLine();
         if (line == "\r\n")
             break;
         rawRequestHeader += line;
     }
 
     QHttpRequestHeader requestHeader(rawRequestHeader);
+    qDebug() << Q_FUNC_INFO << "Requested path: " << requestHeader.path();
 
     // Fill Method by using informations supplied by the client
     Nanogear::Method requestedMethod(requestHeader.method().toUpper());
 
     // Fill the request body, if needed
     QByteArray requestBody = requestHeader.hasKey("content-length")
-        ? m_clientSocket->read(requestHeader.value("content-length").toLongLong()) : "";
+        ? m_clientSocket.read(requestHeader.value("content-length").toLongLong()) : "";
     if (requestedMethod.hasBody())
-        requestBody = m_clientSocket->readAll();
+        requestBody = m_clientSocket.readAll();
     Resource::Representation requestRepresentation(requestBody, requestHeader.value("content-type"));
 
-    PreferenceList<MimeType> acceptedMimeTypes(getPreferenceListFromHeader<MimeType>(requestHeader.value("accept")));
-    PreferenceList<QLocale> acceptedLocales(getPreferenceListFromHeader<QLocale>(requestHeader.value("accept-language")));
-    PreferenceList<QTextCodec*> acceptedCharsets(getPreferenceListFromHeader<QTextCodec*>(requestHeader.value("accept-charset")));
+    PreferenceList<MimeType> acceptedMimeTypes(
+        getPreferenceListFromHeader<MimeType>(requestHeader.value("Accept")));
+    PreferenceList<QLocale> acceptedLocales(
+        getPreferenceListFromHeader<QLocale>(requestHeader.value("Accept-Language")));
+    PreferenceList<QTextCodec*> acceptedCharsets(
+        getPreferenceListFromHeader<QTextCodec*>(requestHeader.value("Accept-Charset")));
+
 
     // Fill the ClientInfo object
     ClientInfo clientInfo(acceptedMimeTypes, acceptedLocales, acceptedCharsets, requestHeader.value("user-agent"));
-
-    qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
+    
 
     // Build the request object
     Request request(requestHeader.method(), clientInfo, &requestRepresentation);
     request.setPath(requestHeader.path());
 
-    // And retrieve the response object (if the resource cannot be found just)
-    // return a default response object
+    // Build an empty response object
     Response response;
 
     // Let the Application's root() handle routing (if a Router class) or let
     // it respond at every uri, if needed
+    qDebug() << Q_FUNC_INFO << "Handling the request";
     Application::instance()->root()->handleRequest(request, response);
 
     const Resource::Representation* representation = response.representation();
@@ -118,32 +124,42 @@ void ConnectionHandlerThread::run() {
 
     QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
         requestHeader.majorVersion(), requestHeader.minorVersion());
-    responseHeader.setValue("connection", requestHeader.value("connection"));
-    if (responseHeader.value("connection").isEmpty()) {
+    responseHeader.setValue("Connection", requestHeader.value("Connection"));
+    
+    if (responseHeader.value("Connection").isEmpty()) {
         if (responseHeader.majorVersion() <= 1 && responseHeader.minorVersion() == 0)
-            responseHeader.setValue("connection", "close");
+            responseHeader.setValue("Connection", "close");
     }
-    responseHeader.setValue("server", "Nanogear");
 
-    if (response.expirationDate().isValid())
-        responseHeader.setValue("expires", response.expirationDate().toUTC().toString("dd MMM yyyy ss:mm:hh") + " GMT");
+    // Sets the server name
+    responseHeader.setValue("Server", "Nanogear");
 
-    responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
+    if (response.expirationDate().isValid()) {
+        responseHeader.setValue("Expires", response.expirationDate().toUTC()
+            .toString("dd MMM yyyy ss:mm:hh") + " GMT");
+    }
 
-    QByteArray responseData(representation->data(clientInfo.acceptedMimeTypes()));
-    responseHeader.setValue("content-length", QString::number(responseData.length()));
+    responseHeader.setContentType(representation->format(clientInfo
+       .acceptedMimeTypes()).toString());
+
+    QByteArray responseData(representation->data(clientInfo
+        .acceptedMimeTypes()));
+    responseHeader.setValue("Content-Length",
+        QString::number(responseData.length()));
 
     // And finally send data back to the client
-    qDebug() << Q_FUNC_INFO << "sending data back to the client (size:" << responseHeader.value("content-length") << ")";
-    m_clientSocket->write(responseHeader.toString().toUtf8());
-    m_clientSocket->write(responseData);
+    qDebug() << Q_FUNC_INFO << "sending data back to the client (size:"
+        << responseHeader.value("content-length") << ")";
+    m_clientSocket.write(responseHeader.toString().toUtf8());
+    m_clientSocket.write(responseData);
 
     qDebug() << Q_FUNC_INFO << "Waiting for data to be written";
-    //m_clientSocket->waitForBytesWritten(-1);
+    m_clientSocket.waitForBytesWritten(-1);
 
     qDebug() << Q_FUNC_INFO << "Disconnecting from host and destroying thread";
-    //m_clientSocket->disconnectFromHost();
-    //m_clientSocket->waitForDisconnected(-1);
+    m_clientSocket.disconnectFromHost();
+
+    QThread::run();
 }
 
 }

@@ -45,55 +45,60 @@ public:
     /*!
      * A default constructor which sends an invalid response code by default (!)
      */
-    Status();
+    Status() : m_status(Invalid) {}
 
     /*!
      * Construct the status from its name
      * \param name The status name
      */
-    Status(const QString& name);
+    Status(const QString& name) : m_status(toType(name)) {}
 
     /*!
      * An overloaded constructor provided for convenience
      * \param name The status name as C-style string
      */
-    Status(const char* name);
+    Status(const char* name) : m_status(toType(name)) {}
 
     /*!
      * Construct this Status from its code
      * \param status the status code
      */
-    Status(int status);
-    ~Status();
+    Status(int status) : m_status(status) {}
 
     /*!
      * Construct the status from its name
      * \param name The status name
      */
-    void fromString(const QString& name);
+    void fromString(const QString& name)
+        { m_status = toType(name); }
 
     /*!
      * \return The string representation of this status code
      */
-    QString toString() const;
+    QString toString() const
+        { return toString(m_status); }
 
     /*!
      * Construct this Status from its code
      * \param status the status code
      */
-    void fromType(int status);
+    void fromType(int status)
+        { m_status = status; }
 
     /*!
      * \return The status code
      */
-    int toType() const;
+    int toType() const
+        { return m_status; }
 
-    bool operator==(const Status& type) const;
+    bool operator==(const Status& type) const
+        { return m_status == type.m_status; }
 
     /*!
      * \return true if this Status is valid
      */
-    bool isValid() const;
+    bool isValid() const
+        { return m_status != Invalid; }
 
     enum Type {
         Invalid = 0,
@@ -154,12 +159,12 @@ public:
     };
 
 private:
-    struct Private;
-    Private* d;
+    QString toString(int value) const;
+    int toType(const QString& key) const;
+    
+    int m_status;
 };
 
 }
-
-Q_DECLARE_METATYPE(Nanogear::Status)
 
 #endif // NANOGEAR_STATUS_H

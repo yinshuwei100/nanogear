@@ -45,8 +45,7 @@ class Representation : public QMimeData {
 public:
     Representation() {}
 
-    template <typename Data, typename Type>
-    Representation(const Data& data, const Type& mimeType = "text/plain")
+    Representation(const QByteArray& data, const MimeType& mimeType = MimeType("text/plain"))
         { setData(mimeType, data); }
 
     /*!
@@ -67,6 +66,14 @@ public:
      */
     QByteArray data(const MimeType& mimeType) const
         { return QMimeData::data(mimeType.toString()); }
+
+    /*!
+     * An overloaded function provided for convenience
+     * \param mimeType A reference to a MimeType
+     * \param data A reference to the raw data
+     */
+    void setData(const MimeType& mimeType, const QByteArray& data)
+        { QMimeData::setData(mimeType.toString(), data); } 
 
     /*!
      * \return true if the requested format is available

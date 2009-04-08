@@ -27,53 +27,13 @@
 
 namespace Nanogear {
 
-struct Status::Private {
-    Private() : status(Invalid) {};
-    Private(const QString& name) : status(toType(name)) {};
-    Private(int s) : status(s) {};
-    static int toType(const QString&);
-    static QString toString(int status);
-    int status;
-};
-
-Status::Status() : d(new Private()) {
-    qRegisterMetaType<Status>();
-}
-Status::Status(const QString& name) : d(new Private(name)) {
-    qRegisterMetaType<Status>();
-}
-Status::Status(const char* name) : d(new Private(name)) {
-    qRegisterMetaType<Status>();
-}
-Status::Status(int status) : d(new Private(status)) {
-    qRegisterMetaType<Status>();
-}
-Status::~Status() {
-    delete d;
-}
-
-void Status::fromString(const QString& name)
-    { d->status = d->toType(name); }
-QString Status::toString() const
-    { return d->toString(d->status); }
-
-void Status::fromType(int status)
-    { d->status = status; }
-int Status::toType() const
-    { return d->status; }
-
-bool Status::operator==(const Status& type) const
-    { return d->status == type.d->status; }
-bool Status::isValid() const
-    { return d->status != Invalid; }
-
-int Status::Private::toType(const QString& key) {
+int Status::toType(const QString& key) const {
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
-QString Status::Private::toString(int value) {
+QString Status::toString(int value) const {
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.valueToKey(value);

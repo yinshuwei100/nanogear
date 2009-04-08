@@ -25,8 +25,7 @@
 #define NANOGEAR_CONCRETE_HTTP_CONNECTIONHANDLERTHREAD_H
 
 #include <QThread>
-
-class QTcpSocket;
+#include <QTcpSocket>
 
 namespace Nanogear {
 namespace Concrete {
@@ -40,6 +39,7 @@ class HTTPServer;
  * \ingroup HTTP Server
  */
 class ConnectionHandlerThread : public QThread {
+    Q_OBJECT
 public:
     ConnectionHandlerThread(int handle);
 
@@ -47,7 +47,7 @@ public:
 
 private:
     int m_socketHandle;
-    QTcpSocket* m_clientSocket;
+    QTcpSocket m_clientSocket;
 };
 
 }

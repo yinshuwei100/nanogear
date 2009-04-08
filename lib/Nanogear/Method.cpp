@@ -21,28 +21,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "HTTPServer.h"
-#include "ConnectionHandlerThread.h"
 
-#include <QTcpSocket>
-#include <QTcpServer>
+#include "Method.h"
+
+#include <QMetaEnum>
 
 namespace Nanogear {
-namespace Concrete {
-namespace HTTP {
 
-void HTTPServer::start() {
-    qDebug() << Q_FUNC_INFO << "Starting HTTP server on " << listenAddress() << ":" << listenPort();
-    listen(listenAddress(), listenPort());
-}
-
-void HTTPServer::incomingConnection(int handle) {
-    qDebug() << Q_FUNC_INFO << "Received new connection, starting a new thread...";
-    
-    (new ConnectionHandlerThread(handle))->start();
+bool Method::hasBody() const {
+    switch (m_method) {
+        case POST:
+        case PUT:
+            return true;
+        default:
+            return false;
+    }
 }
 
-}
-}
+
+int Method::toType(const QString& key) {
+    const QMetaObject& metaObject = staticMetaObject;
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
+    return metaEnum.keyToValue(key.toUtf8());
 }
 
+QString Method::toString(int value) {
+    const QMetaObject& metaObject = staticMetaObject;
+    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
+    return metaEnum.valueToKey(value);
+}
+
+}

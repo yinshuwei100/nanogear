@@ -30,25 +30,21 @@ namespace Nanogear {
 namespace Resource {
 
 void Resource::handleRequest(const Request& request, Response& response) {
-    if (request.method() == Method::GET)
+    if (request.method() == Method::GET) {
         handleGet(request, response);
-
-    if (request.method() == Method::PUT)
+    } else if (request.method() == Method::PUT) {
         handlePut(request, response);
-
-    if (request.method() == Method::POST)
+    } else if (request.method() == Method::POST) {
         handlePost(request, response);
-
-    if (request.method() == Method::OPTIONS)
+    } else if (request.method() == Method::OPTIONS) {
         handleOptions(request, response);
-
-    if (request.method() == Method::DELETE)
+    } else if (request.method() == Method::DELETE) {
         handleDelete(request, response);
-
-    if (request.method() == Method::HEAD)
+    } else if (request.method() == Method::HEAD) {
         handleHead(request, response);
-
-    response.setStatus(Status::NotFound);
+    } else {
+        response.setStatus(Status::NotFound);
+    }
 }
 
 }
