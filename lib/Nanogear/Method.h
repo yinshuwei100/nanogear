@@ -63,36 +63,42 @@ public:
      * This is an overloaded constructor provided for convenience
      * \param method the code representing a method
      */
-    Method(int method);
+    Method(int method) : m_method(method) {};
 
     /*!
      * Build this object from the name of the method
      * \param name Method name
      */
-    void fromString(const QString& name);
+    void fromString(const QString& name)
+        { toType(name); }
 
     /*!
      * \return Return the method name as a string
      */
-    QString toString();
+    QString toString()
+        { toString(m_method); }
 
     /*!
      * Build this method from its integer code
      * \param method
      */
-    void fromType(int method);
+    void fromType(int method)
+        { m_method = method; }
 
     /*!
      * \return the code associated with this method
      */
-    int toType() const;
+    int toType() const
+        { return m_method; }
 
-    bool operator==(const Method& type) const;
+    bool operator==(const Method& type) const
+        { return m_method == type.m_method; }
 
     /*!
      * \return If this method is valid or not
      */
-    bool isValid() const;
+    bool isValid() const
+        { return m_method != Invalid; }
 
     /*!
      * \return true if this method has a body

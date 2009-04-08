@@ -79,7 +79,7 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual void handleGet(const Request& request, Response& response) const
+    virtual void handleGet(const Request& request, Response& response)
         { response.setStatus(Status::MethodNotAllowed); }
 
     /*!

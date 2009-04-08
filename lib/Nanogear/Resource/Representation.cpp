@@ -149,7 +149,7 @@ void Representation::setXhtml(const QString& xhtml) {
 
 QList<MimeType> Representation::mimeTypeFormats() const {
     QList<MimeType> types;
-    foreach (const QString& type, formats())
+    foreach (QString type, QMimeData::formats())
         types.append(type);
     return types;
 }

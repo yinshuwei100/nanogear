@@ -42,7 +42,7 @@ public:
      * A default constructor, it will build a MimeType representing all possible
      * type/subtype pairs.
      */
-    MimeType();
+    MimeType() : m_type("*"), m_subtype("*") {}
 
     /*!
      * A constructor which builds the object from the string representation of

@@ -23,18 +23,33 @@
 
 #include "Router.h"
 
+#include <QDebug>
+
 #include "Request.h"
 #include "Response.h"
 
 namespace Nanogear {
 
 void Router::handleRequest(const Request& request, Response& response) {
+    bool found = false;
+    
     foreach(const QString& routePath, m_routes.keys()) {
         if (routePath == request.path()) {
             // Direct match found
             // Get the class and make it handle the request
+            qDebug() << Q_FUNC_INFO << "Found a direct match ("
+                << routePath << ")" << "with requested path ("
+                << request.path() << ")";
             m_routes.value(routePath)->handleRequest(request, response);
+            found = true;
+            break;
         }
+    }
+
+    if (!found) {
+        qDebug() << Q_FUNC_INFO << "Couldn't find any direct match (404)";
+        response.setStatus(Status::NotFound);
+        response.setRepresentation(&m_notFound);
     }
 }
 

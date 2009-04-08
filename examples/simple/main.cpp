@@ -32,9 +32,22 @@ using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
 public:
-    RootResource() : m_representation("<h1>Test response</h1>", "text/html") {}
+    RootResource() : m_representation("<h1>Simple example</h1><br/><a href=\"/second\">Another resource</a>", "text/html") {}
 
-    virtual void handleGet(const Request& request, Response& response) const {
+    virtual void handleGet(const Request& request, Response& response) {
+        response.setStatus(Status::OK);
+        response.setRepresentation(&m_representation);
+    }
+
+private:
+    Nanogear::Resource::Representation m_representation;
+};
+
+class SecondResource : public Resource::Resource {
+public:
+    SecondResource() : m_representation("<h1>Another resource</h1>", "text/html") {}
+
+    virtual void handleGet(const Request& request, Response& response) {
         response.setStatus(Status::OK);
         response.setRepresentation(&m_representation);
     }
@@ -47,9 +60,11 @@ int main(int argc, char** argv) {
     Application app(argc, argv);
 
     RootResource* root = new RootResource();
+    SecondResource* secondResource = new SecondResource();
 
     Router* router = new Router();
     router->attach("/", root);
+    router->attach("/second", secondResource);
     
     app.setServer(new HTTPServer());
     app.setRoot(router);
