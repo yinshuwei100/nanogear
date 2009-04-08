@@ -21,46 +21,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QString>
-#include <QDebug>
-#include "MimeType.h"
+#include "Router.h"
+
+#include "Request.h"
+#include "Response.h"
 
 namespace Nanogear {
 
-void MimeType::fromString(const QString& type) {
-    m_whole = type;
-    m_type.clear();
-    m_subtype.clear();
-}
-const QString& MimeType::toString() const {
-    return m_whole;
-}
-
-
-bool MimeType::operator==(const MimeType& type) const {
-    return m_whole == type.m_whole;
-}
-bool MimeType::isConcrete() const {
-    return !m_whole.contains("*");
-}
-
-
-const QString& MimeType::type() const {
-    if (m_type.isEmpty())
-        const_cast<MimeType*>(this)->m_type = m_whole.left(m_whole.indexOf('/'));
-    return m_type;
-}
-
-const QString& MimeType::subtype() const {
-    if (m_type.isEmpty())
-        const_cast<MimeType*>(this)->m_subtype = m_whole.right(m_whole.indexOf('/'));
-    return m_subtype;
-}
-
-bool MimeType::isCompatible(const MimeType& other) const {
-    return other.m_whole.contains(m_whole) ||\
-           m_whole.contains(other.m_whole);
+void Router::handleRequest(const Request& request, Response& response) {
+    foreach(const QString& routePath, m_routes.keys()) {
+        if (routePath == request.path()) {
+            // Direct match found
+            // Get the class and make it handle the request
+            m_routes.value(routePath)->handleRequest(request, response);
+        }
+    }
 }
 
 }
-

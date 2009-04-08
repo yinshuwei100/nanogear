@@ -32,6 +32,7 @@
 namespace Nanogear {
 
 class Request;
+class Response;
 
 namespace Resource {
 
@@ -53,24 +54,21 @@ class Representation;
  * \see Roy Fielding's dissertation at:
  *     http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_1
  */
-class Resource : public QObject {
-    Q_OBJECT
+class Resource {
 public:
     /*!
      * A constructor taking a Context and a parent object
      * \param uri this resource URI
      * \param parent parent to this resource
      */
-    Resource(const QString& uri, QObject* parent = 0) : QObject(parent), m_resourceUri(uri)
-        { setObjectName(uri); }
+    Resource(const QString& uri = QString()) : m_resourceUri(uri) {}
 
     /*!
      * An overloaded constructor provided for convenience
      * \param context C-style string representing this resource' URI
      * \param parent parent to this resource
      */
-    Resource(const QChar uri, QObject* parent = 0) : QObject(parent), m_resourceUri(uri)
-        { setObjectName(uri); }
+    Resource(const QChar uri = QChar()) : m_resourceUri(uri) {}
 
     /*!
      * Empty virtual destructor
@@ -84,7 +82,7 @@ public:
      * \param request a reference to a Request object
      * \return a response object
      */
-    virtual Response handleRequest(const Request&);
+    virtual void handleRequest(const Request&, Response&);
 
     /*!
      * Set the URI (relative to its parent) on which this resource should
@@ -92,7 +90,7 @@ public:
      * \param uri a string representing the path
      */
     void setUri(const QString& uri)
-        { m_resourceUri = uri; setObjectName(uri); }
+        { m_resourceUri = uri; }
 
     /*!
      * \return The URI this resource is attached to

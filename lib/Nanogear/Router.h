@@ -21,46 +21,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QString>
-#include <QDebug>
-#include "MimeType.h"
+#ifndef NANOGEAR_ROUTER_H
+#define NANOGEAR_ROUTER_H
+
+#include <QMap>
+
+#include "Resource/Resource.h"
 
 namespace Nanogear {
 
-void MimeType::fromString(const QString& type) {
-    m_whole = type;
-    m_type.clear();
-    m_subtype.clear();
-}
-const QString& MimeType::toString() const {
-    return m_whole;
-}
+class Request;
+class Response;
 
+class Router : public Resource::Resource {
+public:
+    Router();
+    ~Router();
 
-bool MimeType::operator==(const MimeType& type) const {
-    return m_whole == type.m_whole;
-}
-bool MimeType::isConcrete() const {
-    return !m_whole.contains("*");
-}
-
-
-const QString& MimeType::type() const {
-    if (m_type.isEmpty())
-        const_cast<MimeType*>(this)->m_type = m_whole.left(m_whole.indexOf('/'));
-    return m_type;
-}
-
-const QString& MimeType::subtype() const {
-    if (m_type.isEmpty())
-        const_cast<MimeType*>(this)->m_subtype = m_whole.right(m_whole.indexOf('/'));
-    return m_subtype;
-}
-
-bool MimeType::isCompatible(const MimeType& other) const {
-    return other.m_whole.contains(m_whole) ||\
-           m_whole.contains(other.m_whole);
-}
+    virtual handleRequest(const Request&, Response&);
+    
+private:
+    QMap<QString, Resource*> m_routes;
+};
 
 }
 
+#endif /* NANOGEAR_ROUTER_H */

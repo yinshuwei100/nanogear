@@ -49,13 +49,15 @@ public:
      * a MIME type
      * \param type A string representation of the MIME type
      */
-    MimeType(const QString& type);
+    MimeType(const QString& type) :
+        m_whole(type), m_type("*"), m_subtype("*") {}
 
     /*!
      * An overloaded constructor provided for convenience
      * \param type A C-style string representing the MIME type
      */
-    MimeType(const char* type);
+    MimeType(const char* type) :
+        m_whole(type), m_type("*"), m_subtype("*") {}
 
     /*!
      * Build this MimeType object from its string representation
@@ -102,7 +104,5 @@ private:
 };
 
 }
-
-Q_DECLARE_METATYPE(Nanogear::MimeType)
 
 #endif // NANOGEAR_MIMETYPE_H
