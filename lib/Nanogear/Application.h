@@ -48,7 +48,6 @@ class Resource;
  * It is responsible for starting the event loop and the attached connector.
  */
 class Application : public QCoreApplication {
-    Q_OBJECT
 public:
     /*!
      * Initialize this Nanogear application
@@ -74,8 +73,9 @@ public:
     Server* server() const;
 
     /*!
-     * Sets the root resource. Such resource will typically respond to request
-     * made on the root context ("/") relative to the application's context
+     * Sets the root resource. Such resource will respond to any request at
+     * every path. To route requests to other resources build a Router resource
+     * and attach it to this Application using the setRoot method
      * \param resource a pointer a Nanogear::Resource::Resource
      */
     void setRoot(Resource::Resource* r);
@@ -90,16 +90,6 @@ public:
      * \return A pointer to the current instance
      */
     static Application* instance();
-
-    /*!
-     * \return a default Response when a method is not supported
-     */
-    virtual Response methodNotSupported(const Request& r) const;
-
-    /*!
-     * \return a default Response when a resource is not found
-     */
-    virtual Response notFound(const Request& r) const;
 
     /*!
      * Start this Nanogear application. This method will also call the

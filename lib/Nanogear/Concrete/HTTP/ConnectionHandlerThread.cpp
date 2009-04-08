@@ -99,16 +99,17 @@ void ConnectionHandlerThread::run() {
 
     qDebug() << Q_FUNC_INFO << "requested path == " << requestHeader.path();
 
-    // Find a matching resource in Qt MetaObject hierarchy
-    Resource::Resource* resource = Application::instance()->findChild<Resource::Resource*>(requestHeader.path());
-
     // Build the request object
     Request request(requestHeader.method(), clientInfo, &requestRepresentation);
+    request.setPath(requestHeader.path());
 
     // And retrieve the response object (if the resource cannot be found just)
     // return a default response object
-    Response response = resource ? resource->handleRequest(request) :
-        Application::instance()->notFound(request);
+    Response response;
+
+    // Let the Application's root() handle routing (if a Router class) or let
+    // it respond at every uri, if needed
+    Application::instance()->root()->handleRequest(request, response);
 
     const Resource::Representation* representation = response.representation();
 
@@ -136,7 +137,6 @@ void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "sending data back to the client (size:" << responseHeader.value("content-length") << ")";
     m_clientSocket->write(responseHeader.toString().toUtf8());
     m_clientSocket->write(responseData);
-    m_clientSocket->write("asd");
 
     qDebug() << Q_FUNC_INFO << "Waiting for data to be written";
     //m_clientSocket->waitForBytesWritten(-1);
