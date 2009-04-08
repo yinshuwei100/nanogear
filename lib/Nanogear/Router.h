@@ -35,11 +35,13 @@ class Response;
 
 class Router : public Resource::Resource {
 public:
-    Router();
-    ~Router();
+    void handleRequest(const Request&, Response&);
 
-    virtual handleRequest(const Request&, Response&);
-    
+    void attach(const QString& path, Resource::Resource* resource)
+        { m_routes[path] = resource; }
+
+    const QMap<QString, Resource*>& routes() const
+        { return m_routes; }
 private:
     QMap<QString, Resource*> m_routes;
 };

@@ -29,33 +29,26 @@ namespace Nanogear {
 
 namespace Resource {
 
-Response Resource::handleRequest(const Request& req) {
-    if (req.path() != uri()) {
-        Resource* child = findChild<Resource*>(req.path());
-        if (child)
-            return child->handleRequest(req);
-        return notFound(req);
-    }
+void Resource::handleRequest(const Request& request, Response& response) {
+    if (request.method() == Method::GET)
+        handleGet(request, response);
 
-    if (req.method() == "GET")
-        return handleGet(req);
+    if (request.method() == Method::PUT)
+        handlePut(request, response);
 
-    if (req.method() == "PUT")
-        return handlePut(req);
+    if (request.method() == Method::POST)
+        handlePost(request, response);
 
-    if (req.method() == "POST")
-        return handlePost(req);
+    if (request.method() == Method::OPTIONS)
+        handleOptions(request, response);
 
-    if (req.method() == "OPTIONS")
-        return handleOptions(req);
+    if (request.method() == Method::DELETE)
+        handleDelete(request, response);
 
-    if (req.method() == "DELETE")
-        return handleDelete(req);
+    if (request.method() == Method::HEAD)
+        handleHead(request, response);
 
-    if (req.method() == "HEAD")
-        return handleHead(req);
-
-    return methodNotSupported(req);
+    response.setStatus(Status::NotFound);
 }
 
 }

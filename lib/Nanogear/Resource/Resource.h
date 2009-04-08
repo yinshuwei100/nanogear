@@ -57,20 +57,6 @@ class Representation;
 class Resource {
 public:
     /*!
-     * A constructor taking a Context and a parent object
-     * \param uri this resource URI
-     * \param parent parent to this resource
-     */
-    Resource(const QString& uri = QString()) : m_resourceUri(uri) {}
-
-    /*!
-     * An overloaded constructor provided for convenience
-     * \param context C-style string representing this resource' URI
-     * \param parent parent to this resource
-     */
-    Resource(const QChar uri = QChar()) : m_resourceUri(uri) {}
-
-    /*!
      * Empty virtual destructor
      */
     virtual ~Resource() {}
@@ -80,24 +66,11 @@ public:
      * This method is used internally to dispatch the request to the
      * appropriate handler
      * \param request a reference to a Request object
+     * \param response a reference to a Response object
      * \return a response object
      */
-    virtual void handleRequest(const Request&, Response&);
+    virtual void handleRequest(const Request& request, Response& response);
 
-    /*!
-     * Set the URI (relative to its parent) on which this resource should
-     * answer the requests
-     * \param uri a string representing the path
-     */
-    void setUri(const QString& uri)
-        { m_resourceUri = uri; }
-
-    /*!
-     * \return The URI this resource is attached to
-     */
-    const QString& uri() const
-        { return m_resourceUri; }
-        
 protected:
     /*!
      * Override this method in a derived class to handle a GET request.
@@ -106,8 +79,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleGet(const Request& request) const
-        { return methodNotSupported(request); }
+    virtual void handleGet(const Request& request, Response& response) const
+        { response.setStatus(Status::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a HEAD request.
@@ -118,8 +91,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleHead(const Request& request)
-        { return methodNotSupported(request); }
+    virtual void handleHead(const Request& request, Response& response)
+        { response.setStatus(Status::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a PUT request.
@@ -128,8 +101,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handlePut(const Request& request)
-        { return methodNotSupported(request); }
+    virtual void handlePut(const Request& request, Response& response)
+        { response.setStatus(Status::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a POST request.
@@ -138,8 +111,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handlePost(const Request& request)
-        { return methodNotSupported(request); }
+    virtual void handlePost(const Request& request, Response& response)
+        { response.setStatus(Status::MethodNotAllowed); }
         
     /*!
      * Override this method in a derived class to handle a OPTIONS request.
@@ -148,8 +121,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleOptions(const Request& request) const
-        { return methodNotSupported(request); }
+    virtual void handleOptions(const Request& request, Response& response) const
+        { response.setStatus(Status::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a DELETE request.
@@ -158,24 +131,8 @@ protected:
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
-    virtual Response handleDelete(const Request& request)
-        { return methodNotSupported(request); }
-
-    /*!
-     * Respond with Status::MethodNotAllowed
-     * \param request const reference to a Request object
-     * \return a default Response saying that the requested method is not allowed
-     */
-    virtual Response methodNotSupported(const Request& request) const
-        { return Application::instance()->methodNotSupported(request); }
-
-    /*!
-     * Respond with Status::MethodNotAllowed
-     * \param request const reference to a Request object
-     * \return a default Response saying that the requested resource was not found
-     */
-    virtual Response notFound(const Request& request) const
-        { return Application::instance()->notFound(request); }
+    virtual void handleDelete(const Request& request, Response& response)
+        { response.setStatus(Status::MethodNotAllowed); }
 
 private:
     QString m_resourceUri;

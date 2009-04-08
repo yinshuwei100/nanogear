@@ -4,13 +4,11 @@ add_subdirectory(Resource)
 set(nanogear_SRCS
     MimeType.cpp
     Application.cpp
-    Method.cpp
     Status.cpp
-    Request.cpp
+    Router.cpp
 )
 
 qt4_wrap_cpp(nanogear_SRCS
-    Application.h
     Status.h
     Method.h
 )

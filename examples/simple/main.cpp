@@ -25,44 +25,34 @@
 #include <Nanogear/Resource/Resource>
 #include <Nanogear/Concrete/HTTP/HTTPServer>
 #include <Nanogear/Status>
+#include <Nanogear/Router.h>
 
 using namespace Nanogear;
 using namespace Nanogear::Concrete::HTTP;
 
 class RootResource : public Resource::Resource {
 public:
-    RootResource(const QString& uri, QObject* parent)
-        : Resource(uri, parent), m_representation("<h1>Test response</h1>", "text/html") {}
+    RootResource() : m_representation("<h1>Test response</h1>", "text/html") {}
 
-    virtual Response handleGet(const Request&) const {
-        qDebug() << Q_FUNC_INFO << "called";
-        return Response(Status::OK, &m_representation);
+    virtual void handleGet(const Request& request, Response& response) const {
+        response.setStatus(Status::OK);
+        response.setRepresentation(&m_representation);
     }
 
 private:
     Nanogear::Resource::Representation m_representation;
-};
-
-class Root : public Resource::Resource {
-public:
-    Root(const QString& uri, QObject* par)
-        : Resource(uri, par),
-          m_representation("<h1>Simple Application</h1><a href=\"resource\">Resource</a>", "text/html"),
-          m_rootResource("/resource", this) {}
-
-    virtual Response handleGet(const Request&) const {
-        qDebug() << Q_FUNC_INFO << "called";
-        return Response(Status::OK, &m_representation);
-    }
-private:
-    Nanogear::Resource::Representation m_representation;
-    RootResource m_rootResource;
 };
 
 int main(int argc, char** argv) {
     Application app(argc, argv);
+
+    RootResource* root = new RootResource();
+
+    Router* router = new Router();
+    router->attach("/", root);
+    
     app.setServer(new HTTPServer());
-    app.setRoot(new Root("/"));
+    app.setRoot(router);
 
     return app.exec();
 }

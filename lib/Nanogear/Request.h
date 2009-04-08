@@ -49,7 +49,7 @@ class ClientInfo;
  * parameters.
  *
  * It is connector's (or, in general, a Server implementation) responsiblity
- * to fill this object and pass a reference to resources methods handlers.
+ * to fill this object and pass a const reference to resources methods handlers.
  *
  * Informations sent by the client (such as supported media types, character
  * encodings, etc) is encapsulated in a ClientInfo object and is read-only.
@@ -60,8 +60,6 @@ class ClientInfo;
  */
 class Request {
 public:
-    //Request(const Request&);
-
     /*!
      * Default constructor. Invalid method, empty context, empty clientInfo.
      */
@@ -71,9 +69,9 @@ public:
      * A constructor used to initialize values.
      * This constructor is intended to be used only by 'Server' implementations
      *
-     * \param m a const reference to a Method object
-     * \param c a const reference to a ContextObject
-     * \param cI a const reference to a ClientInfo
+     * \param method A const reference to a Method object
+     * \param clientInfo A const reference to a ClientInfo
+     * \param body A pointer to the body representation
      */
     Request(const Method& method, const ClientInfo& clientInfo, Resource::Representation* body) :
         m_method(method), m_clientInfo(clientInfo), m_representation(body) {}
@@ -84,18 +82,22 @@ public:
      * determine which handler should be called on a resource.
      * \return An object encapsulating a method
      */
-    const Method& method() const;
+    const Method& method() const
+        { return m_method; }
 
-    void setMethod(const Method& method);
+    void setMethod(const Method& method)
+        { m_method = method; }
 
     /*!
      * A client usually attaches additional informations to the request, this
      * method can be used to retrieve it.
      * \return An object representing additional informations supplied by the client
      */
-    const ClientInfo& clientInfo() const;
+    const ClientInfo& clientInfo() const
+        { return m_clientInfo; }
 
-    void setClientInfo(const ClientInfo& clientInfo);
+    void setClientInfo(const ClientInfo& clientInfo)
+        { m_clientInfo = clientInfo; }
 
     /*!
      * Set the representation attached to this Request

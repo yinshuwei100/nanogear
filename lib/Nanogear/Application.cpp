@@ -56,18 +56,6 @@ Application* Application::instance() {
 }
 
 
-Response Application::methodNotSupported(const Request& request) const {
-    Q_UNUSED(request);
-    return Response(Status::MethodNotAllowed, &m_methodNotSupported);
-}
-
-
-Response Application::notFound(const Request& request) const {
-    Q_UNUSED(request);
-    return Response(Status::NotFound, &m_notFound);
-}
-
-
 int Application::exec() {
     m_server->start();
     return QCoreApplication::exec();

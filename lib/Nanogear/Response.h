@@ -45,15 +45,9 @@ class Representation;
 class Response {
 public:
     /*!
-     * A constructor used to initialize several values
-     * \param status The response status code
-     * \param representation A representation attached to this Response
-     * \param expires A QDateTime representing the expiration date of this response
+     * Initializes an invalid response object
      */
-    Response(const Status& status, const Resource::Representation* representation) :
-        m_status(status), m_representation(representation) {}
-    Response(const Status& status, const Resource::Representation* representation, const QDateTime& expires) :
-        m_status(status), m_representation(representation), m_expires(expires) {}
+    Response() : m_status(Status::Invalid), m_representation(0) {}
 
     /*!
      * Set the response status code
