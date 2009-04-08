@@ -21,11 +21,11 @@
 
 #include <Nanogear/Application>
 #include <Nanogear/Server>
-#include <Nanogear/Resource/Representation>
-#include <Nanogear/Resource/Resource>
 #include <Nanogear/Concrete/HTTP/HTTPServer>
+#include <Nanogear/Router>
+#include <Nanogear/Resource/Resource>
+#include <Nanogear/Resource/Representation>
 #include <Nanogear/Status>
-#include <Nanogear/Router.h>
 
 using namespace Nanogear;
 using namespace Nanogear::Concrete::HTTP;
