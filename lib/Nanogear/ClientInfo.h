@@ -47,6 +47,8 @@ namespace Nanogear {
  * but it's highly suggested to do so.
  *
  * The data provided by this class is meant to be read-only.
+ *
+ * This class is meant to be 'friend' of server-side components only.
  */
 class ClientInfo {
 public:
@@ -88,8 +90,28 @@ public:
     const PreferenceList<QTextCodec*>& acceptedTextCodecs() const
         { return m_codecs; }
 
-        
 private:
+    /*!
+     * Set the list of accepted mime type
+     * \param mimeTypes The accepted MIME types
+     */
+    void setAcceptedMimeTypes(const PreferenceList<MimeType>& mimeTypes)
+        { m_mimeTypes = mimeTypes; }
+
+    /*!
+     * Set the list of accepted locales
+     * \param locales The accepted locales
+     */
+    void setAcceptedLocales(const PreferenceList<QLocale>& locales)
+        { m_locales = locales; }
+
+    /*!
+     * Set the list of accepted text encodings
+     * \param codecs The accepted text encodings
+     */
+    void setAcceptedTextCodecs(const PreferenceList<QTextCodec*> codecs)
+        { m_codecs = codecs; }
+
     PreferenceList<MimeType> m_mimeTypes;
     PreferenceList<QLocale> m_locales;
     PreferenceList<QTextCodec*> m_codecs;
