@@ -87,6 +87,8 @@ public:
      */
     const PreferenceList<QTextCodec*>& acceptedTextCodecs() const
         { return m_codecs; }
+
+        
 private:
     PreferenceList<MimeType> m_mimeTypes;
     PreferenceList<QLocale> m_locales;

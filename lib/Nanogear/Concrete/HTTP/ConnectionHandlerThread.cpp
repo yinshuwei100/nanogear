@@ -49,9 +49,6 @@ namespace Concrete {
 namespace HTTP {
 
 
-ConnectionHandlerThread::ConnectionHandlerThread(int handle)
-    : QThread(), m_socketHandle(handle) {}
-
 void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "New thread started";
 
@@ -71,6 +68,11 @@ void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "Handling request (size:"
         << m_clientSocket.size() << ")";
 
+
+
+    /* ***************************************************************
+     * This part of the method is dedicated to fill the Request object
+     * ***************************************************************/
     // Separate the HTTP headers from the request body (if any)
     QByteArray rawRequestHeader;
     for (;;) {
@@ -102,7 +104,8 @@ void ConnectionHandlerThread::run() {
 
 
     // Fill the ClientInfo object
-    ClientInfo clientInfo(acceptedMimeTypes, acceptedLocales, acceptedCharsets, requestHeader.value("user-agent"));
+    ClientInfo clientInfo(acceptedMimeTypes, acceptedLocales, acceptedCharsets,
+        requestHeader.value("user-agent"));
     
 
     // Build the request object
@@ -112,15 +115,25 @@ void ConnectionHandlerThread::run() {
     // Build an empty response object
     Response response;
 
+
+    /* ***************************************************************
+     * Handle the request
+     * ***************************************************************/
     // Let the Application's root() handle routing (if a Router class) or let
     // it respond at every uri, if needed
     qDebug() << Q_FUNC_INFO << "Handling the request";
     Application::instance()->root()->handleRequest(request, response);
 
+    // Retrieve the representation from the response
     const Resource::Representation* representation = response.representation();
 
+
+
+    /* *******************************************************************
+     * Extract data from the Response object and answer back to the client
+     * *******************************************************************/
     QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
-    Q_UNUSED(codec); // FIXME
+    Q_UNUSED(codec); /*!< @todo Actually use this field */
 
     QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
         requestHeader.majorVersion(), requestHeader.minorVersion());
@@ -131,7 +144,6 @@ void ConnectionHandlerThread::run() {
             responseHeader.setValue("Connection", "close");
     }
 
-    // Sets the server name
     responseHeader.setValue("Server", "Nanogear");
 
     if (response.expirationDate().isValid()) {
@@ -144,6 +156,7 @@ void ConnectionHandlerThread::run() {
 
     QByteArray responseData(representation->data(clientInfo
         .acceptedMimeTypes()));
+        
     responseHeader.setValue("Content-Length",
         QString::number(responseData.length()));
 
