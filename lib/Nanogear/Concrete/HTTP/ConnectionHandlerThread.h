@@ -41,7 +41,7 @@ class HTTPServer;
 class ConnectionHandlerThread : public QThread {
     Q_OBJECT
 public:
-    ConnectionHandlerThread(int handle);
+    ConnectionHandlerThread(int handle) : m_socketHandle(handle) {}
 
     void run();
 
