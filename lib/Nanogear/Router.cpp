@@ -34,12 +34,12 @@ void Router::handleRequest(const Request& request, Response& response) {
     bool found = false;
     
     foreach(const QString& routePath, m_routes.keys()) {
-        if (routePath == request.path()) {
+        if (routePath == request.resourceRef()) {
             // Direct match found
             // Get the class and make it handle the request
             qDebug() << Q_FUNC_INFO << "Found a direct match ("
                 << routePath << ")" << "with requested path ("
-                << request.path() << ")";
+                << request.resourceRef() << ")";
             m_routes.value(routePath)->handleRequest(request, response);
             found = true;
             break;

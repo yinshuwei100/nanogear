@@ -24,8 +24,8 @@
 #ifndef NANOGEAR_REQUEST_H
 #define NANOGEAR_REQUEST_H
 
+#include <QHash>
 #include <QString>
-#include <QMetaObject>
 #include <QByteArray>
 
 #include "ClientInfo.h"
@@ -61,11 +61,6 @@ class ClientInfo;
 class Request {
 public:
     /*!
-     * Default constructor. Invalid method, empty context, empty clientInfo.
-     */
-    Request();
-
-    /*!
      * A constructor used to initialize values.
      * This constructor is intended to be used only by 'Server' implementations
      *
@@ -85,6 +80,9 @@ public:
     const Method& method() const
         { return m_method; }
 
+    /*!
+     * \param method The request method
+     */
     void setMethod(const Method& method)
         { m_method = method; }
 
@@ -96,8 +94,18 @@ public:
     const ClientInfo& clientInfo() const
         { return m_clientInfo; }
 
+    /*!
+     * Set the client informations attached to this request
+     * \param clientInfo The informations supplied by the client
+     */
     void setClientInfo(const ClientInfo& clientInfo)
         { m_clientInfo = clientInfo; }
+
+    /*!
+     * \return The representation attached to this request
+     */
+    const Resource::Representation* representation() const
+        { return m_representation; }
 
     /*!
      * Set the representation attached to this Request
@@ -107,33 +115,38 @@ public:
         { m_representation = representation; }
 
     /*!
-     * \return The representation attached to this request
+     * \return The path requested by the client
      */
-    const Resource::Representation* representation() const
-        { return m_representation; }
+    const QString& resourceRef() const
+        { return m_resourceRef; }
 
     /*!
      * Set the path requested by the client
      * \param path A string representing the requested path
      */
-    void setPath(const QString& path)
-        { m_path = path; }
+    void setResourceRef(const QString& path)
+        { m_resourceRef = path; }
 
     /*!
-     * \return The path requested by the client
+     * \param parameters Set the request parameter
      */
-    const QString& path() const
-        { return m_path; }
+    void setParameters(const QHash<QString, QString>& parameters)
+        { m_parameters = parameters; }
 
+    /*!
+     * \return The request parameters
+     */
+    const QHash<QString, QString>& parameters() const
+        { return m_parameters; }
+        
 private:
     Method m_method;
     ClientInfo m_clientInfo;
-    QString m_path;
+    QString m_resourceRef;
+    QHash<QString, QString> m_parameters;
     Resource::Representation* m_representation;
 };
 
 }
-
-Q_DECLARE_METATYPE(Nanogear::Request)
 
 #endif /* NANOGEAR_REQUEST_H */

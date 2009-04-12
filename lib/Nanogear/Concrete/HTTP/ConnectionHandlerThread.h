@@ -48,8 +48,6 @@ public:
 private:
     int m_socketHandle;
     QTcpSocket m_clientSocket;
-
-    friend class ClientInfo;
 };
 
 }
