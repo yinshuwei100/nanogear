@@ -24,8 +24,6 @@
 #ifndef NANOGEAR_MIMETYPE_H
 #define NANOGEAR_MIMETYPE_H
 
-#include <QMetaType>
-
 class QString;
 
 namespace Nanogear {

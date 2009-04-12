@@ -95,7 +95,7 @@ void ConnectionHandlerThread::run() {
         ? m_clientSocket.read(requestHeader.value("Content-Length").toLongLong()) : "";
     if (requestedMethod.hasBody())
         requestBody = m_clientSocket.readAll();
-    Resource::Representation requestRepresentation(requestBody, requestHeader.value("content-type"));
+    Resource::Representation entity(requestBody, requestHeader.value("Content-Type"));
 
     PreferenceList<MimeType> acceptedMimeTypes(
         getPreferenceListFromHeader<MimeType>(requestHeader.value("Accept")));
@@ -112,15 +112,20 @@ void ConnectionHandlerThread::run() {
 
     // Extract the GET query string (if any)
     QUrl queryString(requestHeader.path());
+    QUrl formData(entity.text());
     QHash<QString, QString> parameters;
     
     // This is just a way to overcome the fact Q_FOREACH is a two-args macro...
-    typedef QPair<QString, QString> KeyValuePair;
+    typedef QPair<QByteArray, QByteArray> KeyValuePair;
     foreach (const KeyValuePair& keyValue, queryString.encodedQueryItems()) {
         parameters[keyValue.first] = keyValue.second;
     }
+    foreach (const KeyValuePair& keyValue, formData.encodedQueryItems()) {
+        parameters[keyValue.first] = keyValue.second;
+    }
     
-    Request request(requestHeader.method(), clientInfo, &requestRepresentation);
+    
+    Request request(requestHeader.method(), clientInfo, &entity);
     request.setResourceRef(queryString.path());
     request.setParameters(parameters);
 
@@ -134,14 +139,14 @@ void ConnectionHandlerThread::run() {
     Response response;
     Application::instance()->root()->handleRequest(request, response);
 
-    // Retrieve the representation from the response
-    const Resource::Representation* representation = response.representation();
-
 
 
     /* *******************************************************************
      * Extract data from the Response object and answer back to the client
      * *******************************************************************/
+    // Retrieve the representation from the response
+    const Resource::Representation* representation = response.representation();
+    
     QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
     Q_UNUSED(codec); /*!< @todo use this field */
 
@@ -161,11 +166,15 @@ void ConnectionHandlerThread::run() {
             .toString("dd MMM yyyy ss:mm:hh") + " GMT");
     }
 
-    responseHeader.setContentType(representation->format(clientInfo
-       .acceptedMimeTypes()).toString());
-
-    QByteArray responseData(representation->data(clientInfo
-        .acceptedMimeTypes()));
+    // If the resource provides only one representation send it anyway
+    QByteArray responseData;
+    if (representation->formats().count() == 1) {
+        responseHeader.setContentType(representation->formats().at(0));
+        responseData = representation->data(representation->formats().at(0));
+    } else {
+        responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
+        responseData = representation->data(clientInfo.acceptedMimeTypes());
+    }
         
     responseHeader.setValue("Content-Length",
         QString::number(responseData.length()));

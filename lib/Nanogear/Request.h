@@ -104,14 +104,14 @@ public:
     /*!
      * \return The representation attached to this request
      */
-    const Resource::Representation* representation() const
+    const Resource::Representation* entity() const
         { return m_representation; }
 
     /*!
      * Set the representation attached to this Request
      * \param representation A pointer to a Representation object
      */
-    void setRepresentation(Resource::Representation* representation)
+    void setEntity(Resource::Representation* representation)
         { m_representation = representation; }
 
     /*!
