@@ -75,7 +75,7 @@ Directory::Directory(const QString& root) : m_root(root), m_indexAllowed(true) {
 
 
 void Directory::handleGet(const Nanogear::Request& request, Nanogear::Response& response) {
-    QFileInfo pathInfo(m_root.absolutePath() + request.path());
+    QFileInfo pathInfo(m_root.absolutePath() + request.resourceRef());
 
     if (pathInfo.exists()) {
         if (pathInfo.isDir()) {

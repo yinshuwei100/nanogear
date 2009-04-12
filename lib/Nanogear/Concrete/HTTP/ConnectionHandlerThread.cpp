@@ -23,6 +23,8 @@
 
 #include "ConnectionHandlerThread.h"
 
+#include <QUrl>
+#include <QPair>
 #include <QPointer>
 #include <QString>
 #include <QTcpSocket>
@@ -89,8 +91,8 @@ void ConnectionHandlerThread::run() {
     Nanogear::Method requestedMethod(requestHeader.method().toUpper());
 
     // Fill the request body, if needed
-    QByteArray requestBody = requestHeader.hasKey("content-length")
-        ? m_clientSocket.read(requestHeader.value("content-length").toLongLong()) : "";
+    QByteArray requestBody = requestHeader.hasKey("Content-Length")
+        ? m_clientSocket.read(requestHeader.value("Content-Length").toLongLong()) : "";
     if (requestedMethod.hasBody())
         requestBody = m_clientSocket.readAll();
     Resource::Representation requestRepresentation(requestBody, requestHeader.value("content-type"));
@@ -105,15 +107,22 @@ void ConnectionHandlerThread::run() {
 
     // Fill the ClientInfo object
     ClientInfo clientInfo(acceptedMimeTypes, acceptedLocales, acceptedCharsets,
-        requestHeader.value("user-agent"));
+        requestHeader.value("User-Agent"));
     
 
-    // Build the request object
+    // Extract the GET query string (if any)
+    QUrl queryString(requestHeader.path());
+    QHash<QString, QString> parameters;
+    
+    // This is just a way to overcome the fact Q_FOREACH is a two-args macro...
+    typedef QPair<QString, QString> KeyValuePair;
+    foreach (const KeyValuePair& keyValue, queryString.encodedQueryItems()) {
+        parameters[keyValue.first] = keyValue.second;
+    }
+    
     Request request(requestHeader.method(), clientInfo, &requestRepresentation);
-    request.setPath(requestHeader.path());
-
-    // Build an empty response object
-    Response response;
+    request.setResourceRef(queryString.path());
+    request.setParameters(parameters);
 
 
     /* ***************************************************************
@@ -122,6 +131,7 @@ void ConnectionHandlerThread::run() {
     // Let the Application's root() handle routing (if a Router class) or let
     // it respond at every uri, if needed
     qDebug() << Q_FUNC_INFO << "Handling the request";
+    Response response;
     Application::instance()->root()->handleRequest(request, response);
 
     // Retrieve the representation from the response
@@ -133,7 +143,7 @@ void ConnectionHandlerThread::run() {
      * Extract data from the Response object and answer back to the client
      * *******************************************************************/
     QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
-    Q_UNUSED(codec); /*!< @todo Actually use this field */
+    Q_UNUSED(codec); /*!< @todo use this field */
 
     QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
         requestHeader.majorVersion(), requestHeader.minorVersion());
@@ -162,7 +172,7 @@ void ConnectionHandlerThread::run() {
 
     // And finally send data back to the client
     qDebug() << Q_FUNC_INFO << "sending data back to the client (size:"
-        << responseHeader.value("content-length") << ")";
+        << responseHeader.value("Content-Length") << ")";
     m_clientSocket.write(responseHeader.toString().toUtf8());
     m_clientSocket.write(responseData);
 
