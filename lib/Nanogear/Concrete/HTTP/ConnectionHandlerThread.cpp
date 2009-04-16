@@ -65,10 +65,7 @@ void ConnectionHandlerThread::run() {
     connect(this, SIGNAL(finished()), &m_clientSocket, SLOT(deleteLater()));
 
     m_clientSocket.waitForReadyRead(-1);
-
-    qDebug() << Q_FUNC_INFO << "Handling request (size:"
-        << m_clientSocket.size() << ")";
-
+    qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket.size() << ")";
 
 
     /* ***************************************************************
@@ -92,15 +89,12 @@ void ConnectionHandlerThread::run() {
     //
     // Get the entity
     //
-    QByteArray requestBody;
-    if (requestHeader.hasKey("Content-Length")) {
-        requestBody = m_clientSocket.read(requestHeader.value("Content-Length").toLongLong());
-    } else if (requestedMethod.hasBody()) {
-        requestBody = m_clientSocket.readAll();
-    }
-    // Create a representation object from the entity body
-    Resource::Representation entity(requestBody, requestHeader.value("Content-Type"));
-    qDebug() << Q_FUNC_INFO << entity.data(entity.formats().at(0));
+    QByteArray entityBody;
+    if (requestHeader.hasKey("Content-Length"))
+        entityBody = m_clientSocket.read(requestHeader.value("Content-Length").toLongLong());
+    else if (requestedMethod.hasBody())
+        entityBody = m_clientSocket.readAll();
+    Resource::Representation entity(entityBody, requestHeader.value("Content-Type"));
 
     PreferenceList<MimeType> acceptedMimeTypes(
         getPreferenceListFromHeader<MimeType>(requestHeader.value("Accept")));
@@ -115,25 +109,28 @@ void ConnectionHandlerThread::run() {
         requestHeader.value("User-Agent"));
     
 
-    // Extract the GET query string (if any)
-    QUrl queryString(requestHeader.path());
+    /* ***************************************************************
+     * Query strings
+     * ***************************************************************/
     QHash<QString, QString> parameters;
     
-    // This is just a way to overcome the fact Q_FOREACH is a two-args macro...
+    // Overcome the limitations of the Q_FOREACH macro
     typedef QPair<QByteArray, QByteArray> KeyValuePair;
+    
+    QUrl queryString(requestHeader.path());
     foreach (const KeyValuePair& keyValue, queryString.encodedQueryItems()) {
         parameters[keyValue.first] = keyValue.second;
     }
-
     // Handle POST query string
     if (entity.hasFormat("application/x-www-form-urlencoded")) {
-        qDebug() << Q_FUNC_INFO << "Entity: " << entity.data("application/x-www-form-urlencoded");
-        /*foreach (const KeyValuePair& keyValue, formData.encodedQueryItems()) {
+        //             ↓ workaround to get QUrl recognize a query string
+        QUrl formData("?" + entity.data("application/x-www-form-urlencoded"));
+        foreach (const KeyValuePair& keyValue, formData.encodedQueryItems()) {
             parameters[keyValue.first] = keyValue.second;
-        }*/
+        }
     }
     
-    
+    // Fill Request object
     Request request(requestHeader.method(), clientInfo, &entity);
     request.setResourceRef(queryString.path());
     request.setParameters(parameters);
@@ -177,29 +174,25 @@ void ConnectionHandlerThread::run() {
 
     // If the resource provides only one representation send it anyway
     QByteArray responseData;
-    if (representation != 0) {
+    if (representation != 0) { // the resource may or may not return a representation
         if (representation->formats().count() == 1) {
             responseHeader.setContentType(representation->formats().at(0));
             responseData = representation->data(representation->formats().at(0));
         } else {
-            responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
+            responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes())
+                .toString());
             responseData = representation->data(clientInfo.acceptedMimeTypes());
         }
     }
-        
-    responseHeader.setValue("Content-Length",
-        QString::number(responseData.length()));
+    responseHeader.setValue("Content-Length", QString::number(responseData.length()));
 
     // And finally send data back to the client
     qDebug() << Q_FUNC_INFO << "sending data back to the client (size:"
         << responseHeader.value("Content-Length") << ")";
+        
     m_clientSocket.write(responseHeader.toString().toUtf8());
     m_clientSocket.write(responseData);
-
-    qDebug() << Q_FUNC_INFO << "Waiting for data to be written";
     m_clientSocket.waitForBytesWritten(-1);
-
-    qDebug() << Q_FUNC_INFO << "Disconnecting from host and destroying thread";
     m_clientSocket.disconnectFromHost();
 
     QThread::run();

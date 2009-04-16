@@ -40,12 +40,12 @@ bool Method::hasBody() const {
 }
 
 
-int Method::toType(const QString& key) {
+int Method::toType(const QString& key) const {
     QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
-QString Method::toString(int value) {
+QString Method::toString(int value) const {
     QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.valueToKey(value);
 }
