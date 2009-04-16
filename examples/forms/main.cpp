@@ -36,7 +36,7 @@ public:
     virtual void handleGet(const Request& request, Response& response) {
         QString parametersString;
         foreach (const QString& key, request.parameters().keys()) {
-            parametersString += (key + " = " + request.parameters()[key] + "\n");
+            parametersString += (key + " = " + request.parameters()[key] + "<br/>\n");
         }
     
         m_representation.setHtml(QString("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -48,19 +48,26 @@ public:
 "<body>\n"
 "<h2>Forms example</h2>\n"
 "<h3>Get</h3>\n"
-"<form name=\"input\" action=\"get.do\" method=\"get\">\n"
-"<input type=\"text\" name=\"example\" />\n"
+"<form name=\"input\" action=\"/method/get\" method=\"get\">\n"
+"Field 1: <input type=\"text\" name=\"field1\" /><br/>\n"
+"Field 2: <input type=\"password\" name=\"field2\" /><br/>\n"
+"Radio 1: <input type=\"radio\" name=\"radio1\" /><br/>\n"
 "<input type=\"submit\" value=\"Submit\" />\n"
 "</form>\n"
 "<h3>Post</h3>\n"
-"<form name=\"input\" action=\"post.do\" method=\"post\">\n"
-"<input type=\"text\" name=\"example\" />\n"
+"<form name=\"input\" action=\"/method/post\" method=\"post\">\n"
+"Field 1: <input type=\"text\" name=\"field1\" /><br/>\n"
+"Field 2: <input type=\"password\" name=\"field2\" /><br/>\n"
+"Radio 1: <input type=\"radio\" name=\"radio1\" /><br/>\n"
 "<input type=\"submit\" value=\"Submit\" />\n"
 "</form>\n"
 "<hr/>\n"
-"%1\n"
+"Method: %1<br/>\n"
+"Args:<br/><br/>\n"
+"%2\n"
+"<hr/>\n"
 "</body>\n"
-"</html>\n").arg(parametersString));
+"</html>\n").arg(request.method().toString()).arg(parametersString));
 
         response.setStatus(Status::OK);
         response.setRepresentation(&m_representation);

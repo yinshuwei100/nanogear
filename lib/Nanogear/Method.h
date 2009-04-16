@@ -75,7 +75,7 @@ public:
     /*!
      * \return Return the method name as a string
      */
-    QString toString()
+    QString toString() const
         { return toString(m_method); }
 
     /*!
@@ -125,8 +125,8 @@ public:
     };
     
 private:
-    int toType(const QString& key);
-    QString toString(int value);
+    int toType(const QString& key) const;
+    QString toString(int value) const;
     
 private:
     int m_method;
