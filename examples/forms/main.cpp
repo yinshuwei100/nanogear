@@ -53,9 +53,9 @@ public:
 "<input type=\"submit\" value=\"Submit\" />\n"
 "</form>\n"
 "<h3>Post</h3>\n"
-"<form name=\"example_post\" action=\"/method/post\" method=\"post\">\n"
-"<input type=\"text\" name=\"example_post\"/>\n"
-"<input type=\"submit\"/>\n"
+"<form name=\"input\" action=\"post.do\" method=\"post\">\n"
+"<input type=\"text\" name=\"example\" />\n"
+"<input type=\"submit\" value=\"Submit\" />\n"
 "</form>\n"
 "<hr/>\n"
 "%1\n"
@@ -64,6 +64,10 @@ public:
 
         response.setStatus(Status::OK);
         response.setRepresentation(&m_representation);
+    }
+
+    virtual void handlePost(const Request& request, Response& response) {
+        handleGet(request, response);
     }
 private:
     Representation m_representation;
