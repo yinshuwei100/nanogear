@@ -76,7 +76,7 @@ public:
      * \return Return the method name as a string
      */
     QString toString()
-        { toString(m_method); }
+        { return toString(m_method); }
 
     /*!
      * Build this method from its integer code
