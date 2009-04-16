@@ -80,14 +80,18 @@ private:
     Representation m_representation;
 };
 
+class FormsApplication : public Application {
+public:
+    FormsApplication(int argc, char** argv) : Application(argc, argv) {}
+    
+    virtual Nanogear::Resource::Resource* createRoot() {
+        return new FormsExample();
+    }
+};
+
 int main(int argc, char** argv) {
-    Application app(argc, argv);
-
-    FormsExample example;
-
+    FormsApplication app(argc, argv);
     app.setServer(new HTTPServer());
-    app.setRoot(&example);
-
     return app.exec();
 }
 

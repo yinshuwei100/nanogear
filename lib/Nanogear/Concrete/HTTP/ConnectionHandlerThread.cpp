@@ -49,23 +49,24 @@ namespace Nanogear {
 namespace Concrete {
 namespace HTTP {
 
-
 void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "New thread started";
 
     qDebug() << Q_FUNC_INFO << "Socket descriptor: " << m_socketHandle;
-    if (!m_clientSocket.setSocketDescriptor(m_socketHandle)) {
+    m_clientSocket = new QTcpSocket;
+    
+    //connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
+    connect(m_clientSocket, SIGNAL(disconnected()), this, SLOT(quit()));
+    connect(m_clientSocket, SIGNAL(disconnected()), m_clientSocket, SLOT(deleteLater()));
+    
+    if (!m_clientSocket->setSocketDescriptor(m_socketHandle)) {
         qDebug() << Q_FUNC_INFO << "Failed to set socked descriptor";
-        deleteLater();
+        quit();
         return;
     }
 
-    connect(&m_clientSocket, SIGNAL(disconnected()), this, SLOT(quit()));
-    connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
-    connect(this, SIGNAL(finished()), &m_clientSocket, SLOT(deleteLater()));
-
-    m_clientSocket.waitForReadyRead(-1);
-    qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket.size() << ")";
+    m_clientSocket->waitForReadyRead();
+    qDebug() << Q_FUNC_INFO << "Handling request (size:" << m_clientSocket->size() << ")";
 
 
     /* ***************************************************************
@@ -74,7 +75,7 @@ void ConnectionHandlerThread::run() {
     // Separate the HTTP headers from the request body (if any)
     QByteArray rawRequestHeader;
     for (;;) {
-        QByteArray line = m_clientSocket.readLine();
+        QByteArray line(m_clientSocket->readLine());
         if (line == "\r\n")
             break;
         rawRequestHeader += line;
@@ -91,9 +92,9 @@ void ConnectionHandlerThread::run() {
     //
     QByteArray entityBody;
     if (requestHeader.hasKey("Content-Length"))
-        entityBody = m_clientSocket.read(requestHeader.value("Content-Length").toLongLong());
+        entityBody = m_clientSocket->read(requestHeader.value("Content-Length").toLongLong());
     else if (requestedMethod.hasBody())
-        entityBody = m_clientSocket.readAll();
+        entityBody = m_clientSocket->readAll();
     Resource::Representation entity(entityBody, requestHeader.value("Content-Type"));
 
     PreferenceList<MimeType> acceptedMimeTypes(
@@ -143,7 +144,8 @@ void ConnectionHandlerThread::run() {
     // it respond at every uri, if needed
     qDebug() << Q_FUNC_INFO << "Handling the request";
     Response response;
-    Application::instance()->root()->handleRequest(request, response);
+    Resource::Resource* resource = Application::instance()->createRoot();
+    resource->handleRequest(request, response);
 
 
 
@@ -152,9 +154,9 @@ void ConnectionHandlerThread::run() {
      * *******************************************************************/
     // Retrieve the representation from the response
     const Resource::Representation* representation = response.representation();
-    
-    QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
-    Q_UNUSED(codec); /*!< @todo use this field */
+
+    /// \note Unused
+    //QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
 
     QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
         requestHeader.majorVersion(), requestHeader.minorVersion());
@@ -190,12 +192,13 @@ void ConnectionHandlerThread::run() {
     qDebug() << Q_FUNC_INFO << "sending data back to the client (size:"
         << responseHeader.value("Content-Length") << ") -" << responseHeader.value("Content-Type");
         
-    m_clientSocket.write(responseHeader.toString().toUtf8());
-    m_clientSocket.write(responseData);
-    m_clientSocket.waitForBytesWritten(-1);
-    m_clientSocket.disconnectFromHost();
+    m_clientSocket->write(responseHeader.toString().toUtf8());
+    m_clientSocket->write(responseData);
+    m_clientSocket->disconnectFromHost();
+    m_clientSocket->waitForDisconnected();
 
-    QThread::run();
+    delete resource; // Clean-up
+    exec();
 }
 
 }

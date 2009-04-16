@@ -30,32 +30,6 @@
 
 namespace Nanogear {
 
-
-Application::Application(int argc, char** argv)
-    : QCoreApplication(argc, argv) {}
-
-
-void Application::setServer(Server* s) {
-    m_server = s;
-}
-Server* Application::server() const {
-    return m_server;
-}
-
-
-void Application::setRoot(Resource::Resource* root) {
-    m_root = root;
-}
-Resource::Resource* Application::root() const {
-    return m_root;
-}
-
-
-Application* Application::instance() {
-    return static_cast<Application*>(QCoreApplication::instance());
-}
-
-
 int Application::exec() {
     m_server->start();
     return QCoreApplication::exec();

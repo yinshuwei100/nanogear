@@ -58,38 +58,37 @@ public:
      * Warning: The data pointed to by argc and argv must stay valid for the
      * entire lifetime of the QCoreApplication object.
      */
-    Application(int argc, char** argv);
+    Application(int argc, char** argv) : QCoreApplication(argc, argv) {}
 
     /*!
      * Attach a server to this application. The server is automatically started
      * when calling exec()
      * \param server a pointer to a concrete implementation of the server class
      */
-    void setServer(Server* s);
+    void setServer(Server* server)
+        { m_server = server; }
 
     /*!
      * \return The currently attached server
      */
-    Server* server() const;
+    Server* server() const
+        { return m_server; }
 
     /*!
-     * Sets the root resource. Such resource will respond to any request at
-     * every path. To route requests to other resources build a Router resource
-     * and attach it to this Application using the setRoot method
-     * \param resource a pointer a Nanogear::Resource::Resource
+     * Every application must implement this function to create the root resource in the heap
+     * (which will answer requests to every URI)
+     * \note The instance of the object returned by this method is automatically deleted
+     *       by a Server implementation after handling the request.
+     * \return A pointer to the created resource
      */
-    void setRoot(Resource::Resource* r);
-
-    /*!
-     * \return The root resource
-     */
-    Resource::Resource* root() const;
+    virtual Resource::Resource* createRoot() { return 0; };
 
     /*!
      * Retrieve an instance of this Nanogear application
      * \return A pointer to the current instance
      */
-    static Application* instance();
+    static Application* instance()
+        { return static_cast<Application*>(QCoreApplication::instance()); }
 
     /*!
      * Start this Nanogear application. This method will also call the
@@ -100,7 +99,6 @@ public:
 
 private:
     Server* m_server;
-    Resource::Resource* m_root;
     Resource::Representation m_methodNotSupported;
     Resource::Representation m_notFound;
 };

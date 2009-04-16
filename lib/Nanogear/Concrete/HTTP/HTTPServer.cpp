@@ -39,7 +39,10 @@ void HTTPServer::start() {
 void HTTPServer::incomingConnection(int handle) {
     qDebug() << Q_FUNC_INFO << "Received new connection, starting a new thread...";
     
-    (new ConnectionHandlerThread(handle))->start();
+    ConnectionHandlerThread* handler = new ConnectionHandlerThread(handle);
+    connect(handler, SIGNAL(finished()), handler, SLOT(deleteLater()));
+    handler->start();
+    //(new ConnectionHandlerThread(handle))->start();
 }
 
 }

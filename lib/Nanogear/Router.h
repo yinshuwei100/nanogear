@@ -24,7 +24,8 @@
 #ifndef NANOGEAR_ROUTER_H
 #define NANOGEAR_ROUTER_H
 
-#include <QMap>
+#include <QHash>
+#include <QPointer>
 
 #include "Resource/Resource.h"
 #include "Resource/Representation.h"
@@ -34,19 +35,45 @@ namespace Nanogear {
 class Request;
 class Response;
 
+/*!
+ * \class Router
+ * \brief A resource that can route requests based on a URI pattern
+ *
+ * A router is simply a Resource which stores a mapping of URI paths to heap-allocated
+ * Resource instances (using a guarded pointer)
+ *
+ * \note Router's destructor will automatically check if the attached resources are still valid
+ *       pointers, if yes it deletes the referencing objects.
+ */
 class Router : public Resource::Resource {
 public:
     Router() : m_notFound("<h2>404 - Not found</h2>", "text/html") {}
 
+    /*!
+     * This destructor will automatically destroy the objects attached to this Router
+     */
+    virtual ~Router();
+
+    /*!
+     * This method is used internally to dispatch request to routed classes
+     */
     void handleRequest(const Request&, Response&);
 
-    void attach(const QString& path, Resource::Resource* resource)
+    /*!
+     * Attach a resource to this Router
+     * \param path The URI path on which the attached resource will respond to requests
+     * \param resource A pointer to a Resource object
+     */
+    void attach(const QString& path, QPointer<Resource::Resource> resource)
         { m_routes[path] = resource; }
 
-    const QMap<QString, Resource*>& routes() const
+    /*!
+     * \return A modifiable QHash representing the routes
+     */
+    QHash<QString, QPointer<Resource::Resource> >& routes() const
         { return m_routes; }
 private:
-    QMap<QString, Resource*> m_routes;
+    QHash<QString, QPointer<Resource::Resource> > m_routes;
     Nanogear::Resource::Representation m_notFound;
 };
 
