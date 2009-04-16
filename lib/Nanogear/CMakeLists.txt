@@ -1,6 +1,5 @@
 set(nanogear_SRCS
     MimeType.cpp
-    Application.cpp
     Status.cpp
     Router.cpp
     Method.cpp
@@ -16,8 +15,6 @@ set(nanogear_SRCS
 qt4_wrap_cpp(nanogear_SRCS
     Status.h
     Method.h
-
-    Concrete/HTTP/ConnectionHandlerThread.h
 )
 
 add_library(Nanogear SHARED ${nanogear_SRCS})

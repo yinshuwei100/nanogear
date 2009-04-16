@@ -24,7 +24,6 @@
 #ifndef NANOGEAR_CONCRETE_HTTP_CONNECTIONHANDLERTHREAD_H
 #define NANOGEAR_CONCRETE_HTTP_CONNECTIONHANDLERTHREAD_H
 
-#include <QDebug>
 #include <QThread>
 
 class QTcpSocket;
@@ -41,7 +40,6 @@ class HTTPServer;
  * \ingroup HTTP Server
  */
 class ConnectionHandlerThread : public QThread {
-    Q_OBJECT
 public:
     ConnectionHandlerThread(int handle) : m_socketHandle(handle) {}
 
