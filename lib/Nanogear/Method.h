@@ -106,7 +106,7 @@ public:
     bool hasBody() const;
 
     enum Type {
-        Invalid,
+        Invalid = -1,
         CONNECT,
         COPY,
         DELETE,

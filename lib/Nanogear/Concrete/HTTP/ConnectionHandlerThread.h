@@ -39,7 +39,6 @@ class HTTPServer;
  * \ingroup HTTP Server
  */
 class ConnectionHandlerThread : public QThread {
-    Q_OBJECT
 public:
     ConnectionHandlerThread(int handle) : m_socketHandle(handle) {}
 

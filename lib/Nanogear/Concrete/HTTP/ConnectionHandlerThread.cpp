@@ -89,12 +89,18 @@ void ConnectionHandlerThread::run() {
     // Fill Method by using informations supplied by the client
     Nanogear::Method requestedMethod(requestHeader.method().toUpper());
 
-    // Fill the request body, if needed
-    QByteArray requestBody = requestHeader.hasKey("Content-Length")
-        ? m_clientSocket.read(requestHeader.value("Content-Length").toLongLong()) : "";
-    if (requestedMethod.hasBody())
+    //
+    // Get the entity
+    //
+    QByteArray requestBody;
+    if (requestHeader.hasKey("Content-Length")) {
+        requestBody = m_clientSocket.read(requestHeader.value("Content-Length").toLongLong());
+    } else if (requestedMethod.hasBody()) {
         requestBody = m_clientSocket.readAll();
+    }
+    // Create a representation object from the entity body
     Resource::Representation entity(requestBody, requestHeader.value("Content-Type"));
+    qDebug() << Q_FUNC_INFO << entity.data(entity.formats().at(0));
 
     PreferenceList<MimeType> acceptedMimeTypes(
         getPreferenceListFromHeader<MimeType>(requestHeader.value("Accept")));
@@ -121,7 +127,7 @@ void ConnectionHandlerThread::run() {
 
     // Handle POST query string
     if (entity.hasFormat("application/x-www-form-urlencoded")) {
-        qDebug() << Q_FUNC_INFO << entity.data("application/x-www-form-urlencoded");
+        qDebug() << Q_FUNC_INFO << "Entity: " << entity.data("application/x-www-form-urlencoded");
         /*foreach (const KeyValuePair& keyValue, formData.encodedQueryItems()) {
             parameters[keyValue.first] = keyValue.second;
         }*/

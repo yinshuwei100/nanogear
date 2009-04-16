@@ -31,6 +31,7 @@ namespace Nanogear {
 bool Method::hasBody() const {
     switch (m_method) {
         case POST:
+            return true;
         case PUT:
             return true;
         default:
@@ -40,14 +41,12 @@ bool Method::hasBody() const {
 
 
 int Method::toType(const QString& key) {
-    const QMetaObject& metaObject = staticMetaObject;
-    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
+    QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
 QString Method::toString(int value) {
-    const QMetaObject& metaObject = staticMetaObject;
-    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
+    QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.valueToKey(value);
 }
 
