@@ -64,10 +64,10 @@ public:
     bool isIndexAllowed() const
         { return m_indexAllowed; }
 private:
+    QDir m_root;
     bool m_indexAllowed;
     QString m_indexName;
     QString m_xhtmlRepr;
-    QDir m_root;
     
     Nanogear::Resource::Representation m_notAllowed;
     Nanogear::Resource::Representation m_directoryIndex;
