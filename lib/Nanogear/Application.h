@@ -27,6 +27,7 @@
 
 #include <QCoreApplication>
 
+#include "Server.h"
 #include "Response.h"
 
 #include "Resource/Representation.h"
@@ -95,7 +96,8 @@ public:
      * Server::start() method for you.
      * \return The value set to exit() (which is 0 if you call quit())
      */
-    int exec();
+    int exec()
+        { m_server->start(); return QCoreApplication::exec(); }
 
 private:
     Server* m_server;

@@ -70,7 +70,7 @@ public:
     /*!
      * \return A modifiable QHash representing the routes
      */
-    QHash<QString, QPointer<Resource::Resource> >& routes() const
+    QHash<QString, QPointer<Resource::Resource> >& routes()
         { return m_routes; }
 private:
     QHash<QString, QPointer<Resource::Resource> > m_routes;
