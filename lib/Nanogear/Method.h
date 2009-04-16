@@ -63,7 +63,7 @@ public:
      * This is an overloaded constructor provided for convenience
      * \param method the code representing a method
      */
-    Method(int method) : m_method(method) {};
+    Method(int method) : m_method(method) {}
 
     /*!
      * Build this object from the name of the method
