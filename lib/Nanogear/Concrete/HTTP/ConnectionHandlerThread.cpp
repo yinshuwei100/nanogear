@@ -25,7 +25,6 @@
 
 #include <QUrl>
 #include <QPair>
-#include <QPointer>
 #include <QString>
 #include <QTcpSocket>
 #include <QHostAddress>
@@ -112,7 +111,6 @@ void ConnectionHandlerThread::run() {
 
     // Extract the GET query string (if any)
     QUrl queryString(requestHeader.path());
-    QUrl formData(entity.text());
     QHash<QString, QString> parameters;
     
     // This is just a way to overcome the fact Q_FOREACH is a two-args macro...
@@ -120,8 +118,13 @@ void ConnectionHandlerThread::run() {
     foreach (const KeyValuePair& keyValue, queryString.encodedQueryItems()) {
         parameters[keyValue.first] = keyValue.second;
     }
-    foreach (const KeyValuePair& keyValue, formData.encodedQueryItems()) {
-        parameters[keyValue.first] = keyValue.second;
+
+    // Handle POST query string
+    if (entity.hasFormat("application/x-www-form-urlencoded")) {
+        qDebug() << Q_FUNC_INFO << entity.data("application/x-www-form-urlencoded");
+        /*foreach (const KeyValuePair& keyValue, formData.encodedQueryItems()) {
+            parameters[keyValue.first] = keyValue.second;
+        }*/
     }
     
     
@@ -168,12 +171,14 @@ void ConnectionHandlerThread::run() {
 
     // If the resource provides only one representation send it anyway
     QByteArray responseData;
-    if (representation->formats().count() == 1) {
-        responseHeader.setContentType(representation->formats().at(0));
-        responseData = representation->data(representation->formats().at(0));
-    } else {
-        responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
-        responseData = representation->data(clientInfo.acceptedMimeTypes());
+    if (representation != 0) {
+        if (representation->formats().count() == 1) {
+            responseHeader.setContentType(representation->formats().at(0));
+            responseData = representation->data(representation->formats().at(0));
+        } else {
+            responseHeader.setContentType(representation->format(clientInfo.acceptedMimeTypes()).toString());
+            responseData = representation->data(clientInfo.acceptedMimeTypes());
+        }
     }
         
     responseHeader.setValue("Content-Length",
