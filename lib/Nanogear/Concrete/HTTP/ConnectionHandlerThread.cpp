@@ -188,7 +188,7 @@ void ConnectionHandlerThread::run() {
 
     // And finally send data back to the client
     qDebug() << Q_FUNC_INFO << "sending data back to the client (size:"
-        << responseHeader.value("Content-Length") << ")";
+        << responseHeader.value("Content-Length") << ") -" << responseHeader.value("Content-Type");
         
     m_clientSocket.write(responseHeader.toString().toUtf8());
     m_clientSocket.write(responseData);

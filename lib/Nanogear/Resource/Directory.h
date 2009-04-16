@@ -63,11 +63,18 @@ public:
      */
     bool isIndexAllowed() const
         { return m_indexAllowed; }
+
+    /*!
+     * \return a modifiable QHash mapping file extensions to MIME types
+     */
+    QHash<QString, QString>& mimeMappings()
+        { return m_mimeMappings; }
 private:
     QDir m_root;
     bool m_indexAllowed;
     QString m_indexName;
     QString m_xhtmlRepr;
+    QHash<QString, QString> m_mimeMappings;
     
     Nanogear::Resource::Representation m_notAllowed;
     Nanogear::Resource::Representation m_directoryIndex;
