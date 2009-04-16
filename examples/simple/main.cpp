@@ -56,19 +56,24 @@ private:
     Nanogear::Resource::Representation m_representation;
 };
 
-int main(int argc, char** argv) {
-    Application app(argc, argv);
-
-    RootResource* root = new RootResource();
-    SecondResource* secondResource = new SecondResource();
-
-    Router* router = new Router();
-    router->attach("/", root);
-    router->attach("/second", secondResource);
+class SimpleApplication : public Application {
+public:
+    SimpleApplication(int argc, char** argv) : Application(argc, argv) {}
     
-    app.setServer(new HTTPServer());
-    app.setRoot(router);
+    virtual Nanogear::Resource::Resource* createRoot() {
+        Router* router = new Router();
+        RootResource* root = new RootResource();
+        SecondResource* secondResource = new SecondResource();
+        router->attach("/", root);
+        router->attach("/second", secondResource);
+        
+        return router;
+    }
+};
 
+int main(int argc, char** argv) {
+    SimpleApplication app(argc, argv);
+    app.setServer(new HTTPServer());
     return app.exec();
 }
 

@@ -30,20 +30,26 @@
 
 namespace Nanogear {
 
+Router::~Router() {
+    QHash<QString, QPointer<Resource::Resource> >::ConstIterator it;
+    for (it = m_routes.begin(); it != m_routes.end(); ++it) {
+        if (!it->isNull()) {
+            qDebug() << Q_FUNC_INFO << "Deleting resource attached to" << it.key();
+            delete (*it);
+        }
+    }
+}
+
+
 void Router::handleRequest(const Request& request, Response& response) {
     bool found = false;
     
-    foreach(const QString& routePath, m_routes.keys()) {
-        if (routePath == request.resourceRef()) {
-            // Direct match found
-            // Get the class and make it handle the request
-            qDebug() << Q_FUNC_INFO << "Found a direct match ("
-                << routePath << ")" << "with requested path ("
-                << request.resourceRef() << ")";
-            m_routes.value(routePath)->handleRequest(request, response);
-            found = true;
-            break;
-        }
+    if (!m_routes.value(request.resourceRef()).isNull()) {
+        // Direct match found, get the class pointer and make it handle the request
+        qDebug() << Q_FUNC_INFO << "Found a direct match with requested path ("
+            << request.resourceRef() << ")";
+        m_routes.value(request.resourceRef())->handleRequest(request, response);
+        found = true;
     }
 
     if (!found) {

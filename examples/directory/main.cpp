@@ -32,14 +32,18 @@ using namespace Nanogear;
 using namespace Nanogear::Concrete::HTTP;
 using namespace Nanogear::Resource;
 
+class DirectoryApplication : public Application {
+public:
+    DirectoryApplication(int argc, char** argv) : Application(argc, argv) {}
+    
+    virtual Nanogear::Resource::Resource* createRoot() {
+        return new Directory(".");
+    }
+};
+
 int main(int argc, char** argv) {
-    Application app(argc, argv);
-
-    Directory* directory = new Directory(".");
-
+    DirectoryApplication app(argc, argv);
     app.setServer(new HTTPServer());
-    app.setRoot(directory);
-
     return app.exec();
 }
 

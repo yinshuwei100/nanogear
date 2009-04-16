@@ -54,7 +54,7 @@ class Representation;
  * \see Roy Fielding's dissertation at:
  *     http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_1
  */
-class Resource {
+class Resource : public QObject {
 public:
     /*!
      * Empty virtual destructor

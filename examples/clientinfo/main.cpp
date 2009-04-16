@@ -19,5 +19,5 @@
 #include <Nanogear/Application>
 
 int main(int argc, char **argv) {
-    Nanogear::Application app(argc, argv);
+    return 0;
 }
