@@ -1,3 +1,3 @@
-include_directories(${CMAKE_SOURCE_DIR}/lib)
+include_directories(${CMAKE_SOURCE_DIR}/src/core ${CMAKE_SOURCE_DIR}/src/connectors)
 add_executable(clientinfo main.cpp)
 target_link_libraries(clientinfo Nanogear ${QT_LIBRARIES})
