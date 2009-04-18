@@ -56,6 +56,19 @@ public:
         { return m_root.absolutePath(); }
 
     /*!
+     * Set the index file name
+     * \param fileName Index file name
+     */
+    void setIndexName(const QString& indexName)
+        { m_indexName = indexName; }
+
+    /*!
+     * \return The index file name
+     */
+    const QString& indexName() const
+        { return m_indexName; }
+
+    /*!
      * Set this to true to display a directory index when no index file is
      * found. If false, this Resource will answer with Status::Forbidden
      * \param indexAllowed Whether or not allow directory index generation
@@ -75,6 +88,8 @@ public:
     QHash<QString, QString>& mimeMappings()
         { return m_mimeMappings; }
 private:
+    void representFile(const QFileInfo& pathInfo, NResponse& response);
+
     QDir m_root;
     bool m_indexAllowed;
     QString m_indexName;
