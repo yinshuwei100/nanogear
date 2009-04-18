@@ -108,18 +108,24 @@ void NDirectoryResource::handleGet(const NRequest& request, NResponse& response)
             }
         } else {
             // Send a file back to the client
-            QString mimeType("application/octet-stream");
 
-            if (m_mimeMappings.value(pathInfo.completeSuffix()).isEmpty()) {
-                // try libmagic
-                // TODO: Handle libmagic erros!
-                magic_t magicCookie = magic_open(MAGIC_MIME_TYPE | MAGIC_SYMLINK | MAGIC_ERROR);
-                magic_load(magicCookie, NULL);
-                mimeType = magic_file(magicCookie, pathInfo.absoluteFilePath().toLatin1().data());
-                magic_close(magicCookie);
-            } else {
-                // use custom mappings
-                mimeType = m_mimeMappings.value(pathInfo.completeSuffix());
+            // Try with libmagic first, it has a fairly complete default database. When an error
+            // occurs, mimeType will be empty
+            // TODO: Handle libmagic errors
+            // TODO: Create a thin layer over libmagic?
+            magic_t magicCookie = magic_open(MAGIC_MIME_TYPE | MAGIC_SYMLINK | MAGIC_ERROR);
+            magic_load(magicCookie, NULL);
+            QString mimeType(magic_file(magicCookie, pathInfo.absoluteFilePath().toLatin1().data()));
+            magic_close(magicCookie);
+
+            // If libmagic faild to find the MIME type, we query for custom-mapped extensions
+            // if none is found we return a generic "application/octet-stream" MIME type
+            if (mimeType.isEmpty()) {
+                QString customMapping(m_mimeMappings.value(pathInfo.completeSuffix()).isEmpty());
+                if (!customMapping.isEmpty())
+                    mimeType = customMapping;
+                else
+                    mimeType = "application/octet-stream";
             }
 
             // FIXME: Awful
