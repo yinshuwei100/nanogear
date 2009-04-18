@@ -23,6 +23,7 @@
 
 #include "ndirectoryresource.h"
 
+#include <magic.h>
 #include <QFile>
 #include <QFileInfo>
 
@@ -83,6 +84,7 @@ NDirectoryResource::NDirectoryResource(const QString& root) : m_root(root), m_in
     m_mimeMappings["bz2"] = "application/x-bzip";
     m_mimeMappings["tbz"] = "application/x-bzip-compressed-tar";
     m_mimeMappings["tar.bz2"] = "application/x-bzip-compressed-tar";
+    m_mimeMappings["cmake"] = "text/plain";
 
     m_notAllowed.setData("<html><head><title>403 Forbidden</title></head><body>"
 "<h1>Forbidden</h1>"
@@ -162,8 +164,18 @@ void NDirectoryResource::handleGet(const NRequest& request, NResponse& response)
         } else {
             // Send a file back to the client
             QString mimeType("application/octet-stream");
-            if (!m_mimeMappings.value(pathInfo.completeSuffix()).isEmpty())
+
+            if (m_mimeMappings.value(pathInfo.completeSuffix()).isEmpty()) {
+                // try libmagic
+                // TODO: Handle libmagic erros!
+                magic_t magicCookie = magic_open(MAGIC_MIME_TYPE | MAGIC_SYMLINK | MAGIC_ERROR);
+                magic_load(magicCookie, NULL);
+                mimeType = magic_file(magicCookie, pathInfo.absoluteFilePath().toLatin1().data());
+                magic_close(magicCookie);
+            } else {
+                // use custom mappings
                 mimeType = m_mimeMappings.value(pathInfo.completeSuffix());
+            }
 
             // FIXME: Awful
             QFile file(pathInfo.absoluteFilePath());

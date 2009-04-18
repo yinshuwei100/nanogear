@@ -93,4 +93,4 @@ private:
     QString m_userAgent;
 };
 
-#endif // NCLIENTINFO_H
+#endif /* NCLIENTINFO_H */
