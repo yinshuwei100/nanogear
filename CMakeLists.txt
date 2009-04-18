@@ -29,4 +29,4 @@ else (${PEDANTIC})
 endif (${PEDANTIC})
 
 add_subdirectory(examples)
-add_subdirectory(lib)
+add_subdirectory(src)

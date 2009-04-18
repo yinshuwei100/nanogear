@@ -17,51 +17,48 @@
  */
 
 #include <QString>
-#include <QDebug>
 
-#include <Nanogear/Application>
-#include <Nanogear/Server>
-#include <Nanogear/Concrete/HTTP/HTTPServer>
-#include <Nanogear/Router>
-#include <Nanogear/Resource/Resource>
-#include <Nanogear/Resource/Representation>
-#include <Nanogear/Status>
+#include <NApplication>
+#include <NResource>
+#include <NRequest>
+#include <NResponse>
+#include <NRepresentation>
+#include <NStatus>
+#include <NRouter>
+#include <ihttp/NHTTPServer>
 
-using namespace Nanogear;
-using namespace Nanogear::Concrete::HTTP;
-
-class RootResource : public Resource::Resource {
+class RootResource : public NResource {
 public:
     RootResource() : m_representation("<h1>Simple example</h1><br/><a href=\"/second\">Another resource</a>", "text/html") {}
 
-    virtual void handleGet(const Request& request, Response& response) {
-        response.setStatus(Status::OK);
+    virtual void handleGet(const NRequest& request, NResponse& response) {
+        response.setStatus(NStatus::OK);
         response.setRepresentation(&m_representation);
     }
 
 private:
-    Nanogear::Resource::Representation m_representation;
+    NRepresentation m_representation;
 };
 
-class SecondResource : public Resource::Resource {
+class SecondResource : public NResource {
 public:
     SecondResource() : m_representation("<h1>Another resource</h1>", "text/html") {}
 
-    virtual void handleGet(const Request& request, Response& response) {
-        response.setStatus(Status::OK);
+    virtual void handleGet(const NRequest& request, NResponse& response) {
+        response.setStatus(NStatus::OK);
         response.setRepresentation(&m_representation);
     }
 
 private:
-    Nanogear::Resource::Representation m_representation;
+    NRepresentation m_representation;
 };
 
-class SimpleApplication : public Application {
+class SimpleApplication : public NApplication {
 public:
-    SimpleApplication(int argc, char** argv) : Application(argc, argv) {}
+    SimpleApplication(int argc, char** argv) : NApplication(argc, argv) {}
     
-    virtual Nanogear::Resource::Resource* createRoot() {
-        Router* router = new Router();
+    virtual NResource* createRoot() {
+        NRouter* router = new NRouter();
         RootResource* root = new RootResource();
         SecondResource* secondResource = new SecondResource();
         router->attach("/", root);
@@ -73,7 +70,7 @@ public:
 
 int main(int argc, char** argv) {
     SimpleApplication app(argc, argv);
-    app.setServer(new HTTPServer());
+    app.setServer(new NHTTPServer());
     return app.exec();
 }
 
