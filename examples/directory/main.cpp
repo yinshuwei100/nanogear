@@ -32,7 +32,9 @@ public:
     DirectoryApplication(int argc, char** argv) : NApplication(argc, argv) {}
     
     virtual NResource* createRoot() {
-        return new NDirectoryResource(".");
+        NDirectoryResource* directory = new NDirectoryResource(".");
+        directory->setIndexName("index.html");
+        return directory;
     }
 };
 
