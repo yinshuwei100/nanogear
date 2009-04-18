@@ -5,10 +5,10 @@ message(STATUS "This is Nanogear ${NANOGEAR_MAJOR}.${NANOGEAR_MINOR}.${NANOGEAR_
 
 # Documentation
 find_package(Doxygen)
-if (DOXYGEN_FOUND)
+if (DOXYGEN_FOUND AND DOT_FOUND)
     message(STATUS "Building documentation")
     add_subdirectory(docs)
-endif (DOXYGEN_FOUND)
+endif (DOXYGEN_FOUND AND DOT_FOUND)
 
 
 find_package(Qt4 REQUIRED)

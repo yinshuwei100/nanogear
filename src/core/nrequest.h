@@ -92,7 +92,7 @@ public:
      * Set the client informations attached to this request
      * \param clientInfo The informations supplied by the client
      */
-    void setNClientInfo(const NClientInfo& clientInfo)
+    void setClientInfo(const NClientInfo& clientInfo)
         { m_clientInfo = clientInfo; }
 
     /*!

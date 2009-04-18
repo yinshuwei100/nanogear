@@ -16,34 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QString>
-#include <QDebug>
+#include <NApplication>
+#include <NServer>
 
-#include <Nanogear/Application>
-#include <Nanogear/Server>
-#include <Nanogear/Concrete/HTTP/HTTPServer>
-#include <Nanogear/Router>
-#include <Nanogear/Resource/Resource>
-#include <Nanogear/Resource/Representation>
-#include <Nanogear/Resource/Directory>
-#include <Nanogear/Status>
+#include <NRouter>
+#include <NResource>
+#include <NRepresentation>
+#include <NDirectoryResource>
+#include <NStatus>
 
-using namespace Nanogear;
-using namespace Nanogear::Concrete::HTTP;
-using namespace Nanogear::Resource;
+#include <ihttp/NHTTPServer>
 
-class DirectoryApplication : public Application {
+class DirectoryApplication : public NApplication {
 public:
-    DirectoryApplication(int argc, char** argv) : Application(argc, argv) {}
+    DirectoryApplication(int argc, char** argv) : NApplication(argc, argv) {}
     
-    virtual Nanogear::Resource::Resource* createRoot() {
-        return new Directory(".");
+    virtual NResource* createRoot() {
+        return new NDirectoryResource(".");
     }
 };
 
 int main(int argc, char** argv) {
     DirectoryApplication app(argc, argv);
-    app.setServer(new HTTPServer());
+    app.setServer(new NHTTPServer());
     return app.exec();
 }
 

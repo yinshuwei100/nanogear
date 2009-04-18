@@ -19,21 +19,17 @@
 #include <QString>
 #include <QDebug>
 
-#include <Nanogear/Application>
-#include <Nanogear/Concrete/HTTP/HTTPServer>
-#include <Nanogear/Status>
-#include <Nanogear/Response>
-#include <Nanogear/Request>
-#include <Nanogear/Resource/Resource>
-#include <Nanogear/Resource/Representation>
+#include <NApplication>
+#include <NStatus>
+#include <NResponse>
+#include <NRequest>
+#include <NResource>
+#include <NRepresentation>
+#include <ihttp/NHTTPServer>
 
-using namespace Nanogear;
-using namespace Nanogear::Concrete::HTTP;
-using namespace Nanogear::Resource;
-
-class FormsExample : public Nanogear::Resource::Resource {
+class FormsExample : public NResource {
 public:
-    virtual void handleGet(const Request& request, Response& response) {
+    virtual void handleGet(const NRequest& request, NResponse& response) {
         QString parametersString;
         foreach (const QString& key, request.parameters().keys()) {
             parametersString += (key + " = " + request.parameters()[key] + "<br/>\n");
@@ -69,29 +65,29 @@ public:
 "</body>\n"
 "</html>\n").arg(request.method().toString()).arg(parametersString));
 
-        response.setStatus(Status::OK);
+        response.setStatus(NStatus::OK);
         response.setRepresentation(&m_representation);
     }
 
-    virtual void handlePost(const Request& request, Response& response) {
+    virtual void handlePost(const NRequest& request, NResponse& response) {
         handleGet(request, response);
     }
 private:
-    Representation m_representation;
+    NRepresentation m_representation;
 };
 
-class FormsApplication : public Application {
+class FormsApplication : public NApplication {
 public:
-    FormsApplication(int argc, char** argv) : Application(argc, argv) {}
+    FormsApplication(int argc, char** argv) : NApplication(argc, argv) {}
     
-    virtual Nanogear::Resource::Resource* createRoot() {
+    virtual NResource* createRoot() {
         return new FormsExample();
     }
 };
 
 int main(int argc, char** argv) {
     FormsApplication app(argc, argv);
-    app.setServer(new HTTPServer());
+    app.setServer(new NHTTPServer());
     return app.exec();
 }
 
