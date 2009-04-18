@@ -31,61 +31,6 @@
 #include "nresponse.h"
 
 NDirectoryResource::NDirectoryResource(const QString& root) : m_root(root), m_indexAllowed(true) {
-    m_mimeMappings["rpm"] = "application/x-rpm";
-    m_mimeMappings["pdf"] = "application/pdf";
-    m_mimeMappings["sig"] = "application/pgp-signature";
-    m_mimeMappings["spl"] = "application/futuresplash";
-    m_mimeMappings["class"] = "application/octet-stream";
-    m_mimeMappings["ps"] = "application/postscript";
-    m_mimeMappings["torrent"] = "application/x-bittorrent";
-    m_mimeMappings["dvi"] = "application/x-dvi";
-    m_mimeMappings["gz"] = "application/x-gzip";
-    m_mimeMappings["pac"] = "application/x-ns-proxy-autoconfig";
-    m_mimeMappings["swf"] = "application/x-shockwave-flash";
-    m_mimeMappings["tar.gz"] = "application/x-tgz";
-    m_mimeMappings["tgz"] = "application/x-tgz";
-    m_mimeMappings["tar"] = "application/x-tar";
-    m_mimeMappings["zip"] = "application/zip";
-    m_mimeMappings["mp3"] = "audio/mpeg";
-    m_mimeMappings["m3u"] = "audio/x-mpegurl";
-    m_mimeMappings["wma"] = "audio/x-ms-wma";
-    m_mimeMappings["wax"] = "audio/x-ms-wax";
-    m_mimeMappings["ogg"] = "application/ogg";
-    m_mimeMappings["wav"] = "audio/x-wav";
-    m_mimeMappings["gif"] = "image/gif";
-    m_mimeMappings["jar"] = "application/x-java-archive";
-    m_mimeMappings["jpg"] = "image/jpeg";
-    m_mimeMappings["jpeg"] = "image/jpeg";
-    m_mimeMappings["png"] = "image/png";
-    m_mimeMappings["xbm"] = "image/x-xbitmap";
-    m_mimeMappings["xpm"] = "image/x-xpixmap";
-    m_mimeMappings["xwd"] = "image/x-xwindowdump";
-    m_mimeMappings["css"] = "text/css";
-    m_mimeMappings["html"] = "text/html";
-    m_mimeMappings["htm"] = "text/html";
-    m_mimeMappings["js"] = "text/javascript";
-    m_mimeMappings["asc"] = "text/plain";
-    m_mimeMappings["c"] = "text/plain";
-    m_mimeMappings["cpp"] = "text/plain";
-    m_mimeMappings["log"] = "text/plain";
-    m_mimeMappings["conf"] = "text/plain";
-    m_mimeMappings["text"] = "text/plain";
-    m_mimeMappings["txt"] = "text/plain";
-    m_mimeMappings["dtd"] = "text/xml";
-    m_mimeMappings["xml"] = "text/xml";
-    m_mimeMappings["mpeg"] = "video/mpeg";
-    m_mimeMappings["mpg"] = "video/mpeg";
-    m_mimeMappings["mov"] = "video/quicktime";
-    m_mimeMappings["qt"] = "video/quicktime";
-    m_mimeMappings["avi"] = "video/x-msvideo";
-    m_mimeMappings["asf"] = "video/x-ms-asf";
-    m_mimeMappings["asx"] = "video/x-ms-asf";
-    m_mimeMappings["wmv"] = "video/x-ms-wmv";
-    m_mimeMappings["bz2"] = "application/x-bzip";
-    m_mimeMappings["tbz"] = "application/x-bzip-compressed-tar";
-    m_mimeMappings["tar.bz2"] = "application/x-bzip-compressed-tar";
-    m_mimeMappings["cmake"] = "text/plain";
-
     m_notAllowed.setData("<html><head><title>403 Forbidden</title></head><body>"
 "<h1>Forbidden</h1>"
 "<p>Unable to display this resource</p>"
