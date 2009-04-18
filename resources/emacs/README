@@ -1,7 +1,0 @@
-This directory contains resources to be used with emacs.
-
-In particular:
-
-- yasnippet: contains some useful snippets to be used with yasnippet
-             (version >0.5.5) NOTE: You may need to adjust some values,
-             in particular ngrh and ngh have my name in the copyright notice.
