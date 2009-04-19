@@ -29,4 +29,3 @@ endif (${PEDANTIC})
 
 add_subdirectory(examples)
 add_subdirectory(src)
-add_subdirectory(3rdparty)
