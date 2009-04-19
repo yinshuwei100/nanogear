@@ -22,7 +22,7 @@
  */
 
 #ifndef NPREFERENCELIST_H
-#define NPREFERENCELIST_H
+#define NPREFERENCELIST_H 1
 
 #include <QMap>
 #include <QList>
@@ -41,7 +41,7 @@ public:
      * An empty constructor, the result is an empty list
      */
     NPreferenceList() {}
-
+    
 
     NPreferenceList(const QList< NPreference<T> >& other)
         : QList< NPreference<T> >(other) {}

@@ -10,7 +10,6 @@ if (DOXYGEN_FOUND AND DOT_FOUND)
     add_subdirectory(docs)
 endif (DOXYGEN_FOUND AND DOT_FOUND)
 
-
 find_package(Qt4 REQUIRED)
 set(QT_USE_QTNETWORK 1)
 set(QT_DONT_USE_QTGUI 1)
@@ -30,3 +29,4 @@ endif (${PEDANTIC})
 
 add_subdirectory(examples)
 add_subdirectory(src)
+add_subdirectory(3rdparty)

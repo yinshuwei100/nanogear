@@ -10,4 +10,4 @@ set_target_properties(NanogearIHTTPConnector PROPERTIES
     SOVERSION ${NANOGEAR_MAJOR}
 )
 
-target_link_libraries(NanogearIHTTPConnector ${QT_LIBRARIES})
+target_link_libraries(NanogearIHTTPConnector Nanogear ${QT_LIBRARIES})

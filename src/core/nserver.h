@@ -34,12 +34,9 @@
  * This abstract class is implemented by concrete server.
  *
  * A Server is usually attached to an Application object.
- *
- * Nanogear ships with a concrete, multi-threaded HTTP server.
  */
 class NServer : public QObject {
 public:
-
     /*!
      * The default constructor
      * \param port The server will listen on to this port

@@ -29,11 +29,8 @@
 
 #include "nstatus.h"
 #include "nresponse.h"
-#include "napplication.h"
-
 
 class NRequest;
-class NResponse;
 class NRepresentation;
 
 /*!

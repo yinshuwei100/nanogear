@@ -24,6 +24,7 @@
 #ifndef NREQUEST_H
 #define NREQUEST_H
 
+#include <QObject>
 #include <QHash>
 #include <QString>
 #include <QByteArray>
@@ -52,7 +53,7 @@ class NRepresentation;
  *
  * The request body is represented by a read-only QByteArray
  */
-class NRequest {
+class NRequest : public QObject {
 public:
     /*!
      * A constructor used to initialize values.
