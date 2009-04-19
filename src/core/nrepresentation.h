@@ -22,7 +22,7 @@
  */
 
 #ifndef NREPRESENTATION_H
-#define NREPRESENTATION_H
+#define NREPRESENTATION_H 1
 
 #include <QMimeData>
 #include <QByteArray>
@@ -38,7 +38,7 @@
  * describe those bytes."
  *
  * \see Roy Fielding's dissertation at:
- *     http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_2
+ *      http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_2
  */
 class NRepresentation : public QMimeData {
 public:

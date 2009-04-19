@@ -24,6 +24,7 @@
 #ifndef NRESPONSE_H
 #define NRESPONSE_H
 
+#include <QObject>
 #include <QDateTime>
 
 #include "nstatus.h"
@@ -38,7 +39,7 @@ class NRepresentation;
  * task to fill a Response object which will be sent back to the client by a
  * concrete implementation of Server
  */
-class NResponse {
+class NResponse : public QObject {
 public:
     /*!
      * Initializes an invalid response object

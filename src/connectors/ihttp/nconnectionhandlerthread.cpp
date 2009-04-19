@@ -34,6 +34,7 @@
 #include <QDateTime>
 #include <QTcpServer>
 
+#include <napplication.h>
 #include <nresponse.h>
 #include <nrequest.h>
 #include <nmethod.h>
@@ -41,6 +42,7 @@
 #include <nstatus.h>
 #include <nresource.h>
 #include <nrepresentation.h>
+#include <npreferencelist.h>
 
 #include "nhttpserver.h"
 #include "nutility.h"

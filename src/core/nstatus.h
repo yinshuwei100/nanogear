@@ -27,7 +27,6 @@
 #include <QObject>
 #include <QString>
 
-
 /*!
  * \class NStatus
  * \brief Response status code

@@ -27,8 +27,6 @@
 #include <QRegExp>
 #include <QStringList>
 
-#include "npreferencelist.h"
-
 void NRepresentation::setXhtml(const QString& xhtml) {
     setData("application/xhtml+xml", xhtml.toUtf8());
 
