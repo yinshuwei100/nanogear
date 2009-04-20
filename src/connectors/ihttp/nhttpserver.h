@@ -28,6 +28,8 @@
 
 #include <nserver.h>
 
+class QTcpSocket;
+
 /*!
  * \class NHTTPServer
  * \brief A simple HTTP 1.1 server
@@ -38,7 +40,8 @@
  *
  * \note It is not meant to be production-ready.
  */
-class NHTTPServer : public NServer, public QTcpServer {
+class NHTTPServer : public QTcpServer, public NServer {
+    Q_OBJECT
 public:
     NHTTPServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
         NServer(port, listenAddress) {}
@@ -46,8 +49,12 @@ public:
 public:
     void start();
 
-protected:
-    virtual void incomingConnection(int handle);
+public slots:
+    void onNewConnection();
+    void onClientReadyRead();
+
+private:
+    QTcpSocket* m_clientSocket;
 };
 
 #endif /* CONNECTORS_IHTTP_NHTTPSERVER_H */
