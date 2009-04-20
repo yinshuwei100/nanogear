@@ -24,7 +24,6 @@
 #ifndef NSERVER_H
 #define NSERVER_H
 
-#include <QObject>
 #include <QHostAddress>
 
 /*!
@@ -35,7 +34,7 @@
  *
  * A Server is usually attached to an Application object.
  */
-class NServer : public QObject {
+class NServer {
 public:
     /*!
      * The default constructor
