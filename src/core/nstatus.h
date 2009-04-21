@@ -33,7 +33,9 @@
  *
  * This class is used to send Response codes to the clients
  */
-class NStatus {
+
+class NStatus
+{
     Q_GADGET
     Q_ENUMS(Type)
 public:
@@ -66,35 +68,35 @@ public:
      * \param name The status name
      */
     void fromString(const QString& name)
-        { m_status = toType(name); }
+    { m_status = toType(name); }
 
     /*!
      * \return The string representation of this status code
      */
     QString toString() const
-        { return toString(m_status); }
+    { return toString(m_status); }
 
     /*!
      * Construct this Status from its code
      * \param status the status code
      */
     void fromType(int status)
-        { m_status = status; }
+    { m_status = status; }
 
     /*!
      * \return The status code
      */
     int toType() const
-        { return m_status; }
+    { return m_status; }
 
     bool operator==(const NStatus& type) const
-        { return m_status == type.m_status; }
+    { return m_status == type.m_status; }
 
     /*!
      * \return true if this Status is valid
      */
     bool isValid() const
-        { return m_status != Invalid; }
+    { return m_status != Invalid; }
 
     enum Type {
         Invalid = 0,
@@ -157,7 +159,7 @@ public:
 private:
     QString toString(int value) const;
     int toType(const QString& key) const;
-    
+
     int m_status;
 };
 

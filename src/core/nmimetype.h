@@ -32,7 +32,9 @@
  *
  * This class represents a MIME type as described in RFC2046
  */
-class NMimeType {
+
+class NMimeType
+{
 public:
     /*!
      * A default constructor, it will build a MimeType representing all possible
@@ -46,14 +48,14 @@ public:
      * \param type A string representation of the MIME type
      */
     NMimeType(const QString& type) :
-        m_whole(type), m_type("*"), m_subtype("*") {}
+            m_whole(type), m_type("*"), m_subtype("*") {}
 
     /*!
      * An overloaded constructor provided for convenience
      * \param type A C-style string representing the MIME type
      */
     NMimeType(const char* type) :
-        m_whole(type), m_type("*"), m_subtype("*") {}
+            m_whole(type), m_type("*"), m_subtype("*") {}
 
     /*!
      * Build this MimeType object from its string representation

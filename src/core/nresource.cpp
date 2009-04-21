@@ -28,7 +28,8 @@
 #include "nrequest.h"
 #include "nresponse.h"
 
-void NResource::handleRequest(const NRequest& request, NResponse& response) {
+void NResource::handleRequest(const NRequest& request, NResponse& response)
+{
     if (request.method() == NMethod::GET) {
         handleGet(request, response);
     } else if (request.method() == NMethod::PUT) {

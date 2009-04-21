@@ -31,6 +31,7 @@
 #include "nresponse.h"
 
 class NRequest;
+
 class NRepresentation;
 
 /*!
@@ -49,7 +50,9 @@ class NRepresentation;
  * \see Roy Fielding's dissertation at:
  *     http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_1
  */
-class NResource : public QObject {
+
+class NResource : public QObject
+{
 public:
     /*!
      * Empty virtual destructor
@@ -75,7 +78,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleGet(const NRequest& request, NResponse& response)
-        { response.setStatus(NStatus::MethodNotAllowed); }
+    { response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a HEAD request.
@@ -87,7 +90,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleHead(const NRequest& request, NResponse& response)
-        { response.setStatus(NStatus::MethodNotAllowed); }
+    { response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a PUT request.
@@ -97,7 +100,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handlePut(const NRequest& request, NResponse& response)
-        { response.setStatus(NStatus::MethodNotAllowed); }
+    { response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a POST request.
@@ -107,8 +110,8 @@ protected:
      *    will be sent to the client
      */
     virtual void handlePost(const NRequest& request, NResponse& response)
-        { response.setStatus(NStatus::MethodNotAllowed); }
-        
+    { response.setStatus(NStatus::MethodNotAllowed); }
+
     /*!
      * Override this method in a derived class to handle a OPTIONS request.
      * By default this methods returns NStatus::MethodNotAllowed
@@ -117,7 +120,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleOptions(const NRequest& request, NResponse& response) const
-        { response.setStatus(NStatus::MethodNotAllowed); }
+    { response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a DELETE request.
@@ -127,7 +130,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleDelete(const NRequest& request, NResponse& response)
-        { response.setStatus(NStatus::MethodNotAllowed); }
+    { response.setStatus(NStatus::MethodNotAllowed); }
 
 private:
     QString m_resourceUri;

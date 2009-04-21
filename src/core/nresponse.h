@@ -39,7 +39,9 @@ class NRepresentation;
  * task to fill a Response object which will be sent back to the client by a
  * concrete implementation of Server
  */
-class NResponse : public QObject {
+
+class NResponse : public QObject
+{
 public:
     /*!
      * Initializes an invalid response object
@@ -51,39 +53,40 @@ public:
      * \param status The response status code
      */
     void setStatus(const NStatus& status)
-        { m_status = status; }
+    { m_status = status; }
 
     /*!
      * \return The response' status code
      */
     const NStatus& status()
-        { return m_status; }
+    { return m_status; }
 
     /*!
      * Set the representation attached to this Response
      * \param representation A pointer to a Representation object
      */
     void setRepresentation(const NRepresentation* representation)
-        { m_representation = representation; }
+    { m_representation = representation; }
 
     /*!
      * \return The representation attached to this Response
      */
     const NRepresentation* representation() const
-        { return m_representation; }
+    { return m_representation; }
 
     /*!
      * Set the expiration date for this Response
      * \param expirationDate A QDateTime representing the expiration date
      */
     void setExpirationDate(const QDateTime& expires)
-        { m_expires = expires; }
+    { m_expires = expires; }
 
     /*!
      * \return the expiration date of this Response
      */
     const QDateTime& expirationDate() const
-        { return m_expires; }
+    { return m_expires; }
+
 private:
     NStatus m_status;
     const NRepresentation* m_representation;

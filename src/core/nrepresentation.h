@@ -40,31 +40,33 @@
  * \see Roy Fielding's dissertation at:
  *      http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_2
  */
-class NRepresentation : public QMimeData {
+
+class NRepresentation : public QMimeData
+{
 public:
     NRepresentation() {}
 
     NRepresentation(const QByteArray& data, const NMimeType& mimeType = NMimeType("text/plain"))
-        { setData(mimeType, data); }
+    { setData(mimeType, data); }
 
     /*!
      * \return the data (in raw form) attached to this representation
      */
     QByteArray data(const NPreferenceList<NMimeType>& mimeTypes) const
-        { return data(format(mimeTypes)); }
+    { return data(format(mimeTypes)); }
 
     /*!
      * \return the best matching MIME type out of the MIME types supported by
      *    the client
      */
     NMimeType format(const NPreferenceList<NMimeType>& mimeTypes) const
-        { return mimeTypes.outOf(mimeTypeFormats()); }
+    { return mimeTypes.outOf(mimeTypeFormats()); }
 
     /*!
      * \return the data (in raw form) attached to this representation
      */
     QByteArray data(const NMimeType& mimeType) const
-        { return QMimeData::data(mimeType.toString()); }
+    { return QMimeData::data(mimeType.toString()); }
 
     /*!
      * An overloaded function provided for convenience
@@ -72,13 +74,13 @@ public:
      * \param data A reference to the raw data
      */
     void setData(const NMimeType& mimeType, const QByteArray& data)
-        { QMimeData::setData(mimeType.toString(), data); } 
+    { QMimeData::setData(mimeType.toString(), data); }
 
     /*!
      * \return true if the requested format is available
      */
     bool hasFormat(const NMimeType& mimeType) const
-        { return QMimeData::hasFormat(mimeType.toString()); }
+    { return QMimeData::hasFormat(mimeType.toString()); }
 
     /*!
      * A facility to easily add Xhtml content to this representation
@@ -90,13 +92,13 @@ public:
      * \return true if this representation is holding an XHTML document
      */
     bool hasXhtml() const
-        { return hasFormat("application/xhtml+xml"); }
+    { return hasFormat("application/xhtml+xml"); }
 
     /*!
      * \return the XHTML document attached to this representation
      */
     QString xhtml() const
-        { return data("application/xhtml+xml"); }
+    { return data("application/xhtml+xml"); }
 
     /*!
      * \return the list of formats this representation can give back to the

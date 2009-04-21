@@ -32,6 +32,7 @@
 #include "nrepresentation.h"
 
 class NRequest;
+
 class NResponse;
 
 /*!
@@ -44,7 +45,9 @@ class NResponse;
  * \note Router's destructor will automatically check if the attached resources are still valid
  *       pointers, if yes it deletes the referencing objects.
  */
-class NRouter : public NResource {
+
+class NRouter : public NResource
+{
 public:
     NRouter() : m_notFound("<h2>404 - Not found</h2>", "text/html") {}
 
@@ -64,14 +67,14 @@ public:
      * \param resource A pointer to a Resource object
      */
     void attach(const QString& path, QPointer<NResource> resource)
-        { m_routes[path] = resource; }
+    { m_routes[path] = resource; }
 
     /*!
      * \return A modifiable QHash representing the routes
      */
     QHash<QString, QPointer<NResource> >& routes()
-        { return m_routes; }
-        
+    { return m_routes; }
+
 private:
     QHash<QString, QPointer<NResource> > m_routes;
     NRepresentation m_notFound;

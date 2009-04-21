@@ -36,27 +36,31 @@
  * \arg h The value of an HTTP header.
  */
 template <typename T>
-NPreferenceList<T> getPreferenceListFromHeader(const QString& h) {
+NPreferenceList<T> getPreferenceListFromHeader(const QString& h)
+{
     NPreferenceList<T> accept;
-    
+
     QString header = h;
-    foreach (const QString& item, header.remove(" ").split(",")) {
+    foreach(const QString& item, header.remove(" ").split(",")) {
         QStringList pair = item.split(";q=");
         NPreference<T> preference(pair.at(0), pair.value(1, "1").toFloat());
         accept.append(preference);
     }
+
     return accept;
 }
 
 template <>
-NPreferenceList<QTextCodec*> getPreferenceListFromHeader(const QString& h) {
+NPreferenceList<QTextCodec*> getPreferenceListFromHeader(const QString& h)
+{
     NPreferenceList<QTextCodec*> accept;
     QString header = h;
-    foreach (const QString& item, header.remove(" ").split(",")) {
+    foreach(const QString& item, header.remove(" ").split(",")) {
         QStringList pair = item.split(";q=");
         NPreference<QTextCodec*> preference(QTextCodec::codecForName(pair.at(0).toUtf8()), pair.value(1, "1").toFloat());
         accept.append(preference);
     }
+
     return accept;
 }
 

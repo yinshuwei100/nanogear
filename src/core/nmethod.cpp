@@ -26,24 +26,27 @@
 
 #include <QMetaEnum>
 
-bool NMethod::hasBody() const {
+bool NMethod::hasBody() const
+{
     switch (m_method) {
-        case POST:
-            return true;
-        case PUT:
-            return true;
-        default:
-            return false;
+    case POST:
+        return true;
+    case PUT:
+        return true;
+    default:
+        return false;
     }
 }
 
 
-int NMethod::toType(const QString& key) const {
+int NMethod::toType(const QString& key) const
+{
     QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
-QString NMethod::toString(int value) const {
+QString NMethod::toString(int value) const
+{
     QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.valueToKey(value);
 }

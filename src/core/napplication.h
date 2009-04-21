@@ -40,7 +40,9 @@ class NResource;
  * This class represents a Nanogear and inherits from QCoreApplication.
  * It is responsible for starting the event loop and the attached connector.
  */
-class NApplication : public QCoreApplication {
+
+class NApplication : public QCoreApplication
+{
 public:
     /*!
      * Initialize this Nanogear application
@@ -58,14 +60,16 @@ public:
      * when calling exec()
      * \param server a pointer to a concrete implementation of the server class
      */
-    void setServer(NServer* server)
-        { m_server = server; }
+    void setServer(NServer* server) {
+        m_server = server;
+    }
 
     /*!
      * \return The currently attached server
      */
-    NServer* server() const
-        { return m_server; }
+    NServer* server() const {
+        return m_server;
+    }
 
     /*!
      * Every application must implement this function to create the root resource in the heap
@@ -74,22 +78,27 @@ public:
      *       by a Server implementation after handling the request.
      * \return A pointer to the created resource
      */
-    virtual NResource* createRoot() { return 0; };
+    virtual NResource* createRoot() {
+        return 0; // FIXME: dangerous
+    };
 
     /*!
      * Retrieve an instance of this Nanogear application
      * \return A pointer to the current instance
      */
-    static NApplication* instance()
-        { return static_cast<NApplication*>(QCoreApplication::instance()); }
+    static NApplication* instance() {
+        return static_cast<NApplication*>(QCoreApplication::instance());
+    }
 
     /*!
      * Start this Nanogear application. This method will also call the
      * Server::start() method for you.
      * \return The value set to exit() (which is 0 if you call quit())
      */
-    int exec()
-        { m_server->start(); return QCoreApplication::exec(); }
+    int exec() {
+        m_server->start();
+        return QCoreApplication::exec();
+    }
 
 private:
     NServer* m_server;

@@ -46,7 +46,9 @@ class QTextCodec;
  *
  * This class is meant to be 'friend' of server-side components only.
  */
-class NClientInfo {
+
+class NClientInfo
+{
 public:
     /*!
      * A constructor used to initialize values.
@@ -58,10 +60,10 @@ public:
      * \param userAgent the UserAgent string (if any)
      */
     NClientInfo(const NPreferenceList<NMimeType>& mimeTypes,
-        const NPreferenceList<QLocale>& locales,
-        const NPreferenceList<QTextCodec*>& codecs,
-        const QString& userAgent = QString()) : m_mimeTypes(mimeTypes),
-        m_locales(locales), m_codecs(codecs), m_userAgent(userAgent) {}
+                const NPreferenceList<QLocale>& locales,
+                const NPreferenceList<QTextCodec*>& codecs,
+                const QString& userAgent = QString()) : m_mimeTypes(mimeTypes),
+            m_locales(locales), m_codecs(codecs), m_userAgent(userAgent) {}
 
     /*!
      * \return The UserAgent string (if any)
@@ -72,19 +74,19 @@ public:
      * \return The list of accepted MIME types
      */
     const NPreferenceList<NMimeType>& acceptedMimeTypes() const
-        { return m_mimeTypes; }
+    { return m_mimeTypes; }
 
     /*!
      * \return The list of accepted MIME types
      */
     const NPreferenceList<QLocale>& acceptedLocales() const
-        { return m_locales; }
+    { return m_locales; }
 
     /*!
      * \return The list of accepted charsets
      */
     const NPreferenceList<QTextCodec*>& acceptedTextCodecs() const
-        { return m_codecs; }
+    { return m_codecs; }
 
 private:
     NPreferenceList<NMimeType> m_mimeTypes;

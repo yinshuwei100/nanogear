@@ -40,11 +40,13 @@ class QTcpSocket;
  *
  * \note It is not meant to be production-ready.
  */
-class NHTTPServer : public QTcpServer, public NServer {
+
+class NHTTPServer : public QTcpServer, public NServer
+{
     Q_OBJECT
 public:
     NHTTPServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
-        NServer(port, listenAddress) {}
+            NServer(port, listenAddress) {}
 
 public:
     void start();
