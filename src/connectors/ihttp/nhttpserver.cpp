@@ -22,7 +22,6 @@
  */
 
 #include "nhttpserver.h"
-#include "nconnectionhandlerthread.h"
 
 #include <QUrl>
 #include <QTcpSocket>
