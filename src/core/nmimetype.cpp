@@ -25,37 +25,48 @@
 
 #include <QString>
 
-void NMimeType::fromString(const QString& type) {
+void NMimeType::fromString(const QString& type)
+{
     m_whole = type;
     m_type.clear();
     m_subtype.clear();
 }
-const QString& NMimeType::toString() const {
+
+const QString& NMimeType::toString() const
+{
     return m_whole;
 }
 
 
-bool NMimeType::operator==(const NMimeType& type) const {
+bool NMimeType::operator==(const NMimeType& type) const
+{
     return m_whole == type.m_whole;
 }
-bool NMimeType::isConcrete() const {
+
+bool NMimeType::isConcrete() const
+{
     return !m_whole.contains("*");
 }
 
 
-const QString& NMimeType::type() const {
+const QString& NMimeType::type() const
+{
     if (m_type.isEmpty())
         const_cast<NMimeType*>(this)->m_type = m_whole.left(m_whole.indexOf('/'));
+
     return m_type;
 }
 
-const QString& NMimeType::subtype() const {
+const QString& NMimeType::subtype() const
+{
     if (m_type.isEmpty())
         const_cast<NMimeType*>(this)->m_subtype = m_whole.right(m_whole.indexOf('/'));
+
     return m_subtype;
 }
 
-bool NMimeType::isCompatible(const NMimeType& other) const {
-    return other.m_whole.contains(m_whole) ||\
+bool NMimeType::isCompatible(const NMimeType& other) const
+{
+    return other.m_whole.contains(m_whole) || \
            m_whole.contains(other.m_whole);
 }

@@ -28,24 +28,27 @@
 #include "nrequest.h"
 #include "nresponse.h"
 
-NRouter::~NRouter() {
+NRouter::~NRouter()
+{
     QHash<QString, QPointer<NResource> >::ConstIterator it;
+
     for (it = m_routes.begin(); it != m_routes.end(); ++it) {
         if (!it->isNull()) {
             qDebug() << Q_FUNC_INFO << "Deleting resource attached to" << it.key();
-            delete (*it);
+            delete(*it);
         }
     }
 }
 
 
-void NRouter::handleRequest(const NRequest& request, NResponse& response) {
+void NRouter::handleRequest(const NRequest& request, NResponse& response)
+{
     bool found = false;
-    
+
     if (!m_routes.value(request.resourceRef()).isNull()) {
         // Direct match found, get the class pointer and make it handle the request
         qDebug() << Q_FUNC_INFO << "Found a direct match with requested path ("
-            << request.resourceRef() << ")";
+        << request.resourceRef() << ")";
         m_routes.value(request.resourceRef())->handleRequest(request, response);
         found = true;
     }

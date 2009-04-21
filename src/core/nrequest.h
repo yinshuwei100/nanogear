@@ -53,7 +53,9 @@ class NRepresentation;
  *
  * The request body is represented by a read-only QByteArray
  */
-class NRequest : public QObject {
+
+class NRequest : public QObject
+{
 public:
     /*!
      * A constructor used to initialize values.
@@ -64,22 +66,22 @@ public:
      * \param body A pointer to the body representation
      */
     NRequest(const NMethod& method, const NClientInfo& clientInfo, NRepresentation* body) :
-        m_method(method), m_clientInfo(clientInfo), m_representation(body) {}
+            m_method(method), m_clientInfo(clientInfo), m_representation(body) {}
 
-        
+
     /*!
      * When a client makes a request it usually specifies a method. It used to
      * determine which handler should be called on a resource.
      * \return An object encapsulating a method
      */
     const NMethod& method() const
-        { return m_method; }
+    { return m_method; }
 
     /*!
      * \param method The request method
      */
     void setNMethod(const NMethod& method)
-        { m_method = method; }
+    { m_method = method; }
 
     /*!
      * A client usually attaches additional informations to the request, this
@@ -87,53 +89,53 @@ public:
      * \return An object representing additional informations supplied by the client
      */
     const NClientInfo& clientInfo() const
-        { return m_clientInfo; }
+    { return m_clientInfo; }
 
     /*!
      * Set the client informations attached to this request
      * \param clientInfo The informations supplied by the client
      */
     void setClientInfo(const NClientInfo& clientInfo)
-        { m_clientInfo = clientInfo; }
+    { m_clientInfo = clientInfo; }
 
     /*!
      * \return The representation attached to this request
      */
     const NRepresentation* entity() const
-        { return m_representation; }
+    { return m_representation; }
 
     /*!
      * Set the representation attached to this Request
      * \param representation A pointer to a Representation object
      */
     void setEntity(NRepresentation* representation)
-        { m_representation = representation; }
+    { m_representation = representation; }
 
     /*!
      * \return The path requested by the client
      */
     const QString& resourceRef() const
-        { return m_resourceRef; }
+    { return m_resourceRef; }
 
     /*!
      * Set the path requested by the client
      * \param path A string representing the requested path
      */
     void setResourceRef(const QString& path)
-        { m_resourceRef = path; }
+    { m_resourceRef = path; }
 
     /*!
      * \param parameters Set the request parameter
      */
     void setParameters(const QHash<QString, QString>& parameters)
-        { m_parameters = parameters; }
+    { m_parameters = parameters; }
 
     /*!
      * \return The request parameters
      */
     const QHash<QString, QString>& parameters() const
-        { return m_parameters; }
-        
+    { return m_parameters; }
+
 private:
     NMethod m_method;
     NClientInfo m_clientInfo;

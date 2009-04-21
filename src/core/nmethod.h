@@ -34,7 +34,9 @@
  * Used to determine which method to execute to handle a request. It is usually
  * filled by a concrete implementation of Server.
  */
-class NMethod {
+
+class NMethod
+{
     Q_GADGET
     Q_ENUMS(Type)
 public:
@@ -66,35 +68,35 @@ public:
      * \param name Method name
      */
     void fromString(const QString& name)
-        { toType(name); }
+    { toType(name); }
 
     /*!
      * \return Return the method name as a string
      */
     QString toString() const
-        { return toString(m_method); }
+    { return toString(m_method); }
 
     /*!
      * Build this method from its integer code
      * \param method
      */
     void fromType(int method)
-        { m_method = method; }
+    { m_method = method; }
 
     /*!
      * \return the code associated with this method
      */
     int toType() const
-        { return m_method; }
+    { return m_method; }
 
     bool operator==(const NMethod& type) const
-        { return m_method == type.m_method; }
+    { return m_method == type.m_method; }
 
     /*!
      * \return If this method is valid or not
      */
     bool isValid() const
-        { return m_method != Invalid; }
+    { return m_method != Invalid; }
 
     /*!
      * \return true if this method has a body
@@ -119,11 +121,11 @@ public:
         TRACE,
         UNLOCK
     };
-    
+
 private:
     int toType(const QString& key) const;
     QString toString(int value) const;
-    
+
 private:
     int m_method;
 };

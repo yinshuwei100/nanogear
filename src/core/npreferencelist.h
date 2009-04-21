@@ -35,22 +35,24 @@
  *
  * Preference's are meant to be chosen from. PreferenceList provides convenience methods for doing just that.
  */
-template <typename T> class NPreferenceList : public QList< NPreference<T> > {
+
+template <typename T> class NPreferenceList : public QList< NPreference<T> >
+{
 public:
     /*!
      * An empty constructor, the result is an empty list
      */
     NPreferenceList() {}
-    
+
 
     NPreferenceList(const QList< NPreference<T> >& other)
-        : QList< NPreference<T> >(other) {}
+            : QList< NPreference<T> >(other) {}
 
     /*!
      * \return the Preference with the highest quality. The Preference the client wants most.
      */
     T top() const
-        { return *(toMap().end()); }
+    { return *(toMap().end()); }
 
     /*!
      * Out of a list of possible choices, returns the "best" one.
@@ -59,11 +61,14 @@ public:
      */
     T outOf(const QList<T>& server) const {
         QMap<float, T> map = toMap();
+
         for (typename QMap<float, T>::iterator i = map.end(); i != map.begin();) {
             --i;
+
             if (server.contains(*i))
                 return *i;
         }
+
         return T();
     }
 
@@ -73,9 +78,10 @@ public:
      */
     QMap<float, T> toMap() const {
         QMap<float, T> ret;
-        foreach (const NPreference<T>& type, *this) {
+        foreach(const NPreference<T>& type, *this) {
             ret.insertMulti(type.quality(), type.data());
         }
+
         return ret;
     }
 };

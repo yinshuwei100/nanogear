@@ -27,14 +27,15 @@
 #include <QRegExp>
 #include <QStringList>
 
-void NRepresentation::setXhtml(const QString& xhtml) {
+void NRepresentation::setXhtml(const QString& xhtml)
+{
     setData("application/xhtml+xml", xhtml.toUtf8());
 
     QString html = xhtml;
     QRegExp fix;
 
     // Convert XHTML to valid HTML.
-    #define ELEMENT_NONEMPTY(x) \
+#define ELEMENT_NONEMPTY(x) \
     fix = QRegExp("<"x" (.*)/>"); \
     while (fix.indexIn(html) != -1)\
         html.replace(fix, "<"x" " + fix.cap(1) + "></"x">");
@@ -115,10 +116,10 @@ void NRepresentation::setXhtml(const QString& xhtml) {
     ELEMENT_NONEMPTY("u");
     ELEMENT_NONEMPTY("ul");
     ELEMENT_NONEMPTY("var");
-    #undef ELEMENT_NONEMPTY
+#undef ELEMENT_NONEMPTY
 
 
-    #define ELEMENT_EMPTY(x) \
+#define ELEMENT_EMPTY(x) \
     fix = QRegExp("<"x" (.*)/>"); \
     while (fix.indexIn(html) != -1)\
         html.replace(fix, "<"x" " + fix.cap(1) + ">");
@@ -135,16 +136,17 @@ void NRepresentation::setXhtml(const QString& xhtml) {
     ELEMENT_EMPTY("link");
     ELEMENT_EMPTY("meta");
     ELEMENT_EMPTY("param");
-    #undef ELEMENT_EMPTY
+#undef ELEMENT_EMPTY
 
 
     setHtml(html);
 }
 
-QList<NMimeType> NRepresentation::mimeTypeFormats() const {
+QList<NMimeType> NRepresentation::mimeTypeFormats() const
+{
     QList<NMimeType> types;
-    foreach (const QString& type, QMimeData::formats())
-        types.append(type);
+    foreach(const QString& type, QMimeData::formats())
+    types.append(type);
     return types;
 }
 

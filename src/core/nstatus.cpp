@@ -25,13 +25,15 @@
 
 #include <QMetaEnum>
 
-int NStatus::toType(const QString& key) const {
+int NStatus::toType(const QString& key) const
+{
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
-QString NStatus::toString(int value) const {
+QString NStatus::toString(int value) const
+{
     const QMetaObject& metaObject = staticMetaObject;
     QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
     return metaEnum.valueToKey(value);

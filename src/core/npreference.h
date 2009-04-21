@@ -30,21 +30,26 @@
  *
  * Encapsulates a generic preference
  */
-template <typename T> class NPreference {
+
+template <typename T> class NPreference
+{
 public:
     NPreference(const T& data = T(), float quality = 1)
-        : m_data(data), m_quality(quality) {}
+            : m_data(data), m_quality(quality) {}
+
     virtual ~NPreference() {}
 
     const T& data() const
-        { return m_data; }
+    { return m_data; }
+
     void setData(const T& data)
-        { m_data = data; }
+    { m_data = data; }
 
     float quality() const
-        { return m_quality; }
+    { return m_quality; }
+
     void setQuality(float quality)
-        { m_quality = quality; }
+    { m_quality = quality; }
 
 private:
     T m_data;
@@ -53,12 +58,14 @@ private:
 
 
 template <typename T, typename U>
-bool operator==(const NPreference<T>& a, const NPreference<U>& b) {
+bool operator==(const NPreference<T>& a, const NPreference<U>& b)
+{
     return a.data() == b.data();
 }
 
 template <typename T, typename U>
-bool operator==(const NPreference<T>& a, const U& b) {
+bool operator==(const NPreference<T>& a, const U& b)
+{
     return a.data() == b;
 }
 

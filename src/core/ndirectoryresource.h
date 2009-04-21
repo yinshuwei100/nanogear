@@ -31,15 +31,18 @@
 #include "nrepresentation.h"
 
 class NRequest;
+
 class NResponse;
 
 /*!
  * \class NDirectoryResource
  */
-class NDirectoryResource : public NResource {
+
+class NDirectoryResource : public NResource
+{
 public:
     NDirectoryResource(const QString& root);
-    
+
     virtual void handleGet(const NRequest& request, NResponse& response);
 
     /*!
@@ -47,26 +50,26 @@ public:
      * \param root An absolute or relative path to a directory on the filesystem
      */
     void setRoot(const QString& root)
-        { m_root = QDir(root); }
+    { m_root = QDir(root); }
 
     /*!
      * \return The absolute path to the root directory
      */
     QString root() const
-        { return m_root.absolutePath(); }
+    { return m_root.absolutePath(); }
 
     /*!
      * Set the index file name
      * \param fileName Index file name
      */
     void setIndexName(const QString& indexName)
-        { m_indexName = indexName; }
+    { m_indexName = indexName; }
 
     /*!
      * \return The index file name
      */
     const QString& indexName() const
-        { return m_indexName; }
+    { return m_indexName; }
 
     /*!
      * Set this to true to display a directory index when no index file is
@@ -74,19 +77,20 @@ public:
      * \param indexAllowed Whether or not allow directory index generation
      */
     void setIndexAllowed(bool indexAllowed)
-        { m_indexAllowed = indexAllowed; }
+    { m_indexAllowed = indexAllowed; }
 
     /*!
      * \return True if directory index generation is allowed
      */
     bool isIndexAllowed() const
-        { return m_indexAllowed; }
+    { return m_indexAllowed; }
 
     /*!
      * \return a modifiable QHash mapping file extensions to MIME types
      */
     QHash<QString, QString>& mimeMappings()
-        { return m_mimeMappings; }
+    { return m_mimeMappings; }
+
 private:
     void representFile(const QFileInfo& pathInfo, NResponse& response);
 
@@ -95,7 +99,7 @@ private:
     QString m_indexName;
     QString m_xhtmlRepr;
     QHash<QString, QString> m_mimeMappings;
-    
+
     NRepresentation m_notAllowed;
     NRepresentation m_directoryIndex;
     NRepresentation m_rawFile;

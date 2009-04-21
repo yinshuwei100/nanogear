@@ -34,7 +34,9 @@
  *
  * A Server is usually attached to an Application object.
  */
-class NServer {
+
+class NServer
+{
 public:
     /*!
      * The default constructor
@@ -42,7 +44,7 @@ public:
      * \param parent The parent of this object
      */
     NServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
-        m_listenPort(port), m_listenAddress(listenAddress) {}
+            m_listenPort(port), m_listenAddress(listenAddress) {}
 
     virtual ~NServer() {}
 
@@ -51,26 +53,26 @@ public:
      * \param port Listen port
      */
     void setListenPort(int port)
-        { m_listenPort = port; }
+    { m_listenPort = port; }
 
     /*!
      * \return The listen port
      */
     int listenPort() const
-        { return m_listenPort; }
+    { return m_listenPort; }
 
     /*!
      * Set the address onto the server listens for new connections
      * \param listenAddress An IPv4/IPv6 address encapsulated in a QHostAddress
      */
     void setListenAddress(const QHostAddress& listenAddress)
-        { m_listenAddress = listenAddress; }
+    { m_listenAddress = listenAddress; }
 
     /*!
      * \return The current listening address
      */
     const QHostAddress& listenAddress() const
-        { return m_listenAddress; }
+    { return m_listenAddress; }
 
     /*!
      * Concrete implementation of Server must implement this function
