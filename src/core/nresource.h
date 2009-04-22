@@ -78,7 +78,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleGet(const NRequest& request, NResponse& response)
-    { response.setStatus(NStatus::MethodNotAllowed); }
+    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a HEAD request.
@@ -90,7 +90,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleHead(const NRequest& request, NResponse& response)
-    { response.setStatus(NStatus::MethodNotAllowed); }
+    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a PUT request.
@@ -100,7 +100,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handlePut(const NRequest& request, NResponse& response)
-    { response.setStatus(NStatus::MethodNotAllowed); }
+    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a POST request.
@@ -110,7 +110,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handlePost(const NRequest& request, NResponse& response)
-    { response.setStatus(NStatus::MethodNotAllowed); }
+    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a OPTIONS request.
@@ -120,7 +120,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleOptions(const NRequest& request, NResponse& response) const
-    { response.setStatus(NStatus::MethodNotAllowed); }
+    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
 
     /*!
      * Override this method in a derived class to handle a DELETE request.
@@ -130,7 +130,7 @@ protected:
      *    will be sent to the client
      */
     virtual void handleDelete(const NRequest& request, NResponse& response)
-    { response.setStatus(NStatus::MethodNotAllowed); }
+    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
 
 private:
     QString m_resourceUri;

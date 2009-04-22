@@ -36,8 +36,8 @@ class NResponse;
 
 /*!
  * \class NDirectoryResource
+ *
  */
-
 class NDirectoryResource : public NResource
 {
 public:
