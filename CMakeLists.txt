@@ -6,10 +6,12 @@ message(STATUS "This is Nanogear ${NANOGEAR_MAJOR}.${NANOGEAR_MINOR}.${NANOGEAR_
 
 # Documentation
 find_package(Doxygen)
-if (DOXYGEN_FOUND AND DOT_FOUND)
-    message(STATUS "Building documentation")
+if (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
+    message(STATUS "To build documentation run the 'doc' target")
     add_subdirectory(docs)
-endif (DOXYGEN_FOUND AND DOT_FOUND)
+else (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
+    message(STATUS "You will need both doxygen and graphviz 'dot' to build documentation")
+endif (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
 
 find_package(Libmagic REQUIRED)
 
