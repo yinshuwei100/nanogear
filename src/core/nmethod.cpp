@@ -41,12 +41,14 @@ bool NMethod::hasBody() const
 
 int NMethod::toType(const QString& key) const
 {
-    QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
+    QMetaEnum metaEnum(staticMetaObject
+                       .enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.keyToValue(key.toUtf8());
 }
 
 QString NMethod::toString(int value) const
 {
-    QMetaEnum metaEnum(staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Type")));
+    QMetaEnum metaEnum(staticMetaObject
+                       .enumerator(staticMetaObject.indexOfEnumerator("Type")));
     return metaEnum.valueToKey(value);
 }

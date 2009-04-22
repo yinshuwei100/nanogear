@@ -32,6 +32,7 @@ public:
     RootResource() : m_representation("<h1>Simple example</h1><br/><a href=\"/second\">Another resource</a>", "text/html") {}
 
     virtual void handleGet(const NRequest& request, NResponse& response) {
+        Q_UNUSED(request)
         response.setStatus(NStatus::OK);
         response.setRepresentation(&m_representation);
     }
@@ -45,6 +46,7 @@ public:
     SecondResource() : m_representation("<h1>Another resource</h1>", "text/html") {}
 
     virtual void handleGet(const NRequest& request, NResponse& response) {
+        Q_UNUSED(request)
         response.setStatus(NStatus::OK);
         response.setRepresentation(&m_representation);
     }

@@ -30,7 +30,7 @@
 #include "nrequest.h"
 #include "nresponse.h"
 
-NDirectoryResource::NDirectoryResource(const QString& root) : m_root(root), m_indexAllowed(true)
+NDirectoryResource::NDirectoryResource(const QString& root) : m_root(root), m_indexAllowed(false)
 {
     m_notAllowed.setData("<html><head><title>403 Forbidden</title></head><body>"
                          "<h1>Forbidden</h1>"
@@ -99,7 +99,6 @@ void NDirectoryResource::handleGet(const NRequest& request, NResponse& response)
                     }
 
                     htmlTableEntries += QString("<tr><td class=\"n\"><a href=\"%1\">%2</a>%3</td><td class=\"m\">%4</td><td class=\"s\">%5</td><td class=\"t\">%6</td></tr>\n")
-
                                         .arg(pathInfo.fileName() + "/" + dirFileInfo.fileName())
                                         .arg(dirFileInfo.fileName()).arg(dirIdentifier)
                                         .arg(dirFileInfo.lastModified().toString()).arg(size)
@@ -148,12 +147,9 @@ void NDirectoryResource::representFile(const QFileInfo& pathInfo, NResponse& res
     QFile file(pathInfo.absoluteFilePath());
 
     file.open(QIODevice::ReadOnly);
-
     m_rawFile.setData(mimeType, file.readAll());
-
     file.close();
 
     response.setStatus(NStatus::OK);
-
     response.setRepresentation(&m_rawFile);
 }

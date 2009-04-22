@@ -36,11 +36,10 @@ class QTcpSocket;
  * \ingroup HTTP Server
  *
  * This is a concrete Server implementation providing a very simple HTTP 1.1
- * threaded server.
+ * server.
  *
  * \note It is not meant to be production-ready.
  */
-
 class NHTTPServer : public QTcpServer, public NServer
 {
     Q_OBJECT
