@@ -22,7 +22,7 @@
  */
 
 #ifndef NREPRESENTATION_H
-#define NREPRESENTATION_H 1
+#define NREPRESENTATION_H
 
 #include <QMimeData>
 #include <QByteArray>

@@ -55,12 +55,6 @@ class NResource : public QObject
 {
 public:
     /*!
-     * Empty virtual destructor
-     */
-    virtual ~NResource() {}
-
-
-    /*!
      * This method is used internally to dispatch the request to the
      * appropriate handler
      * \param request a reference to a Request object

@@ -22,7 +22,7 @@
  */
 
 #ifndef NPREFERENCELIST_H
-#define NPREFERENCELIST_H 1
+#define NPREFERENCELIST_H
 
 #include <QMap>
 #include <QList>
