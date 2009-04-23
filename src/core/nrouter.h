@@ -39,11 +39,11 @@ class NResponse;
  * \class NRouter
  * \brief A resource that can route requests based on a URI pattern
  *
- * A router is simply a Resource which stores a mapping of URI paths to heap-allocated
- * Resource instances (using a guarded pointer)
+ * A router is simply a Resource which stores a mapping of URI paths to
+ * heap-allocated Resource instances (using a guarded pointer)
  *
- * \note Router's destructor will automatically check if the attached resources are still valid
- *       pointers, if yes it deletes the referencing objects.
+ * \note Router's destructor will automatically check if the attached resources
+ *       are still valid pointers, if yes it deletes the referencing objects.
  */
 
 class NRouter : public NResource
@@ -52,9 +52,10 @@ public:
     NRouter() : m_notFound("<h2>404 - Not found</h2>", "text/html") {}
 
     /*!
-     * This destructor will automatically destroy the objects attached to this Router
+     * This destructor will automatically destroy the objects attached to
+     * this Router
      */
-    virtual ~NRouter();
+    ~NRouter();
 
     /*!
      * This method is used internally to dispatch request to routed classes
