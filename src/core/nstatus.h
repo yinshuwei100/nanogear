@@ -31,9 +31,9 @@
  * \class NStatus
  * \brief Response status code
  *
- * This class is used to send Response codes to the clients
+ * This class is used to send response status codes to the clients.
+ * Status codes conform to HTTP 1.1 status codes.
  */
-
 class NStatus
 {
     Q_GADGET
@@ -41,7 +41,7 @@ class NStatus
 public:
 
     /*!
-     * A default constructor which sends an invalid response code by default (!)
+     * Default constructor. Sets an Invalid status code.
      */
     NStatus() : m_status(Invalid) {}
 
@@ -98,6 +98,10 @@ public:
     bool isValid() const
     { return m_status != Invalid; }
 
+    /*!
+     * This enum holds HTTP status codes
+     * \see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+     */
     enum Type {
         Invalid = 0,
         Continue = 100,
@@ -157,7 +161,16 @@ public:
     };
 
 private:
+    /*!
+     * Get the status code name as string from its number
+     * \param value The status code
+     */
     QString toString(int value) const;
+
+    /*!
+     * Get the status code number from its name
+     * \param key The status name
+     */
     int toType(const QString& key) const;
 
     int m_status;
