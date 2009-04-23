@@ -135,7 +135,7 @@ void NDirectoryResource::representFile(const QFileInfo& pathInfo, NResponse& res
     // if none is found we return a generic "application/octet-stream" MIME type
 
     if (mimeType.isEmpty()) {
-        QString customMapping(m_mimeMappings.value(pathInfo.completeSuffix()).isEmpty());
+        QString customMapping(m_mimeMappings.value(pathInfo.completeSuffix()));
 
         if (!customMapping.isEmpty())
             mimeType = customMapping;
