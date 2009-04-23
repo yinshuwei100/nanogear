@@ -23,3 +23,9 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
     DESTINATION include/Nanogear/Connectors/IHTTP
     FILES_MATCHING PATTERN *.h
 )
+
+# Install Qt-style headers
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION include/Nanogear
+    FILES_MATCHING PATTERN N*
+)
