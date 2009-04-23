@@ -37,10 +37,10 @@ class NResource;
  * \class NApplication
  * \brief A Nanogear application
  *
- * This class represents a Nanogear and inherits from QCoreApplication.
+ * This class represents a Nanogear application and it's used to handle a set
+ * of dependant resources.
  * It is responsible for starting the event loop and the attached connector.
  */
-
 class NApplication : public QCoreApplication
 {
 public:
