@@ -44,14 +44,30 @@ class NHTTPServer : public QTcpServer, public NServer
 {
     Q_OBJECT
 public:
+    /*!
+     * \param port A port to listen on (default: 8080)
+     * \param listenAddress The address to listen on (default: QHostAddress::Any)
+     */
     NHTTPServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
             NServer(port, listenAddress) {}
 
 public:
+    /*!
+     * Make the server listen for incoming connections
+     */
     void start();
 
 public slots:
+    /*!
+     * This slot is called when a client connects to this QTcpServer, it just
+     * get a pointer to the pending connection and connects a couple of signals,
+     * the control then passes to onClientReadyRead()
+     */
     void onNewConnection();
+
+    /*!
+     * Handle the request
+     */
     void onClientReadyRead();
 
 private:

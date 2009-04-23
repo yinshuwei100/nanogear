@@ -103,28 +103,43 @@ public:
      */
     bool hasBody() const;
 
+    /*!
+     * Various connection types, names are derived from HTTP 1.1 method
+     * definition. This enum includes also WebDav request method types
+     * \see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+     * \see http://www.webdav.org/specs/rfc2518.html#http.methods.for.distributed.authoring
+     */
     enum Type {
         Invalid = -1,
-        CONNECT,
-        COPY,
-        DELETE,
+        OPTIONS,   /* HTTP 1.1 standard methods */
         GET,
         HEAD,
-        LOCK,
-        MKCOL,
-        MOVE,
-        OPTIONS,
         POST,
-        PROPFIND,
-        PROPPATCH,
         PUT,
+        DELETE,
         TRACE,
+        CONNECT,
+        PROPFIND,   /* WebDAV request methods */
+        PROPPATCH,
+        MKCOL,
+        COPY,
+        MOVE,
+        LOCK,
         UNLOCK
     };
 
 private:
-    int toType(const QString& key) const;
+    /*!
+     * Get the status code name as string from its number
+     * \param value The status code
+     */
     QString toString(int value) const;
+    
+    /*!
+     * Get the status code number from its name
+     * \param key The status name
+     */
+    int toType(const QString& key) const;
 
 private:
     int m_method;

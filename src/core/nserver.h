@@ -46,8 +46,6 @@ public:
     NServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
             m_listenPort(port), m_listenAddress(listenAddress) {}
 
-    virtual ~NServer() {}
-
     /*!
      * Set the listen port for this server
      * \param port Listen port
@@ -75,7 +73,8 @@ public:
     { return m_listenAddress; }
 
     /*!
-     * Concrete implementation of Server must implement this function
+     * This method is called by NApplication::exec and is used to start the
+     * server connector.
      */
     virtual void start() = 0;
 

@@ -36,14 +36,20 @@ class NResponse;
 
 /*!
  * \class NDirectoryResource
+ * \brief A resource mapping files under a directory to URI paths
  *
+ * NDirectoryResource can be used to provide filesystem access to the clients.
+ *
+ * A typical use-case of this class is to send images, scripts and other data
+ * along with an HTML page to the client.
+ *
+ * NDirectoryResource accepts a directory as the 'root' directory and every file
+ * contained will be exposed with a Resource URI
  */
 class NDirectoryResource : public NResource
 {
 public:
     NDirectoryResource(const QString& root);
-
-    virtual void handleGet(const NRequest& request, NResponse& response);
 
     /*!
      * Set the root directory on the filesystem
@@ -91,7 +97,22 @@ public:
     QHash<QString, QString>& mimeMappings()
     { return m_mimeMappings; }
 
+protected:
+    /*!
+     * Handle GET request. If a file is requested do a MIME type lookup using
+     * libmagic. If a directory is requested first look for an index file and
+     * show it (if available) otherwise show a directory listing if allowed
+     * or send a 403 when this resource is not allowed to send directory
+     * listings.
+     */
+    virtual void handleGet(const NRequest& request, NResponse& response);
+
 private:
+    /*!
+     * Internal method used to send a file back to the client
+     * \param pathInfo A QFileInfo reference of the requested file
+     * \param response A reference to the NResponse object passed to handleGet
+     */
     void representFile(const QFileInfo& pathInfo, NResponse& response);
 
     QDir m_root;
