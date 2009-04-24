@@ -1,0 +1,4 @@
+build/
+.kdev4/
+nanogear.kdev4
+*.user
