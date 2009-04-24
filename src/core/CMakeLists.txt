@@ -20,7 +20,7 @@ set_target_properties(Nanogear PROPERTIES
     SOVERSION ${NANOGEAR_MAJOR}
 )
 
-target_link_libraries(Nanogear magic ${QT_LIBRARIES})
+target_link_libraries(Nanogear ${Libmagic_LIBRARY} ${QT_LIBRARIES})
 
 # Install the library
 install(TARGETS Nanogear
@@ -38,3 +38,5 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
     DESTINATION include/Nanogear
     FILES_MATCHING PATTERN N*
 )
+
+add_subdirectory(tests)
