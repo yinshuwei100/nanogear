@@ -66,7 +66,7 @@ public:
 
     /*!
      * Set the index file name
-     * \param fileName Index file name
+     * \param indexName Index file name
      */
     void setIndexName(const QString& indexName)
     { m_indexName = indexName; }

@@ -76,7 +76,7 @@ public:
 
     /*!
      * Set the expiration date for this Response
-     * \param expirationDate A QDateTime representing the expiration date
+     * \param expires A QDateTime representing the expiration date
      */
     void setExpirationDate(const QDateTime& expires)
     { m_expires = expires; }
