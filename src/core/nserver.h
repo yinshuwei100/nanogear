@@ -41,9 +41,9 @@ public:
     /*!
      * The default constructor
      * \param port The server will listen on to this port
-     * \param parent The parent of this object
+     * \param listenAddress The server will listen on this address
      */
-    NServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
+    NServer(int port, const QHostAddress& listenAddress) :
             m_listenPort(port), m_listenAddress(listenAddress) {}
 
     /*!

@@ -18,7 +18,7 @@ include(${QT_USE_FILE})
 #
 find_package(Doxygen)
 if (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
-    message(STATUS "To build documentation run the 'doc' target")
+    message(STATUS "Use the 'apidocs' target to build documentation")
     add_subdirectory(docs)
 else (DOXYGEN_FOUND AND DOXYGEN_DOT_FOUND)
     message(STATUS "You will need both doxygen and graphviz 'dot' to build documentation")

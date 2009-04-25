@@ -57,8 +57,8 @@ public:
     /*!
      * This method is used internally to dispatch the request to the
      * appropriate handler
-     * \param request a reference to a Request object
-     * \param response a reference to a Response object
+     * \param request a const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
      * \return a response object
      */
     virtual void handleRequest(const NRequest& request, NResponse& response);
@@ -68,6 +68,7 @@ protected:
      * Override this method in a derived class to handle a GET request.
      * By default this methods returns NStatus::MethodNotAllowed
      * \param request const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
@@ -80,6 +81,7 @@ protected:
      * \note this method is much like GET but must NOT return a response body
      *    (a Representation)
      * \param request const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
@@ -90,6 +92,7 @@ protected:
      * Override this method in a derived class to handle a PUT request.
      * By default this methods returns NStatus::MethodNotAllowed
      * \param request const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
@@ -100,6 +103,7 @@ protected:
      * Override this method in a derived class to handle a POST request.
      * By default this methods returns NStatus::MethodNotAllowed
      * \param request const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
@@ -110,6 +114,7 @@ protected:
      * Override this method in a derived class to handle a OPTIONS request.
      * By default this methods returns NStatus::MethodNotAllowed
      * \param request const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
@@ -120,6 +125,7 @@ protected:
      * Override this method in a derived class to handle a DELETE request.
      * By default this methods returns NStatus::MethodNotAllowed
      * \param request const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
      * \return the resource is responsible for compiling a Response object which
      *    will be sent to the client
      */
