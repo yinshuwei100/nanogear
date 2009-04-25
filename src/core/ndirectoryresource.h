@@ -41,10 +41,11 @@ class NResponse;
  * NDirectoryResource can be used to provide filesystem access to the clients.
  *
  * A typical use-case of this class is to send images, scripts and other data
- * along with an HTML page to the client.
+ * along with an HTML page to the client or just let clients (typically
+ * web browsers) browse a directory.
  *
  * NDirectoryResource accepts a directory as the 'root' directory and every file
- * contained will be exposed with a Resource URI
+ * contained will be mapped to an URI path.
  */
 class NDirectoryResource : public NResource
 {
@@ -126,4 +127,4 @@ private:
     NRepresentation m_rawFile;
 };
 
-#endif // NDIRECTORYRESOURCE_H
+#endif /* NDIRECTORYRESOURCE_H */
