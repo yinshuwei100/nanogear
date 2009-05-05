@@ -2,3 +2,6 @@ build/
 .kdev4/
 nanogear.kdev4
 *.user
+.dep.inc
+nbproject/
+nbproject-Makefile.mk
