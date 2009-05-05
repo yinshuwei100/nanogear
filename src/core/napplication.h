@@ -29,9 +29,8 @@
 
 #include "nserver.h"
 #include "nresponse.h"
+#include "nresource.h"
 #include "nrepresentation.h"
-
-class NResource;
 
 /*!
  * \class NApplication
@@ -41,7 +40,7 @@ class NResource;
  * of dependant resources.
  * It is responsible for starting the event loop and the attached connector.
  */
-class NApplication : public QCoreApplication
+class NApplication : public QCoreApplication, public NResource
 {
 public:
     /*!
