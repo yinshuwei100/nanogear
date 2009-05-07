@@ -39,8 +39,8 @@
 
 void NHTTPServer::start()
 {
-    qDebug() << Q_FUNC_INFO << "Starting HTTP server on " << listenAddress() << ":" << listenPort();
-    listen(listenAddress(), listenPort());
+    qDebug() << Q_FUNC_INFO << "Starting HTTP server on " << address() << ":" << port();
+    listen(address(), port());
     connect(this, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
 }
 
