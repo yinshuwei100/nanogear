@@ -26,6 +26,8 @@
 
 #include <QHostAddress>
 
+#include "nresource.h"
+
 /*!
  * \class NServer
  * \brief Abstract class representing a generic Server
@@ -43,34 +45,53 @@ public:
      * \param port The server will listen on to this port
      * \param listenAddress The server will listen on this address
      */
-    NServer(int port, const QHostAddress& listenAddress) :
-            m_listenPort(port), m_listenAddress(listenAddress) {}
+    NServer(int port = 8080, const QHostAddress& listenAddress = QHostAddress::Any) :
+            m_listenPort(port), m_listenAddress(listenAddress), m_target(0) {}
 
     /*!
      * Set the listen port for this server
      * \param port Listen port
      */
-    void setListenPort(int port)
+    void setPort(int port)
     { m_listenPort = port; }
 
     /*!
      * \return The listen port
      */
-    int listenPort() const
+    int port() const
     { return m_listenPort; }
 
     /*!
      * Set the address onto the server listens for new connections
      * \param listenAddress An IPv4/IPv6 address encapsulated in a QHostAddress
      */
-    void setListenAddress(const QHostAddress& listenAddress)
+    void setAddress(const QHostAddress& listenAddress)
     { m_listenAddress = listenAddress; }
 
     /*!
      * \return The current listening address
      */
-    const QHostAddress& listenAddress() const
+    const QHostAddress& address() const
     { return m_listenAddress; }
+
+    /*!
+     * Set the target Resource
+     * \param target The target resource
+     */
+    void setTarget(NResource* target)
+    { m_target = target; }
+
+    /*!
+     * \return The target resource
+     */
+    NResource* target()
+    { return m_target; }
+
+    /*!
+     * \return True if this Server has a target resource attached
+     */
+    bool hasTarget()
+    { return m_target != 0; }
 
     /*!
      * This method is called by NApplication::exec and is used to start the
@@ -81,6 +102,7 @@ public:
 private:
     int m_listenPort;
     QHostAddress m_listenAddress;
+    NResource* m_target;
 };
 
 #endif /* NSERVER_H */
