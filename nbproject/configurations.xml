@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <df name="nanogear" root=".">
+      <df name="cmake">
+        <df name="modules">
+        </df>
+      </df>
+      <df name="Debug">
+        <df name="CMakeFiles">
+          <df name="CMakeTmp">
+            <df name="CMakeFiles">
+              <df name="cmTryCompileExec.dir">
+              </df>
+            </df>
+          </df>
+          <df name="CompilerIdC">
+            <in>CMakeCCompilerId.c</in>
+          </df>
+          <df name="CompilerIdCXX">
+            <in>CMakeCXXCompilerId.cpp</in>
+          </df>
+        </df>
+        <df name="docs">
+          <df name="CMakeFiles">
+            <df name="apidocs.dir">
+            </df>
+          </df>
+        </df>
+        <df name="examples">
+          <df name="CMakeFiles">
+          </df>
+          <df name="directory">
+            <df name="CMakeFiles">
+              <df name="directory.dir">
+              </df>
+            </df>
+          </df>
+          <df name="forms">
+            <df name="CMakeFiles">
+              <df name="forms.dir">
+              </df>
+            </df>
+          </df>
+          <df name="simple">
+            <df name="CMakeFiles">
+              <df name="simple.dir">
+              </df>
+            </df>
+          </df>
+        </df>
+        <df name="src">
+          <df name="CMakeFiles">
+          </df>
+          <df name="connectors">
+            <df name="CMakeFiles">
+            </df>
+            <df name="ihttp">
+              <df name="CMakeFiles">
+                <df name="NanogearIHTTPConnector.dir">
+                </df>
+              </df>
+              <df name="tests">
+                <df name="CMakeFiles">
+                </df>
+              </df>
+              <in>moc_nhttpserver.cxx</in>
+            </df>
+          </df>
+          <df name="core">
+            <df name="CMakeFiles">
+              <df name="Nanogear.dir">
+              </df>
+            </df>
+            <df name="tests">
+              <df name="CMakeFiles">
+              </df>
+            </df>
+            <in>moc_nmethod.cxx</in>
+            <in>moc_nstatus.cxx</in>
+          </df>
+        </df>
+      </df>
+      <df name="docs">
+      </df>
+      <df name="examples">
+        <df name="directory">
+          <in>main.cpp</in>
+        </df>
+        <df name="forms">
+          <in>main.cpp</in>
+        </df>
+        <df name="simple">
+          <in>main.cpp</in>
+        </df>
+      </df>
+      <df name="nanogear">
+      </df>
+      <df name="Release">
+      </df>
+      <df name="scripts">
+      </df>
+      <df name="src">
+        <df name="connectors">
+          <df name="ihttp">
+            <df name="tests">
+            </df>
+            <in>nhttpserver.cpp</in>
+            <in>nhttpserver.h</in>
+            <in>nutility.h</in>
+          </df>
+        </df>
+        <df name="core">
+          <df name="tests">
+          </df>
+          <in>napplication.h</in>
+          <in>nclientinfo.h</in>
+          <in>nconnector.h</in>
+          <in>ndirectoryresource.cpp</in>
+          <in>ndirectoryresource.h</in>
+          <in>nmethod.cpp</in>
+          <in>nmethod.h</in>
+          <in>nmimetype.cpp</in>
+          <in>nmimetype.h</in>
+          <in>npreference.h</in>
+          <in>npreferencelist.h</in>
+          <in>nrepresentation.cpp</in>
+          <in>nrepresentation.h</in>
+          <in>nrequest.h</in>
+          <in>nresource.cpp</in>
+          <in>nresource.h</in>
+          <in>nresponse.h</in>
+          <in>nrouter.cpp</in>
+          <in>nrouter.h</in>
+          <in>nserver.h</in>
+          <in>nstatus.cpp</in>
+          <in>nstatus.h</in>
+        </df>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>build/Makefile</itemPath>
+      <itemPath>nanogear-Makefile.mk</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>nanogear-Makefile.mk</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>Debug</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath>Debug/examples/forms/forms</executablePath>
+        </makeTool>
+      </makefileType>
+      <folder path="nanogear/examples">
+        <ccTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>src/connectors</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="nanogear/examples/forms">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/QtCore</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_SHARED</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="nanogear/examples/simple">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/QtCore</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_SHARED</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="nanogear/src">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/QtCore</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_SHARED</Elem>
+          </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="nanogear/src/connectors">
+        <ccTool>
+          <incDir>
+            <pElem>src/core</pElem>
+            <pElem>/usr/include/QtNetwork</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+    </conf>
+  </confs>
+</configurationDescriptor>
