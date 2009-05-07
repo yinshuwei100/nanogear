@@ -1,6 +1,7 @@
 set(nanogear_SRCS
     ndirectoryresource.cpp
     nmethod.cpp
+    nprotocol.cpp
     nrepresentation.cpp
     nresource.cpp
     nrouter.cpp
@@ -10,6 +11,7 @@ set(nanogear_SRCS
 
 qt4_wrap_cpp(nanogear_SRCS
     nstatus.h
+    nprotocol.h
     nmethod.h
 )
 

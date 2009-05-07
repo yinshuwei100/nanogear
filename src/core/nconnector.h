@@ -24,11 +24,12 @@
 #ifndef NCONNECTOR_H
 #define NCONNECTOR_H
 
+#include <QList>
+
 #include "nresource.h"
 
 class NConnector : public NResource {
 public:
-    
 };
 
 #endif
