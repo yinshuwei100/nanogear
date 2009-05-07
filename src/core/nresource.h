@@ -50,7 +50,6 @@ class NRepresentation;
  * \see Roy Fielding's dissertation at:
  *     http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_1
  */
-
 class NResource : public QObject
 {
 public:

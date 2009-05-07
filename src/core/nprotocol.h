@@ -26,6 +26,10 @@
 
 #include <QObject>
 
+/*!
+ * \class NProtocol
+ * \brief Wrap some common protocols in a class
+ */
 class NProtocol
 {
     Q_GADGET
@@ -56,8 +60,8 @@ public:
     NProtocol(int status) : m_protocol(status) {}
 
     /*!
-     * Construct the status from its name
-     * \param name The status name
+     * Construct the protocol from its name
+     * \param name The protocol name
      */
     void fromString(const QString& name)
     { m_protocol = toType(name); }
@@ -69,14 +73,14 @@ public:
     { return toString(m_protocol); }
 
     /*!
-     * Construct this Status from its code
+     * Construct this Protocol from its code
      * \param status the status code
      */
     void fromType(int status)
     { m_protocol = status; }
 
     /*!
-     * \return The status code
+     * \return The protocol code
      */
     int toType() const
     { return m_protocol; }
@@ -85,7 +89,7 @@ public:
     { return m_protocol == type.m_protocol; }
 
     /*!
-     * This enum holds HTTP status codes
+     * This enum holds some commonly used protocols
      * \see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
      */
     enum Protocol {

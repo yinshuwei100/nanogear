@@ -26,10 +26,18 @@
 
 #include <QList>
 
+#include "nprotocol.h"
 #include "nresource.h"
 
 class NConnector : public NResource {
 public:
+    void setProtocols(const QList<NProtocol>& protocols)
+    { m_protocols = protocols; }
+    
+    const QList<NProtocol>& getProtocols()
+    { return m_protocols; }
+private:
+    QList m_protocols<NProtocol>;
 };
 
 #endif
