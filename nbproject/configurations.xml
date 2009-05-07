@@ -105,6 +105,7 @@
           <df name="ihttp">
             <df name="tests">
             </df>
+            <in>NHTTPServer</in>
             <in>nhttpserver.cpp</in>
             <in>nhttpserver.h</in>
             <in>nutility.h</in>
@@ -113,6 +114,15 @@
         <df name="core">
           <df name="tests">
           </df>
+          <in>NApplication</in>
+          <in>NDirectoryResource</in>
+          <in>NRepresentation</in>
+          <in>NRequest</in>
+          <in>NResource</in>
+          <in>NResponse</in>
+          <in>NRouter</in>
+          <in>NServer</in>
+          <in>NStatus</in>
           <in>napplication.h</in>
           <in>nclientinfo.h</in>
           <in>nconnector.h</in>
@@ -141,6 +151,7 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <itemPath>.gitignore</itemPath>
       <itemPath>build/Makefile</itemPath>
       <itemPath>nanogear-Makefile.mk</itemPath>
     </logicalFolder>
@@ -162,6 +173,17 @@
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
           <executablePath>Debug/examples/forms/forms</executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>/usr/include/QtCore</pElem>
+              <pElem>src/core</pElem>
+              <pElem>src/connectors</pElem>
+              <pElem>/usr/include/QtNetwork</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>QT_SHARED</Elem>
+            </preprocessorList>
+          </ccTool>
         </makeTool>
       </makefileType>
       <folder path="nanogear/examples">
@@ -170,26 +192,6 @@
             <pElem>src/core</pElem>
             <pElem>src/connectors</pElem>
           </incDir>
-        </ccTool>
-      </folder>
-      <folder path="nanogear/examples/forms">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/QtCore</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>QT_SHARED</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="nanogear/examples/simple">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/QtCore</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>QT_SHARED</Elem>
-          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="nanogear/src">
