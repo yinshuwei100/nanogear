@@ -47,6 +47,6 @@ endif (${PEDANTIC})
 #
 add_subdirectory(src)
 
-if (${BUILD_EXAMPLES})
+if (${WITH_EXAMPLES})
     add_subdirectory(examples)
-endif (${BUILD_EXAMPLES})
+endif (${WITH_EXAMPLES})
