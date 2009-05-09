@@ -36,6 +36,8 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
 )
 
 # Install Qt-style headers
+# FIXME: On windows systems this would have a bad
+#        behaviour
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
     DESTINATION include/Nanogear
     FILES_MATCHING PATTERN N*
