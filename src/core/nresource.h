@@ -24,15 +24,7 @@
 #ifndef NRESOURCE_H
 #define NRESOURCE_H
 
-#include <QObject>
-#include <QString>
-
-#include "nstatus.h"
-#include "nresponse.h"
-
-class NRequest;
-
-class NRepresentation;
+#include "nuniform.h"
 
 /*!
  * \class NResource
@@ -50,89 +42,26 @@ class NRepresentation;
  * \see Roy Fielding's dissertation at:
  *     http://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm#sec_5_2_1_1
  */
-class NResource : public QObject
-{
+class NResource : public NUniform {
 public:
     /*!
-     * This method is used internally to dispatch the request to the
-     * appropriate handler
-     * \param request a const reference to a Request object
-     * \param response a reference to the Response object built by the Connector
-     * \return a response object
+     * \return True if this resource was started
      */
-    virtual void handleRequest(const NRequest& request, NResponse& response);
-
-protected:
-    /*!
-     * Override this method in a derived class to handle a GET request.
-     * By default this methods returns NStatus::MethodNotAllowed
-     * \param request const reference to a Request object
-     * \param response a reference to the Response object built by the Connector
-     * \return the resource is responsible for compiling a Response object which
-     *    will be sent to the client
-     */
-    virtual void handleGet(const NRequest& request, NResponse& response)
-    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
+    void isStarted()
+    { return m_started; }
 
     /*!
-     * Override this method in a derived class to handle a HEAD request.
-     * By default this methods returns NStatus::MethodNotAllowed
-     * \note this method is much like GET but must NOT return a response body
-     *    (a Representation)
-     * \param request const reference to a Request object
-     * \param response a reference to the Response object built by the Connector
-     * \return the resource is responsible for compiling a Response object which
-     *    will be sent to the client
+     * Reimplement this method to define how to start this resource.
+     * This is mostly used internally by other classes.
      */
-    virtual void handleHead(const NRequest& request, NResponse& response)
-    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
+    virtual void start() {}
 
     /*!
-     * Override this method in a derived class to handle a PUT request.
-     * By default this methods returns NStatus::MethodNotAllowed
-     * \param request const reference to a Request object
-     * \param response a reference to the Response object built by the Connector
-     * \return the resource is responsible for compiling a Response object which
-     *    will be sent to the client
+     * Re-implement this method to define how to stop this resource.
      */
-    virtual void handlePut(const NRequest& request, NResponse& response)
-    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
-
-    /*!
-     * Override this method in a derived class to handle a POST request.
-     * By default this methods returns NStatus::MethodNotAllowed
-     * \param request const reference to a Request object
-     * \param response a reference to the Response object built by the Connector
-     * \return the resource is responsible for compiling a Response object which
-     *    will be sent to the client
-     */
-    virtual void handlePost(const NRequest& request, NResponse& response)
-    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
-
-    /*!
-     * Override this method in a derived class to handle a OPTIONS request.
-     * By default this methods returns NStatus::MethodNotAllowed
-     * \param request const reference to a Request object
-     * \param response a reference to the Response object built by the Connector
-     * \return the resource is responsible for compiling a Response object which
-     *    will be sent to the client
-     */
-    virtual void handleOptions(const NRequest& request, NResponse& response) const
-    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
-
-    /*!
-     * Override this method in a derived class to handle a DELETE request.
-     * By default this methods returns NStatus::MethodNotAllowed
-     * \param request const reference to a Request object
-     * \param response a reference to the Response object built by the Connector
-     * \return the resource is responsible for compiling a Response object which
-     *    will be sent to the client
-     */
-    virtual void handleDelete(const NRequest& request, NResponse& response)
-    { Q_UNUSED(request) response.setStatus(NStatus::MethodNotAllowed); }
-
+    virtual void stop() {}
 private:
-    QString m_resourceUri;
+    bool m_started;
 };
 
 #endif /* NRESOURCE_H */
