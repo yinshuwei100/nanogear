@@ -24,31 +24,103 @@
 
 #include "nmethod.h"
 
-#include <QMetaEnum>
+// Inizialize constants
+const NMethod NMethod::CONNECT("CONNECT", "Used with a proxy that can dynamically switch to being "
+        "a tunnel");
+
+const NMethod NMethod::COPY("COPY", "Creates a duplicate of the source resource, identified by the "
+        "Request-URI, in the destination resource, identified by the URI in the Destination header");
+
+const NMethod NMethod::DELETE("DELETE", "Requests that the origin server deletes the resource "
+        "identified by the request URI");
+
+const NMethod NMethod::GET("GET", "Retrieves whatever information (in the form of an entity) "
+        "that is identified by the request URI");
+
+const NMethod NMethod::HEAD("HEAD", "Identical to GET except that the server must not return a "
+        "message body in the response");
+
+const NMethod NMethod::LOCK("LOCK", "Used to take out a lock of any access type (WebDAV)");
+
+const NMethod NMethod::MKCOL("MKCOL", "Used to create a new collection (WebDAV)");
+
+const NMethod NMethod::MOVE("MOVE", "Logical equivalent of a copy, followed by consistency "
+        "maintenance processing, followed by a delete of the source (WebDAV)");
+
+const NMethod NMethod::OPTIONS("OPTIONS", "Requests for information about the communication "
+        "options available on the request/response chain identified by the URI");
+
+const NMethod NMethod::POST("POST", "Requests that the origin server accepts the entity enclosed "
+        "in the request as a new subordinate of the resource identified by the request URI");
+
+const NMethod NMethod::PROPFIND("PROPFIND", "Retrieves properties defined on the resource "
+        "identified by the request URI");
+
+const NMethod NMethod::PROPPATCH("PROPPATCH", "Processes instructions specified in the request "
+        "body to set and/or remove properties defined on the resource identified by the "
+        "request URI");
+
+const NMethod NMethod::PUT("PUT", "Requests that the enclosed entity be stored under the supplied "
+        "request URI");
+
+const NMethod NMethod::TRACE("TRACE", "Used to invoke a remote, application-layer loop-back of "
+        "the request message");
+
+const NMethod NMethod::UNLOCK("UNLOCK", "Removes the lock identified by the lock token from the "
+        "request URI, and all other resources included in the lock");
+
+bool NMethod::operator==(const NMethod& other) const
+{
+    bool ret = false;
+    ret = (m_description == other.m_description);
+    ret = (m_name == other.m_name);
+    return ret;
+}
 
 bool NMethod::hasBody() const
 {
-    switch (m_method) {
-    case POST:
+    if (*this == POST)
         return true;
-    case PUT:
+    else if (*this == PUT)
         return true;
-    default:
+    else
         return false;
-    }
 }
 
-
-int NMethod::toType(const QString& key) const
+NMethod NMethod::valueOf(const QString& methodName)
 {
-    QMetaEnum metaEnum(staticMetaObject
-                       .enumerator(staticMetaObject.indexOfEnumerator("Type")));
-    return metaEnum.keyToValue(key.toUtf8());
-}
+    QString normalizedMethodName(methodName.toUpper());
 
-QString NMethod::toString(int value) const
-{
-    QMetaEnum metaEnum(staticMetaObject
-                       .enumerator(staticMetaObject.indexOfEnumerator("Type")));
-    return metaEnum.valueToKey(value);
+    if (normalizedMethodName == "CONNECT")
+        return NMethod::CONNECT;
+    else if (normalizedMethodName == "COPY")
+        return NMethod::COPY;
+    else if (normalizedMethodName == "DELETE")
+        return NMethod::DELETE;
+    else if (normalizedMethodName == "GET")
+        return NMethod::GET;
+    else if (normalizedMethodName == "HEAD")
+        return NMethod::HEAD;
+    else if (normalizedMethodName == "LOCK")
+        return NMethod::LOCK;
+    else if (normalizedMethodName == "MKCOL")
+        return NMethod::MKCOL;
+    else if (normalizedMethodName == "MOVE")
+        return NMethod::MOVE;
+    else if (normalizedMethodName == "OPTIONS")
+        return NMethod::OPTIONS;
+    else if (normalizedMethodName == "POST")
+        return NMethod::POST;
+    else if (normalizedMethodName == "PROPFIND")
+        return NMethod::PROPFIND;
+    else if (normalizedMethodName == "PROPPATCH")
+        return NMethod::PROPPATCH;
+    else if (normalizedMethodName == "PUT")
+        return NMethod::PUT;
+    else if (normalizedMethodName == "TRACE")
+        return NMethod::TRACE;
+    else if (normalizedMethodName == "UNLOCK")
+        return NMethod::UNLOCK;
+    else
+        return NMethod(normalizedMethodName);
 }
