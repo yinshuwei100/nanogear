@@ -33,7 +33,7 @@ public:
 
     virtual void handleGet(const NRequest& request, NResponse& response) {
         Q_UNUSED(request)
-        response.setStatus(NStatus::OK);
+        response.setStatus(NStatus::SUCCESS_OK);
         response.setRepresentation(&m_representation);
     }
 
@@ -47,7 +47,7 @@ public:
 
     virtual void handleGet(const NRequest& request, NResponse& response) {
         Q_UNUSED(request)
-        response.setStatus(NStatus::OK);
+        response.setStatus(NStatus::SUCCESS_OK);
         response.setRepresentation(&m_representation);
     }
 

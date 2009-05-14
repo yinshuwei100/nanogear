@@ -46,7 +46,7 @@ public:
     /*!
      * Initializes an invalid response object
      */
-    NResponse() : m_status(NStatus::Invalid), m_representation(0) {}
+    NResponse() : m_representation(0) {}
 
     /*!
      * Set the response status code

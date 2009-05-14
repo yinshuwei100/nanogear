@@ -160,7 +160,7 @@ void NHTTPServer::onClientReadyRead()
     /// \note Unused
     //QTextCodec* codec = clientInfo.acceptedTextCodecs().top();
 
-    QHttpResponseHeader responseHeader(response.status().toType(), response.status().toString(),
+    QHttpResponseHeader responseHeader(response.status().code(), response.status().name(),
                                        requestHeader.majorVersion(), requestHeader.minorVersion());
 
     responseHeader.setValue("Connection", requestHeader.value("Connection"));

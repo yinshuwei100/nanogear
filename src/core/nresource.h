@@ -47,7 +47,7 @@ public:
     /*!
      * \return True if this resource was started
      */
-    void isStarted()
+    bool isStarted()
     { return m_started; }
 
     /*!
@@ -60,6 +60,16 @@ public:
      * Re-implement this method to define how to stop this resource.
      */
     virtual void stop() {}
+
+    /*!
+     * This method is used internally to dispatch the request to the
+     * appropriate handler
+     * \param request a const reference to a Request object
+     * \param response a reference to the Response object built by the Connector
+     * \return a response object
+     */
+    virtual void handleRequest(const NRequest& request, NResponse& response);
+
 private:
     bool m_started;
 };

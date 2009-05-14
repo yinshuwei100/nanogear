@@ -55,7 +55,7 @@ void NRouter::handleRequest(const NRequest& request, NResponse& response)
 
     if (!found) {
         qDebug() << Q_FUNC_INFO << "Couldn't find any direct match (404)";
-        response.setStatus(NStatus::NotFound);
+        response.setStatus(NStatus::CLIENT_ERROR_NOT_FOUND);
         response.setRepresentation(&m_notFound);
     }
 }
