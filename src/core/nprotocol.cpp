@@ -23,20 +23,19 @@
 
 #include "nprotocol.h"
 
-#include <QMetaEnum>
+// Initialize constants
+const NProtocol NProtocol::HTTP("http", "HTTP", "HyperText Transfer Protocol", 80);
 
-int NProtocol::toType(const QString& key) const
+const NProtocol NProtocol::HTTPS("https", "HTTPS", "HyperText Transfer Protocol via SSL", 443);
+
+const NProtocol NProtocol::FILE("file", "FILE", "FILE is a standard scheme to access to "
+        "representations stored in the file system (locally most of the time).");
+
+bool NProtocol::operator==(const NProtocol& other) const
 {
-    const QMetaObject& metaObject = staticMetaObject;
-    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Protocol"));
-    return metaEnum.keyToValue(key.toUtf8());
+    bool ret = false;
+    ret = (m_name == other.m_name);
+    ret = (m_description == other.m_description);
+    ret = (m_defaultPort == other.m_defaultPort);
+    return ret;
 }
-
-QString NProtocol::toString(int value) const
-{
-    const QMetaObject& metaObject = staticMetaObject;
-    QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Protocol"));
-    return metaEnum.valueToKey(value);
-}
-
-

@@ -39,6 +39,9 @@
  */
 class NMetadata {
 public:
+    /*!
+     * Default constructor
+     */
     NMetadata() {}
     
     NMetadata(const QString& name) : m_name(name) {}

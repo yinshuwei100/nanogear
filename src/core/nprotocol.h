@@ -24,94 +24,72 @@
 #ifndef NPROTOCOL_H
 #define	NPROTOCOL_H
 
-#include <QObject>
+#include <QString>
+
+#include "nmetadata.h"
 
 /*!
  * \class NProtocol
  * \brief Wrap some common protocols in a class
  */
-class NProtocol
-{
-    Q_GADGET
-    Q_ENUMS(Type)
+class NProtocol : public NMetadata {
 public:
+    /*!
+     * Default constructor
+     */
+    NProtocol() : m_defaultPort(0) {}
 
     /*!
-     * Default constructor using the HTTP protocol.
+     * @param name The protocol's name
      */
-    NProtocol() : m_protocol(HTTP) {}
+    NProtocol(const QString& name) : NMetadata(name), m_defaultPort(0) {}
 
     /*!
-     * Construct the status from its name
-     * \param name The status name
+     * @param name The protocol's name
+     * @param description The protocol's description
      */
-    NProtocol(const QString& name) : m_protocol(toType(name)) {}
+    NProtocol(const QString& name, const QString& description) : NMetadata(name, description),
+        m_defaultPort(0) {}
 
     /*!
-     * An overloaded constructor provided for convenience
-     * \param name The status name as C-style string
+     * @param name The protocol's name
+     * @param description The protocol's description
+     * @param defaultPort The protocol's default port
      */
-    NProtocol(const char* name) : m_protocol(toType(name)) {}
+    NProtocol(const QString& name, const QString& description, int defaultPort) :
+        NMetadata(name, description), m_defaultPort(defaultPort) {}
 
     /*!
-     * Construct this Status from its code
-     * \param status the status code
+     * @param schemeName The scheme name (usually the part before '://' in a URI :-)
+     * @param name The protocol's name
+     * @param description The protocol's description
+     * @param defaultPort The protocol's default port
      */
-    NProtocol(int status) : m_protocol(status) {}
+    NProtocol(const QString& schemeName, const QString& name, const QString& description,
+            int defaultPort) : NMetadata(name, description), m_schemeName(schemeName),
+            m_defaultPort(defaultPort) {}
 
-    /*!
-     * Construct the protocol from its name
-     * \param name The protocol name
-     */
-    void fromString(const QString& name)
-    { m_protocol = toType(name); }
+   /*!
+    * @param schemeName The scheme name (usually the part before '://' in a URI :-)
+    * @param name The protocol's name
+    * @param description The protocol's description
+    */
+    NProtocol(const QString& schemeName, const QString& name, const QString& description) :
+           NMetadata(name, description), m_schemeName(schemeName) {}
 
-    /*!
-     * \return The string representation of this status code
-     */
-    QString toString() const
-    { return toString(m_protocol); }
+    bool operator==(const NProtocol& other) const;
 
-    /*!
-     * Construct this Protocol from its code
-     * \param status the status code
-     */
-    void fromType(int status)
-    { m_protocol = status; }
+    //! The HTTP protocol
+    static const NProtocol HTTP;
 
-    /*!
-     * \return The protocol code
-     */
-    int toType() const
-    { return m_protocol; }
+    //! The HTTP protocol over SSL
+    static const NProtocol HTTPS;
 
-    bool operator==(const NProtocol& type) const
-    { return m_protocol == type.m_protocol; }
-
-    /*!
-     * This enum holds some commonly used protocols
-     * \see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-     */
-    enum Protocol {
-        HTTP = 0,
-        HTTPS,
-        FILE
-    };
-
+    //! The file protocol used for local resources
+    static const NProtocol FILE;
 private:
-    /*!
-     * Get the protocol name from it's enum index
-     * \param value The protocol code
-     */
-    QString toString(int value) const;
-
-    /*!
-     * Get the protocol's enum index from it's name
-     * \param key The protocol name
-     */
-    int toType(const QString& key) const;
-
-    int m_protocol;
+    QString m_schemeName;
+    int m_defaultPort;
 };
 
 #endif	/* NPROTOCOL_H */
