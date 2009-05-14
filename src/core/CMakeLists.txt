@@ -9,10 +9,6 @@ set(nanogear_SRCS
     nmimetype.cpp
 )
 
-qt4_wrap_cpp(nanogear_SRCS
-    nmethod.h
-)
-
 add_library(Nanogear SHARED ${nanogear_SRCS})
 
 set_target_properties(Nanogear PROPERTIES

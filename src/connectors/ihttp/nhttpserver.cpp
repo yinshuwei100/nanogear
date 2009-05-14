@@ -75,7 +75,7 @@ void NHTTPServer::onClientReadyRead()
     qDebug() << Q_FUNC_INFO << "Requested path: " << requestHeader.path();
 
     // Fill Method by using informations supplied by the client
-    NMethod requestedMethod(requestHeader.method().toUpper());
+    NMethod requestedMethod = NMethod::valueOf(requestHeader.method().toUpper());
 
     //
     // Get the entity

@@ -34,7 +34,7 @@ public:
         foreach (const QString& key, request.parameters().keys()) {
             parametersString += (key + " = " + request.parameters()[key] + "<br/>\n");
         }
-    
+
         m_representation.setHtml(QString("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
 "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n"
 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n"
@@ -63,7 +63,7 @@ public:
 "%2\n"
 "<hr/>\n"
 "</body>\n"
-"</html>\n").arg(request.method().toString()).arg(parametersString));
+"</html>\n").arg(request.method().name()).arg(parametersString));
 
         response.setStatus(NStatus::SUCCESS_OK);
         response.setRepresentation(&m_representation);
@@ -79,7 +79,7 @@ private:
 class FormsApplication : public NApplication {
 public:
     FormsApplication(int argc, char** argv) : NApplication(argc, argv) {}
-    
+
     virtual NResource* createRoot() {
         return new FormsExample();
     }

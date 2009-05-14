@@ -24,8 +24,9 @@
 #ifndef NMETHOD_H
 #define NMETHOD_H
 
-#include <QObject>
 #include <QString>
+
+#include "nmetadata.h"
 
 /*!
  * \class NMethod
@@ -34,69 +35,23 @@
  * Used to determine which method to execute to handle a request. It is usually
  * filled by a concrete implementation of Server.
  */
-
-class NMethod
-{
-    Q_GADGET
-    Q_ENUMS(Type)
+class NMethod : public NMetadata {
 public:
-    /*!
-     * Default constructor. Builds a invalid method.
-     */
-    NMethod() : m_method(Invalid) {}
+
+    NMethod(const QString& name) : NMetadata(name) {}
+
+    NMethod(const QString& name, const QString& description) : NMetadata(name, description) {}
+
+    bool operator==(const NMethod& type) const;
 
     /*!
-     * Build a Method object from its name
-     * \param name method's name
+     * Retrieve an instance of a NMethod class from the method's name
+     *
+     * \param methodName Requested method name
+     * \return An instance of the default methods provided, otherwise a new NMethod instance with
+     *      methodName as name (normalized to upper case)
      */
-    NMethod(const QString& name) : m_method(toType(name)) {}
-
-    /*!
-     * This is an overloaded constructor provided for convenience
-     * \param name method's name (C-style string)
-     */
-    NMethod(const char* name) : m_method(toType(name)) {}
-
-    /*!
-     * This is an overloaded constructor provided for convenience
-     * \param method the code representing a method
-     */
-    NMethod(int method) : m_method(method) {}
-
-    /*!
-     * Build this object from the name of the method
-     * \param name Method name
-     */
-    void fromString(const QString& name)
-    { toType(name); }
-
-    /*!
-     * \return Return the method name as a string
-     */
-    QString toString() const
-    { return toString(m_method); }
-
-    /*!
-     * Build this method from its integer code
-     * \param method
-     */
-    void fromType(int method)
-    { m_method = method; }
-
-    /*!
-     * \return the code associated with this method
-     */
-    int toType() const
-    { return m_method; }
-
-    bool operator==(const NMethod& type) const
-    { return m_method == type.m_method; }
-
-    /*!
-     * \return If this method is valid or not
-     */
-    bool isValid() const
-    { return m_method != Invalid; }
+    static NMethod valueOf(const QString& methodName);
 
     /*!
      * \return true if this method has a body
@@ -104,45 +59,126 @@ public:
     bool hasBody() const;
 
     /*!
-     * Various connection types, names are derived from HTTP 1.1 method
-     * definition. This enum includes also WebDav request method types
-     * \see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
-     * \see http://www.webdav.org/specs/rfc2518.html#http.methods.for.distributed.authoring
+     * Used with a proxy that can dynamically switch to being a tunnel.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.9">HTTP RFC - 9.9 CONNECT</a>
      */
-    enum Type {
-        Invalid = -1,
-        OPTIONS,   /* HTTP 1.1 standard methods */
-        GET,
-        HEAD,
-        POST,
-        PUT,
-        DELETE,
-        TRACE,
-        CONNECT,
-        PROPFIND,   /* WebDAV request methods */
-        PROPPATCH,
-        MKCOL,
-        COPY,
-        MOVE,
-        LOCK,
-        UNLOCK
-    };
+    static const NMethod CONNECT;
 
-private:
     /*!
-     * Get the status code name as string from its number
-     * \param value The status code
+     * Creates a duplicate of the source resource, identified by the
+     * Request-URI, in the destination resource, identified by the URI in the
+     * Destination header.
+     *
+     * \see <a href="http://www.webdav.org/specs/rfc2518.html#METHOD_COPY">WEBDAV RFC - 8.8 COPY Method</a>
      */
-    QString toString(int value) const;
-    
-    /*!
-     * Get the status code number from its name
-     * \param key The status name
-     */
-    int toType(const QString& key) const;
+    static const NMethod COPY;
 
-private:
-    int m_method;
+    /*!
+     * Requests that the origin server deletes the resource identified by the
+     * request URI.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.7">HTTP RFC - 9.7 DELETE</a>
+     */
+    static const NMethod DELETE;
+
+    /*!
+     * Retrieves whatever information (in the form of an entity) that is
+     * identified by the request URI.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.3">HTTP RFC - 9.3 GET</a>
+     */
+    static const NMethod GET;
+
+    /*!
+     * Identical to GET except that the server must not return a message body in
+     * the response but only the message header.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4">HTTP RFC - 9.4 GET</a>
+     */
+    static const NMethod HEAD;
+
+    /*!
+     * Used to take out a lock of any access type on the resource identified by
+     * the request URI.
+     *
+     * \see <a href="http://www.webdav.org/specs/rfc2518.html#METHOD_LOCK">WEBDAV RFC - 8.10 LOCK Method</a>
+     */
+    static const NMethod LOCK;
+
+    /*!
+     * MKCOL creates a new collection resource at the location specified by the
+     * Request URI.
+     *
+     * \see <a href="http://www.webdav.org/specs/rfc2518.html#METHOD_MKCOL">WEBDAV RFC - 8.3 MKCOL Method</a>
+     */
+    static const NMethod MKCOL;
+
+    /*!
+     * Logical equivalent of a copy, followed by consistency maintenance
+     * processing, followed by a delete of the source where all three actions
+     * are performed atomically.
+     *
+     * \see <a href="http://www.webdav.org/specs/rfc2518.html#METHOD_MOVE">WEBDAV RFC - 8.3 MKCOL Method</a>
+     */
+    static const NMethod MOVE;
+
+    /*!
+     * Requests for information about the communication options available on the
+     * request/response chain identified by the URI.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.2">HTTP RFC - 9.2 OPTIONS</a>
+     */
+    static const NMethod OPTIONS;
+
+    /*!
+     * Requests that the origin server accepts the entity enclosed in the
+     * request as a new subordinate of the resource identified by the request
+     * URI.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5">HTTP RFC - 9.5 POST</a>
+     */
+    static const NMethod POST;
+
+    /*!
+     * Retrieves properties defined on the resource identified by the request
+     * URI.
+     *
+     * \see <a href="http://www.webdav.org/specs/rfc2518.html#METHOD_PROPFIND">WEBDAV RFC - 8.1 PROPFIND</a>
+     */
+    static const NMethod PROPFIND;
+
+    /*!
+     * Processes instructions specified in the request body to set and/or remove
+     * properties defined on the resource identified by the request URI.
+     *
+     * \see <a href="http://www.webdav.org/specs/rfc2518.html#METHOD_PROPPATCH">WEBDAV RFC - 8.2 PROPPATCH</a>
+     */
+    static const NMethod PROPPATCH;
+
+    /*!
+     * Requests that the enclosed entity be stored under the supplied request
+     * URI.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.6"HTTP RFC - 9.6 PUT</a>
+     */
+    static const NMethod PUT;
+
+    /*!
+     * Used to invoke a remote, application-layer loop-back of the request
+     * message.
+     *
+     * \see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.8">HTTP RFC - 9.8 TRACE</a>
+     */
+    static const NMethod TRACE;
+
+    /*!
+     * Removes the lock identified by the lock token from the request URI, and
+     * all other resources included in the lock.
+     *
+     * \see <a href="http://www.webdav.org/specs/rfc2518.html#METHOD_UNLOCK">WEBDAV RFC - 8.11 UNLOCK Method</a>
+     */
+    static const NMethod UNLOCK;
 };
 
 #endif /* NMETHOD_H */
