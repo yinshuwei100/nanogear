@@ -10,7 +10,6 @@ set(nanogear_SRCS
 )
 
 qt4_wrap_cpp(nanogear_SRCS
-    nprotocol.h
     nmethod.h
 )
 
