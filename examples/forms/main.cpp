@@ -65,7 +65,7 @@ public:
 "</body>\n"
 "</html>\n").arg(request.method().toString()).arg(parametersString));
 
-        response.setStatus(NStatus::OK);
+        response.setStatus(NStatus::SUCCESS_OK);
         response.setRepresentation(&m_representation);
     }
 

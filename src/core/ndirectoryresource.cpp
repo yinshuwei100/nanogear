@@ -107,10 +107,10 @@ void NDirectoryResource::handleGet(const NRequest& request, NResponse& response)
 
                 m_directoryIndex.setXhtml(m_xhtmlRepr.arg(pathInfo.fileName()).arg(htmlTableEntries));
 
-                response.setStatus(NStatus::OK);
+                response.setStatus(NStatus::SUCCESS_OK);
                 response.setRepresentation(&m_directoryIndex);
             } else {
-                response.setStatus(NStatus::Forbidden);
+                response.setStatus(NStatus::CLIENT_ERROR_FORBIDDEN);
                 response.setRepresentation(&m_notAllowed);
             }
         } else {
@@ -150,6 +150,6 @@ void NDirectoryResource::representFile(const QFileInfo& pathInfo, NResponse& res
     m_rawFile.setData(mimeType, file.readAll());
     file.close();
 
-    response.setStatus(NStatus::OK);
+    response.setStatus(NStatus::SUCCESS_OK);
     response.setRepresentation(&m_rawFile);
 }

@@ -21,30 +21,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "nresource.h"
+#ifndef NMETADATA_H
+#define	NMETADATA_H
 
-#include "nmethod.h"
-#include "nstatus.h"
-#include "nrequest.h"
-#include "nresponse.h"
+class NMetadata {
+public:
+    NMetadata() {}
+    
+    NMetadata(const QString& name) : m_name(name) {}
 
-void NResource::handleRequest(const NRequest& request, NResponse& response)
-{
-    if (request.method() == NMethod::GET) {
-        handleGet(request, response);
-    } else if (request.method() == NMethod::PUT) {
-        handlePut(request, response);
-    } else if (request.method() == NMethod::POST) {
-        handlePost(request, response);
-    } else if (request.method() == NMethod::OPTIONS) {
-        handleOptions(request, response);
-    } else if (request.method() == NMethod::DELETE) {
-        handleDelete(request, response);
-    } else if (request.method() == NMethod::HEAD) {
-        handleHead(request, response);
-    } else {
-        response.setStatus(NStatus::CLIENT_ERROR_NOT_FOUND);
-    }
-}
+    NMetadata(const QString& name, const QString& description) :
+        m_name(name), m_description(description) {}
 
+    const QString& name() const
+    { return m_name; }
+
+    const QString& description() const
+    { return m_description; }
+
+protected:
+    QString m_name;
+    QString m_description;
+};
+
+#endif	/* NMETADATA_H */
 
