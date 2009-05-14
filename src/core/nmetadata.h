@@ -43,15 +43,28 @@ public:
      * Default constructor
      */
     NMetadata() {}
-    
+
+    /*!
+     * @param name The unique name
+     */
     NMetadata(const QString& name) : m_name(name) {}
 
+    /*!
+     * \param name The unique name
+     * \param description A description
+     */
     NMetadata(const QString& name, const QString& description) :
         m_name(name), m_description(description) {}
 
+    /*!
+     * \return The name (ex: "text/html" or "compress" or "iso-8851-1")
+     */
     const QString& name() const
     { return m_name; }
 
+    /*!
+     * \return The description
+     */
     const QString& description() const
     { return m_description; }
 
