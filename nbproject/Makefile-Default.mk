@@ -24,7 +24,7 @@ CND_CONF=Default
 CND_DISTDIR=dist
 
 # Include project Makefile
-include nanogear-Makefile.mk
+include Nanogear-Makefile.mk
 
 # Object Directory
 OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
@@ -50,14 +50,14 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	cd build/debug && ${MAKE} -f Makefile
+	cd build && ${MAKE} -f Makefile
 
 # Subprojects
 .build-subprojects:
 
 # Clean Targets
 .clean-conf:
-	cd build/debug && ${MAKE} -f Makefile clean
+	cd build && ${MAKE} -f Makefile clean
 
 # Subprojects
 .clean-subprojects:

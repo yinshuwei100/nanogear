@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="62">
-  <projectmakefile>nanogear-Makefile.mk</projectmakefile>
+  <projectmakefile>Nanogear-Makefile.mk</projectmakefile>
   <defaultConf>0</defaultConf>
   <confs>
     <conf name="Default" type="0">

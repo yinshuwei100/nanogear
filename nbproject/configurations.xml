@@ -1,89 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="62">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <df name="nanogear" root=".">
-      <df name="cmake">
-        <df name="modules">
-        </df>
+    <df name="examples" root="examples">
+      <df name="directory">
+        <in>main.cpp</in>
       </df>
-      <df name="docs">
+      <df name="forms">
+        <in>main.cpp</in>
       </df>
-      <df name="examples">
-        <df name="directory">
-          <in>main.cpp</in>
-        </df>
-        <df name="forms">
-          <in>main.cpp</in>
-        </df>
-        <df name="simple">
-          <in>main.cpp</in>
-        </df>
+      <df name="simple">
+        <in>main.cpp</in>
       </df>
-      <df name="scripts">
-      </df>
-      <df name="src">
-        <df name="connectors">
-          <df name="ihttp">
-            <df name="tests">
-            </df>
-            <in>NHTTPServer</in>
-            <in>nhttpserver.cpp</in>
-            <in>nhttpserver.h</in>
-            <in>nutility.h</in>
-          </df>
-        </df>
-        <df name="core">
+    </df>
+    <df name="scripts" root="scripts">
+    </df>
+    <df name="src" root="src">
+      <df name="connectors">
+        <df name="ihttp">
           <df name="tests">
           </df>
-          <in>NApplication</in>
-          <in>NDirectoryResource</in>
-          <in>NRepresentation</in>
-          <in>NRequest</in>
-          <in>NResource</in>
-          <in>NResponse</in>
-          <in>NRouter</in>
-          <in>NServer</in>
-          <in>NStatus</in>
-          <in>napplication.h</in>
-          <in>nclientinfo.h</in>
-          <in>nconnector.h</in>
-          <in>ndirectoryresource.cpp</in>
-          <in>ndirectoryresource.h</in>
-          <in>nmetadata.h</in>
-          <in>nmethod.cpp</in>
-          <in>nmethod.h</in>
-          <in>nmimetype.cpp</in>
-          <in>nmimetype.h</in>
-          <in>npreference.h</in>
-          <in>npreferencelist.h</in>
-          <in>nprotocol.cpp</in>
-          <in>nprotocol.h</in>
-          <in>nrepresentation.cpp</in>
-          <in>nrepresentation.h</in>
-          <in>nrequest.h</in>
-          <in>nresource.cpp</in>
-          <in>nresource.h</in>
-          <in>nresponse.h</in>
-          <in>nrouter.cpp</in>
-          <in>nrouter.h</in>
-          <in>nserver.h</in>
-          <in>nstatus.cpp</in>
-          <in>nstatus.h</in>
-          <in>nuniform.h</in>
+          <in>nhttpserver.cpp</in>
+          <in>nhttpserver.h</in>
+          <in>nutility.h</in>
         </df>
+      </df>
+      <df name="core">
+        <df name="tests">
+        </df>
+        <in>NMetadata</in>
+        <in>NProtocol</in>
+        <in>NUniform</in>
+        <in>napplication.h</in>
+        <in>nclientinfo.h</in>
+        <in>ncomponent.h</in>
+        <in>nconnector.h</in>
+        <in>ndirectoryresource.cpp</in>
+        <in>ndirectoryresource.h</in>
+        <in>nmetadata.h</in>
+        <in>nmethod.cpp</in>
+        <in>nmethod.h</in>
+        <in>nmimetype.cpp</in>
+        <in>nmimetype.h</in>
+        <in>npreference.h</in>
+        <in>npreferencelist.h</in>
+        <in>nprotocol.cpp</in>
+        <in>nprotocol.h</in>
+        <in>nrepresentation.cpp</in>
+        <in>nrepresentation.h</in>
+        <in>nrequest.h</in>
+        <in>nresource.cpp</in>
+        <in>nresource.h</in>
+        <in>nresponse.h</in>
+        <in>nrouter.cpp</in>
+        <in>nrouter.h</in>
+        <in>nserver.h</in>
+        <in>nstatus.cpp</in>
+        <in>nstatus.h</in>
+        <in>nuniform.h</in>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
-      <itemPath>build/debug/Makefile</itemPath>
-      <itemPath>nanogear-Makefile.mk</itemPath>
+      <itemPath>../__build/Makefile</itemPath>
+      <itemPath>Nanogear-Makefile.mk</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>.</Elem>
+    <Elem>src</Elem>
+    <Elem>scripts</Elem>
+    <Elem>examples</Elem>
   </sourceRootList>
-  <projectmakefile>nanogear-Makefile.mk</projectmakefile>
+  <projectmakefile>Nanogear-Makefile.mk</projectmakefile>
   <confs>
     <conf name="Default" type="0">
       <toolsSet>
@@ -93,16 +81,13 @@
       </toolsSet>
       <makefileType>
         <makeTool>
-          <buildCommandWorkingDir>build/debug</buildCommandWorkingDir>
+          <buildCommandWorkingDir>build</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
           <executablePath></executablePath>
           <ccTool>
             <incDir>
               <pElem>/usr/include/QtCore</pElem>
-              <pElem>src/core</pElem>
-              <pElem>src/connectors</pElem>
-              <pElem>/usr/include/QtNetwork</pElem>
             </incDir>
             <preprocessorList>
               <Elem>QT_SHARED</Elem>
@@ -110,32 +95,6 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <folder path="nanogear/examples">
-        <ccTool>
-          <incDir>
-            <pElem>src/core</pElem>
-            <pElem>src/connectors</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
-      <folder path="nanogear/src">
-        <ccTool>
-          <incDir>
-            <pElem>/usr/include/QtCore</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>QT_SHARED</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="nanogear/src/connectors">
-        <ccTool>
-          <incDir>
-            <pElem>src/core</pElem>
-            <pElem>/usr/include/QtNetwork</pElem>
-          </incDir>
-        </ccTool>
-      </folder>
     </conf>
   </confs>
 </configurationDescriptor>
